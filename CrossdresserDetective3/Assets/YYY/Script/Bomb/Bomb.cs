@@ -1,0 +1,65 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bomb : MonoBehaviour
+{
+    private Animator anim;
+
+    public float startTime;
+    public float waitTime;
+    public float bombForce;
+    
+
+    Collider2D coll;
+    Rigidbody2D rb;
+
+    [Header("Check")]
+    public float radius;
+    public LayerMask targetLayer;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        startTime = Time.time;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Time.time > startTime + waitTime)
+        {
+            anim.Play("bomb_explotion");
+        }
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    public void Explotion()//动画帧事件调用，爆炸检测层把对应物体推出
+    {
+        coll.enabled = false;//防止自己被炸到
+        Collider2D[] aroundObjects = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
+
+      
+        rb.gravityScale = 0;//防止掉出屏幕
+
+        foreach (var item in aroundObjects)
+        {
+            Vector3 pos = transform.position - item.transform.position;
+
+            item.GetComponent<Rigidbody2D>().AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);
+        }
+    }
+
+    public void DestoryThis() 
+    {
+        Destroy(gameObject);
+
+    }
+}
