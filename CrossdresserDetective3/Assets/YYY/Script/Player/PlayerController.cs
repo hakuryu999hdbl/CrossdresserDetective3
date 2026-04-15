@@ -185,6 +185,11 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
         }
+
+        if (Keyboard.current.jKey.isPressed && isGround)
+        {
+            Attack();
+        }
     }
 
 
