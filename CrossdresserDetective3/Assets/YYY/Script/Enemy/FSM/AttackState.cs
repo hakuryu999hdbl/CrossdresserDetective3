@@ -7,6 +7,7 @@ public class AttackState : EnemyBaseState
     public override void EnterState(EnemyController enemy)
     {
         //Debug.Log("发现敌人！！！！");
+        enemy.animState = 2;
         enemy.targetPoint = enemy.attackList[0];//列表第一个作为追踪目标（最近的目标）
     }
 
@@ -19,12 +20,12 @@ public class AttackState : EnemyBaseState
 
 
         //出现多个目标的时候，最近的优先
-        if (enemy.attackList.Count > 1) 
+        if (enemy.attackList.Count > 1)
         {
 
-            for(int i = 0; i < enemy.attackList.Count; i++)
+            for (int i = 0; i < enemy.attackList.Count; i++)
             {
-                if (Mathf.Abs(enemy.transform.position.x - enemy.attackList[i].position.x) < Mathf.Abs(enemy.transform.position.x - enemy.targetPoint.position.x)) 
+                if (Mathf.Abs(enemy.transform.position.x - enemy.attackList[i].position.x) < Mathf.Abs(enemy.transform.position.x - enemy.targetPoint.position.x))
                 {
 
                     enemy.targetPoint = enemy.attackList[i];
@@ -33,6 +34,10 @@ public class AttackState : EnemyBaseState
 
             }
 
+        }
+        else if (enemy.attackList.Count == 1)//如果列表里就一个目标，那就追踪那个
+        {
+            enemy.targetPoint = enemy.attackList[0];
         }
 
 

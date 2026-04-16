@@ -13,6 +13,12 @@ public class EnemyController : MonoBehaviour
     public Transform pointA, pointB;
     public Transform targetPoint;
 
+
+    [Header("敌人攻击")]
+    public float attackRate;//攻击频率
+    public float attackRange, skillRange;
+    float nextAttack = 0;
+
     public List<Transform> attackList = new List<Transform>();
 
     public PatrolState patrolState = new PatrolState();//巡逻状态
@@ -60,10 +66,35 @@ public class EnemyController : MonoBehaviour
     public void AttackAction() 
     {
 
-    }// 攻击玩家
+        if (Vector2.Distance(transform.position, targetPoint.position) < attackRange) 
+        {
+            if (Time.time > nextAttack) 
+            {
+                // 播放攻击动画
+                anim.SetTrigger("attack");
+                Debug.Log("普通攻击");
+                nextAttack = Time.time + attackRange;
+            }
+        }
+
+
+
+    }//攻击
 
     public void SkillAction() 
     {
+
+        Debug.Log("这是炸弹，技能攻击");
+        if (Vector2.Distance(transform.position, targetPoint.position) < skillRange)
+        {
+            if (Time.time > nextAttack)
+            {
+                // 播放攻击动画
+                anim.SetTrigger("skill");
+                Debug.Log("普通攻击");
+                nextAttack = Time.time + attackRate;
+            }
+        }
 
     }// 对炸弹使用技能
 

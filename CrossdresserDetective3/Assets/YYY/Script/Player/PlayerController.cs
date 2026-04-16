@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [Header("基础属性")]
     public Rigidbody2D rb;
     public float speed;
     public float jumpForce;
 
+    [Header("基础属性")]
+    public float health;
+    public bool isDead = false;
+    public PlayerAnimation playerAnimation;
 
     [Header("地面检测")]
     public Transform groundCheck;//检测中心
@@ -42,11 +46,20 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
+
+        if (isDead){ return; }
+
         CheckInput();
+        playerAnimation.anim.SetBool("dead", isDead);
+
+
     }//输入用Update（听）
 
     public void FixedUpdate()
     {
+        if (isDead){ rb.velocity = Vector2.zero;}//死亡后不能滑行
+
+
         PhysicsCheck();
         Movement();
         Jump();
@@ -192,7 +205,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void GetHit(float damage)
+    {
+        health -= damage;
+       
+        if (health < 1)
+        {
 
+        }
+        playerAnimation.anim.SetTrigger("hit");
+    }
 
     /// <summary>
     /// 多端输入
@@ -357,6 +379,8 @@ public class PlayerController : MonoBehaviour
     {
         isInteracting = false;
     }
+
+   
 
     //手机端触发
     //public bool isMenu = false;//持续按下交互键
