@@ -8,6 +8,13 @@ public class EnemyController : MonoBehaviour
     public Animator anim;
     public int animState;
 
+    public GameObject alarmSign;
+
+    [Header("基础属性")]
+    public float health;
+    public bool isDead = false;
+
+
     [Header("敌人巡逻")]
     public float speed;
     public Transform pointA, pointB;
@@ -15,8 +22,8 @@ public class EnemyController : MonoBehaviour
 
 
     [Header("敌人攻击")]
-    public float attackRate;//攻击频率
-    public float attackRange, skillRange;
+    public float attackRate;//攻击冷却
+    public float attackRange, skillRange;//攻击范围
     float nextAttack = 0;
 
     public List<Transform> attackList = new List<Transform>();
@@ -27,8 +34,8 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Init() 
     {
-        anim = GetComponentInChildren<Animator>();//我把动画放下面了
-
+        anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
+        alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
 
     private void Awake()
@@ -42,6 +49,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        anim.SetBool("dead", isDead);
+        if (isDead){return;}
 
         currentState.OnUpdate(this);//每帧执行状态
         anim.SetInteger("state", animState);
@@ -73,7 +82,7 @@ public class EnemyController : MonoBehaviour
                 // 播放攻击动画
                 anim.SetTrigger("attack");
                 Debug.Log("普通攻击");
-                nextAttack = Time.time + attackRange;
+                nextAttack = Time.time + attackRate;
             }
         }
 

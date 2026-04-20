@@ -47,7 +47,7 @@ public class AttackState : EnemyBaseState
         if (enemy.targetPoint.CompareTag("Bomb"))
             enemy.SkillAction();
 
-
+       
 
         enemy.MoveToTarget();
     }

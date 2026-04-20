@@ -46,18 +46,22 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Update()
     {
-
+        playerAnimation.anim.SetBool("dead", isDead);
         if (isDead){ return; }
 
         CheckInput();
-        playerAnimation.anim.SetBool("dead", isDead);
+       
 
 
     }//输入用Update（听）
 
     public void FixedUpdate()
     {
-        if (isDead){ rb.velocity = Vector2.zero;}//死亡后不能滑行
+        if (isDead)
+        { 
+            rb.velocity = Vector2.zero;
+            return;
+        }//死亡后不能滑行
 
 
         PhysicsCheck();
@@ -207,13 +211,20 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void GetHit(float damage)
     {
-        health -= damage;
-       
-        if (health < 1)
+        if (!playerAnimation.anim.GetCurrentAnimatorStateInfo(1).IsName("player_hit"))
         {
+            health -= damage;
 
-        }
-        playerAnimation.anim.SetTrigger("hit");
+            if (health < 1)
+            {
+                health = 0;
+                isDead = true;
+            }
+            playerAnimation.anim.SetTrigger("hit");
+        }//在Hit动画状态中，不会受伤
+
+
+    
     }
 
     /// <summary>
