@@ -16,4 +16,8 @@ public class Whale : EnemyController, IDamageable
 
         anim.SetTrigger("hit");
     }//不同的敌人做出不同反应
+
+
+
+    
 }

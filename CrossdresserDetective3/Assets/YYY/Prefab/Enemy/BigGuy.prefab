@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c764ebd416c69d1429d6d62be7b0f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombAvilable: 0
 --- !u!1 &2800108085528037087
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +324,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 660671960009508150}
+--- !u!1 &5858099006474145925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1521171501378752603}
+  m_Layer: 10
+  m_Name: PickUp Point
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1521171501378752603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5858099006474145925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.537, y: 0.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3964271660430672145}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5999587953037797172
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +421,7 @@ Transform:
   - {fileID: 7869196183437255512}
   - {fileID: 3210459032089512804}
   - {fileID: 7866340045265495465}
+  - {fileID: 1521171501378752603}
   m_Father: {fileID: 9125829265252304947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2575892419616377814
@@ -416,7 +449,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &2490514660804382313
 BoxCollider2D:
@@ -481,12 +514,13 @@ MonoBehaviour:
   alarmSign: {fileID: 2975836458435579576}
   health: 5
   isDead: 0
+  hasBomb: 0
   speed: 3
   pointA: {fileID: 4907915974698028824}
   pointB: {fileID: 9078886228065522116}
   targetPoint: {fileID: 0}
-  attackRate: 2
-  attackRange: 1
+  attackRate: 0.5
+  attackRange: 3
   skillRange: 1.5
   attackList: []
 --- !u!1 &7466191444926823668
@@ -613,6 +647,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 660671960009508150}
+  pickupPoint: {fileID: 1521171501378752603}
+  power: 20
 --- !u!1 &7665386429308032733
 GameObject:
   m_ObjectHideFlags: 0

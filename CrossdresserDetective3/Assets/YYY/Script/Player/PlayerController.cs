@@ -221,6 +221,9 @@ public class PlayerController : MonoBehaviour, IDamageable
                 isDead = true;
             }
             playerAnimation.anim.SetTrigger("hit");
+
+            UIManager.instance.UpdateHealth(health);
+
         }//在Hit动画状态中，不会受伤
 
 

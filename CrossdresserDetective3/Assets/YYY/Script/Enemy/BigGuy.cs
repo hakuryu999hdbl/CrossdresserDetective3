@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BigGuy : EnemyController, IDamageable
 {
+
+  
+
+
     public void GetHit(float damage)
     {
         health -= damage;
@@ -16,4 +20,6 @@ public class BigGuy : EnemyController, IDamageable
 
         anim.SetTrigger("hit");
     }//不同的敌人做出不同反应
+
+   
 }

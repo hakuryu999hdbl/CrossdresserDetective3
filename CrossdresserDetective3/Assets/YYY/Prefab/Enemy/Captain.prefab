@@ -62,7 +62,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &7973976468382275757
 BoxCollider2D:
@@ -127,6 +127,7 @@ MonoBehaviour:
   alarmSign: {fileID: 5898807401993569842}
   health: 5
   isDead: 0
+  hasBomb: 0
   speed: 3
   pointA: {fileID: 1287836040855756269}
   pointB: {fileID: 6734349263927873743}
@@ -288,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c764ebd416c69d1429d6d62be7b0f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombAvilable: 0
 --- !u!1 &5816639990555096534
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +568,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2107691251
   m_SortingLayer: 2
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 836ac478088ed0b4583b28d6d7f1e210, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -613,6 +615,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 5032704982873167155}
+  pickupPoint: {fileID: 0}
+  power: 0
+  scale: 0
 --- !u!1 &8375118484211678438
 GameObject:
   m_ObjectHideFlags: 0

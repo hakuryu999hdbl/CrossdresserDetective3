@@ -13,6 +13,8 @@ public class AttackState : EnemyBaseState
 
     public override void OnUpdate(EnemyController enemy)
     {
+        if (enemy.hasBomb){ return; }//有炸弹的情况下不巡逻
+
         if (enemy.attackList.Count <= 0)
         {
             enemy.TransitionToState(enemy.patrolState);//一旦列表为0恢复巡逻

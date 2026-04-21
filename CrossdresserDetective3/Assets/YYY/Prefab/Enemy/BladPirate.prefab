@@ -188,7 +188,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &7925621710150805229
 BoxCollider2D:
@@ -253,11 +253,13 @@ MonoBehaviour:
   alarmSign: {fileID: 3114739131411563512}
   health: 5
   isDead: 0
+  hasBomb: 0
+  isBoss: 0
   speed: 3
   pointA: {fileID: 1344076229512726094}
   pointB: {fileID: 8607821445789695}
   targetPoint: {fileID: 0}
-  attackRate: 2
+  attackRate: 1
   attackRange: 1
   skillRange: 1.5
   attackList: []
@@ -461,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c764ebd416c69d1429d6d62be7b0f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombAvilable: 1
 --- !u!1 &6437857292600108596
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +541,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2107691251
   m_SortingLayer: 2
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: b13986ceb5195ee4f8de77d09b8b10c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -585,6 +588,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 0}
+  pickupPoint: {fileID: 0}
+  power: 0
+  scale: 0
 --- !u!1 &8252223796717711627
 GameObject:
   m_ObjectHideFlags: 0
