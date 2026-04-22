@@ -57,7 +57,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (isDead){ return; }
 
         CheckInput();
-       
+
+
+
+        inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
+
+
 
 
     }//输入用Update（听）
@@ -410,7 +415,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         isInteracting = false;
     }
 
-   
+
 
     //手机端触发
     //public bool isMenu = false;//持续按下交互键
@@ -433,5 +438,26 @@ public class PlayerController : MonoBehaviour, IDamageable
     //        //isMenu = false;
     //    }
     //}
+    #endregion
+
+
+    /// <summary>
+    /// 多端输入2
+    /// </summary>
+    #region
+    public PlayerInputControl inputControl;
+    public Vector2 inputDirection;
+    private void Awake()
+    {
+        inputControl = new PlayerInputControl();
+    }
+    private void OnEnable()
+    {
+        inputControl.Enable();
+    }
+    private void OnDisable()
+    {
+        inputControl.Disable();
+    }
     #endregion
 }
