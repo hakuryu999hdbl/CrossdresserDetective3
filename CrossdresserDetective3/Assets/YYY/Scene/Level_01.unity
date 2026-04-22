@@ -469,6 +469,7 @@ MonoBehaviour:
   isDodging: 0
   isInteracting: 0
   InteractingButton: {fileID: 0}
+  inputDirection: {x: 0, y: 0}
 --- !u!61 &65564745
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1287,7 +1288,7 @@ Tilemap:
       - {fileID: -810736135, guid: c7f424720051533448aab6209066a870, type: 3}
       - {fileID: -353444849, guid: c7f424720051533448aab6209066a870, type: 3}
       - {fileID: 91795414, guid: c7f424720051533448aab6209066a870, type: 3}
-      m_AnimationSpeed: 7.0000005
+      m_AnimationSpeed: 7
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -4, z: 0}
@@ -3535,7 +3536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &549765340
 Transform:
   m_ObjectHideFlags: 0
@@ -9516,7 +9517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1284110222
 Transform:
   m_ObjectHideFlags: 0
