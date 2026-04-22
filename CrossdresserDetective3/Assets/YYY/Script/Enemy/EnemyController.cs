@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
         alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
 
 
-        GameManager.instance.IsEnemy(this);
+      
 
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
 
@@ -50,6 +50,9 @@ public class EnemyController : MonoBehaviour
     }
     void Start()
     {
+
+        GameManager.instance.IsEnemy(this);
+
         TransitionToState(patrolState);//一开始进入巡逻状态
 
         if (isBoss) 

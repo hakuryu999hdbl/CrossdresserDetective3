@@ -12,6 +12,8 @@ public class Door : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent <BoxCollider2D>();
         coll.enabled = false;
+
+        GameManager.instance.IsExit(this);
     }
     public void OpenDoor() 
     {
@@ -24,7 +26,7 @@ public class Door : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GameManager.instance.RestartScene();
+            GameManager.instance.NextScene();
         }
     }
 }

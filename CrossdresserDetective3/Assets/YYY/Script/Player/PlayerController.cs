@@ -37,6 +37,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody2D>();
 
         RegisterHandle();//登录手柄
+
+
+        GameManager.instance.IsPlayer(this);
+
+
+        health = GameManager.instance.LoadHealth();
+        UIManager.instance.UpdateHealth(health);
     }
 
 
@@ -140,6 +147,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             transform.localScale = new Vector3(horizontalInput, 1, 1);
         }
+
+        //if (horizontalInput > 0)
+        //{
+        //    transform.eulerAngles = new Vector3(0, 0, 0);
+        //}
+        //if (horizontalInput < 0)
+        //{
+        //    transform.eulerAngles = new Vector3(0, 180, 0);
+        //}
     }
 
 

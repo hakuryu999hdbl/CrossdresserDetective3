@@ -49,7 +49,7 @@ public class FrameEvent : MonoBehaviour
             enemyController.targetPoint.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             enemyController.targetPoint.SetParent(transform.parent.parent);
 
-            if (FindObjectOfType<PlayerController>().gameObject.transform.position.x-transform.position.x<0) 
+            if (FindFirstObjectByType<PlayerController>().gameObject.transform.position.x-transform.position.x<0) 
             {
                 enemyController.targetPoint.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 1) * power, ForceMode2D.Impulse);
             }
