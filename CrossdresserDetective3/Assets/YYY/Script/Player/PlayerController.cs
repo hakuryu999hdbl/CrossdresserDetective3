@@ -7,22 +7,30 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     [Header("基础属性")]
+
     public Rigidbody2D rb;
     public float speed;
-    public float jumpForce;
+    float walkSpeed => speed/2.5f;//拉姆达表达式会导致每次调用都执行
+    float runSpeed;
 
-    [Header("基础属性")]
+    [Header("碰撞体与下蹲")]
+    public CapsuleCollider2D coll;
+    public bool isCrouch;
+    Vector2 originalOffset;
+    Vector2 originalSize;
+
+
+    [Header("地面检测与跳跃")]
+    public float jumpForce;
+    public PhysicsCheck physicsCheck;
+
+
+    [Header("生命值")]
     public float health;
     public bool isDead = false;
     public PlayerAnimation playerAnimation;
 
-    [Header("地面检测")]
-    public Transform groundCheck;//检测中心
-    public float checkRadius;//检测半径
-    public LayerMask groundLayer;//对象图层
-    public bool isGround;//是否在地面
 
-    public PhysicsCheck physicsCheck;
 
 
 
@@ -41,7 +49,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
 
-        //RegisterHandle();//登录手柄
+        coll= GetComponent<CapsuleCollider2D>();
+
+        originalOffset = coll.offset;
+        originalSize = coll.size;
+
+
 
 
         GameManager.instance.IsPlayer(this);
@@ -81,14 +94,23 @@ public class PlayerController : MonoBehaviour, IDamageable
         }//死亡后不能滑行
 
 
-        //PhysicsCheck();
-        //Movement();
+
         //_Jump();
 
+        if (!isHurt) { Move(); }
+       
+
+    }//每帧执行动作用FixedUpdate（做）
 
 
+    void Move() 
+    {
+        if (!isCrouch)
+        {
+            rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
+        }
 
-        rb.velocity = new Vector2(inputDirection.x * speed , rb.velocity.y);
+
         //翻转
         int faceDir = (int)transform.localScale.x;
         if (inputDirection.x > 0)
@@ -103,90 +125,25 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         transform.localScale = new Vector3(faceDir, 1, 1);
 
+        //下蹲
+        isCrouch = inputDirection.y < -0.5f && physicsCheck.isGround;
 
-
-    }//每帧执行动作用FixedUpdate（做）
-
-
-
-
-
-
-
-    float inputX = 0f;//兼有【摇杆joyX】【手柄input.x】【键盘kx】【旧输入系统Horizontal】多种渠道的水平输入
-    float inputY = 0f;//兼有【摇杆joyY】【手柄input.y】【键盘ky】【旧输入系统Vertical】多种渠道的水平输入
-
-    void Movement()
-    {
-        // 1. 先读摇杆
-        float joyX = Joystick.Horizontal;
-        float joyY = Joystick.Vertical;
-
-        if (Mathf.Abs(joyX) > 0.01f || Mathf.Abs(joyY) > 0.01f)
+        if (isCrouch)
         {
-            inputX = joyX;
-            inputY = joyY;
+            //降低碰撞体高度
+            originalOffset = new Vector2(0f, -0.1f);
+            coll.size = new Vector2(0.8f, 1.5f);
+
         }
         else
         {
-            // 2. 再读 Input System
-            Vector2 input = moveAction.action.ReadValue<Vector2>();
-
-            if (input.sqrMagnitude > 0.001f)
-            {
-                inputX = input.x;
-                inputY = input.y;
-            }
-            else
-            {
-                // 3. 再读 Keyboard.current
-                float kx = 0f;
-                float ky = 0f;
-
-                if (Keyboard.current != null)
-                {
-                    if (Keyboard.current.wKey.isPressed) ky += 1;
-                    if (Keyboard.current.sKey.isPressed) ky -= 1;
-                    if (Keyboard.current.dKey.isPressed) kx += 1;
-                    if (Keyboard.current.aKey.isPressed) kx -= 1;
-                }
-
-                if (Mathf.Abs(kx) > 0.01f || Mathf.Abs(ky) > 0.01f)
-                {
-                    inputX = kx;
-                    inputY = ky;
-                }
-                else
-                {
-                    // 4. 最后兜底旧输入
-                    inputX = Input.GetAxisRaw("Horizontal");
-                    inputY = Input.GetAxisRaw("Vertical");
-                }
-            }
+            //还原原先状态
+            coll.offset = originalOffset;
+            coll.size = originalSize;
         }
 
-
-        // 最终统一使用 inputX / inputY
-        float horizontalInput = inputX;
-
-
-
-        rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
-
-        if (horizontalInput != 0)
-        {
-            transform.localScale = new Vector3(horizontalInput, 1, 1);
-        }
-
-        //if (horizontalInput > 0)
-        //{
-        //    transform.eulerAngles = new Vector3(0, 0, 0);
-        //}
-        //if (horizontalInput < 0)
-        //{
-        //    transform.eulerAngles = new Vector3(0, 180, 0);
-        //}
     }
+
 
 
 
@@ -206,24 +163,13 @@ public class PlayerController : MonoBehaviour, IDamageable
    //         jumpFX.transform.position = transform.position+new Vector3(0,-0.45f,0);
    //     }
    // }//持续跳跃
-   // void PhysicsCheck() 
-   // {
-   //     isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-   // 
-   //     if (isGround) { isJump = false; }//跳跃结束
-   // 
-   // }//地面检测
+
     public void LandFX()//动画帧时间触发
     {
         landFX.SetActive(true);
         landFX.transform.position = transform.position + new Vector3(0, -0.75f, 0);
     }
 
-
-   //public void OnDrawGizmos()
-   //{
-   //    Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
-   //}//显示检测圆环(不需要调用)
 
 
 
@@ -276,198 +222,27 @@ public class PlayerController : MonoBehaviour, IDamageable
     
     }
 
-    /// <summary>
-    /// 多端输入
-    /// </summary>
-    #region
-    [Header("多端输入InputSystem")]
-    [SerializeField] private InputActionReference moveAction;//方向键控制
-    [SerializeField] private InputActionAsset inputActions;//跑攻闪
+    [Header("受伤反弹死亡")]
+    public bool isHurt = false;
+    public float hurtForce;
 
-    private InputAction runAction;
-
-    private InputAction AttackAction;
-
-    private InputAction DodgeAction;
-
-    private InputAction InteractAction;
-
-    private InputAction MenuAction;
-
-    public bool isInputBlocked = true;//在捏人界面暂时切断玩家的输入
-
-    private void RegisterHandle()
+    public void GetHurt(Transform attacker)
     {
-        // 获取动作（根据你的Action Map结构可能需要调整路径）
-        runAction = inputActions.FindAction("Run");
-        AttackAction = inputActions.FindAction("Attack");
-        DodgeAction = inputActions.FindAction("Dodge");
-        InteractAction = inputActions.FindAction("Interact");
-        MenuAction = inputActions.FindAction("Menu");
+        isHurt = true;//主要用于屏蔽输入
 
-
-        // 订阅输入事件
-        runAction.started += OnRunStarted;
-        runAction.canceled += OnRunCanceled;
-
-        // 订阅输入事件
-        AttackAction.started += OnAttackStarted;
-        AttackAction.canceled += OnAttackCanceled;
-
-        // 订阅输入事件
-        DodgeAction.started += OnDodgeStarted;
-        DodgeAction.canceled += OnDodgeCanceled;
-
-        // 订阅输入事件
-        InteractAction.started += OnInteractStarted;
-        InteractAction.canceled += OnInteractCanceled;
-
-        // 订阅输入事件
-        MenuAction.started += OnMenuStarted;
-        MenuAction.canceled += OnMenuCanceled;
+        rb.velocity = Vector2.zero;
+        Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
     }
-    private void OnRunStarted(InputAction.CallbackContext context)
+    public void PlayerDead() 
     {
-
-        isRunning = true;
-
+        isDead = true;
+        inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
     }
-    private void OnRunCanceled(InputAction.CallbackContext context)
-    {
-
-        isRunning = false;
-    }
-
-    private void OnAttackStarted(InputAction.CallbackContext context)
-    {
-
-        
-
-    }
-    private void OnAttackCanceled(InputAction.CallbackContext context)
-    {
-
-       
-    }
-
-    private void OnDodgeStarted(InputAction.CallbackContext context)
-    {
-
-        canJump = true;
-
-    }
-    private void OnDodgeCanceled(InputAction.CallbackContext context)
-    {
-        canJump = false;
-
-    }
-
-    private void OnInteractStarted(InputAction.CallbackContext context)
-    {
-
-        isInteracting = true;
-
-    }
-    private void OnInteractCanceled(InputAction.CallbackContext context)
-    {
-
-        isInteracting = false;
-    }
-    private void OnMenuStarted(InputAction.CallbackContext context)
-    {
-
-
-
-    }
-    private void OnMenuCanceled(InputAction.CallbackContext context)
-    {
-
-
-
-    }
-
-    [Header("手机端触发")]
-    public Joystick Joystick;
-
-    //手机端触发
-    public bool isRunning = false;//持续按下跑步键
-    public void ButtonSetRun()
-    {
-
-        isRunning = true;
-
-    }
-    public void ButtonSetStop()
-    {
-        isRunning = false;
-
-    }
-
-    //手机端触发
-    public bool isAttacking = false;//持续按下攻击键
-    public void ButtonSetAttack()
-    {
-
-    }
-    public void ButtonSetAttackOver()
-    {
-
-
-    }
-
-    //手机端触发
-    public bool isDodging = false;//持续按下闪避键
-    public void ButtonSetDodge()
-    {
-
-    }
-    public void ButtonSetDodgeOver()
-    {
-
-    }
-
-
-    //手机端触发
-    public bool isInteracting = false;//持续按下交互键
-    public GameObject InteractingButton;
-    public void ButtonSetInteract()
-    {
-
-        isInteracting = true;
-    }
-    public void ButtonSetInteractOver()
-    {
-        isInteracting = false;
-    }
-
-
-
-    //手机端触发
-    //public bool isMenu = false;//持续按下交互键
-    //public void ButtonSetMenu()
-    //{
-    //
-    //    if (!isDie && currentHealth > 0 && !isInputBlocked && IsGrounded())
-    //    {
-    //        //isMenu = true;
-    //
-    //        UIManager.instance.OpenCloseMenu();
-    //        AudioManager.instance.AudioPlay(AudioManager.instance.Bullet_AK);
-    //    }
-    //}
-    //public void ButtonSetMenuOver()
-    //{
-    //
-    //    if (!isDie && currentHealth > 0 && !isInputBlocked && IsGrounded())
-    //    {
-    //        //isMenu = false;
-    //    }
-    //}
-    #endregion
 
 
     /// <summary>
-    /// 多端输入2
+    /// 多端输入
     /// </summary>
     #region
     public PlayerInputControl inputControl;
@@ -477,6 +252,24 @@ public class PlayerController : MonoBehaviour, IDamageable
         inputControl = new PlayerInputControl();
 
         inputControl.Gameplay.Jump.started += Jump;
+
+        #region 强制走路
+        runSpeed = speed;//最开始把跑步速度设置为速度
+        inputControl.Gameplay.WalkButton.performed += ctx =>
+        {
+            if (physicsCheck.isGround)
+            {
+                speed = walkSpeed;
+            }//在地面的时候才能切换走或跑
+        };//检测按住
+        inputControl.Gameplay.WalkButton.canceled += ctx =>
+        {
+            if (physicsCheck.isGround)
+            {
+                speed = runSpeed;
+            }//在地面的时候才能切换走或跑
+        };//检测松开
+        #endregion
 
     }
 

@@ -19,6 +19,8 @@ public class PhysicsCheck : MonoBehaviour
     void Checked() 
     {
         isGround = Physics2D.OverlapCircle(groundCheck.transform.position, checkRadius, groundLayer);
+
+        //if (isGround) { isJump = false; }//跳跃结束
     }
     public void OnDrawGizmos()
     {
