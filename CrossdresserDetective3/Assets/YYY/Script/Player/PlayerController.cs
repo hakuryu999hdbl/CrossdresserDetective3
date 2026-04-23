@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,6 +22,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     public LayerMask groundLayer;//对象图层
     public bool isGround;//是否在地面
 
+    public PhysicsCheck physicsCheck;
+
+
 
     [Header("特效")]
     public GameObject jumpFX;
@@ -35,8 +39,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        physicsCheck = GetComponent<PhysicsCheck>();
 
-        RegisterHandle();//登录手柄
+        //RegisterHandle();//登录手柄
 
 
         GameManager.instance.IsPlayer(this);
@@ -53,16 +58,16 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Update()
     {
-        playerAnimation.anim.SetBool("dead", isDead);
-        if (isDead){ return; }
+        //playerAnimation.anim.SetBool("dead", isDead);
+        //if (isDead){ return; }
+        //
+        //CheckInput();
 
-        CheckInput();
+
 
 
 
         inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
-
-
 
 
     }//输入用Update（听）
@@ -76,10 +81,30 @@ public class PlayerController : MonoBehaviour, IDamageable
         }//死亡后不能滑行
 
 
-        PhysicsCheck();
-        Movement();
-        Jump();
- 
+        //PhysicsCheck();
+        //Movement();
+        //_Jump();
+
+
+
+
+        rb.velocity = new Vector2(inputDirection.x * speed , rb.velocity.y);
+        //翻转
+        int faceDir = (int)transform.localScale.x;
+        if (inputDirection.x > 0)
+        {
+            faceDir = 1;
+            //transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        if (inputDirection.x < 0)
+        {
+            faceDir = -1;
+            //transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        transform.localScale = new Vector3(faceDir, 1, 1);
+
+
+
     }//每帧执行动作用FixedUpdate（做）
 
 
@@ -169,25 +194,25 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool canJump;//是否按下了按钮
     public bool isJump;//是否位于跳跃中
 
-    void Jump()
-    {
-        if (canJump)
-        {
-            isJump = true;
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            canJump = false; // 提取文字中未显示，但逻辑上建议加上，防止无限跳跃
-
-            jumpFX.SetActive(true);
-            jumpFX.transform.position = transform.position+new Vector3(0,-0.45f,0);
-        }
-    }//持续跳跃
-    void PhysicsCheck() 
-    {
-        isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-
-        if (isGround) { isJump = false; }//跳跃结束
-
-    }//地面检测
+   // void _Jump()
+   // {
+   //     if (canJump)
+   //     {
+   //         isJump = true;
+   //         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+   //         canJump = false; // 提取文字中未显示，但逻辑上建议加上，防止无限跳跃
+   //
+   //         jumpFX.SetActive(true);
+   //         jumpFX.transform.position = transform.position+new Vector3(0,-0.45f,0);
+   //     }
+   // }//持续跳跃
+   // void PhysicsCheck() 
+   // {
+   //     isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+   // 
+   //     if (isGround) { isJump = false; }//跳跃结束
+   // 
+   // }//地面检测
     public void LandFX()//动画帧时间触发
     {
         landFX.SetActive(true);
@@ -195,10 +220,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
-    }//显示检测圆环(不需要调用)
+   //public void OnDrawGizmos()
+   //{
+   //    Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
+   //}//显示检测圆环(不需要调用)
 
 
 
@@ -217,18 +242,18 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
 
-    void CheckInput()
-    {
-        if (Keyboard.current.spaceKey.isPressed && isGround)
-        {
-            canJump = true;
-        }
-
-        if (Keyboard.current.jKey.isPressed && isGround)
-        {
-            Attack();
-        }
-    }
+    //void CheckInput()
+    //{
+    //    if (Keyboard.current.spaceKey.isPressed && isGround)
+    //    {
+    //        canJump = true;
+    //    }
+    //
+    //    if (Keyboard.current.jKey.isPressed && isGround)
+    //    {
+    //        Attack();
+    //    }
+    //}
 
     public void GetHit(float damage)
     {
@@ -450,7 +475,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Awake()
     {
         inputControl = new PlayerInputControl();
+
+        inputControl.Gameplay.Jump.started += Jump;
+
     }
+
     private void OnEnable()
     {
         inputControl.Enable();
@@ -459,5 +488,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         inputControl.Disable();
     }
+
+
+    private void Jump(InputAction.CallbackContext obj)
+    {
+        if (physicsCheck.isGround) 
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
+        
+    }
+
     #endregion
 }
