@@ -26,4 +26,10 @@ public class PhysicsCheck : MonoBehaviour
     {
         Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
     }//显示检测圆环(不需要调用)
+
+
+
+    //巡逻敌人使用
+    public bool touchLeftWall;
+    public bool touchRightWall;
 }

@@ -24,6 +24,17 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float jumpForce;
     public PhysicsCheck physicsCheck;
 
+    //[Header("跳跃相关")]
+    //public bool isJump;//是否位于跳跃中
+
+
+    [Header("攻击")]
+    public bool isAttack;
+
+    [Header("物理材质")]
+    public PhysicsMaterial2D normal;//在地面的材质防止滑动
+    public PhysicsMaterial2D wall;//防止卡墙移动
+
 
     [Header("生命值")]
     public float health;
@@ -73,8 +84,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         //playerAnimation.anim.SetBool("dead", isDead);
         //if (isDead){ return; }
-        //
-        //CheckInput();
+
 
 
 
@@ -97,8 +107,9 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         //_Jump();
 
-        if (!isHurt) { Move(); }
-       
+        if (!isHurt&&!isAttack) { Move(); }
+
+        CheckState();//如果在地上就是有摩擦力，在空中就没有防止卡墙
 
     }//每帧执行动作用FixedUpdate（做）
 
@@ -147,22 +158,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
 
-    [Header("跳跃相关")]
-    private bool canJump;//是否按下了按钮
-    public bool isJump;//是否位于跳跃中
-
-   // void _Jump()
-   // {
-   //     if (canJump)
-   //     {
-   //         isJump = true;
-   //         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-   //         canJump = false; // 提取文字中未显示，但逻辑上建议加上，防止无限跳跃
-   //
-   //         jumpFX.SetActive(true);
-   //         jumpFX.transform.position = transform.position+new Vector3(0,-0.45f,0);
-   //     }
-   // }//持续跳跃
 
     public void LandFX()//动画帧时间触发
     {
@@ -173,33 +168,20 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
 
-    public void Attack()
-    {
-        if (Time.time > nextAttack)
-        {
-            Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
-
-            nextAttack = Time.time + attackRate;
-        }
-    }
-
-
-
-
-
-
-    //void CheckInput()
+    //public void Attack()
     //{
-    //    if (Keyboard.current.spaceKey.isPressed && isGround)
+    //    if (Time.time > nextAttack)
     //    {
-    //        canJump = true;
-    //    }
+    //        Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
     //
-    //    if (Keyboard.current.jKey.isPressed && isGround)
-    //    {
-    //        Attack();
+    //        nextAttack = Time.time + attackRate;
     //    }
     //}
+
+
+
+
+
 
     public void GetHit(float damage)
     {
@@ -240,6 +222,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
     }
 
+    public void CheckState() 
+    {
+        coll.sharedMaterial = physicsCheck.isGround ? normal : wall;//简写如果在地面就使用有摩擦力的这一版，没有就不是
+    }
+
+
 
     /// <summary>
     /// 多端输入
@@ -271,6 +259,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         };//检测松开
         #endregion
 
+        inputControl.Gameplay.Attack.started += PlayerAttack;
     }
 
     private void OnEnable()
@@ -288,9 +277,21 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (physicsCheck.isGround) 
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+
+            jumpFX.SetActive(true);
+            jumpFX.transform.position = transform.position + new Vector3(0, -0.45f, 0);
         }
         
     }
+
+    void PlayerAttack(InputAction.CallbackContext obj) 
+    {
+        playerAnimation.PlayAttack();
+        isAttack = true;
+
+    }
+   
+
 
     #endregion
 }
