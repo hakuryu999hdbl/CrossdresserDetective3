@@ -99,8 +99,8 @@ public class GameManager : MonoBehaviour
 
     public void SaveData() 
     {
-        PlayerPrefs.SetFloat("playerHealth",player.health);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetFloat("playerHealth",player.health);
+        //PlayerPrefs.Save();
     }
 
 

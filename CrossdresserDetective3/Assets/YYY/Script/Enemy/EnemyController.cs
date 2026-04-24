@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public Transform pointA, pointB;
     public Transform targetPoint;
-
+    public PhysicsCheck physicsCheck;//检测左右有墙翻转
 
     [Header("敌人攻击")]
     public float attackRate;//攻击冷却
@@ -39,8 +39,9 @@ public class EnemyController : MonoBehaviour
         anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
         alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
 
+        physicsCheck = GetComponent<PhysicsCheck>();
 
-      
+        rb = GetComponent<Rigidbody2D>();
 
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
 
@@ -106,6 +107,51 @@ public class EnemyController : MonoBehaviour
         currentState = state;
         currentState.EnterState(this);
     }//切换状态
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    public bool IsWallAhead()
+    {
+        if (physicsCheck == null || targetPoint == null) return false;
+
+        if (targetPoint.position.x > transform.position.x)
+            return physicsCheck.touchRightWall;
+
+        if (targetPoint.position.x < transform.position.x)
+            return physicsCheck.touchLeftWall;
+
+        return false;
+    } //巡逻调用切换方向
+
+    public void SwitchToOtherPoint()
+    {
+        targetPoint = targetPoint == pointA ? pointB : pointA;
+    } //巡逻调用切换目标
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -196,4 +242,78 @@ public class EnemyController : MonoBehaviour
     {
         attackList.Remove(collision.transform);
     }//离开视野范围
+
+
+
+
+
+
+
+    //受伤调用
+    [Header("受伤反弹死亡")]
+    Transform attacker;
+    public bool isHurt = false;
+    public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
+    public float hurtForce;
+    public void OnTakeDamage(Transform attackTrans) 
+    {
+
+        Debug.Log("敌人受伤");
+
+        attacker = attackTrans;
+        //转身
+        if (attackTrans.position.x - transform.position.x > 0) 
+        {
+            transform.localScale = new Vector3(1,1,1);
+        }
+        if (attackTrans.position.x - transform.position.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        //受伤被击退
+        //isHurt = true;//主要用于停止移动
+        anim.SetTrigger("hit");
+
+
+        rb.velocity = Vector2.zero;
+        Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+
+        //isHurt = false;//主要用于停止移动
+
+
+
+
+        // 如果之前有协程，先停掉（保险）
+        if (hurtCoroutine != null)
+        {
+            StopCoroutine(hurtCoroutine);
+        }
+
+        hurtCoroutine = StartCoroutine(OnHurt(dir));
+    }
+    private Coroutine hurtCoroutine;
+
+    private IEnumerator OnHurt(Vector2 dir)
+    {
+        // 清空当前速度（防止叠加）
+        rb.velocity = Vector2.zero;
+
+        // 击退
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+
+        // 硬直时间
+        yield return new WaitForSeconds(0.45f);
+
+        isHurt = false;
+    }
+
+
+    public void OnDie() 
+    {
+        isDead = true;
+        gameObject.layer = 2;//ignoreRaycast
+    }
+
 }

@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3269579608221774288}
   - component: {fileID: 1853196525009519305}
-  - component: {fileID: 7973976468382275757}
+  - component: {fileID: 1460984041960223818}
   - component: {fileID: 5032704982873167155}
+  - component: {fileID: 184950750994557000}
   m_Layer: 10
   m_Name: Enemy_Captain
   m_TagString: Player
@@ -64,8 +65,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &7973976468382275757
-BoxCollider2D:
+--- !u!70 &1460984041960223818
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,18 +99,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.13005179}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.8154104, y: 1.9566411}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.06450367, y: 0}
+  m_Size: {x: 0.98111606, y: 2.1417823}
+  m_Direction: 0
 --- !u!114 &5032704982873167155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,14 +120,42 @@ MonoBehaviour:
   health: 5
   isDead: 0
   hasBomb: 0
+  isBoss: 0
   speed: 3
   pointA: {fileID: 1287836040855756269}
   pointB: {fileID: 6734349263927873743}
   targetPoint: {fileID: 0}
+  physicsCheck: {fileID: 184950750994557000}
   attackRate: 2
   attackRange: 1
   skillRange: 1.5
   attackList: []
+  isHurt: 0
+  rb: {fileID: 1853196525009519305}
+  hurtForce: 0
+--- !u!114 &184950750994557000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001929213345842585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0ac91536fd48c43ba6ade4faf43f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomOffset: {x: 0, y: -1}
+  leftOffset: {x: -0.43, y: 0}
+  rightOffset: {x: 0.4, y: 0}
+  touchLeftWall: 0
+  touchRightWall: 0
+  checkRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  isGround: 0
+  manual: 1
 --- !u!1 &1012779946021576479
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 1012779946021576479}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: 3.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,7 +212,7 @@ Transform:
   m_GameObject: {fileID: 1988530458171212804}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: -4.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

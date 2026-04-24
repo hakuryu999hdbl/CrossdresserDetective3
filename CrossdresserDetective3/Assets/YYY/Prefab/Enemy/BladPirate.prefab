@@ -136,8 +136,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2494688970956594531}
   - component: {fileID: 1180484887671825988}
-  - component: {fileID: 7925621710150805229}
+  - component: {fileID: 2893786328320609097}
   - component: {fileID: 5107009305770921559}
+  - component: {fileID: 345969310741723967}
   m_Layer: 10
   m_Name: Enemy_BladPirate
   m_TagString: Player
@@ -190,8 +191,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &7925621710150805229
-BoxCollider2D:
+--- !u!70 &2893786328320609097
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -224,18 +225,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.13005179}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.8154104, y: 1.9566411}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.036487818, y: 0}
+  m_Size: {x: 0.92508435, y: 2.1417823}
+  m_Direction: 0
 --- !u!114 &5107009305770921559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,10 +251,37 @@ MonoBehaviour:
   pointA: {fileID: 1344076229512726094}
   pointB: {fileID: 8607821445789695}
   targetPoint: {fileID: 0}
+  physicsCheck: {fileID: 345969310741723967}
   attackRate: 1
   attackRange: 1
   skillRange: 1.5
   attackList: []
+  isHurt: 0
+  rb: {fileID: 1180484887671825988}
+  hurtForce: 0
+--- !u!114 &345969310741723967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309303749007229996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0ac91536fd48c43ba6ade4faf43f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomOffset: {x: 0, y: -1}
+  leftOffset: {x: -0.5, y: 0}
+  rightOffset: {x: 0.4, y: 0}
+  touchLeftWall: 0
+  touchRightWall: 0
+  checkRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  isGround: 0
+  manual: 1
 --- !u!1 &3114739131411563512
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6716f1b2ace3f743a82bb8fef78d5cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyController: {fileID: 0}
+  enemyController: {fileID: 5107009305770921559}
   pickupPoint: {fileID: 0}
   power: 0
   scale: 0
@@ -616,7 +635,7 @@ Transform:
   m_GameObject: {fileID: 8252223796717711627}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: 3.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -647,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 8986274244421163280}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: -4.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

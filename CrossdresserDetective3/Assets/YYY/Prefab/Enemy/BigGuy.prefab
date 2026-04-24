@@ -117,7 +117,7 @@ Transform:
   m_GameObject: {fileID: 2800108085528037087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: 3.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -380,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 5999587953037797172}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: -4.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -396,8 +396,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3964271660430672145}
   - component: {fileID: 2575892419616377814}
-  - component: {fileID: 2490514660804382313}
+  - component: {fileID: 7921498758037510572}
   - component: {fileID: 660671960009508150}
+  - component: {fileID: 5242789068717987805}
   m_Layer: 10
   m_Name: Enemy_BigGuy
   m_TagString: Player
@@ -451,8 +452,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &2490514660804382313
-BoxCollider2D:
+--- !u!70 &7921498758037510572
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -485,18 +486,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.13005179}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.8154104, y: 1.9566411}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.18667406, y: 0}
+  m_Size: {x: 1.5903525, y: 2.1417823}
+  m_Direction: 0
 --- !u!114 &660671960009508150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,14 +507,42 @@ MonoBehaviour:
   health: 5
   isDead: 0
   hasBomb: 0
+  isBoss: 0
   speed: 3
   pointA: {fileID: 4907915974698028824}
   pointB: {fileID: 9078886228065522116}
   targetPoint: {fileID: 0}
+  physicsCheck: {fileID: 5242789068717987805}
   attackRate: 0.5
   attackRange: 3
   skillRange: 1.5
   attackList: []
+  isHurt: 0
+  rb: {fileID: 2575892419616377814}
+  hurtForce: 0
+--- !u!114 &5242789068717987805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6473204011001016985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0ac91536fd48c43ba6ade4faf43f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomOffset: {x: 0, y: -1}
+  leftOffset: {x: -1, y: 0}
+  rightOffset: {x: 0.61, y: 0}
+  touchLeftWall: 0
+  touchRightWall: 0
+  checkRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  isGround: 0
+  manual: 1
 --- !u!1 &7466191444926823668
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +669,7 @@ MonoBehaviour:
   enemyController: {fileID: 660671960009508150}
   pickupPoint: {fileID: 1521171501378752603}
   power: 20
+  scale: 0
 --- !u!1 &7665386429308032733
 GameObject:
   m_ObjectHideFlags: 0

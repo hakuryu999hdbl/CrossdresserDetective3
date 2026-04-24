@@ -278,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 3699252011743690472}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: 3.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -294,8 +294,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5746108132786203708}
   - component: {fileID: 931615397216162919}
-  - component: {fileID: 3417794191623138792}
+  - component: {fileID: 8059134660836324743}
   - component: {fileID: 2501891516359615408}
+  - component: {fileID: 4130677859441677739}
   m_Layer: 10
   m_Name: Enemy_Whale
   m_TagString: Player
@@ -348,8 +349,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &3417794191623138792
-BoxCollider2D:
+--- !u!70 &8059134660836324743
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -382,18 +383,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.14013189, y: -0.07909474}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.5027832, y: 1.2092047}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.10618671, y: -0.09025818}
+  m_Size: {x: 1.6909792, y: 1.2980894}
+  m_Direction: 1
 --- !u!114 &2501891516359615408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,14 +404,42 @@ MonoBehaviour:
   health: 5
   isDead: 0
   hasBomb: 0
+  isBoss: 0
   speed: 3
   pointA: {fileID: 2632477323170674282}
   pointB: {fileID: 706979421884935676}
   targetPoint: {fileID: 0}
+  physicsCheck: {fileID: 4130677859441677739}
   attackRate: 2
   attackRange: 1
   skillRange: 1.5
   attackList: []
+  isHurt: 0
+  rb: {fileID: 0}
+  hurtForce: 0
+--- !u!114 &4130677859441677739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7997729909169678161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0ac91536fd48c43ba6ade4faf43f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomOffset: {x: 0, y: -0.75}
+  leftOffset: {x: -0.7, y: 0}
+  rightOffset: {x: 0.9, y: 0}
+  touchLeftWall: 0
+  touchRightWall: 0
+  checkRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  isGround: 0
+  manual: 1
 --- !u!1 &8723647075494339133
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 9158145839836278888}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.49, y: -2.85, z: 0}
+  m_LocalPosition: {x: -4.49, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

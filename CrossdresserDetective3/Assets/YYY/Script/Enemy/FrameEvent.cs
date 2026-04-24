@@ -81,6 +81,9 @@ public class FrameEvent : MonoBehaviour
     }
 
 
-
+    public void DestroyAfterAnimation()
+    {
+        //Destroy(enemyController.gameObject);
+    }
 
 }

@@ -5,4 +5,7 @@ public abstract class EnemyBaseState
     public abstract void EnterState(EnemyController enemy);//开始执行什么
 
     public abstract void OnUpdate(EnemyController enemy);//每帧执行什么
+
+
+
 }

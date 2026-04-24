@@ -36,8 +36,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public PhysicsMaterial2D wall;//防止卡墙移动
 
 
-    [Header("生命值")]
-    public float health;
+    [Header("死亡判定")]
     public bool isDead = false;
     public PlayerAnimation playerAnimation;
 
@@ -71,8 +70,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.instance.IsPlayer(this);
 
 
-        health = GameManager.instance.LoadHealth();
-        UIManager.instance.UpdateHealth(health);
+        //health = GameManager.instance.LoadHealth();
+        //UIManager.instance.UpdateHealth(health);
     }
 
 
@@ -185,24 +184,27 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void GetHit(float damage)
     {
-        if (!playerAnimation.anim.GetCurrentAnimatorStateInfo(1).IsName("player_hit"))
-        {
-            health -= damage;
-
-            if (health < 1)
-            {
-                health = 0;
-                isDead = true;
-            }
-            playerAnimation.anim.SetTrigger("hit");
-
-            UIManager.instance.UpdateHealth(health);
-
-        }//在Hit动画状态中，不会受伤
+        //if (!playerAnimation.anim.GetCurrentAnimatorStateInfo(1).IsName("player_hit"))
+        //{
+        //    health -= damage;
+        //
+        //    if (health < 1)
+        //    {
+        //        health = 0;
+        //        isDead = true;
+        //    }
+        //    playerAnimation.anim.SetTrigger("hit");
+        //
+        //    UIManager.instance.UpdateHealth(health);
+        //
+        //}//在Hit动画状态中，不会受伤
 
 
     
     }
+
+
+
 
     [Header("受伤反弹死亡")]
     public bool isHurt = false;
@@ -286,6 +288,9 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void PlayerAttack(InputAction.CallbackContext obj) 
     {
+
+        if (!physicsCheck.isGround) { return; }//空中无法攻击
+
         playerAnimation.PlayAttack();
         isAttack = true;
 
