@@ -29,7 +29,8 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("isCrouch", playerController.isCrouch);//每帧检测是否下蹲
         anim.SetBool("isDead", playerController.isDead);//每帧检测是活着
         anim.SetBool("isAttack", playerController.isAttack);//每帧检测玩家是否处于攻击
-       
+        anim.SetBool("onWall", physicsCheck.onWall);//每帧检测玩家是否处于贴墙
+        anim.SetBool("isSlide", playerController.isSlide);//每帧检测玩家是滑铲
     }
 
     public void PlayHurt() 

@@ -5,9 +5,12 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
-    [Header("生命值")]
+    [Header("数值")]
     public float maxHealth;
     public float currentHealth;
+    public float maxPower;
+    public float currentPower;
+    public float powerRecoverSpeed;
 
     [Header("受伤无敌")]
     public float invulnerableDuration;//无敌时长
@@ -15,12 +18,16 @@ public class Character : MonoBehaviour
     public bool invulnerable;//是否无敌
 
     [Header("受伤击退死亡")]
+    public UnityEvent<Character> OnHealthChange;//只要生命值有一点改变，就把Character广播出去到ScriptObject
     public UnityEvent<Transform> OnTakeDamge;
     public UnityEvent OnDie;
 
     private void Start()
     {
         currentHealth = maxHealth;
+        currentPower = maxPower;
+        //传输Character过去
+        OnHealthChange?.Invoke(this);
     }
 
     private void Update()
@@ -33,6 +40,13 @@ public class Character : MonoBehaviour
                 invulnerable = false;
             }
         }
+
+
+
+        if (currentPower < maxPower) 
+        {
+            currentPower += Time.deltaTime * powerRecoverSpeed;
+        }//恢复体力值
     }
 
 
@@ -50,6 +64,8 @@ public class Character : MonoBehaviour
             OnTakeDamge?.Invoke(attacker.transform);
             GetComponent<PlayerController>()?.GetHurt(attacker.transform); // 玩家直接击退
 
+
+
         }
         else
         {
@@ -58,8 +74,9 @@ public class Character : MonoBehaviour
             //触发死亡
             OnDie?.Invoke();
         }
-       
 
+        //传输Character过去
+        OnHealthChange?.Invoke(this);
 
     }
 
@@ -71,6 +88,17 @@ public class Character : MonoBehaviour
             invulnerableCounter = invulnerableDuration;
         }
     }//触发无敌
+
+
+    public void OnSlide(int cost) 
+    {
+        currentPower -= cost;
+
+        //传输Character过去
+        OnHealthChange?.Invoke(this);
+
+    }//体力消耗传输
+
 
 
 }

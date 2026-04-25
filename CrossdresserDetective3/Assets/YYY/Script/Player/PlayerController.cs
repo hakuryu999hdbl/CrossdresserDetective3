@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     [Header("基础属性")]
-
+    public Character character;
     public Rigidbody2D rb;
     public float speed;
     float walkSpeed => speed/2.5f;//拉姆达表达式会导致每次调用都执行
@@ -15,21 +15,24 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [Header("碰撞体与下蹲")]
     public CapsuleCollider2D coll;
-    public bool isCrouch;
+
     Vector2 originalOffset;
     Vector2 originalSize;
 
 
-    [Header("地面检测与跳跃")]
+    [Header("地面检测与跳跃滑铲")]
     public float jumpForce;
     public PhysicsCheck physicsCheck;
+    public float wallJumpForce;
+
+    public float slideDistance;//滑铲距离
+    public float slideSpeed;//滑铲速度
 
     //[Header("跳跃相关")]
     //public bool isJump;//是否位于跳跃中
 
 
-    [Header("攻击")]
-    public bool isAttack;
+   
 
     [Header("物理材质")]
     public PhysicsMaterial2D normal;//在地面的材质防止滑动
@@ -37,16 +40,23 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
     [Header("死亡判定")]
-    public bool isDead = false;
     public PlayerAnimation playerAnimation;
-
-
-
 
 
     [Header("特效")]
     public GameObject jumpFX;
     public GameObject landFX;
+
+
+    [Header("状态")]
+    public bool isAttack;
+    public bool isCrouch;
+    public bool isHurt = false;
+    public bool isDead = false;
+    public bool wallJump;//蹬墙跳出期间X横向暂时不受方向键控制
+    public bool isSlide;
+
+
 
     [Header("炸弹")]
     public GameObject bombPrefab;
@@ -56,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        character = GetComponent<Character>();
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
 
@@ -115,10 +126,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Move() 
     {
-        if (!isCrouch)
+        if (!isCrouch&&!wallJump)
         {
             rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
-        }
+        }//下蹲和非蹬墙跳期间才可以获取左右
 
 
         //翻转
@@ -207,7 +218,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
     [Header("受伤反弹死亡")]
-    public bool isHurt = false;
+
     public float hurtForce;
 
     public void GetHurt(Transform attacker)
@@ -224,9 +235,31 @@ public class PlayerController : MonoBehaviour, IDamageable
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
     }
 
+
+
+
+
+
+
+
     public void CheckState() 
     {
         coll.sharedMaterial = physicsCheck.isGround ? normal : wall;//简写如果在地面就使用有摩擦力的这一版，没有就不是
+
+        if (physicsCheck.onWall)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);//贴在墙上下落速度减慢
+
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
+
+        if (wallJump && rb.velocity.y < 0f)
+        {
+            wallJump = false;
+        }//蹬墙跳出去的时候，下落状态下可以左右移动
     }
 
 
@@ -262,8 +295,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         #endregion
 
         inputControl.Gameplay.Attack.started += PlayerAttack;
+
+        inputControl.Gameplay.Slide.started +=Slide;
+
     }
 
+  
     private void OnEnable()
     {
         inputControl.Enable();
@@ -276,16 +313,25 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Jump(InputAction.CallbackContext obj)
     {
-        if (physicsCheck.isGround) 
+        if (physicsCheck.isGround)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
 
+            StopAllCoroutines();//一旦跳跃打断所有协程（滑铲）
+            isSlide = false;
+
+
+            //跳跃特效
             jumpFX.SetActive(true);
             jumpFX.transform.position = transform.position + new Vector3(0, -0.45f, 0);
         }
+        else if (physicsCheck.onWall) 
+        {
+            rb.AddForce(new Vector2(-inputDirection.x, 2f) * wallJumpForce, ForceMode2D.Impulse);//蹬墙跳，给与反方向的力
+            wallJump = true;
+        }
         
     }
-
     void PlayerAttack(InputAction.CallbackContext obj) 
     {
 
@@ -295,7 +341,51 @@ public class PlayerController : MonoBehaviour, IDamageable
         isAttack = true;
 
     }
-   
+
+
+    public int slidePowerCost;
+
+    private void Slide(InputAction.CallbackContext obj)
+    {
+        if (!isSlide&&physicsCheck.isGround&&character.currentPower>=slidePowerCost)//在地上才能滑铲需要体力值
+        {
+            isSlide = true;//非滑铲的情况下才能滑铲
+            var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x,transform.position.y);//获得滑铲目标点
+
+            gameObject.layer = LayerMask.NameToLayer("NPC");//滑铲过程中保持无敌
+            StartCoroutine(TriggerSlide(targetPos));
+
+
+            //每次滑铲消耗体力
+            character.OnSlide(slidePowerCost);
+        }
+
+       
+    }
+
+    IEnumerator TriggerSlide(Vector3 target) 
+    {
+        do
+        {
+            yield return null;
+
+            if (!physicsCheck.isGround)
+            {
+                  break;//脱离地面停止
+            }
+              
+            if(physicsCheck.touchLeftWall&&transform.localScale.x<0f|| physicsCheck.touchRightWall && transform.localScale.x > 0f)
+            {
+                isSlide = false;
+                break;//撞墙停止
+            }
+            rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x*slideSpeed,transform.position.y));
+
+        }while(MathF.Abs(target.x - transform.position.x) > 0.1f);//直到到达目标点之前不停做
+
+        isSlide = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
+    }
 
 
     #endregion

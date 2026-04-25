@@ -87,4 +87,72 @@ public class UIManager : MonoBehaviour
         gameOverPanel.SetActive(playerDead);
     }
 
+
+
+
+
+
+    [Header("事件监听")]
+    public CharacterEventSO healthEvent;
+
+    private void OnEnable()
+    {
+        healthEvent.OnEventRaised += OnHealthEvent;
+    }
+    private void OnDisable()
+    {
+        healthEvent.OnEventRaised -= OnHealthEvent;
+    }
+
+    void OnHealthEvent(Character character) 
+    {
+        var persentage = character.currentHealth / character.maxHealth;//将百分比传输
+        OnHealthChange(persentage);
+        OnPowerChange(character);
+    }
+
+
+
+
+
+
+    public Image healthImage;
+    public Image healthDelayImage;
+    public Image powerImage;
+
+    public void OnHealthChange(float persentage) 
+    {
+        healthImage.fillAmount = persentage;
+    }
+
+    public bool isRecovering;//体力值恢复
+    public void OnPowerChange(Character character)
+    {
+        isRecovering = true;
+        currentCharacter = character;
+    }
+    Character currentCharacter;
+
+    private void Update()
+    {
+        if (healthDelayImage.fillAmount > healthImage.fillAmount) 
+        {
+            healthDelayImage.fillAmount -= Time.deltaTime*1.2f;//可以调整速度
+        }
+
+
+        if (isRecovering)
+        {
+            float percentage = currentCharacter.currentPower / currentCharacter.maxPower;
+            powerImage.fillAmount = percentage;
+
+            if (percentage >= 1)
+            {
+                isRecovering = false;
+                return;
+            }
+        }
+
+    }
+
 }
