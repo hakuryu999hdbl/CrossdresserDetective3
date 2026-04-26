@@ -50,6 +50,17 @@ public class Character : MonoBehaviour
     }
 
 
+    public void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("DieZone"))
+        {
+            //死亡，更新血量
+            currentHealth = 0;
+            OnHealthChange?.Invoke(this);
+            OnDie?.Invoke();
+        }
+    }
+
     public void TakeDamage(Attack attacker)
     {
         if (invulnerable) { return; }//处于无敌
@@ -98,6 +109,7 @@ public class Character : MonoBehaviour
         OnHealthChange?.Invoke(this);
 
     }//体力消耗传输
+
 
 
 
