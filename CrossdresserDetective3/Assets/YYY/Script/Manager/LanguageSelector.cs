@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 using System.Linq;
 
 public class LanguageSelector : Selectable, IMoveHandler
 {
     [Header("UI")]
     public Text textUI;                // 旧版 Text
-    public TMP_Text tmpTextUI;         // TMP
 
     [Header("Languages")]
     public string[] languages =
@@ -28,7 +26,7 @@ public class LanguageSelector : Selectable, IMoveHandler
     {
         base.Start();
 
-        index = PlayerPrefs.GetInt("Language", 3); // 默认 English
+        index = PlayerPrefs.GetInt("language", 0); // 默认 日语
         Refresh();
     }
 
@@ -69,14 +67,15 @@ public class LanguageSelector : Selectable, IMoveHandler
 
     }
 
+  
+
     private void Refresh()
     {
+        
+
         string lang = languages[index];
 
         if (textUI != null)
             textUI.text = lang;
-
-        if (tmpTextUI != null)
-            tmpTextUI.text = lang;
     }
 }

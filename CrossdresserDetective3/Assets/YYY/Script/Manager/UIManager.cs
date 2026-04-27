@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
 
+
+
+
+    [Header("判断摇杆")]
     public GameObject mobileTouch;
+
+    public static UIManager instance;
 
     public void Awake()
     {
@@ -27,24 +35,82 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+        inputControl = new PlayerInputControl();
+        inputControl.UI.Cancel.started += OnCancel;
     }
 
 
 
+    /// <summary>
+    /// 暂停菜单
+    /// </summary>
+    #region
 
+    [Header("暂停菜单")]
     public GameObject PauseMenu;
-
+    public GameObject firstSelected; // X 或 Master Slider
+    private PlayerInputControl inputControl;//UI端多端输入
 
     private bool isPaused=false;
-
-    public void TogglePause()
+    public PlayerController playerController;
+    public void TogglePause() 
     {
-        isPaused = !isPaused;
-
-        Time.timeScale = isPaused ? 0f : 1f;
-
-        PauseMenu.SetActive(isPaused);
+        if (isPaused)
+        {
+            ClosePause();
+        }
+        else 
+        {
+            OpenPause();
+        }
     }
+    public void OpenPause()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+        PauseMenu.SetActive(true);
+
+        playerController.DisableGameplayInput();
+        // 打开 UI 输入、设置默认选中
+        inputControl.Enable();
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
+    }
+
+    public void ClosePause()
+    {
+        isPaused = false;
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+
+        playerController.EnableGameplayInput();
+        // 关闭 UI 输入
+        inputControl.Disable();
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+    public void BackToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+
+    }//跳转编号场景
+
+    private void OnCancel(InputAction.CallbackContext ctx)
+    {
+        if (isPaused)
+        {
+            ClosePause();
+        }
+
+    }
+
+    #endregion
+
+
+
+
 
 
 
@@ -71,7 +137,6 @@ public class UIManager : MonoBehaviour
 
 
 
-   
 
 
 
@@ -85,6 +150,10 @@ public class UIManager : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 生命值，体力值等UI
+    /// </summary>
+    #region
 
     [Header("事件监听")]
     public CharacterEventSO healthEvent;
@@ -92,10 +161,12 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         healthEvent.OnEventRaised += OnHealthEvent;
+        inputControl.Enable();
     }
     private void OnDisable()
     {
         healthEvent.OnEventRaised -= OnHealthEvent;
+        inputControl.Disable();
     }
 
     void OnHealthEvent(Character character) 
@@ -148,5 +219,5 @@ public class UIManager : MonoBehaviour
         }
 
     }
-
+    #endregion
 }

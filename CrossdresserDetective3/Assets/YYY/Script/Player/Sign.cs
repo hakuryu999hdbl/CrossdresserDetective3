@@ -1,67 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
-//using UnityEngine.InputSystem.Android;
 
 public class Sign : MonoBehaviour
 {
-    public PlayerInputControl playerInput;//多端输入
+    public PlayerInputControl playerInput;
 
     public Transform playerTrans;
-    private Animator anim;
     public GameObject signSprite;
+
+    private Animator anim;
+    private SpriteRenderer signRenderer;
+
     private bool canPress;
-
-
-    private IInteractable targetItem;//当前正在互动的物体
-
+    private IInteractable targetItem;
 
     private void Awake()
     {
-        // anim = GetComponentInChildren<Animator>();
         anim = signSprite.GetComponent<Animator>();
+        signRenderer = signSprite.GetComponent<SpriteRenderer>();
 
         playerInput = new PlayerInputControl();
-        playerInput.Enable();
     }
 
     private void OnEnable()
     {
-        InputSystem.onActionChange += OnActionChange;//通过当前不同的输入设备，显示不同的提示
+        playerInput.Enable();
+
+        InputSystem.onActionChange += OnActionChange;
         playerInput.Gameplay.Confirm.started += OnConfirm;
     }
-   
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+        playerInput.Gameplay.Confirm.started -= OnConfirm;
+
+        playerInput.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+        playerInput.Gameplay.Confirm.started -= OnConfirm;
+    }
 
     private void Update()
     {
-        signSprite.GetComponent<SpriteRenderer>().enabled = canPress;
-        signSprite.transform.localScale = playerTrans.localScale;
+        if (signRenderer != null)
+            signRenderer.enabled = canPress;
+
+        if (signSprite != null && playerTrans != null)
+            signSprite.transform.localScale = playerTrans.localScale;
     }
 
     private void OnConfirm(InputAction.CallbackContext obj)
     {
-        if (canPress)
+        if (canPress && targetItem != null)
         {
             targetItem.TriggerAction();
         }
     }
 
-
-    /// <summary>
-    /// 切换设备不同动画按键提示
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <param name="actionChange"></param>
     private void OnActionChange(object obj, InputActionChange actionChange)
     {
+        if (anim == null) return;
+
         if (actionChange == InputActionChange.ActionStarted)
         {
-            // Debug.Log(((InputAction)obj).activeControl.device);
+            InputAction action = obj as InputAction;
+            if (action == null || action.activeControl == null) return;
 
-            var device = ((InputAction)obj).activeControl.device;
+            var device = action.activeControl.device;
 
             if (device is Keyboard)
             {
@@ -75,14 +86,10 @@ public class Sign : MonoBehaviour
             {
                 anim.Play("xbox");
             }
-            //else if (device is Gamepad)
-            //{
-            //    anim.Play("gamepad");
-            //}
-            //else if (device is Touchscreen)
-            //{
-            //    anim.Play("android");
-            //}
+            else if (device is Gamepad)
+            {
+                anim.Play("xbox");
+            }
         }
     }
 
@@ -90,18 +97,26 @@ public class Sign : MonoBehaviour
     {
         if (other.CompareTag("Interactable"))
         {
-            canPress = true;
-            targetItem = other.GetComponent<IInteractable>();//获得交互物体
+            IInteractable item = other.GetComponent<IInteractable>();
+
+            if (item != null)
+            {
+                canPress = true;
+                targetItem = item;
+            }
         }
-        else 
+        else
         {
             canPress = false;
         }
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
-        canPress = false;
+        if (other.CompareTag("Interactable"))
+        {
+            canPress = false;
+            targetItem = null;
+        }
     }
-
- 
 }

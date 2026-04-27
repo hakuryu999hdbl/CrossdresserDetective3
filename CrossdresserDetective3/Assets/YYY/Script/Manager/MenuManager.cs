@@ -7,6 +7,11 @@ using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+
+    /// <summary>
+    /// 多端输入
+    /// </summary>
+    #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
     public GameObject settingButton;//退出设置菜单默认选中
@@ -26,7 +31,7 @@ public class MenuManager : MonoBehaviour
 
 
         //Debug.Log("目前是否根据系统语言进行设置" + PlayerPrefs.GetInt("language_initialized"));//0无设置  1已经设置好
-        //Debug.Log("目前储存的语言" + PlayerPrefs.GetInt("language"));//0日语 1简体中文 2繁体中文 3英语 4韩语
+        Debug.Log("目前储存的语言" + PlayerPrefs.GetInt("language"));//0日语 1简体中文 2繁体中文 3英语 4韩语
 
 
     }
@@ -53,18 +58,23 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    #endregion
 
 
 
 
-
-
+    /// <summary>
+    /// 设置菜单
+    /// </summary>
+    #region
     [Header("设置菜单")]
     private bool isSettingOpen = false;
 
     public GameObject MainMenu;
     public GameObject SettingMenu;
     public GameObject settingFirstSelected;//打开设置默认选中
+    public LanguageSelector languageSelector;//初始化设置的时候直接传输过去
+
     public void OpenSetting()
     {
         SettingMenu.SetActive(true);
@@ -87,8 +97,15 @@ public class MenuManager : MonoBehaviour
     }
 
 
+    public void DeleteAllData()
+    {
 
 
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Debug.Log("初始化");
+    }
 
 
     void InitLanguageOnce()
@@ -112,21 +129,20 @@ public class MenuManager : MonoBehaviour
         {
             case SystemLanguage.Japanese:
                 return 0;
-
             case SystemLanguage.ChineseSimplified:
                 return 1;
-
             case SystemLanguage.ChineseTraditional:
                 return 2;
-
+            case SystemLanguage.English:
+                return 3;
             case SystemLanguage.Korean:
                 return 4;
 
             default:
-                return 3; //默认英语
+                return 0; //默认日语
         }
     }
-
+    #endregion
 
 
 

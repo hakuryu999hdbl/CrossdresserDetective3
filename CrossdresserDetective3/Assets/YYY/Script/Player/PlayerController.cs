@@ -314,8 +314,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         inputControl.Disable();
     }
+    public void EnableGameplayInput()
+    {
+        inputControl.Gameplay.Enable();
+    }
+    public void DisableGameplayInput()
+    {
+        inputControl.Gameplay.Disable();
+    }
 
-
+   
     private void Jump(InputAction.CallbackContext obj)
     {
         if (physicsCheck.isGround)
