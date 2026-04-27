@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
-using UnityEngine.InputSystem.Switch;
 //using UnityEngine.InputSystem.Android;
 
 public class Sign : MonoBehaviour
@@ -75,10 +74,6 @@ public class Sign : MonoBehaviour
             else if (device is XInputController)
             {
                 anim.Play("xbox");
-            }
-            else if (device is SwitchProControllerHID)
-            {
-                anim.Play("xbox");//Switch键位
             }
             //else if (device is Gamepad)
             //{

@@ -268,6 +268,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     /// 多端输入
     /// </summary>
     #region
+
+    [Header("多端输入")]
     public PlayerInputControl inputControl;
     public Vector2 inputDirection;
     private void Awake()
@@ -297,6 +299,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         inputControl.Gameplay.Attack.started += PlayerAttack;
 
         inputControl.Gameplay.Slide.started +=Slide;
+
+
+        inputControl.Gameplay.Pause.started += OnPause;
 
     }
 
@@ -387,6 +392,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
     }
 
-
+    private void OnPause(InputAction.CallbackContext ctx)
+    {
+        UIManager.instance.TogglePause();
+    }
     #endregion
 }

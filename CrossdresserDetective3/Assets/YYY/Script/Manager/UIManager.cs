@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    public GameObject mobileTouch;
+
     public void Awake()
     {
+
+#if UNITY_STANDALONE
+    mobileTouch.SetActive(false);
+#endif
+
 
         //跨场景保存，单独留有一个
         if (instance == null)
@@ -22,50 +30,20 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public GameObject healthBar;
+
 
     public GameObject PauseMenu;
 
-    public void UpdateHealth(float currentHealth) 
+
+    private bool isPaused=false;
+
+    public void TogglePause()
     {
-        switch (currentHealth) 
-        {
-            case 3:
-                healthBar.transform.GetChild(0).gameObject.SetActive(true);
-                healthBar.transform.GetChild(1).gameObject.SetActive(true);
-                healthBar.transform.GetChild(2).gameObject.SetActive(true);
-                break;
+        isPaused = !isPaused;
 
-            case 2:
-                healthBar.transform.GetChild(0).gameObject.SetActive(true);
-                healthBar.transform.GetChild(1).gameObject.SetActive(true);
-                healthBar.transform.GetChild(2).gameObject.SetActive(false);
-                break;
+        Time.timeScale = isPaused ? 0f : 1f;
 
-            case 1:
-                healthBar.transform.GetChild(0).gameObject.SetActive(true);
-                healthBar.transform.GetChild(1).gameObject.SetActive(false);
-                healthBar.transform.GetChild(2).gameObject.SetActive(false);
-                break;
-
-            case 0:
-                healthBar.transform.GetChild(0).gameObject.SetActive(false);
-                healthBar.transform.GetChild(1).gameObject.SetActive(false);
-                healthBar.transform.GetChild(2).gameObject.SetActive(false);
-                break;
-        }
-    }
-
-    public void PauseGame() 
-    {
-        PauseMenu.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    public void ResumeGame()
-    {
-        PauseMenu.SetActive(false);
-        Time.timeScale = 1;
+        PauseMenu.SetActive(isPaused);
     }
 
 
@@ -86,6 +64,22 @@ public class UIManager : MonoBehaviour
     {
         gameOverPanel.SetActive(playerDead);
     }
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
 
 
 

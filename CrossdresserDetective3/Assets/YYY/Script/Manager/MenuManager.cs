@@ -3,22 +3,139 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject newGameButton;
+    [Header("多端输入")]
+    public GameObject newGameButton;//开头默认选中
+    public GameObject settingButton;//退出设置菜单默认选中
+    private PlayerInputControl inputControl;
 
 
-    
-    void OnEnable()
+    private void Awake()
     {
+        inputControl = new PlayerInputControl();
+
+        EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(newGameButton);//开头设置默认按钮
+
+        inputControl.UI.Cancel.started += OnCancel;
+
+        //InitLanguageOnce();//根据系统设置语言
+
+
+        //Debug.Log("目前是否根据系统语言进行设置" + PlayerPrefs.GetInt("language_initialized"));//0无设置  1已经设置好
+        //Debug.Log("目前储存的语言" + PlayerPrefs.GetInt("language"));//0日语 1简体中文 2繁体中文 3英语 4韩语
+
+
     }
+
+    private void OnEnable()
+    {
+
+        inputControl.Enable();
+
+    }
+
+    private void OnDisable()
+    {
+        inputControl.Disable();
+    }
+
+    // 🎮 Cancel键逻辑
+    private void OnCancel(InputAction.CallbackContext ctx)
+    {
+        if (isSettingOpen)
+        {
+            CloseSetting();
+        }
+
+    }
+
+
+
+
+
+
+
+    [Header("设置菜单")]
+    private bool isSettingOpen = false;
+
+    public GameObject MainMenu;
+    public GameObject SettingMenu;
+    public GameObject settingFirstSelected;//打开设置默认选中
+    public void OpenSetting()
+    {
+        SettingMenu.SetActive(true);
+        MainMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingFirstSelected);
+
+        isSettingOpen = true;
+    }
+
+    public void CloseSetting()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingButton);
+
+
+        SettingMenu.SetActive(false);
+        MainMenu.SetActive(true);
+        isSettingOpen = false;
+    }
+
+
+
+
+
+
+    void InitLanguageOnce()
+    {
+        //
+        if (PlayerPrefs.HasKey("language_initialized"))
+            return;
+
+        int lang = DetectSystemLanguage();
+
+        PlayerPrefs.SetInt("language", lang);
+        PlayerPrefs.SetInt("language_initialized", 1);
+        PlayerPrefs.Save();
+    }
+
+    int DetectSystemLanguage()
+    {
+        SystemLanguage sys = Application.systemLanguage;
+
+        switch (sys)
+        {
+            case SystemLanguage.Japanese:
+                return 0;
+
+            case SystemLanguage.ChineseSimplified:
+                return 1;
+
+            case SystemLanguage.ChineseTraditional:
+                return 2;
+
+            case SystemLanguage.Korean:
+                return 4;
+
+            default:
+                return 3; //默认英语
+        }
+    }
+
+
+
+
+
 
     public void NewGame()
     {
-       
-        SceneManager.LoadScene(0);
+
+        SceneManager.LoadScene(1);
 
     }//跳转编号场景
 
