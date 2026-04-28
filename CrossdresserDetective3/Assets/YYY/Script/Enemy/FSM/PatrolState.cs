@@ -23,6 +23,8 @@ public class PatrolState : EnemyBaseState
         if (enemy.attackList.Count > 0)
         {
             enemy.TransitionToState(enemy.attackState);
+
+            return;
         }//只要索敌列表不为0就进入攻击状态
 
 

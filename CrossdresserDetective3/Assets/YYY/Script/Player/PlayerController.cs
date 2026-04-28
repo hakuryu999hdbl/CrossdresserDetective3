@@ -58,10 +58,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
 
-    [Header("炸弹")]
-    public GameObject bombPrefab;
-    public float nextAttack = 0;//攻击冷却
-    public float attackRate;//攻击频率
+  
 
     // Start is called before the first frame update
     void Start()
@@ -178,15 +175,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
 
-    //public void Attack()
-    //{
-    //    if (Time.time > nextAttack)
-    //    {
-    //        Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
-    //
-    //        nextAttack = Time.time + attackRate;
-    //    }
-    //}
+   
 
 
 
@@ -296,7 +285,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         };//检测松开
         #endregion
 
-        inputControl.Gameplay.Attack.started += PlayerAttack;
+        //inputControl.Gameplay.Attack.started += PlayerAttack;
+        inputControl.Gameplay.Attack.started += OnAttackStarted;
+        inputControl.Gameplay.Attack.canceled += OnAttackCanceled;
+
 
         inputControl.Gameplay.Slide.started +=Slide;
 
@@ -345,17 +337,57 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         
     }
-    void PlayerAttack(InputAction.CallbackContext obj) 
+
+
+    #region  攻击触发
+    [Header("攻击触发/炸弹")]
+    public GameObject bombPrefab;
+    public float nextAttack = 0;//攻击冷却
+    public float attackRate;//攻击频率
+    private float attackPressTime;
+    private float chargeThreshold = 0.35f;
+    private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
-
-        if (!physicsCheck.isGround) { return; }//空中无法攻击
-
-        playerAnimation.PlayAttack();
-        isAttack = true;
-
+        attackPressTime = Time.time;
     }
 
+    private void OnAttackCanceled(InputAction.CallbackContext ctx)
+    {
+        float holdTime = Time.time - attackPressTime;
 
+        if (holdTime >= chargeThreshold)
+        {
+            ThrowBomb();//蓄力攻击
+        }
+        else
+        {
+            PlayerAttack(ctx);//单按一下
+        }
+    }
+    public void ThrowBomb()
+    {
+        if (Time.time > nextAttack)
+        {
+            Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
+
+            nextAttack = Time.time + attackRate;
+        }
+    }
+    void PlayerAttack(InputAction.CallbackContext obj) 
+    {
+    
+        if (!physicsCheck.isGround) { return; }//空中无法攻击
+    
+        playerAnimation.PlayAttack();
+        isAttack = true;
+    
+    }
+    #endregion
+
+
+
+
+    [Header("滑铲的体力消耗")]
     public int slidePowerCost;
 
     private void Slide(InputAction.CallbackContext obj)
