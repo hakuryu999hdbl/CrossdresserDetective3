@@ -47,8 +47,13 @@ public class Bomb : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
+    public GameObject Blast;
+
     public void Explotion()//动画帧事件调用，爆炸检测层把对应物体推出
     {
+
+        Instantiate(Blast, transform.position, Quaternion.identity);
+
         coll.enabled = false;//防止自己被炸到
         Collider2D[] aroundObjects = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
 
@@ -67,10 +72,10 @@ public class Bomb : MonoBehaviour
             }
 
 
-            if (item.CompareTag("Player"))
-            {
-                item.GetComponent<IDamageable>().GetHit(5);
-            }
+            //if (item.CompareTag("Player"))
+            //{
+            //    
+            //}
         }
     }
 

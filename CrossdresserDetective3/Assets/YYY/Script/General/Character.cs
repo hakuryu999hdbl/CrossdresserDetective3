@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IDamageable
 {
     [Header("数值")]
     public float maxHealth;
@@ -73,8 +73,8 @@ public class Character : MonoBehaviour
 
             //受伤执行击退事件
             OnTakeDamge?.Invoke(attacker.transform);
-            GetComponent<PlayerController>()?.GetHurt(attacker.transform); // 玩家直接击退
-
+            GetComponent<PlayerController>()?.OnTakeDamage(attacker); // 玩家直接击退
+            GetComponent<EnemyController>()?.OnTakeDamage(attacker); // 敌人直接击退
 
 
         }

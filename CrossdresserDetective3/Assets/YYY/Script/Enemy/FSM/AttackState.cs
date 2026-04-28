@@ -13,7 +13,26 @@ public class AttackState : EnemyBaseState
 
     public override void OnUpdate(EnemyController enemy)
     {
-        if (enemy.hasBomb){ return; }//有炸弹的情况下不巡逻
+        // 有炸弹时不再追踪攻击，直接回巡逻
+        if (enemy.hasBomb)
+        {
+            enemy.attackList.Clear();
+            enemy.targetPoint = null;
+            enemy.TransitionToState(enemy.patrolState);
+            return;
+        }
+
+        // 清理已经不存在、被销毁、或不再是可检测层的目标
+        enemy.attackList.RemoveAll(t =>
+            t == null ||
+            (!t.CompareTag("Player") && !t.CompareTag("Bomb")) ||
+            (t.CompareTag("Bomb") && t.gameObject.layer != LayerMask.NameToLayer("Bomb"))
+        );
+
+
+
+
+        //if (enemy.hasBomb){ return; }//有炸弹的情况下不巡逻
 
         if (enemy.attackList.Count <= 0)
         {

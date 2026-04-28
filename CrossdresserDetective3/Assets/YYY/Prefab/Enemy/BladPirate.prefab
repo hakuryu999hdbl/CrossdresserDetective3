@@ -49,7 +49,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 3831
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -59,7 +59,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 264
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 2494688970956594531}
   - component: {fileID: 1180484887671825988}
   - component: {fileID: 2893786328320609097}
+  - component: {fileID: 4211947040636514243}
   - component: {fileID: 5107009305770921559}
   - component: {fileID: 345969310741723967}
   m_Layer: 10
@@ -228,6 +229,70 @@ CapsuleCollider2D:
   m_Offset: {x: -0.036487818, y: 0}
   m_Size: {x: 0.92508435, y: 2.1417823}
   m_Direction: 0
+--- !u!114 &4211947040636514243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309303749007229996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 0
+  maxPower: 0
+  currentPower: 0
+  powerRecoverSpeed: 0
+  invulnerableDuration: 0.2
+  invulnerable: 0
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTakeDamge:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 95a4edfe47f643f4ba88cfdf9954d35e, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5107009305770921559}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: OnDie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 95a4edfe47f643f4ba88cfdf9954d35e, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5107009305770921559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +323,7 @@ MonoBehaviour:
   attackList: []
   isHurt: 0
   rb: {fileID: 1180484887671825988}
-  hurtForce: 0
+  hurtForce: 4.5
 --- !u!114 &345969310741723967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,14 +339,16 @@ MonoBehaviour:
   bottomOffset: {x: 0, y: -1}
   leftOffset: {x: -0.5, y: 0}
   rightOffset: {x: 0.4, y: 0}
+  isGround: 0
   touchLeftWall: 0
   touchRightWall: 0
+  onWall: 0
   checkRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  isGround: 0
   manual: 1
+  isPlayer: 0
 --- !u!1 &3114739131411563512
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,8 +468,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5741926000315852090}
   - component: {fileID: 6581902854631601043}
-  - component: {fileID: 2896832711928180745}
-  m_Layer: 11
+  - component: {fileID: 8592991278112254494}
+  - component: {fileID: 8298093086179371405}
+  m_Layer: 0
   m_Name: Hit point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +518,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 264
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -470,7 +538,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8898475, y: 0.4051764}
   m_EdgeRadius: 0
---- !u!114 &2896832711928180745
+--- !u!114 &8592991278112254494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895135473342154744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  attackRange: 0
+  attackRate: 0
+  knockbackX: 10
+  knockbackY: 10
+  hurtTime: 0.2
+  clearVelocity: 1
+  bombAvailable: 1
+--- !u!114 &8298093086179371405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -482,7 +570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c764ebd416c69d1429d6d62be7b0f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombAvilable: 1
 --- !u!1 &6437857292600108596
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +697,7 @@ MonoBehaviour:
   pickupPoint: {fileID: 0}
   power: 0
   scale: 0
+  TargetDestory: {fileID: 0}
 --- !u!1 &8252223796717711627
 GameObject:
   m_ObjectHideFlags: 0

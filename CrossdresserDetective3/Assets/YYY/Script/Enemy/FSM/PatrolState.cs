@@ -20,6 +20,8 @@ public class PatrolState : EnemyBaseState
 
     public override void OnUpdate(EnemyController enemy)
     {
+
+
         if (enemy.attackList.Count > 0)
         {
             enemy.TransitionToState(enemy.attackState);

@@ -53,8 +53,6 @@ public class PhysicsCheck : MonoBehaviour
     {
         //地面检测
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, checkRadius, groundLayer);
-        // isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(bottomOffset.x*transform.localScale.x,bottomOffset.y), checkRadius, groundLayer);
-
 
         //if (isGround) { isJump = false; }//跳跃结束
 

@@ -44,8 +44,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6811086305832771495}
   - component: {fileID: 7753284588812365233}
-  - component: {fileID: 5686161879646449095}
-  m_Layer: 11
+  - component: {fileID: 232824838548991035}
+  - component: {fileID: 4842549691819809435}
+  m_Layer: 0
   m_Name: Hit point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +94,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 264
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -113,7 +114,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8898475, y: 0.4051764}
   m_EdgeRadius: 0
---- !u!114 &5686161879646449095
+--- !u!114 &232824838548991035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080448009105706039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  attackRange: 0
+  attackRate: 0
+  knockbackX: 5
+  knockbackY: 0
+  hurtTime: 0.2
+  clearVelocity: 1
+  bombAvailable: 0
+--- !u!114 &4842549691819809435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c764ebd416c69d1429d6d62be7b0f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombAvilable: 0
 --- !u!1 &2008667383620017155
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +273,7 @@ MonoBehaviour:
   pickupPoint: {fileID: 0}
   power: 0
   scale: 1.2
+  TargetDestory: {fileID: 0}
 --- !u!1 &3699252011743690472
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +316,7 @@ GameObject:
   - component: {fileID: 5746108132786203708}
   - component: {fileID: 931615397216162919}
   - component: {fileID: 8059134660836324743}
+  - component: {fileID: 4594454699050075584}
   - component: {fileID: 2501891516359615408}
   - component: {fileID: 4130677859441677739}
   m_Layer: 10
@@ -386,6 +408,70 @@ CapsuleCollider2D:
   m_Offset: {x: -0.10618671, y: -0.09025818}
   m_Size: {x: 1.6909792, y: 1.2980894}
   m_Direction: 1
+--- !u!114 &4594454699050075584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7997729909169678161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 0
+  maxPower: 0
+  currentPower: 0
+  powerRecoverSpeed: 0
+  invulnerableDuration: 0.2
+  invulnerable: 0
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTakeDamge:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 95a4edfe47f643f4ba88cfdf9954d35e, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2501891516359615408}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: OnDie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 95a4edfe47f643f4ba88cfdf9954d35e, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2501891516359615408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,8 +501,8 @@ MonoBehaviour:
   skillRange: 1.5
   attackList: []
   isHurt: 0
-  rb: {fileID: 0}
-  hurtForce: 0
+  rb: {fileID: 931615397216162919}
+  hurtForce: 4.5
 --- !u!114 &4130677859441677739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,14 +518,16 @@ MonoBehaviour:
   bottomOffset: {x: 0, y: -0.75}
   leftOffset: {x: -0.7, y: 0}
   rightOffset: {x: 0.9, y: 0}
+  isGround: 0
   touchLeftWall: 0
   touchRightWall: 0
+  onWall: 0
   checkRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  isGround: 0
   manual: 1
+  isPlayer: 0
 --- !u!1 &8723647075494339133
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +577,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 3831
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -499,7 +587,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 264
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295

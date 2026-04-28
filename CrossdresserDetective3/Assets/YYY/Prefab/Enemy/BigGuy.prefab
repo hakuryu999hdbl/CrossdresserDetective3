@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6022021697340331914}
   - component: {fileID: 4130008453351898696}
-  - component: {fileID: 4221519006771892212}
+  - component: {fileID: 6582739671997285603}
+  - component: {fileID: 5619033452472923801}
   m_Layer: 11
   m_Name: Hit point
   m_TagString: Untagged
@@ -59,7 +60,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 264
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -79,7 +80,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8898475, y: 0.4051764}
   m_EdgeRadius: 0
---- !u!114 &4221519006771892212
+--- !u!114 &6582739671997285603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2675111679096418075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  attackRange: 0
+  attackRate: 0
+  knockbackX: 15
+  knockbackY: 3
+  hurtTime: 0.2
+  clearVelocity: 1
+  bombAvailable: 0
+--- !u!114 &5619033452472923801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c764ebd416c69d1429d6d62be7b0f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombAvilable: 0
 --- !u!1 &2800108085528037087
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +301,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 3831
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -291,7 +311,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 264
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -399,6 +419,7 @@ GameObject:
   - component: {fileID: 7921498758037510572}
   - component: {fileID: 660671960009508150}
   - component: {fileID: 5242789068717987805}
+  - component: {fileID: 3900565816961586548}
   m_Layer: 10
   m_Name: Enemy_BigGuy
   m_TagString: Player
@@ -519,7 +540,7 @@ MonoBehaviour:
   attackList: []
   isHurt: 0
   rb: {fileID: 2575892419616377814}
-  hurtForce: 0
+  hurtForce: 4.5
 --- !u!114 &5242789068717987805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,14 +556,80 @@ MonoBehaviour:
   bottomOffset: {x: 0, y: -1}
   leftOffset: {x: -1, y: 0}
   rightOffset: {x: 0.61, y: 0}
+  isGround: 0
   touchLeftWall: 0
   touchRightWall: 0
+  onWall: 0
   checkRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  isGround: 0
   manual: 1
+  isPlayer: 0
+--- !u!114 &3900565816961586548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6473204011001016985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 0
+  maxPower: 0
+  currentPower: 0
+  powerRecoverSpeed: 0
+  invulnerableDuration: 0.2
+  invulnerable: 0
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTakeDamge:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 95a4edfe47f643f4ba88cfdf9954d35e, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 660671960009508150}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: OnDie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 95a4edfe47f643f4ba88cfdf9954d35e, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7466191444926823668
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,6 +757,7 @@ MonoBehaviour:
   pickupPoint: {fileID: 1521171501378752603}
   power: 20
   scale: 0
+  TargetDestory: {fileID: 0}
 --- !u!1 &7665386429308032733
 GameObject:
   m_ObjectHideFlags: 0

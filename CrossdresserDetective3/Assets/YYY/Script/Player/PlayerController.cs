@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour
 {
     [Header("基础属性")]
     public Character character;
@@ -77,9 +77,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         GameManager.instance.IsPlayer(this);
 
-
-        //health = GameManager.instance.LoadHealth();
-        //UIManager.instance.UpdateHealth(health);
     }
 
 
@@ -162,76 +159,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 
-
-
-
-
-    public void LandFX()//动画帧时间触发
-    {
-        landFX.SetActive(true);
-        landFX.transform.position = transform.position + new Vector3(0, -0.75f, 0);
-    }
-
-
-
-
-   
-
-
-
-
-
-
-    public void GetHit(float damage)
-    {
-        //if (!playerAnimation.anim.GetCurrentAnimatorStateInfo(1).IsName("player_hit"))
-        //{
-        //    health -= damage;
-        //
-        //    if (health < 1)
-        //    {
-        //        health = 0;
-        //        isDead = true;
-        //    }
-        //    playerAnimation.anim.SetTrigger("hit");
-        //
-        //    UIManager.instance.UpdateHealth(health);
-        //
-        //}//在Hit动画状态中，不会受伤
-
-
-    
-    }
-
-
-
-
-    [Header("受伤反弹死亡")]
-
-    public float hurtForce;
-
-    public void GetHurt(Transform attacker)
-    {
-        isHurt = true;//主要用于屏蔽输入
-
-        rb.velocity = Vector2.zero;
-        Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
-        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
-    }
-    public void PlayerDead() 
-    {
-        isDead = true;
-        inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
-    }
-
-
-
-
-
-
-
-
-    public void CheckState() 
+    public void CheckState()
     {
         coll.sharedMaterial = physicsCheck.isGround ? normal : wall;//简写如果在地面就使用有摩擦力的这一版，没有就不是
 
@@ -250,6 +178,70 @@ public class PlayerController : MonoBehaviour, IDamageable
             wallJump = false;
         }//蹬墙跳出去的时候，下落状态下可以左右移动
     }
+
+
+    public void LandFX()//动画帧时间触发
+    {
+        landFX.SetActive(true);
+        landFX.transform.position = transform.position + new Vector3(0, -0.75f, 0);
+    }
+
+
+
+
+    /// <summary>
+    /// 受伤死亡
+    /// </summary>
+    #region
+    [Header("受伤死亡")]
+    public float hurtForce;
+
+    #region  旧击退
+    public void GetHurt(Transform attacker)
+    {
+       // isHurt = true;//主要用于屏蔽输入
+       //
+       // rb.velocity = Vector2.zero;
+       // Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
+       // rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+    }
+    #endregion
+
+    public void OnTakeDamage(Attack attack)
+    {
+
+        if (attack == null)
+            return;
+
+        isHurt = true;//这个直接触发动画了
+
+        if (attack.clearVelocity)
+        {
+            rb.velocity = Vector2.zero;
+        }
+
+        float dir = transform.position.x >= attack.transform.position.x ? 1f : -1f;
+
+        rb.AddForce(
+            new Vector2(dir * attack.knockbackX, attack.knockbackY),
+            ForceMode2D.Impulse
+        );
+
+    }
+
+
+
+
+
+    public void PlayerDead() 
+    {
+        isDead = true;
+        inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
+    }
+
+
+    #endregion
+
 
 
 

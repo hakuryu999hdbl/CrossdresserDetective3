@@ -146,17 +146,6 @@ public class EnemyController : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     public void MoveToTarget()
     {
         transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, speed * Time.deltaTime);
@@ -228,11 +217,31 @@ public class EnemyController : MonoBehaviour
 
 
 
-    //CheckArea调用
+
+
+    public Transform heldBomb;//扔炸弹方向
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// CheckArea视野范围调用
+    /// </summary>
+    #region
     public void OnCheckAreaStay(Collider2D collision)
     {
         if (!attackList.Contains(collision.transform)&&!hasBomb&&!isDead && !GameManager.instance.gameOver) 
         {
+
             attackList.Add(collision.transform);
 
         }//只要不是新的，就装进去(如果持有炸弹/自己死亡/玩家死亡，不需要再添加新的进去)
@@ -243,77 +252,116 @@ public class EnemyController : MonoBehaviour
         attackList.Remove(collision.transform);
     }//离开视野范围
 
+    #endregion
 
 
 
 
-
-
-    //受伤调用
-    [Header("受伤反弹死亡")]
+    /// <summary>
+    /// 受伤死亡
+    /// </summary>
+    #region
+    [Header("受伤死亡")]
     Transform attacker;
     public bool isHurt = false;
     public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
     public float hurtForce;
-    public void OnTakeDamage(Transform attackTrans) 
+
+    #region 旧击退
+    // public void OnTakeDamage(Transform attackTrans) 
+    // {
+    //
+    //     Debug.Log("敌人受伤");
+    //
+    //     attacker = attackTrans;
+    //
+    //     //转身
+    //     //if (attackTrans.position.x - transform.position.x > 0) 
+    //     //{
+    //     //    transform.localScale = new Vector3(1,1,1);
+    //     //}
+    //     //if (attackTrans.position.x - transform.position.x < 0)
+    //     //{
+    //     //    transform.localScale = new Vector3(-1, 1, 1);
+    //     //}
+    //
+    //     //受伤被击退
+    //     isHurt = true;//主要用于停止移动
+    //     anim.SetTrigger("hit");
+    //
+    //
+    //     rb.velocity = Vector2.zero;
+    //     Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
+    //     rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+    //
+    //     isHurt = false;//主要用于停止移动
+    //
+    //
+    //
+    //
+    //     // 如果之前有协程，先停掉（保险）
+    //     if (hurtCoroutine != null)
+    //     {
+    //         StopCoroutine(hurtCoroutine);
+    //     }
+    //     
+    //     hurtCoroutine = StartCoroutine(OnHurt(dir));
+    // }
+    // private Coroutine hurtCoroutine;
+    //
+    // private IEnumerator OnHurt(Vector2 dir)
+    // {
+    //     // 清空当前速度（防止叠加）
+    //     rb.velocity = Vector2.zero;
+    //
+    //     // 击退
+    //     rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+    //
+    //     // 硬直时间
+    //     yield return new WaitForSeconds(0.45f);
+    //
+    //     isHurt = false;
+    // }
+
+    #endregion
+
+
+
+    public void OnTakeDamage(Attack attack)
     {
 
-        Debug.Log("敌人受伤");
+        if (attack == null)
+            return;
 
-        attacker = attackTrans;
-        //转身
-        if (attackTrans.position.x - transform.position.x > 0) 
-        {
-            transform.localScale = new Vector3(1,1,1);
-        }
-        if (attackTrans.position.x - transform.position.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-
-        //受伤被击退
-        //isHurt = true;//主要用于停止移动
+        isHurt = true;
         anim.SetTrigger("hit");
-
-
-        rb.velocity = Vector2.zero;
-        Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
-        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
-
-        //isHurt = false;//主要用于停止移动
-
-
-
-
-        // 如果之前有协程，先停掉（保险）
-        if (hurtCoroutine != null)
+        if (attack.clearVelocity)
         {
-            StopCoroutine(hurtCoroutine);
+            rb.velocity = Vector2.zero;
         }
 
-        hurtCoroutine = StartCoroutine(OnHurt(dir));
+        float dir = transform.position.x >= attack.transform.position.x ? 1f : -1f;
+
+        rb.AddForce(
+            new Vector2(dir * attack.knockbackX, attack.knockbackY),
+            ForceMode2D.Impulse
+        );
+
     }
-    private Coroutine hurtCoroutine;
 
-    private IEnumerator OnHurt(Vector2 dir)
-    {
-        // 清空当前速度（防止叠加）
-        rb.velocity = Vector2.zero;
 
-        // 击退
-        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
 
-        // 硬直时间
-        yield return new WaitForSeconds(0.45f);
 
-        isHurt = false;
-    }
+
+
+
 
 
     public void OnDie() 
     {
         isDead = true;
-        gameObject.layer = 2;//ignoreRaycast
+        //gameObject.layer = 2;//ignoreRaycast
+        gameObject.layer = LayerMask.NameToLayer("Enviroment");
     }
-
+    #endregion
 }
