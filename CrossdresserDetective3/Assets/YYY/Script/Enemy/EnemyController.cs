@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     [Header("基础属性")]
     public bool isDead = false;
     public bool hasBomb;//是否持有炸弹
-
+    public GameObject CheckArea;//死后隐藏视野范围（要是敌人直接消失就不用了）
 
     [Header("敌人巡逻")]
     public float speed;
@@ -197,44 +197,44 @@ public class EnemyController : MonoBehaviour
 
 
 
-    bool inAttackRangeLastFrame = false;
+    //bool inAttackRangeLastFrame = false;
 
 
     public void AttackAction()
     {
 
-        // if (Vector2.Distance(transform.position, targetPoint.position) < attackRange)
-        // {
-        //     if (Time.time > nextAttack)
-        //     {
-        //         // 播放攻击动画
-        //         anim.SetTrigger("attack");
-        //         Debug.Log("普通攻击");
-        //         nextAttack = Time.time + attackRate;
-        //     }
-        // }
-
-        float distance = Vector2.Distance(transform.position, targetPoint.position);
-        bool inRange = distance < attackRange;
-
-        // 👉 刚进入攻击范围
-        if (inRange && !inAttackRangeLastFrame)
-        {
-            nextAttack = Time.time + attackRate;
-        }
-
-        if (inRange)
+        if (Vector2.Distance(transform.position, targetPoint.position) < attackRange)
         {
             if (Time.time > nextAttack)
             {
+                // 播放攻击动画
                 anim.SetTrigger("attack");
                 Debug.Log("普通攻击");
-
                 nextAttack = Time.time + attackRate;
             }
         }
 
-        inAttackRangeLastFrame = inRange;
+       // float distance = Vector2.Distance(transform.position, targetPoint.position);
+       // bool inRange = distance < attackRange;
+       //
+       // // 👉 刚进入攻击范围
+       // if (inRange && !inAttackRangeLastFrame)
+       // {
+       //     nextAttack = Time.time + attackRate;
+       // }
+       //
+       // if (inRange)
+       // {
+       //     if (Time.time > nextAttack)
+       //     {
+       //         anim.SetTrigger("attack");
+       //         Debug.Log("普通攻击");
+       //
+       //         nextAttack = Time.time + attackRate;
+       //     }
+       // }
+       //
+       // inAttackRangeLastFrame = inRange;
 
     }//攻击
 
@@ -425,6 +425,15 @@ public class EnemyController : MonoBehaviour
 
 
 
+        // 👉 巡逻状态被偷袭 = 直接死
+        if (currentState == patrolState)
+        {
+            OnDie();
+            return;
+        }
+
+
+
         //一旦受伤立刻把Attack的根物体的character所在物体立为目标
         Character attackerCharacter = attack.GetComponentInParent<Character>();
 
@@ -452,6 +461,8 @@ public class EnemyController : MonoBehaviour
 
 
         anim.SetTrigger("hit");
+
+
         if (attack.clearVelocity)
         {
             rb.velocity = Vector2.zero;
@@ -463,6 +474,9 @@ public class EnemyController : MonoBehaviour
             new Vector2(dir * attack.knockbackX, attack.knockbackY),
             ForceMode2D.Impulse
         );
+
+       
+
 
     }
 
@@ -479,6 +493,7 @@ public class EnemyController : MonoBehaviour
         isDead = true;
         //gameObject.layer = 2;//ignoreRaycast
         gameObject.layer = LayerMask.NameToLayer("Enviroment");
+        CheckArea?.SetActive(false);
     }
     #endregion
 }
