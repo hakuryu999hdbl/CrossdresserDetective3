@@ -1,82 +1,82 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PatrolState : EnemyBaseState
 {
+    private float timer;
+    private bool isWalking;
+
     public override void EnterState(EnemyController enemy)
     {
         enemy.animState = 0;
-        enemy.SwitchPoint();//距离目标最近的时候切换远目标
 
-        isWalk = false;
-        waitTimer = 2f;
-        wallWait = false;
+        // 第一次进入时随机方向
+        if (enemy.patrolDir == 0)
+        {
+            enemy.patrolDir = Random.value < 0.5f ? -1 : 1;
+        }
+
+        StartIdle(enemy);
     }
-
-    float waitTimer = 2f;
-    bool isWalk = false;
-    bool wallWait;
 
     public override void OnUpdate(EnemyController enemy)
     {
-
-
         if (enemy.attackList.Count > 0)
         {
             enemy.TransitionToState(enemy.attackState);
-
             return;
-        }//只要索敌列表不为0就进入攻击状态
+        }
 
+        timer -= Time.deltaTime;
 
-        // 等待中
-        if (!isWalk)
+        if (isWalking)
         {
-            waitTimer -= Time.deltaTime;
+            enemy.animState = 1;
 
-            if (waitTimer <= 0)
+            if (enemy.IsWallAheadByDir())
             {
-                isWalk = true;
-
-                // 如果是撞墙等待结束，就切目标
-                if (wallWait)
-                {
-                    enemy.SwitchToOtherPoint();
-                    wallWait = false;
-                }
+                enemy.TurnAround();
+                StartIdle(enemy);
+                return;
             }
 
-            return;
+            enemy.MovePatrol();
+
+            if (timer <= 0)
+            {
+                StartIdle(enemy);
+                return;
+            }
         }
-
-
-        // 前方碰墙：开始等待，不立刻转身
-        if (enemy.IsWallAhead())
+        else
         {
             enemy.animState = 0;
-            isWalk = false;
-            wallWait = true;
-            waitTimer = 2f;
-            return;
+
+            if (timer <= 0)
+            {
+                StartWalk(enemy);
+                return;
+            }
         }
-
-        enemy.animState = 1;
-        enemy.MoveToTarget();
-
-        // 到达AB点：正常重进巡逻，保留原本“站一会再走”
-        if (Mathf.Abs(enemy.targetPoint.position.x - enemy.transform.position.x) < 0.01f)
-        {
-            enemy.TransitionToState(enemy.patrolState);
-            return;
-        }
-
-
-
     }
 
+    private void StartIdle(EnemyController enemy)
+    {
+        isWalking = false;
+        enemy.animState = 0;
+        timer = Random.Range(enemy.minIdleTime, enemy.maxIdleTime);
+    }
 
+    private void StartWalk(EnemyController enemy)
+    {
+        isWalking = true;
+        enemy.animState = 1;
 
+        // 每次开始走，有一定概率换方向
+        if (Random.value < 0.35f)
+        {
+            enemy.TurnAround();
+        }
 
-   
+        timer = Random.Range(enemy.minWalkTime, enemy.maxWalkTime);
+    }
 }

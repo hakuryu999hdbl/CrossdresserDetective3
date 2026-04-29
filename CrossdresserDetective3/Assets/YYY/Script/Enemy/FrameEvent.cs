@@ -10,12 +10,30 @@ public class FrameEvent : MonoBehaviour
 
     public void SetOff()
     {
-        if (enemyController.targetPoint.GetComponent<Bomb>() != null)
-        {
-            enemyController.targetPoint.GetComponent<Bomb>().TurnOff();
-        }
-        
-      
+
+        if (enemyController == null)
+            return;
+
+        if (enemyController.targetPoint == null)
+            return;
+
+        Bomb bomb = enemyController.targetPoint.GetComponent<Bomb>();
+
+        if (bomb == null)
+            return;
+
+        bomb.TurnOff();
+
+        enemyController.attackList.Remove(enemyController.targetPoint);
+        enemyController.targetPoint = null;
+
+
+        //if (enemyController.targetPoint.GetComponent<Bomb>() != null)
+        //{
+        //    enemyController.targetPoint.GetComponent<Bomb>().TurnOff();
+        //}
+
+
     }
 
 

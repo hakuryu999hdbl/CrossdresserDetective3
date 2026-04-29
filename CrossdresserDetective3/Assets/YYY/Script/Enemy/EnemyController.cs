@@ -11,17 +11,22 @@ public class EnemyController : MonoBehaviour
     public GameObject alarmSign;
 
     [Header("基础属性")]
-    public float health;
     public bool isDead = false;
     public bool hasBomb;//是否持有炸弹
-    public bool isBoss = false;
 
 
     [Header("敌人巡逻")]
     public float speed;
-    public Transform pointA, pointB;
     public Transform targetPoint;
     public PhysicsCheck physicsCheck;//检测左右有墙翻转
+
+    [Header("敌人跳跃")]
+    public float jumpForce = 6f;
+    public float jumpCooldown = 0.8f;
+    private float nextJumpTime;
+
+
+
 
     [Header("敌人攻击")]
     public float attackRate;//攻击冷却
@@ -56,18 +61,10 @@ public class EnemyController : MonoBehaviour
 
         TransitionToState(patrolState);//一开始进入巡逻状态
 
-        if (isBoss) 
-        {
-            UIManager.instance.SetBossHealth(health);
-        }
     }
 
     public virtual void Update()
     {
-        if (isBoss)
-        {
-            UIManager.instance.UpdateBossHealth(health);
-        }
 
         anim.SetBool("dead", isDead);
         if (isDead)
@@ -99,7 +96,11 @@ public class EnemyController : MonoBehaviour
         currentState.OnUpdate(this);//每帧执行状态
         anim.SetInteger("state", animState);
 
-       
+
+
+        anim.SetBool("isGround", physicsCheck != null && physicsCheck.isGround);
+        anim.SetFloat("yVelocity", rb != null ? rb.velocity.y : 0f);
+
     }
 
     public void TransitionToState(EnemyBaseState  state) 
@@ -121,24 +122,6 @@ public class EnemyController : MonoBehaviour
 
 
 
-   
-    public bool IsWallAhead()
-    {
-        if (physicsCheck == null || targetPoint == null) return false;
-
-        if (targetPoint.position.x > transform.position.x)
-            return physicsCheck.touchRightWall;
-
-        if (targetPoint.position.x < transform.position.x)
-            return physicsCheck.touchLeftWall;
-
-        return false;
-    } //巡逻调用切换方向
-
-    public void SwitchToOtherPoint()
-    {
-        targetPoint = targetPoint == pointA ? pointB : pointA;
-    } //巡逻调用切换目标
 
 
 
@@ -146,18 +129,82 @@ public class EnemyController : MonoBehaviour
 
 
 
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// 攻击状态
+    /// </summary>
+    #region
+
+    public Transform heldBomb;//扔炸弹方向
     public void MoveToTarget()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, speed * Time.deltaTime);
+        //transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, speed * Time.deltaTime);
+        //FilpDirection();
+
+
+        if (targetPoint == null) return;
+
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            new Vector2(targetPoint.position.x, transform.position.y),
+            speed * Time.deltaTime
+        );//只追 X
+
         FilpDirection();
+
+        TryJumpObstacle();
+
+
     }//前往目标
 
-    public void AttackAction() 
+
+    private void TryJumpObstacle()
+    {
+        if (physicsCheck == null) return;
+        if (rb == null) return;
+        if (!physicsCheck.isGround) return;
+        if (Time.time < nextJumpTime) return;
+
+        bool wallAhead = false;
+
+        if (transform.rotation.eulerAngles.y == 0)
+        {
+            wallAhead = physicsCheck.touchRightWall;
+        }
+        else
+        {
+            wallAhead = physicsCheck.touchLeftWall;
+        }
+
+        if (!wallAhead) return;
+
+        rb.velocity = new Vector2(rb.velocity.x, 0f);
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        nextJumpTime = Time.time + jumpCooldown;
+    }
+
+
+
+
+
+
+
+
+
+    public void AttackAction()
     {
 
-        if (Vector2.Distance(transform.position, targetPoint.position) < attackRange) 
+        if (Vector2.Distance(transform.position, targetPoint.position) < attackRange)
         {
-            if (Time.time > nextAttack) 
+            if (Time.time > nextAttack)
             {
                 // 播放攻击动画
                 anim.SetTrigger("attack");
@@ -170,7 +217,7 @@ public class EnemyController : MonoBehaviour
 
     }//攻击
 
-    public virtual void SkillAction() 
+    public virtual void SkillAction()
     {
 
         //Debug.Log("这是炸弹，技能攻击");
@@ -189,7 +236,7 @@ public class EnemyController : MonoBehaviour
 
     public void FilpDirection()
     {
-        if (transform.position.x < targetPoint.position.x) 
+        if (transform.position.x < targetPoint.position.x)
         {
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
@@ -200,37 +247,59 @@ public class EnemyController : MonoBehaviour
 
     }//反转：追逐目标
 
-    public void SwitchPoint()
+    #endregion
+
+    /// <summary>
+    /// 巡逻状态
+    /// </summary>
+    #region
+    [Header("自由巡逻")]
+    public float patrolSpeed = 2f;
+    public float minWalkTime = 1.5f;
+    public float maxWalkTime = 4f;
+    public float minIdleTime = 1f;
+    public float maxIdleTime = 3f;
+
+    [HideInInspector] public int patrolDir = 1;
+
+    public void MovePatrol()
     {
-        if (Mathf.Abs(pointA.position.x - transform.position.x) > Mathf.Abs(pointB.position.x - transform.position.x))
-        {
-            targetPoint = pointA;
-        }
+        transform.position += new Vector3(patrolDir * patrolSpeed * Time.deltaTime, 0f, 0f);
+
+        if (patrolDir > 0)
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         else
-        {
-            targetPoint = pointB;
-        }
-    }//距离哪个点更远目标就是哪个点
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+    }
+
+    public bool IsWallAheadByDir()
+    {
+        if (physicsCheck == null) return false;
+
+        if (patrolDir > 0)
+            return physicsCheck.touchRightWall;
+
+        if (patrolDir < 0)
+            return physicsCheck.touchLeftWall;
+
+        return false;
+    }
+
+    public void TurnAround()
+    {
+        patrolDir *= -1;
+
+        if (patrolDir > 0)
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        else
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+    }
 
 
 
 
 
-
-
-
-    public Transform heldBomb;//扔炸弹方向
-
-
-
-
-
-
-
-
-
-
-
+    #endregion
 
 
     /// <summary>
@@ -262,10 +331,10 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     #region
     [Header("受伤死亡")]
-    Transform attacker;
-    public bool isHurt = false;
+    //Transform attacker;
+    //public bool isHurt = false;
     public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
-    public float hurtForce;
+    //public float hurtForce=4.5f;
 
     #region 旧击退
     // public void OnTakeDamage(Transform attackTrans) 
@@ -333,7 +402,34 @@ public class EnemyController : MonoBehaviour
         if (attack == null)
             return;
 
-        isHurt = true;
+
+
+        //一旦受伤立刻把Attack的根物体的character所在物体立为目标
+        Character attackerCharacter = attack.GetComponentInParent<Character>();
+
+        if (attackerCharacter != null)
+        {
+            Transform attacker = attackerCharacter.transform;
+
+            targetPoint = attacker;
+
+            if (!attackList.Contains(attacker))
+            {
+                attackList.Add(attacker);
+            }
+
+            TransitionToState(attackState);
+        }
+
+
+
+
+        //isHurt = true;
+
+
+
+
+
         anim.SetTrigger("hit");
         if (attack.clearVelocity)
         {

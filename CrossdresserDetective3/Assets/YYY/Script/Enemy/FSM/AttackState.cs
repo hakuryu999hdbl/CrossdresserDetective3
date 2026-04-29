@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttackState : EnemyBaseState
 {
@@ -8,6 +6,14 @@ public class AttackState : EnemyBaseState
     {
         //Debug.Log("发现敌人！！！！");
         enemy.animState = 2;
+
+        if (enemy.attackList == null || enemy.attackList.Count <= 0)
+        {
+            enemy.targetPoint = null;
+            enemy.TransitionToState(enemy.patrolState);
+            return;
+        }
+
         enemy.targetPoint = enemy.attackList[0];//列表第一个作为追踪目标（最近的目标）
     }
 
@@ -32,11 +38,11 @@ public class AttackState : EnemyBaseState
 
 
 
-        //if (enemy.hasBomb){ return; }//有炸弹的情况下不巡逻
-
         if (enemy.attackList.Count <= 0)
         {
+            enemy.targetPoint = null;
             enemy.TransitionToState(enemy.patrolState);//一旦列表为0恢复巡逻
+            return;
         }
 
 
@@ -63,13 +69,24 @@ public class AttackState : EnemyBaseState
 
 
         //根据tag来判断不同动作
-        if (enemy.targetPoint.CompareTag("Player"))
-            enemy.AttackAction();
-        if (enemy.targetPoint.CompareTag("Bomb"))
-            enemy.SkillAction();
+
+        if(enemy.targetPoint != null)
+        {
+            if (enemy.targetPoint.CompareTag("Player"))
+                enemy.AttackAction();
+            if (enemy.targetPoint.CompareTag("Bomb"))
+                enemy.SkillAction();
+
+            enemy.MoveToTarget();
+        }
+        else
+        {
+            enemy.TransitionToState(enemy.patrolState);
+        }
+     
 
        
 
-        enemy.MoveToTarget();
+      
     }
 }
