@@ -77,7 +77,14 @@ public class AttackState : EnemyBaseState
             if (enemy.targetPoint.CompareTag("Bomb"))
                 enemy.SkillAction();
 
-            enemy.MoveToTarget();
+
+
+            //进入攻击范围之后，移动就应该停止
+            float distance = Vector2.Distance(enemy.transform.position, enemy.targetPoint.position);
+            if (distance > enemy.attackRange)
+            {
+                enemy.MoveToTarget();
+            }
         }
         else
         {

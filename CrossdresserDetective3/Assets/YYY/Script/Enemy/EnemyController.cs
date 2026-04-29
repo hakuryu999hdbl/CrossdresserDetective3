@@ -197,23 +197,44 @@ public class EnemyController : MonoBehaviour
 
 
 
+    bool inAttackRangeLastFrame = false;
 
 
     public void AttackAction()
     {
 
-        if (Vector2.Distance(transform.position, targetPoint.position) < attackRange)
+        // if (Vector2.Distance(transform.position, targetPoint.position) < attackRange)
+        // {
+        //     if (Time.time > nextAttack)
+        //     {
+        //         // 播放攻击动画
+        //         anim.SetTrigger("attack");
+        //         Debug.Log("普通攻击");
+        //         nextAttack = Time.time + attackRate;
+        //     }
+        // }
+
+        float distance = Vector2.Distance(transform.position, targetPoint.position);
+        bool inRange = distance < attackRange;
+
+        // 👉 刚进入攻击范围
+        if (inRange && !inAttackRangeLastFrame)
+        {
+            nextAttack = Time.time + attackRate;
+        }
+
+        if (inRange)
         {
             if (Time.time > nextAttack)
             {
-                // 播放攻击动画
                 anim.SetTrigger("attack");
                 Debug.Log("普通攻击");
+
                 nextAttack = Time.time + attackRate;
             }
         }
 
-
+        inAttackRangeLastFrame = inRange;
 
     }//攻击
 
