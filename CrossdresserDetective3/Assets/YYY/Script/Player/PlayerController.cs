@@ -146,8 +146,8 @@ public class PlayerController : MonoBehaviour
         if (isCrouch)
         {
             //降低碰撞体高度
-            originalOffset = new Vector2(0f, -0.1f);
-            coll.size = new Vector2(0.8f, 1.5f);
+            originalOffset = new Vector2(0f, -0.05f);
+            coll.size = new Vector2(0.8f, 1.9f);
 
         }
         else
@@ -213,7 +213,10 @@ public class PlayerController : MonoBehaviour
         if (attack == null)
             return;
 
-        isHurt = true;//这个直接触发动画了
+        isHurt = true;//主要用于屏蔽输入
+
+        playerAnimation.PlayHurt();
+
 
         if (attack.clearVelocity)
         {
