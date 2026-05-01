@@ -146,8 +146,8 @@ public class PlayerController : MonoBehaviour
         if (isCrouch)
         {
             //降低碰撞体高度
-            originalOffset = new Vector2(0f, -0.05f);
-            coll.size = new Vector2(0.8f, 1.9f);
+            //originalOffset = new Vector2(0f, 0.78f);
+            //coll.size = new Vector2(0.8f, 1.9f);
 
         }
         else

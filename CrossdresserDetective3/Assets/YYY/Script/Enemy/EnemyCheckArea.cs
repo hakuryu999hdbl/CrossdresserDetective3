@@ -44,7 +44,7 @@ public class EnemyCheckArea : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!IsValidTarget(other)) return;
+        //if (!IsValidTarget(other)) return;
 
         enemy.OnCheckAreaStay(other);
         targetColor = alertColor;
@@ -52,7 +52,7 @@ public class EnemyCheckArea : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!IsValidTarget(other)) return;
+        //if (!IsValidTarget(other)) return;
 
         enemy.OnCheckAreaExit(other);
 
@@ -64,7 +64,7 @@ public class EnemyCheckArea : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsValidTarget(other)) return;
+        //if (!IsValidTarget(other)) return;
 
         if (!enemy.isDead && !GameManager.instance.gameOver)
         {

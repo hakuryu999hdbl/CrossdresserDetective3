@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("动画状态")]
     EnemyBaseState currentState;//当前状态
     public Animator anim;
     public int animState;
+
+    int attackLayer;
+    int jumpLayer;
+    int deadLayer;
+
+
+
 
     public GameObject alarmSign;
 
@@ -44,6 +52,15 @@ public class EnemyController : MonoBehaviour
         anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
         alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
 
+
+        //抓层，让死亡的时候把别的层权重关掉
+        attackLayer = anim.GetLayerIndex("Attack Layer");
+        jumpLayer = anim.GetLayerIndex("Jump Layer");
+        deadLayer = anim.GetLayerIndex("Dead Layer");
+
+
+
+
         physicsCheck = GetComponent<PhysicsCheck>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -69,7 +86,20 @@ public class EnemyController : MonoBehaviour
         anim.SetBool("dead", isDead);
         if (isDead)
         {
+            // 关闭其他动作层权重
+            anim.SetLayerWeight(attackLayer, 0f);
+            anim.SetLayerWeight(jumpLayer, 0f);
+
+            // 打开死亡层
+            anim.SetLayerWeight(deadLayer, 1f);
+
+
+            animState = 3;//防止不停触发Run
+
+
+
             GameManager.instance.EnemyDead(this);//死后移除列表
+           
             return;
         }
 
@@ -494,6 +524,7 @@ public class EnemyController : MonoBehaviour
         //gameObject.layer = 2;//ignoreRaycast
         gameObject.layer = LayerMask.NameToLayer("Enviroment");
         CheckArea?.SetActive(false);
+       
     }
     #endregion
 }

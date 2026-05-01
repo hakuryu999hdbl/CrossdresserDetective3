@@ -8,6 +8,8 @@ public class FrameEvent : MonoBehaviour
 
     public EnemyController enemyController;
 
+
+    #region 吹灭炸弹
     public void SetOff()
     {
 
@@ -35,12 +37,11 @@ public class FrameEvent : MonoBehaviour
 
 
     }
+    #endregion
 
 
-
-
-
-
+    #region 丢掉炸弹
+    [Header("丢掉炸弹")]
     public Transform pickupPoint;
 
     public void PickUpBomb()
@@ -149,14 +150,12 @@ public class FrameEvent : MonoBehaviour
 
     }
 
+    #endregion
 
 
-
-
-
+    #region 吞下炸弹
+    [Header("吞下炸弹")]
     public float scale;
-
-
     public void Swalow() 
     {
 
@@ -189,11 +188,57 @@ public class FrameEvent : MonoBehaviour
 
         enemyController.transform.localScale *= scale;//吞下炸弹变大
     }
+    #endregion
 
+
+    #region 爆炸/野猪死后消灭本体
+    [Header("死后消灭本体")]
     public GameObject TargetDestory;
     public void DestroyAfterAnimation()
     {
         Destroy(TargetDestory);
     }
+    #endregion
 
+
+    #region 攻击动画触发
+    [Header("攻击动画触发")]
+    public GameObject AttackArea_1;
+    public GameObject AttackArea_2;
+    public GameObject AttackArea_3;
+    public void Attack_1()
+    {
+        StartCoroutine(AttackRoutine(AttackArea_1));
+    }
+    public void Attack_2()
+    {
+        StartCoroutine(AttackRoutine(AttackArea_2));
+    }
+    public void Attack_3()
+    {
+        StartCoroutine(AttackRoutine(AttackArea_3));
+    }
+
+    IEnumerator AttackRoutine(GameObject area)
+    {
+        if (area == null) yield break;
+
+        area.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+
+        area.SetActive(false);
+    }
+    #endregion
+
+    #region 落地特效触发
+    [Header("落地特效触发")]
+    public PlayerController playerController;
+
+    public void LandFX()
+    {
+        //跳落第一帧触发
+        playerController.LandFX();
+    }
+    #endregion
 }
