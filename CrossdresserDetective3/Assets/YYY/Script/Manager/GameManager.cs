@@ -51,57 +51,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-        PlayerPrefs.DeleteKey("playerHealth");
+        
     }
 
-    public void NewGame() 
-    {
-        PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene(1);
-    }//跳转编号场景
-
-    public void NextScene()
-    {
-        //进入下一关存储血量
-        SaveData();
-
-
-        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
-        if (nextIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextIndex);
-        }
-        else
-        {
-            Debug.Log("已经是最后一个场景了");
-        }
-    }
-
-
-    public void QuitGame() 
-    {
-
-        Application.Quit();
-    }
-
-    public float LoadHealth() 
-    {
-        if (!PlayerPrefs.HasKey("playerHealth"))
-        {
-            PlayerPrefs.SetFloat("playerHealth", 3f);
-        }
-
-        float currentHealth = PlayerPrefs.GetFloat("playerHealth");
-
-        return currentHealth;
-    }
-
-    public void SaveData() 
-    {
-        //PlayerPrefs.SetFloat("playerHealth",player.health);
-        //PlayerPrefs.Save();
-    }
 
 
 
@@ -123,7 +75,7 @@ public class GameManager : MonoBehaviour
 
         if (enemies.Count<=0) 
         {
-            doorExit.OpenDoor();
+            //doorExit.OpenDoor();
         }
 
     }
