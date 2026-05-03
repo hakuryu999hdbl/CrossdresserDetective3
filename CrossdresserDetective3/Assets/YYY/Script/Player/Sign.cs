@@ -5,6 +5,8 @@ using UnityEngine.InputSystem.XInput;
 
 public class Sign : MonoBehaviour
 {
+    public PlayerController playerController;//玩家不落地不能进行交互
+
     public PlayerInputControl playerInput;
 
     public Transform playerTrans;
@@ -95,7 +97,7 @@ public class Sign : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Interactable"))
+        if (other.CompareTag("Interactable")&& playerController.physicsCheck.isGround)
         {
             IInteractable item = other.GetComponent<IInteractable>();
 

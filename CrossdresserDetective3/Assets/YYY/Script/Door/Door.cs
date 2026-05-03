@@ -4,67 +4,125 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    [Header("传送目标")]
+    [Header("对应出口位置")]
     [SerializeField] private Transform target;
 
-    [Header("传送对象")]
-    [SerializeField] private Transform player;
+    [Header("对应出口门")]
+    [SerializeField] private Door targetDoor;
 
+    [Header("玩家")]
+    [SerializeField] private PlayerController player;
 
+    [Header("时间")]
+    [SerializeField] private float enterTime = 0.5f;
+    [SerializeField] private float exitTime = 0.5f;
 
-    Animator anim;
-    BoxCollider2D coll;
-    void Start()
+    [Header("提示")]
+    public GameObject Effect;
+
+    private Animator anim;
+    private bool isTeleporting;//是否传送
+
+    private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
-        coll = GetComponent <BoxCollider2D>();
 
+        if (player == null)
+        {
+            player = FindFirstObjectByType<PlayerController>();
 
-        //coll.enabled = false;
-
-        //GameManager.instance.IsExit(this);//告诉GameManager自己是出口
+        }
     }
-    public void OpenDoor() 
+
+    public void TriggerAction()
+    {
+        if (isTeleporting) return;//位于传送中禁止传送
+        if (target == null || player == null) return;
+
+        StartCoroutine(TeleportRoutine());
+    }
+
+    private IEnumerator TeleportRoutine()
+    {
+        isTeleporting = true;
+
+        // 1. 锁玩家控制
+        player.isTeleporting=true;
+
+        // 2. 当前门开 + 玩家进门淡出
+        PlayOpen();
+        //player.PlayFadeOut();
+        player.playerAnimation.anim.SetTrigger("Teleport");
+
+        yield return new WaitForSeconds(enterTime);
+
+        // 3. 真正传送
+        player.transform.position = target.position;
+
+        // 4. 目标门开 + 玩家出门淡入
+        if (targetDoor != null)
+        {
+            targetDoor.PlayOpen();
+        }
+
+        //player.PlayFadeIn();
+
+        yield return new WaitForSeconds(exitTime);
+
+        // 5. 解锁玩家控制
+        player.isTeleporting = false;
+
+        isTeleporting = false;
+    }
+
+    public void PlayOpen()
+    {
+        if (anim != null)
+        {
+            anim.SetTrigger("Open");
+        }
+    }
+
+
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Effect.SetActive(true);
+        }
+    }
+
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Effect.SetActive(false);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void OpenDoor()
     {
         //anim.Play("Exit_Open");
         //coll.enabled = true;
     }//GameManager 调用
 
 
-    //public void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        GameManager.instance.NextScene();
-    //    }
-    //}
+   
 
-    public void TriggerAction()
-    {
-        //传送到对应门
-
-        if (target == null)
-        {
-            Debug.LogWarning($"{name} 没有设置 Target");
-            return;
-        }
-
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        }
-
-        if (player == null)
-        {
-            Debug.LogWarning("没有找到 Player");
-            return;
-        }
-
-        player.position = target.position;
-
-        if (anim != null)
-        {
-            anim.SetBool("isOpen",true);
-        }
-    }
 }

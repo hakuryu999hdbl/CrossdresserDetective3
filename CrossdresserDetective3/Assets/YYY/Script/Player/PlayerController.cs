@@ -55,10 +55,10 @@ public class PlayerController : MonoBehaviour
     public bool isDead = false;
     public bool wallJump;//蹬墙跳出期间X横向暂时不受方向键控制
     public bool isSlide;
+    public bool isTeleporting = false;//是否传送
 
 
 
-  
 
     // Start is called before the first frame update
     void Start()
@@ -86,13 +86,6 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
-        //playerAnimation.anim.SetBool("dead", isDead);
-        //if (isDead){ return; }
-
-
-
-
-
 
         inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
 
@@ -107,11 +100,7 @@ public class PlayerController : MonoBehaviour
             return;
         }//死亡后不能滑行
 
-
-
-        //_Jump();
-
-        if (!isHurt&&!isAttack) { Move(); }
+        if (!isHurt&&!isAttack&& !isTeleporting) { Move(); }
 
         CheckState();//如果在地上就是有摩擦力，在空中就没有防止卡墙
 
