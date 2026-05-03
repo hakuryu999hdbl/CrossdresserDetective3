@@ -78,6 +78,7 @@ public class EnemyController : MonoBehaviour
 
         TransitionToState(patrolState);//一开始进入巡逻状态
 
+        RandomizeZ();
     }
 
     public virtual void Update()
@@ -289,11 +290,13 @@ public class EnemyController : MonoBehaviour
     {
         if (transform.position.x < targetPoint.position.x)
         {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            transform.localScale = new Vector3(1, 1, 1);
+            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            transform.localScale = new Vector3(-1, 1, 1);
+            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         }
 
     }//反转：追逐目标
@@ -318,9 +321,11 @@ public class EnemyController : MonoBehaviour
         transform.position += new Vector3(patrolDir * patrolSpeed * Time.deltaTime, 0f, 0f);
 
         if (patrolDir > 0)
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            transform.localScale = new Vector3(1, 1, 1);
         else
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            transform.localScale = new Vector3(-1, 1, 1);
     }
 
     public bool IsWallAheadByDir()
@@ -341,9 +346,11 @@ public class EnemyController : MonoBehaviour
         patrolDir *= -1;
 
         if (patrolDir > 0)
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            transform.localScale = new Vector3(1, 1, 1);
+        //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         else
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            transform.localScale = new Vector3(-1, 1, 1);
+        //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
     }
 
 
@@ -527,4 +534,14 @@ public class EnemyController : MonoBehaviour
        
     }
     #endregion
+
+
+    public void RandomizeZ()
+    {
+        anim.transform.position = new Vector3(
+         anim.transform.position.x,
+         anim.transform.position.y,
+        Random.Range(-0.2f, -0.3f)
+    );
+    }
 }
