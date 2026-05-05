@@ -44,6 +44,7 @@ public class LanguageSelector : Selectable, IMoveHandler
         {
             base.OnMove(eventData); // 上下交给导航
         }
+        AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
     }
 
     public void ChangeLanguage(int dir)

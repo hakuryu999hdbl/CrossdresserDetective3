@@ -54,7 +54,7 @@ public class Sign : MonoBehaviour
             signRenderer.enabled = canPress;
 
         if (signSprite != null && playerTrans != null)
-            signSprite.transform.localScale = playerTrans.localScale;
+            signSprite.transform.localScale = playerTrans.localScale/2;
     }
 
     private void OnConfirm(InputAction.CallbackContext obj)

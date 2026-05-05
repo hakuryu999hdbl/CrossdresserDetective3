@@ -57,6 +57,7 @@ public class MenuManager : MonoBehaviour
         if (isSettingOpen)
         {
             CloseSetting();
+            AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
         }
 
     }
@@ -102,7 +103,7 @@ public class MenuManager : MonoBehaviour
 
     public void DeleteAllData()
     {
-
+        AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
 
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();

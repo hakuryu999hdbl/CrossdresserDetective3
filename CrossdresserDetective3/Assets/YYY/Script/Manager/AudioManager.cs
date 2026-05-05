@@ -62,13 +62,13 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    // 🔊 播放音效（不打断/这个主要由UI层按键触发，局内通过FrameEvent自带的AuidoSoure播放范围音效）
+    // 🔊 播放音效（不打断）
     public void PlayFX(AudioClip clip)
     {
         if (clip == null) return;
 
         fxSource.PlayOneShot(clip);
-    }
+    }//这个主要由UI层按键触发，局内通过FrameEvent自带的AuidoSoure播放范围音效）
 
 
 
@@ -92,6 +92,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip SE_falldown;
     public AudioClip SE_Door_Open, SE_Door_Close;
 
+
+    public AudioClip UI_Click, UI_Select;
     #endregion
 
 
