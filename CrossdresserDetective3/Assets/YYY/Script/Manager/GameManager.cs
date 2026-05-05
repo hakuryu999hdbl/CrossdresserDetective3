@@ -9,20 +9,20 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-        //跨场景保存，单独留有一个
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
 
 
         //player = FindFirstObjectByType<PlayerController>();
         //doorExit = FindFirstObjectByType<Door>();
     }
+
+
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Level_1, true);
+    }
+
 
     public void IsPlayer(PlayerController controller) 
     {

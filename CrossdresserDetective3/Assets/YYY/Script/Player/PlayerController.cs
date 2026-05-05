@@ -184,6 +184,8 @@ public class PlayerController : MonoBehaviour
     #region
     [Header("受伤死亡")]
     public float hurtForce;
+    public FrameEvent_Audio frameEvent_Audio;
+    public GameObject Effect_Blood;
 
     #region  旧击退
     public void GetHurt(Transform attacker)
@@ -219,9 +221,22 @@ public class PlayerController : MonoBehaviour
             ForceMode2D.Impulse
         );
 
+        PlayBloodEffect();
     }
 
+    void PlayBloodEffect()
+    {
+        GameObject blood = Instantiate(
+            Effect_Blood,
+            transform.position,
+            Quaternion.identity
+        );
 
+        frameEvent_Audio._Attack_blood();
+
+
+        Destroy(blood, 1f); // 1秒后销毁
+    }
 
 
 

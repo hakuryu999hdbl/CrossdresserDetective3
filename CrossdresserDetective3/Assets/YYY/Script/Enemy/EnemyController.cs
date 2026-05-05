@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
 
         rb = GetComponent<Rigidbody2D>();
-
+        coll = GetComponent<CapsuleCollider2D>();
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
 
     private void Awake()
@@ -391,8 +391,11 @@ public class EnemyController : MonoBehaviour
     [Header("受伤死亡")]
     //Transform attacker;
     //public bool isHurt = false;
-    public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
     //public float hurtForce=4.5f;
+    public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
+    public CapsuleCollider2D coll;
+    public FrameEvent_Audio frameEvent_Audio;
+    public GameObject Effect_Blood;
 
     #region 旧击退
     // public void OnTakeDamage(Transform attackTrans) 
@@ -512,13 +515,25 @@ public class EnemyController : MonoBehaviour
             ForceMode2D.Impulse
         );
 
-       
 
+        PlayBloodEffect();
 
     }
 
 
+    void PlayBloodEffect()
+    {
+        GameObject blood = Instantiate(
+            Effect_Blood,
+            transform.position,
+            Quaternion.identity
+        );
 
+        frameEvent_Audio._Attack_blood();
+
+
+        Destroy(blood, 1f); // 1秒后销毁
+    }
 
 
 
@@ -531,7 +546,10 @@ public class EnemyController : MonoBehaviour
         //gameObject.layer = 2;//ignoreRaycast
         gameObject.layer = LayerMask.NameToLayer("Enviroment");
         CheckArea?.SetActive(false);
-       
+
+        //防止尸体堵在门前
+        coll.enabled = false;
+        rb.bodyType = RigidbodyType2D.Static;
     }
     #endregion
 

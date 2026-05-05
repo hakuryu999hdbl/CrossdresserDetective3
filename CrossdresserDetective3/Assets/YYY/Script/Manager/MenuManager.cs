@@ -35,7 +35,10 @@ public class MenuManager : MonoBehaviour
 
 
     }
-
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Theme, true);
+    }
     private void OnEnable()
     {
 

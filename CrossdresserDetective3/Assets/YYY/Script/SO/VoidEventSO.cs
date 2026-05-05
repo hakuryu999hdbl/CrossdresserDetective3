@@ -10,6 +10,6 @@ public class VoidEventSO : ScriptableObject
 
     public void RaiseEvent()
     {
-        OnEventRaised?.Invoke();//事件的调用
+        OnEventRaised?.Invoke();//相机震动事件的调用
     }
 }

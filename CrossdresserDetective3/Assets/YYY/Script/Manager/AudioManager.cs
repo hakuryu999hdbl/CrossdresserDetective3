@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
 
 
     /// <summary>
-    /// �����T��
+    /// 声音控制
     /// </summary>
     #region
     public AudioMixer Mixer;
@@ -40,39 +40,64 @@ public class AudioManager : MonoBehaviour
 
 
 
+    public static AudioManager Instance;
 
-
-
-
-
-
-
-    public AudioSource BGMSource;
-    public AudioSource FXSource;
-    public PlayAudioEventSO FXEvent;
-    public PlayAudioEventSO BGMEvent;
-
-    private void OnEnable()
+    private void Awake()
     {
-        FXEvent.OnEventRaised += OnFXEvent;
-        BGMEvent.OnEventRaised += OnBGMEvent;
+        Instance = this;
     }
 
-    private void OnDisable()
+
+
+    public AudioSource bgmSource;
+    public AudioSource fxSource;
+
+    // 🎵 播放BGM（可循环）
+    public void PlayBGM(AudioClip clip, bool loop = true)
     {
-        FXEvent.OnEventRaised -= OnFXEvent;
-        BGMEvent.OnEventRaised -= OnBGMEvent;
+        if (clip == null) return;
+
+        bgmSource.clip = clip;
+        bgmSource.loop = loop;
+        bgmSource.Play();
     }
 
-    private void OnFXEvent(AudioClip clip)
+    // 🔊 播放音效（不打断/这个主要由UI层按键触发，局内通过FrameEvent自带的AuidoSoure播放范围音效）
+    public void PlayFX(AudioClip clip)
     {
-        FXSource.clip = clip;
-        FXSource.Play();
+        if (clip == null) return;
+
+        fxSource.PlayOneShot(clip);
     }
 
-    private void OnBGMEvent(AudioClip clip)
-    {
-        BGMSource.clip = clip;
-        BGMSource.Play();
-    }
+
+
+    /// <summary>
+    /// 声音
+    /// </summary>
+    #region
+    [Header("效果音")]
+    public AudioClip BGM_Theme;
+    public AudioClip BGM_Level_1;
+
+    public AudioClip Attack_sword_chop1, Attack_sword_chop2, Attack_sword_chop3, Attack_katana, Attack_katana_in, Attack_katana_draw,
+                     Attack_sword_clash2, Attack_sword_clash3, Attack_sword_clash4,
+                     Attack_blood1, Attack_blood2, Attack_blood3;
+
+
+    public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
+
+
+    public AudioClip SE_WalkClip_1, SE_WalkClip_2, SE_RunClip_1, SE_RunClip_2;
+    public AudioClip SE_falldown;
+    public AudioClip SE_Door_Open, SE_Door_Close;
+
+    #endregion
+
+
+
+
+
+
+
 }

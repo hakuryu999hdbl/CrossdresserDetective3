@@ -22,6 +22,9 @@ public class Character : MonoBehaviour, IDamageable
     public UnityEvent<Transform> OnTakeDamge;
     public UnityEvent OnDie;
 
+
+
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -86,10 +89,17 @@ public class Character : MonoBehaviour, IDamageable
             OnDie?.Invoke();
         }
 
+
+
         //传输Character过去
         OnHealthChange?.Invoke(this);
 
     }
+
+ 
+
+
+
 
     void TriggerInvulnerable() 
     {

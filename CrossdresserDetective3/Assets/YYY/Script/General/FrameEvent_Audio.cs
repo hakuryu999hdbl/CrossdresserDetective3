@@ -1,0 +1,130 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FrameEvent_Audio : MonoBehaviour
+{
+    /// <summary>
+    /// 声音
+    /// </summary>
+    #region
+    [Header("声音")]
+
+    AudioManager AudioManager;
+    public AudioSource audioS;
+
+    void Start()
+    {
+        AudioManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<AudioManager>();
+    }
+
+
+
+    public void _Attack_sword_chop()
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_sword_chop1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_sword_chop2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Attack_sword_chop3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.Attack_katana);
+                break;
+        }
+    }
+
+    //public void _Attack_katana_in() { audioS.PlayOneShot(AudioManager.Attack_katana_in); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+    //public void _Attack_katana_draw() { audioS.PlayOneShot(AudioManager.Attack_katana_draw); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+
+    //public void _Attack_sword_clash2() { audioS.PlayOneShot(AudioManager.Attack_sword_clash2); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+    //public void _Attack_sword_clash3() { audioS.PlayOneShot(AudioManager.Attack_sword_clash3); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+    //public void _Attack_sword_clash4() { audioS.PlayOneShot(AudioManager.Attack_sword_clash4); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+
+    //public void _Attack_blood1() { audioS.PlayOneShot(AudioManager.Attack_blood1); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+    //public void _Attack_blood2() { audioS.PlayOneShot(AudioManager.Attack_blood2); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+    //public void _Attack_blood3() { audioS.PlayOneShot(AudioManager.Attack_blood3); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+
+
+
+
+
+
+    public void _SE_HighHeels_Walk()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            audioS.PlayOneShot(AudioManager.SE_WalkClip_1);
+        }
+        else
+        {
+            audioS.PlayOneShot(AudioManager.SE_WalkClip_2);
+        }
+
+    }
+    public void _SE_HighHeels_Run()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            audioS.PlayOneShot(AudioManager.SE_RunClip_1);
+        }
+        else
+        {
+            audioS.PlayOneShot(AudioManager.SE_RunClip_2);
+        }
+
+    }
+
+    public void _SE_falldown() { audioS.PlayOneShot(AudioManager.SE_falldown); }
+
+    public void _SE_Door_Open() { audioS.PlayOneShot(AudioManager.SE_Door_Open); }
+    public void _SE_Door_Close() { audioS.PlayOneShot(AudioManager.SE_Door_Close); }
+
+    public void _YYY_attack() 
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.YYY_attack1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.YYY_attack2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.YYY_attack3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.YYY_attack4);
+                break;
+        }
+    }
+
+
+
+
+
+
+    public void _Attack_blood() 
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_blood1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_blood2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Attack_blood3);
+                break;
+        }
+    }//这个由Player和Enemy中代码各自调用
+
+
+    #endregion
+}
