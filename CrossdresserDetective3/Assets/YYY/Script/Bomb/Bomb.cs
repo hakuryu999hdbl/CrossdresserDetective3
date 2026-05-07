@@ -54,11 +54,11 @@ public class Bomb : MonoBehaviour
 
         Instantiate(Blast, transform.position, Quaternion.identity);
 
-        coll.enabled = false;//防止自己被炸到
+       // coll.enabled = false;//防止自己被炸到
         Collider2D[] aroundObjects = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
-
-      
-        rb.gravityScale = 0;//防止掉出屏幕
+       //
+       //
+       // rb.gravityScale = 0;//防止掉出屏幕
 
         foreach (var item in aroundObjects)
         {

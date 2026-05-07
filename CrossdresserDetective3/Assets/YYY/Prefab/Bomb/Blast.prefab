@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2107691251
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 11
   m_Sprite: {fileID: 2007176907, guid: 6ed8b10589612ea418b65ecbed0bf523, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,6 +129,10 @@ MonoBehaviour:
   power: 0
   scale: 0
   TargetDestory: {fileID: 2893791978365086630}
+  AttackArea_1: {fileID: 0}
+  AttackArea_2: {fileID: 0}
+  AttackArea_3: {fileID: 0}
+  playerController: {fileID: 0}
 --- !u!114 &3967692169655186708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +148,11 @@ MonoBehaviour:
   damage: 100
   attackRange: 0
   attackRate: 0
+  knockbackX: 10
+  knockbackY: 10
+  hurtTime: 0.2
+  clearVelocity: 1
+  bombAvailable: 1
 --- !u!58 &1752447313513450748
 CircleCollider2D:
   m_ObjectHideFlags: 0
