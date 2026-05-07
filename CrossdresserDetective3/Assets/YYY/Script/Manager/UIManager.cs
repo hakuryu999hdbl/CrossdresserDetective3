@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
 
     [Header("暂停菜单")]
     public GameObject PauseMenu;
-    public GameObject firstSelected; // X 或 Master Slider
+    public GameObject firstSelected; //进入设置页面最先选中 X 或 Master Slider
     private PlayerInputControl inputControl;//UI端多端输入
 
     private bool isPaused=false;
@@ -88,6 +88,7 @@ public class UIManager : MonoBehaviour
         playerController.EnableGameplayInput();
         // 关闭 UI 输入
         inputControl.Disable();
+        firstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
     }
     public void BackToMenu()

@@ -84,6 +84,7 @@ public class MenuManager : MonoBehaviour
         SettingMenu.SetActive(true);
         MainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
         EventSystem.current.SetSelectedGameObject(settingFirstSelected);
 
         isSettingOpen = true;
@@ -91,6 +92,7 @@ public class MenuManager : MonoBehaviour
 
     public void CloseSetting()
     {
+        settingFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(settingButton);
 
