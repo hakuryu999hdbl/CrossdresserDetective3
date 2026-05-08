@@ -53,6 +53,13 @@ public class ButtonSound : MonoBehaviour,
     {
         if (!CanPlay()) return;
 
+        if (GameFlowData.suppressNextClickSound)
+        {
+            GameFlowData.suppressNextClickSound = false;
+            return;
+        }
+        //商店购买按下音吞掉
+
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
     }
 
@@ -60,6 +67,13 @@ public class ButtonSound : MonoBehaviour,
     public void OnSubmit(BaseEventData eventData)
     {
         if (!CanPlay()) return;
+
+        if (GameFlowData.suppressNextClickSound)
+        {
+            GameFlowData.suppressNextClickSound = false;
+            return;
+        }
+        //商店购买按下音吞掉
 
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
     }
