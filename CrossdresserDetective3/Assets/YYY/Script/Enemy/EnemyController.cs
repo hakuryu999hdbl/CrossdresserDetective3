@@ -190,7 +190,7 @@ public class EnemyController : MonoBehaviour
 
         FilpDirection();
 
-        TryJumpObstacle();
+        //TryJumpObstacle();//暂时关闭跳跃
 
 
     }//前往目标
