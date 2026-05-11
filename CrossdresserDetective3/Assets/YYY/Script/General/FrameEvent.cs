@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using Spine;
-
+using UnityEngine.InputSystem;
 
 public class FrameEvent : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class FrameEvent : MonoBehaviour
 
         // 初始皮肤
         ShowCurrentAll(
-            1, // 吊袜带
+            0, // 吊袜带
             1, // 衣服
             0, // 手套：0 = 不显示
             0, // 内裤：0 = 不显示
@@ -40,7 +40,7 @@ public class FrameEvent : MonoBehaviour
     void Update()
     {
         // 按 T 随机换装测试
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Keyboard.current.tKey.wasPressedThisFrame)
         {
             RandomTestSkin();
         }
