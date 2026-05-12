@@ -14,6 +14,7 @@ public class SkyboxSample : MonoBehaviour
         //if (Random.Range(0, 2) == 0) { PlayerPrefs.SetInt("Time", 0); }
         //else { PlayerPrefs.SetInt("Time", 1); }
 
+        //Black();
         DayOrNight();
 
 
@@ -81,5 +82,12 @@ public class SkyboxSample : MonoBehaviour
         mainCamera.clearFlags = CameraClearFlags.SolidColor;//用纯色
         mainCamera.backgroundColor = Color.white;
         dayLight.intensity = 0.2f;
+    }
+
+    public void Black()
+    {
+        mainCamera.clearFlags = CameraClearFlags.SolidColor;//用纯色
+        mainCamera.backgroundColor = Color.black;
+        dayLight.intensity = 1f;
     }
 }
