@@ -2058,7 +2058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &231662299
 Transform:
   m_ObjectHideFlags: 0
@@ -3350,7 +3350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4677499506108583813, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6501189024370597219, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_Mesh
@@ -5182,57 +5182,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 603746576}
-    m_ColliderPaths:
-    - - X: 410000000
-        Y: 50000000
-      - X: 400000000
-        Y: 50000000
-      - X: 400000000
-        Y: -10000000
-      - X: 70000000
-        Y: -10000000
-      - X: 70000000
-        Y: 50000000
-      - X: 140000000
-        Y: 50000000
-      - X: 140000000
-        Y: 130000000
-      - X: -140000000
-        Y: 130000000
-      - X: -140000000
-        Y: -10000000
-      - X: -310000000
-        Y: -10000000
-      - X: -310000000
-        Y: -150000000
-      - X: 410000000
-        Y: -150000000
-    - - X: -130000000
-        Y: 60000000
-      - X: -130000000
-        Y: 120000000
-      - X: 130000000
-        Y: 120000000
-      - X: 130000000
-        Y: 60000000
-    - - X: -130000000
-        Y: -10000000
-      - X: -130000000
-        Y: 50000000
-      - X: 60000000
-        Y: 50000000
-      - X: 60000000
-        Y: -10000000
-    - - X: -130000000
-        Y: -80000000
-      - X: -130000000
-        Y: -20000000
-      - X: 10000000
-        Y: -20000000
-      - X: 10000000
-        Y: -80000000
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: 40.999973, y: -15}
@@ -17550,7 +17500,45 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 834151864}
+    m_ColliderPaths:
+    - - X: 140000000
+        Y: 130000000
+      - X: -20000000
+        Y: 130000000
+      - X: -20000000
+        Y: 200000000
+      - X: -140000000
+        Y: 200000000
+      - X: -140000000
+        Y: -20000000
+      - X: 140000000
+        Y: -20000000
+    - - X: -130000000
+        Y: 130000000
+      - X: -130000000
+        Y: 190000000
+      - X: -30000000
+        Y: 190000000
+      - X: -30000000
+        Y: 130000000
+    - - X: -130000000
+        Y: 60000000
+      - X: -130000000
+        Y: 120000000
+      - X: 130000000
+        Y: 120000000
+      - X: 130000000
+        Y: 60000000
+    - - X: -130000000
+        Y: -10000000
+      - X: -130000000
+        Y: 50000000
+      - X: 130000000
+        Y: 50000000
+      - X: 130000000
+        Y: -10000000
   m_CompositePaths:
     m_Paths:
     - - {x: 13.999971, y: -2}
@@ -34264,7 +34252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1361802753
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35899,7 +35887,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1590026197
 Transform:
   m_ObjectHideFlags: 0
@@ -36870,7 +36858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4677499506108583813, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6501189024370597219, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_Mesh
@@ -37072,7 +37060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0ac91536fd48c43ba6ade4faf43f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bottomOffset: {x: 0, y: -1}
+  bottomOffset: {x: 0, y: -0.75}
   leftOffset: {x: -0.39, y: 0}
   rightOffset: {x: 0.39, y: 0}
   isGround: 0
@@ -37106,8 +37094,13 @@ MonoBehaviour:
   wallJumpForce: 8
   slideDistance: 4.5
   slideSpeed: 0.3
+  wallPowerCost: 1
+  wallPowerCostInterval: 0.2
+  wallPowerTimer: 0
+  wallSlideSpeed: -1.5
   normal: {fileID: 6200000, guid: 7ad6c9cea6270fa4f812cc25f6ef2165, type: 2}
   wall: {fileID: 6200000, guid: 00a11df7b1ee5f741a02353f1d621e08, type: 2}
+  wall_Stop: {fileID: 6200000, guid: 7f3d6cee3fb5b7a4caff1964c8f661b6, type: 2}
   playerAnimation: {fileID: 500547784}
   jumpFX: {fileID: 336022631}
   landFX: {fileID: 312256630}
@@ -37118,6 +37111,7 @@ MonoBehaviour:
   wallJump: 0
   isSlide: 0
   isTeleporting: 0
+  isWallCling: 0
   hurtForce: 8
   frameEvent_Audio: {fileID: 500547792}
   Effect_Blood: {fileID: 1622069723160390679, guid: 3cbb102f876966040a9c79278e3e6a63, type: 3}
@@ -37206,7 +37200,8 @@ MonoBehaviour:
   currentHealth: 0
   maxPower: 15
   currentPower: 0
-  powerRecoverSpeed: 1
+  powerRecoverSpeed: 2
+  StopPowerRecover: 0
   invulnerableDuration: 0.5
   invulnerable: 0
   OnHealthChange:
@@ -37799,7 +37794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1776649182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38045,7 +38040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4677499506108583813, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6501189024370597219, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_Mesh

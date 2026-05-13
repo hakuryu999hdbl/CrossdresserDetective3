@@ -11,6 +11,7 @@ public class Character : MonoBehaviour, IDamageable
     public float maxPower;
     public float currentPower;
     public float powerRecoverSpeed;
+    public bool StopPowerRecover=false;//在墙上不能回复体力
 
     [Header("受伤无敌")]
     public float invulnerableDuration;//无敌时长
@@ -31,6 +32,7 @@ public class Character : MonoBehaviour, IDamageable
         currentPower = maxPower;
         //传输Character过去
         OnHealthChange?.Invoke(this);
+
     }
 
     private void Update()
@@ -46,9 +48,15 @@ public class Character : MonoBehaviour, IDamageable
 
 
 
-        if (currentPower < maxPower) 
+        if (currentPower < maxPower)
         {
-            currentPower += Time.deltaTime * powerRecoverSpeed;
+            if (!StopPowerRecover)
+            {
+                currentPower += powerRecoverSpeed * Time.deltaTime;
+                currentPower = Mathf.Clamp(currentPower, 0, maxPower);
+
+                OnHealthChange?.Invoke(this);
+            }
         }//恢复体力值
     }
 
@@ -114,6 +122,7 @@ public class Character : MonoBehaviour, IDamageable
     public void OnSlide(int cost) 
     {
         currentPower -= cost;
+        currentPower = Mathf.Clamp(currentPower, 0, maxPower);
 
         //传输Character过去
         OnHealthChange?.Invoke(this);

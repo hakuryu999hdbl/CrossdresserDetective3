@@ -32,7 +32,10 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("onWall", physicsCheck.onWall);//每帧检测玩家是否处于贴墙
         anim.SetBool("isSlide", playerController.isSlide);//每帧检测玩家是滑铲
 
-       
+
+        anim.SetBool("isWallCling", playerController.isWallCling);//每帧检测玩家是滑铲
+
+
     }
 
     public void PlayHurt() 

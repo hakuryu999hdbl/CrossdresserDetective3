@@ -14,8 +14,8 @@ public class SkyboxSample : MonoBehaviour
         //if (Random.Range(0, 2) == 0) { PlayerPrefs.SetInt("Time", 0); }
         //else { PlayerPrefs.SetInt("Time", 1); }
 
-        //Black();
-        DayOrNight();
+        Black();
+        //DayOrNight();
 
 
     }

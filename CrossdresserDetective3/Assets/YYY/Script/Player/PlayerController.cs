@@ -28,16 +28,24 @@ public class PlayerController : MonoBehaviour
     public float slideDistance;//滑铲距离
     public float slideSpeed;//滑铲速度
 
+    [Header("挂墙")]
+    public int wallPowerCost = 1;
+    public float wallPowerCostInterval = 0.2f;
+    public float wallPowerTimer;
+    public float wallSlideSpeed = -1.5f;
+
+
+
     //[Header("跳跃相关")]
     //public bool isJump;//是否位于跳跃中
 
 
-   
+
 
     [Header("物理材质")]
     public PhysicsMaterial2D normal;//在地面的材质防止滑动
     public PhysicsMaterial2D wall;//防止卡墙移动
-
+    public PhysicsMaterial2D wall_Stop;//在墙上停住
 
     [Header("死亡判定")]
     public PlayerAnimation playerAnimation;
@@ -56,7 +64,7 @@ public class PlayerController : MonoBehaviour
     public bool wallJump;//蹬墙跳出期间X横向暂时不受方向键控制
     public bool isSlide;
     public bool isTeleporting = false;//是否传送
-
+    public bool isWallCling;   // 是否抓/蹬在墙上停住
 
 
 
@@ -150,17 +158,78 @@ public class PlayerController : MonoBehaviour
 
     public void CheckState()
     {
-        coll.sharedMaterial = physicsCheck.isGround ? normal : wall;//简写如果在地面就使用有摩擦力的这一版，没有就不是
-
-        if (physicsCheck.onWall)
+        // 默认材质
+        if (physicsCheck.isGround)
         {
+            isWallCling = false;
+            coll.sharedMaterial = normal;
+        
+            character.StopPowerRecover = false;//体力恢复   
+        }
+        else if (physicsCheck.onWall && character.currentPower > 0)
+        {
+            // 在墙上，并且还有体力：停住
+            isWallCling = true;
+            coll.sharedMaterial = wall_Stop;
+
+            //rb.velocity = new Vector2(0, 0);
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);//贴在墙上下落速度减慢
 
+
+            //为了一格一格扣体力
+            wallPowerTimer += Time.fixedDeltaTime;
+            if (wallPowerTimer >= wallPowerCostInterval)
+            {
+                wallPowerTimer = 0;
+
+
+                character.OnSlide(wallPowerCost);
+                character.StopPowerRecover = true;//墙上扣体力不恢复     
+            }
+        
+             
+        }
+        else if (physicsCheck.onWall && character.currentPower <= 0)
+        {
+            // 体力耗尽：缓慢滑落
+            isWallCling = false;
+            coll.sharedMaterial = wall;
+
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);//贴在墙上下落速度减慢
+            //rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, wallSlideSpeed));
+
+            character.StopPowerRecover = true;//墙上扣体力不恢复   
         }
         else
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+            // 普通空中
+            isWallCling = false;
+            coll.sharedMaterial = wall;
+            wallPowerTimer = 0;
         }
+
+
+
+
+
+
+
+        //coll.sharedMaterial = physicsCheck.isGround ? normal : wall;//简写如果在地面就使用有摩擦力的这一版，没有就不是
+        //
+        //if (physicsCheck.onWall)
+        //{
+        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);//贴在墙上下落速度减慢
+        //
+        //
+        //}
+        //else
+        //{
+        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        //
+        //
+        //}
+
+
 
         if (wallJump && rb.velocity.y < 0f)
         {
