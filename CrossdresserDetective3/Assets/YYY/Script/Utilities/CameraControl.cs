@@ -6,18 +6,105 @@ using Cinemachine;
 public class CameraControl : MonoBehaviour
 {
     private CinemachineConfiner2D confiner2D;
+    private CinemachineVirtualCamera virtualCamera;
     public CinemachineImpulseSource impulseSource;
     public VoidEventSO cameraShakeEvent;
+
+
+
+    [Header("Zoom")]
+    float normalSize = 6f;
+    float zoomSize = 3f;
+    float zoomSpeed = 8f;
+
+    private bool isZoomIn;
+    private float targetSize;
+
+
+
+
+
+
+
+
+
     void Awake()
     {
         confiner2D = GetComponent<CinemachineConfiner2D>();
+        virtualCamera = GetComponent<CinemachineVirtualCamera>();
+
     }
 
     private void Start()
     {
+        GetNewCameraBounds();//设置相机边界
+
+
+        //获取缩小放大距离
+        if (virtualCamera != null)
+        {
+            normalSize = virtualCamera.m_Lens.OrthographicSize;
+            targetSize = normalSize;
+        }
+    }
+    private void Update()
+    {
+        if (virtualCamera == null) return;
+
+        virtualCamera.m_Lens.OrthographicSize =
+            Mathf.Lerp(
+                virtualCamera.m_Lens.OrthographicSize,
+                targetSize,
+                Time.deltaTime * zoomSpeed
+            );
+    }
+
+
+
+    //放大缩小镜头
+    public void EnableConfiner()
+    {
         GetNewCameraBounds();
     }
 
+    public void DisableConfiner()
+    {
+        if (confiner2D == null) return;
+
+        confiner2D.m_BoundingShape2D = null;
+        confiner2D.InvalidateCache();
+    }
+
+    public void ToggleZoom()
+    {
+        isZoomIn = !isZoomIn;
+        targetSize = isZoomIn ? zoomSize : normalSize;
+
+        if (isZoomIn)
+            DisableConfiner();
+        else
+            EnableConfiner();
+    }
+
+    public void SetZoom(bool zoomIn)
+    {
+        isZoomIn = zoomIn;
+        targetSize = isZoomIn ? zoomSize : normalSize;
+
+        if (isZoomIn)
+            DisableConfiner();
+        else
+            EnableConfiner();
+    }
+
+
+
+
+
+
+
+
+    //设置相机边界
     private void GetNewCameraBounds() 
     {
         var obj = GameObject.FindGameObjectWithTag("Bounds");
@@ -29,6 +116,9 @@ public class CameraControl : MonoBehaviour
     }
 
 
+
+
+    //相机抖动SO事件
     private void OnEnable()
     {
         cameraShakeEvent.OnEventRaised += OnCameraShakeEvent;

@@ -89,6 +89,15 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ZoomCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""949eb356-888d-446e-a981-a1740763533a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -386,6 +395,28 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""435bc42f-689e-4a25-984a-c588f0027825"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ZoomCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5bd4102-ea9e-428c-8781-6e7435015915"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ZoomCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1057,6 +1088,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
         m_Gameplay_Slide = m_Gameplay.FindAction("Slide", throwIfNotFound: true);
         m_Gameplay_Confirm = m_Gameplay.FindAction("Confirm", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_ZoomCamera = m_Gameplay.FindAction("ZoomCamera", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1137,6 +1169,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Slide;
     private readonly InputAction m_Gameplay_Confirm;
     private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_ZoomCamera;
     public struct GameplayActions
     {
         private @PlayerInputControl m_Wrapper;
@@ -1148,6 +1181,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
         public InputAction @Slide => m_Wrapper.m_Gameplay_Slide;
         public InputAction @Confirm => m_Wrapper.m_Gameplay_Confirm;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @ZoomCamera => m_Wrapper.m_Gameplay_ZoomCamera;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1178,6 +1212,9 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @ZoomCamera.started += instance.OnZoomCamera;
+            @ZoomCamera.performed += instance.OnZoomCamera;
+            @ZoomCamera.canceled += instance.OnZoomCamera;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -1203,6 +1240,9 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @ZoomCamera.started -= instance.OnZoomCamera;
+            @ZoomCamera.performed -= instance.OnZoomCamera;
+            @ZoomCamera.canceled -= instance.OnZoomCamera;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -1392,6 +1432,7 @@ public partial class @PlayerInputControl: IInputActionCollection2, IDisposable
         void OnSlide(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnZoomCamera(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -363,6 +363,7 @@ public class PlayerController : MonoBehaviour
 
         inputControl.Gameplay.Pause.started += OnPause;
 
+        inputControl.Gameplay.ZoomCamera.started += OnZoomCamera;
     }
 
   
@@ -503,6 +504,16 @@ public class PlayerController : MonoBehaviour
     private void OnPause(InputAction.CallbackContext ctx)
     {
         UIManager.instance.TogglePause();
+    }
+
+
+    [Header("放大缩小镜头")]
+    public CameraControl cameraControl;
+
+    private void OnZoomCamera(InputAction.CallbackContext ctx)
+    {
+      
+            cameraControl.ToggleZoom();
     }
     #endregion
 }

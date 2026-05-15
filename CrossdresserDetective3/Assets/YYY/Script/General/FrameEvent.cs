@@ -26,9 +26,9 @@ public class FrameEvent : MonoBehaviour
 
         // 初始皮肤
         ShowCurrentAll(
-            0, // 吊袜带
-            2, // 衣服
-            0, // 手套：0 = 不显示
+            1, // 吊袜带
+            1, // 衣服
+            1, // 手套：0 = 不显示
             1, // 内裤：0 = 不显示
             1, // 鞋子
             0, // 裙子
