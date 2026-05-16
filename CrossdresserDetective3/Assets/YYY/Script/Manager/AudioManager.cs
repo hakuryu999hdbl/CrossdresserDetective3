@@ -82,8 +82,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip Attack_sword_chop1, Attack_sword_chop2, Attack_sword_chop3, Attack_katana, Attack_katana_in, Attack_katana_draw,
                      Attack_sword_clash2, Attack_sword_clash3, Attack_sword_clash4,
-                     Attack_blood1, Attack_blood2, Attack_blood3;
-
+                     Attack_blood1, Attack_blood2, Attack_blood3,
+                     Attack_bomb_bounce_1, Attack_bomb_bounce_2, Attack_bomb_bounce_3;
 
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
 

@@ -8,4 +8,9 @@ public class JumpFX : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public void DestroyThis()
+    {
+        Destroy(this.gameObject);
+    }
 }

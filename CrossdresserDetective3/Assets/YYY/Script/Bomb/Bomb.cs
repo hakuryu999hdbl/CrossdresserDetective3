@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class Bomb : MonoBehaviour
 {
+
     private Animator anim;
 
     public float startTime;
@@ -55,9 +58,9 @@ public class Bomb : MonoBehaviour
         Instantiate(Blast, transform.position, Quaternion.identity);
 
        // coll.enabled = false;//防止自己被炸到
+
         Collider2D[] aroundObjects = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
-       //
-       //
+
        // rb.gravityScale = 0;//防止掉出屏幕
 
         foreach (var item in aroundObjects)
@@ -70,13 +73,9 @@ public class Bomb : MonoBehaviour
             {
                 item.GetComponent<Bomb>().TurnOn();
             }
-
-
-            //if (item.CompareTag("Player"))
-            //{
-            //    
-            //}
         }
+
+        OnBlast?.Invoke(transform);
     }
 
     public void DestoryThis() 
@@ -84,7 +83,7 @@ public class Bomb : MonoBehaviour
         Destroy(gameObject);
 
     }
-
+    public UnityEvent<Transform> OnBlast;//爆炸抖动相机
 
     public void TurnOff() 
     {
@@ -98,4 +97,17 @@ public class Bomb : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Bomb");
         startTime = Time.time;
     }
+
+    [Header("碰撞地板墙壁弹跳发出声音")]
+    public LayerMask groundLayer;
+    public FrameEvent_Audio frameEvent_Audio;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & groundLayer) != 0)
+        {
+            frameEvent_Audio._Attack_bomb_bounce();
+        }
+    }
+
 }

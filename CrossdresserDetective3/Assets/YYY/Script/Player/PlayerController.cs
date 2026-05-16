@@ -411,6 +411,11 @@ public class PlayerController : MonoBehaviour
     #region  攻击触发
     [Header("攻击触发/炸弹")]
     public GameObject bombPrefab;
+    float throwForce = 16f;//投掷炸弹力度
+
+
+
+
     public float nextAttack = 0;//攻击冷却
     public float attackRate;//攻击频率
     private float attackPressTime;
@@ -437,7 +442,28 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.time > nextAttack)
         {
-            Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
+            //Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
+
+            //将炸弹扔出去
+            GameObject bomb =
+           Instantiate(
+               bombPrefab,
+               transform.position,
+               Quaternion.identity
+           );
+
+            Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                Vector2 dir =
+                    new Vector2(transform.localScale.x * 0.6f, 1f).normalized;
+
+                rb.velocity = dir * throwForce;
+            }
+
+
+
 
             nextAttack = Time.time + attackRate;
         }

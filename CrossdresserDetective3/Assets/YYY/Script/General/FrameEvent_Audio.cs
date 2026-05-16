@@ -125,6 +125,20 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }//这个由Player和Enemy中代码各自调用
 
-
+    public void _Attack_bomb_bounce()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_3);
+                break;
+        }
+    }//这个由Bomb中代码调用
     #endregion
 }

@@ -354,7 +354,7 @@ public class FrameEvent : MonoBehaviour
     #endregion
 
 
-    #region 爆炸/野猪死后消灭本体
+    #region 野猪死后消灭本体
     [Header("死后消灭本体")]
     public GameObject TargetDestory;
     public void DestroyAfterAnimation()
