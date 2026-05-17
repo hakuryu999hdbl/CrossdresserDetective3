@@ -542,6 +542,8 @@ public class EnemyController : MonoBehaviour
 
     public void OnDie() 
     {
+        PlayBloodEffect();
+
         isDead = true;
         //gameObject.layer = 2;//ignoreRaycast
         gameObject.layer = LayerMask.NameToLayer("Enviroment");
@@ -550,6 +552,7 @@ public class EnemyController : MonoBehaviour
         //防止尸体堵在门前
         //coll.enabled = false;
         //rb.bodyType = RigidbodyType2D.Static;
+
     }
     #endregion
 

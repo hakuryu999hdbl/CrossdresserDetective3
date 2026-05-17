@@ -65,6 +65,7 @@ public class CameraControl : MonoBehaviour
     public void EnableConfiner()
     {
         GetNewCameraBounds();
+
     }
 
     public void DisableConfiner()
@@ -73,34 +74,27 @@ public class CameraControl : MonoBehaviour
 
         confiner2D.m_BoundingShape2D = null;
         confiner2D.InvalidateCache();
+
     }
 
     public void ToggleZoom()
     {
         isZoomIn = !isZoomIn;
+
         targetSize = isZoomIn ? zoomSize : normalSize;
 
         if (isZoomIn)
+        {
             DisableConfiner();
-        else
+            UIManager.instance.HidePortrait();
+        }
+        else 
+        {
             EnableConfiner();
+            UIManager.instance.ShowPortrait();
+        }
+           
     }
-
-    public void SetZoom(bool zoomIn)
-    {
-        isZoomIn = zoomIn;
-        targetSize = isZoomIn ? zoomSize : normalSize;
-
-        if (isZoomIn)
-            DisableConfiner();
-        else
-            EnableConfiner();
-    }
-
-
-
-
-
 
 
 

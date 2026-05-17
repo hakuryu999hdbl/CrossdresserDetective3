@@ -31,7 +31,7 @@ public class FrameEvent : MonoBehaviour
             1, // 手套：0 = 不显示
             1, // 内裤：0 = 不显示
             1, // 鞋子
-            0, // 裙子
+            1, // 裙子
             1, // 丝袜：0 = 不显示
             1  // 近战武器
         );
@@ -42,7 +42,20 @@ public class FrameEvent : MonoBehaviour
         // 按 T 随机换装测试
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            RandomTestSkin();
+            //RandomTestSkin();
+
+
+            ShowCurrentAll(
+          1, // 吊袜带
+          1, // 衣服
+          1, // 手套：0 = 不显示
+          1, // 内裤：0 = 不显示
+          1, // 鞋子
+          0, // 裙子
+          1, // 丝袜：0 = 不显示
+          1  // 近战武器
+      );
+
         }
     }
     public void RandomTestSkin()

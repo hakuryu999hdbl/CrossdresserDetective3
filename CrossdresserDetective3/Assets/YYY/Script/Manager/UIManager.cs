@@ -111,10 +111,27 @@ public class UIManager : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 放大显示人体
+    /// </summary>
+    #region
+    [Header("放大显示人体")]
+    public Animator anim;
+
+    public void ShowPortrait()
+    {
+        anim.SetBool("isShow", true);
+    }
+
+    public void HidePortrait()
+    {
+        anim.SetBool("isShow", false);
+    }
+
+    #endregion
 
 
-
-
+    [Header("生命值")]
     public Slider bossHealthBar;
     public GameObject gameOverPanel;
     public void SetBossHealth(float health)

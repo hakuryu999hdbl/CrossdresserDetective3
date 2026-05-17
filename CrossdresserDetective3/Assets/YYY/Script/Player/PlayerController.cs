@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public Character character;
     public Rigidbody2D rb;
     public float speed;
-    float walkSpeed => speed/2.5f;//拉姆达表达式会导致每次调用都执行
+    float walkSpeed => speed / 2.5f;//拉姆达表达式会导致每次调用都执行
     float runSpeed;
 
     [Header("碰撞体与下蹲")]
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
 
-        coll= GetComponent<CapsuleCollider2D>();
+        coll = GetComponent<CapsuleCollider2D>();
 
         originalOffset = coll.offset;
         originalSize = coll.size;
@@ -103,21 +103,21 @@ public class PlayerController : MonoBehaviour
     public void FixedUpdate()
     {
         if (isDead)
-        { 
+        {
             rb.velocity = Vector2.zero;
             return;
         }//死亡后不能滑行
 
-        if (!isHurt&&!isAttack&& !isTeleporting) { Move(); }
+        if (!isHurt && !isAttack && !isTeleporting) { Move(); }
 
         CheckState();//如果在地上就是有摩擦力，在空中就没有防止卡墙
 
     }//每帧执行动作用FixedUpdate（做）
 
 
-    void Move() 
+    void Move()
     {
-        if (!isCrouch&&!wallJump)
+        if (!isCrouch && !wallJump)
         {
             rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
         }//下蹲和非蹬墙跳期间才可以获取左右
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
         {
             isWallCling = false;
             coll.sharedMaterial = normal;
-        
+
             character.StopPowerRecover = false;//体力恢复   
         }
         else if (physicsCheck.onWall && character.currentPower > 0)
@@ -186,8 +186,8 @@ public class PlayerController : MonoBehaviour
                 character.OnSlide(wallPowerCost);
                 character.StopPowerRecover = true;//墙上扣体力不恢复     
             }
-        
-             
+
+
         }
         else if (physicsCheck.onWall && character.currentPower <= 0)
         {
@@ -259,11 +259,11 @@ public class PlayerController : MonoBehaviour
     #region  旧击退
     public void GetHurt(Transform attacker)
     {
-       // isHurt = true;//主要用于屏蔽输入
-       //
-       // rb.velocity = Vector2.zero;
-       // Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
-       // rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+        // isHurt = true;//主要用于屏蔽输入
+        //
+        // rb.velocity = Vector2.zero;
+        // Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
+        // rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
     }
     #endregion
 
@@ -309,8 +309,11 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void PlayerDead() 
+    public void PlayerDead()
     {
+
+        PlayBloodEffect();
+
         isDead = true;
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
     }
@@ -358,7 +361,7 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.Attack.canceled += OnAttackCanceled;
 
 
-        inputControl.Gameplay.Slide.started +=Slide;
+        inputControl.Gameplay.Slide.started += Slide;
 
 
         inputControl.Gameplay.Pause.started += OnPause;
@@ -366,7 +369,7 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.ZoomCamera.started += OnZoomCamera;
     }
 
-  
+
     private void OnEnable()
     {
         inputControl.Enable();
@@ -384,7 +387,7 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.Disable();
     }
 
-   
+
     private void Jump(InputAction.CallbackContext obj)
     {
         if (physicsCheck.isGround)
@@ -399,12 +402,12 @@ public class PlayerController : MonoBehaviour
             jumpFX.SetActive(true);
             jumpFX.transform.position = transform.position + new Vector3(0, -0.45f, 0);
         }
-        else if (physicsCheck.onWall) 
+        else if (physicsCheck.onWall)
         {
             rb.AddForce(new Vector2(-inputDirection.x, 2f) * wallJumpForce, ForceMode2D.Impulse);//蹬墙跳，给与反方向的力
             wallJump = true;
         }
-        
+
     }
 
 
@@ -468,14 +471,14 @@ public class PlayerController : MonoBehaviour
             nextAttack = Time.time + attackRate;
         }
     }
-    void PlayerAttack(InputAction.CallbackContext obj) 
+    void PlayerAttack(InputAction.CallbackContext obj)
     {
-    
+
         if (!physicsCheck.isGround) { return; }//空中无法攻击
-    
+
         playerAnimation.PlayAttack();
         isAttack = true;
-    
+
     }
     #endregion
 
@@ -487,10 +490,10 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
-        if (!isSlide&&physicsCheck.isGround&&character.currentPower>=slidePowerCost)//在地上才能滑铲需要体力值
+        if (!isSlide && physicsCheck.isGround && character.currentPower >= slidePowerCost)//在地上才能滑铲需要体力值
         {
             isSlide = true;//非滑铲的情况下才能滑铲
-            var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x,transform.position.y);//获得滑铲目标点
+            var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x, transform.position.y);//获得滑铲目标点
 
             gameObject.layer = LayerMask.NameToLayer("NPC");//滑铲过程中保持无敌
             StartCoroutine(TriggerSlide(targetPos));
@@ -500,10 +503,10 @@ public class PlayerController : MonoBehaviour
             character.OnSlide(slidePowerCost);
         }
 
-       
+
     }
 
-    IEnumerator TriggerSlide(Vector3 target) 
+    IEnumerator TriggerSlide(Vector3 target)
     {
         do
         {
@@ -511,17 +514,17 @@ public class PlayerController : MonoBehaviour
 
             if (!physicsCheck.isGround)
             {
-                  break;//脱离地面停止
+                break;//脱离地面停止
             }
-              
-            if(physicsCheck.touchLeftWall&&transform.localScale.x<0f|| physicsCheck.touchRightWall && transform.localScale.x > 0f)
+
+            if (physicsCheck.touchLeftWall && transform.localScale.x < 0f || physicsCheck.touchRightWall && transform.localScale.x > 0f)
             {
                 isSlide = false;
                 break;//撞墙停止
             }
-            rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x*slideSpeed,transform.position.y));
+            rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x * slideSpeed, transform.position.y));
 
-        }while(MathF.Abs(target.x - transform.position.x) > 0.1f);//直到到达目标点之前不停做
+        } while (MathF.Abs(target.x - transform.position.x) > 0.1f);//直到到达目标点之前不停做
 
         isSlide = false;
         gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
@@ -538,8 +541,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnZoomCamera(InputAction.CallbackContext ctx)
     {
+
+        cameraControl.ToggleZoom();
+
       
-            cameraControl.ToggleZoom();
     }
+
+
+
     #endregion
 }
