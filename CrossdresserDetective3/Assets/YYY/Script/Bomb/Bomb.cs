@@ -54,8 +54,13 @@ public class Bomb : MonoBehaviour
 
     public void Explotion()//动画帧事件调用，爆炸检测层把对应物体推出
     {
+        Vector3 spawnPos = transform.position + new Vector3(0, 2f, 0);
+        Instantiate(Blast, spawnPos, Quaternion.identity);
+        //Instantiate(Blast, transform.position, Quaternion.identity);
 
-        Instantiate(Blast, transform.position, Quaternion.identity);
+
+
+
 
        // coll.enabled = false;//防止自己被炸到
 
@@ -67,15 +72,22 @@ public class Bomb : MonoBehaviour
         {
             Vector3 pos = transform.position - item.transform.position;
 
-            item.GetComponent<Rigidbody2D>().AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);
+            item.GetComponent<Rigidbody2D>().AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);//炸飞
+
+            //触发可掉落物体
+            FallOnExplosion fall = item.GetComponent<FallOnExplosion>();
+            if (fall != null)
+            {
+                fall.OnBlastHit(transform.position);
+            }
 
             if (item.CompareTag("Bomb")&&item.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("bomb_off"))
             {
                 item.GetComponent<Bomb>().TurnOn();
-            }
+            }//重新点燃爆炸物
         }
 
-        OnBlast?.Invoke(transform);
+        OnBlast?.Invoke(transform);//相机震动
     }
 
     public void DestoryThis() 

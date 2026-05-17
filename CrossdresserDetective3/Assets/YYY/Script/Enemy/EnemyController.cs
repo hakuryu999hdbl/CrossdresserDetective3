@@ -548,8 +548,8 @@ public class EnemyController : MonoBehaviour
         CheckArea?.SetActive(false);
 
         //防止尸体堵在门前
-        coll.enabled = false;
-        rb.bodyType = RigidbodyType2D.Static;
+        //coll.enabled = false;
+        //rb.bodyType = RigidbodyType2D.Static;
     }
     #endregion
 
