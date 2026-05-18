@@ -5,6 +5,7 @@ public class AttackState : EnemyBaseState
     public override void EnterState(EnemyController enemy)
     {
         //Debug.Log("发现敌人！！！！");
+        enemy.checkArea.SetAttackColor();//设置视野范围红色
         enemy.animState = 2;
 
         if (enemy.attackList == null || enemy.attackList.Count <= 0)
@@ -41,7 +42,7 @@ public class AttackState : EnemyBaseState
         if (enemy.attackList.Count <= 0)
         {
             enemy.targetPoint = null;
-            enemy.TransitionToState(enemy.patrolState);//一旦列表为0恢复巡逻
+            enemy.TransitionToState(enemy.searchState);//一旦列表为0进入搜索状态
             return;
         }
 

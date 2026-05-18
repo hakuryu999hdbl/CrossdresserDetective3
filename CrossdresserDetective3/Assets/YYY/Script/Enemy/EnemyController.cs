@@ -45,12 +45,13 @@ public class EnemyController : MonoBehaviour
 
     public PatrolState patrolState = new PatrolState();//巡逻状态
     public AttackState attackState = new AttackState();//攻击状态
-
+    public SearchState searchState = new SearchState();//搜索状态
 
     public virtual void Init() 
     {
-        anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
-        alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
+        //别找了我直接赋值，这样后面加东西一改排序就出问题
+        //anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
+        //alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
 
 
         //抓层，让死亡的时候把别的层权重关掉
@@ -132,6 +133,19 @@ public class EnemyController : MonoBehaviour
         anim.SetBool("isGround", physicsCheck != null && physicsCheck.isGround);
         anim.SetFloat("yVelocity", rb != null ? rb.velocity.y : 0f);
 
+
+
+        if (questionSign == null) return;
+
+        float parentDir = transform.localScale.x >= 0 ? 1f : -1f;
+
+        questionSign.transform.localScale = new Vector3(
+            Mathf.Abs(questionSign.transform.localScale.x) * parentDir,
+            Mathf.Abs(questionSign.transform.localScale.y),
+            Mathf.Abs(questionSign.transform.localScale.z)
+        );
+
+
     }
 
     public void TransitionToState(EnemyBaseState  state) 
@@ -161,18 +175,25 @@ public class EnemyController : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 搜索状态
+    /// </summary>
+    #region
 
+    [Header("搜索状态")]
+    public float searchTime = 3f;        // 继续追寻几秒
+    public float lookTime = 1.2f;        // 左右看的时间
+    public Vector3 lastKnownTargetPos;   // 最后看到目标的位置
 
-
-
-
+    public GameObject questionSign;      // 问号标记，可选
+    #endregion
 
 
     /// <summary>
     /// 攻击状态
     /// </summary>
     #region
-
+    [Header("攻击状态")]
     public Transform heldBomb;//扔炸弹方向
     public void MoveToTarget()
     {
@@ -303,11 +324,12 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
+
     /// <summary>
     /// 巡逻状态
     /// </summary>
     #region
-    [Header("自由巡逻")]
+    [Header("巡逻状态")]
     public float patrolSpeed = 2f;
     public float minWalkTime = 1.5f;
     public float maxWalkTime = 4f;
@@ -320,12 +342,17 @@ public class EnemyController : MonoBehaviour
     {
         transform.position += new Vector3(patrolDir * patrolSpeed * Time.deltaTime, 0f, 0f);
 
-        if (patrolDir > 0)
+        if (patrolDir > 0) 
+        {
             //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             transform.localScale = new Vector3(1, 1, 1);
+        }       
         else
+        {
             //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);        
+        }
+       
     }
 
     public bool IsWallAheadByDir()
@@ -364,6 +391,11 @@ public class EnemyController : MonoBehaviour
     /// CheckArea视野范围调用
     /// </summary>
     #region
+
+    [Header("视野范围")]
+    public EnemyCheckArea checkArea;
+
+
     public void OnCheckAreaStay(Collider2D collision)
     {
         if (!attackList.Contains(collision.transform)&&!hasBomb&&!isDead && !GameManager.instance.gameOver) 
@@ -372,7 +404,14 @@ public class EnemyController : MonoBehaviour
             attackList.Add(collision.transform);
 
         }//只要不是新的，就装进去(如果持有炸弹/自己死亡/玩家死亡，不需要再添加新的进去)
-      
+
+
+        if (collision.CompareTag("Player") || collision.CompareTag("Bomb"))
+        {
+            lastKnownTargetPos = collision.transform.position;
+        }//记录最后看到的目标位置（搜索状态使用）
+
+
     }//只要持续处于范围之中
     public void OnCheckAreaExit(Collider2D collision)
     {

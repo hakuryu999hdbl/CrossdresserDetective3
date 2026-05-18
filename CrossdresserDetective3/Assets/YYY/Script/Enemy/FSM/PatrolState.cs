@@ -7,6 +7,7 @@ public class PatrolState : EnemyBaseState
 
     public override void EnterState(EnemyController enemy)
     {
+        enemy.checkArea.SetPatrolColor();//设置视野范围绿色
         enemy.animState = 0;
 
         // 第一次进入时随机方向

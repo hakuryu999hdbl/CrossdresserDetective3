@@ -8,8 +8,9 @@ public class EnemyCheckArea : MonoBehaviour
     public EnemyController enemy;
 
     [Header("视野颜色")]
-    public Color normalColor = new Color(0f, 1f, 0f, 0.35f);
-    public Color alertColor = new Color(1f, 0f, 0f, 0.35f);
+    public Color patrolColor = Color.green;
+    public Color searchColor = Color.yellow;
+    public Color attackColor = Color.red;
     public float colorChangeSpeed = 6f;
 
     private MeshRenderer meshRenderer;
@@ -23,8 +24,8 @@ public class EnemyCheckArea : MonoBehaviour
         if (meshRenderer != null)
         {
             fovMaterial = meshRenderer.material;
-            targetColor = normalColor;
-            fovMaterial.color = normalColor;
+            targetColor = patrolColor;
+            fovMaterial.color = Color.green;
         }
     }
 
@@ -47,7 +48,7 @@ public class EnemyCheckArea : MonoBehaviour
         //if (!IsValidTarget(other)) return;
 
         enemy.OnCheckAreaStay(other);
-        targetColor = alertColor;
+        //targetColor = alertColor;
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -56,10 +57,10 @@ public class EnemyCheckArea : MonoBehaviour
 
         enemy.OnCheckAreaExit(other);
 
-        if (enemy.attackList.Count <= 0)
-        {
-            targetColor = normalColor;
-        }
+        //if (enemy.attackList.Count <= 0)
+        //{
+        //    targetColor = normalColor;
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -68,7 +69,7 @@ public class EnemyCheckArea : MonoBehaviour
 
         if (!enemy.isDead && !GameManager.instance.gameOver)
         {
-            targetColor = alertColor;
+            //targetColor = alertColor;
             StartCoroutine(OnAlarm());
         }
     }
@@ -99,5 +100,26 @@ public class EnemyCheckArea : MonoBehaviour
 
         enemy.alarmSign.SetActive(false);
     }//检测该物体的动画播放完隐藏
+
+
+
+
+
+
+
+    public void SetPatrolColor()
+    {
+        targetColor = patrolColor;
+    }
+
+    public void SetSearchColor()
+    {
+        targetColor = searchColor;
+    }
+
+    public void SetAttackColor()
+    {
+        targetColor = attackColor;
+    }
 
 }
