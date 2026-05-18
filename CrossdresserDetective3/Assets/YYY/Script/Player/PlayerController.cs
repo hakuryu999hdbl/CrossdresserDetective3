@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("挂墙")]
     public int wallPowerCost = 1;
-    public float wallPowerCostInterval = 0.2f;
+    public float wallPowerCostInterval = 0.4f;
     public float wallPowerTimer;
     public float wallSlideSpeed = -1.5f;
 
@@ -409,9 +409,14 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
 
-            StopAllCoroutines();//一旦跳跃打断所有协程（滑铲）
-            isSlide = false;
+            //StopAllCoroutines();//一旦跳跃打断所有协程（滑铲）
+            //isSlide = false;
 
+            if (slideCoroutine != null)
+            {
+                StopCoroutine(slideCoroutine);
+                EndSlide();
+            }
 
             //跳跃特效
             jumpFX.SetActive(true);
@@ -501,49 +506,91 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("滑铲的体力消耗")]
+    public float slideDuration = 0.35f;
+    private Coroutine slideCoroutine;
+
     public int slidePowerCost;
 
     private void Slide(InputAction.CallbackContext obj)
     {
-        if (!isSlide && physicsCheck.isGround && character.currentPower >= slidePowerCost)//在地上才能滑铲需要体力值
-        {
-            isSlide = true;//非滑铲的情况下才能滑铲
-            var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x, transform.position.y);//获得滑铲目标点
+        //if (!isSlide && physicsCheck.isGround && character.currentPower >= slidePowerCost)//在地上才能滑铲需要体力值
+        //{
+        //    isSlide = true;//非滑铲的情况下才能滑铲
+        //    var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x, transform.position.y);//获得滑铲目标点
+        //
+        //    gameObject.layer = LayerMask.NameToLayer("NPC");//滑铲过程中保持无敌
+        //    StartCoroutine(TriggerSlide(targetPos));
+        //
+        //
+        //    //每次滑铲消耗体力
+        //    character.OnSlide(slidePowerCost);
+        //}
+        if (isSlide) return;
+        if (!physicsCheck.isGround) return;
+        if (character.currentPower < slidePowerCost) return;
+        if (isAttack || isHurt || isDead || isTeleporting) return;
 
-            gameObject.layer = LayerMask.NameToLayer("NPC");//滑铲过程中保持无敌
-            StartCoroutine(TriggerSlide(targetPos));
+        character.OnSlide(slidePowerCost);
 
-
-            //每次滑铲消耗体力
-            character.OnSlide(slidePowerCost);
-        }
-
+        slideCoroutine = StartCoroutine(TriggerSlide());
 
     }
-
-    IEnumerator TriggerSlide(Vector3 target)
+    IEnumerator TriggerSlide()
     {
-        do
+        float timer = 0f;
+        float dir = transform.localScale.x;
+
+        isSlide = true;
+        gameObject.layer = LayerMask.NameToLayer("NPC");
+
+        while (timer < slideDuration)
         {
-            yield return null;
+            yield return new WaitForFixedUpdate();
 
             if (!physicsCheck.isGround)
-            {
-                break;//脱离地面停止
-            }
+                break;
 
-            if (physicsCheck.touchLeftWall && transform.localScale.x < 0f || physicsCheck.touchRightWall && transform.localScale.x > 0f)
-            {
-                isSlide = false;
-                break;//撞墙停止
-            }
-            rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x * slideSpeed, transform.position.y));
+            if ((physicsCheck.touchLeftWall && dir < 0f) ||
+                (physicsCheck.touchRightWall && dir > 0f))
+                break;
 
-        } while (MathF.Abs(target.x - transform.position.x) > 0.1f);//直到到达目标点之前不停做
+            rb.MovePosition(rb.position + new Vector2(dir * slideSpeed * Time.fixedDeltaTime, 0f));
+
+            timer += Time.fixedDeltaTime;
+        }
 
         isSlide = false;
-        gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
+    void EndSlide()
+    {
+        isSlide = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        slideCoroutine = null;
+    }
+    //IEnumerator TriggerSlide(Vector3 target)
+    //{
+    //    do
+    //    {
+    //        yield return null;
+    //
+    //        if (!physicsCheck.isGround)
+    //        {
+    //            break;//脱离地面停止
+    //        }
+    //
+    //        if (physicsCheck.touchLeftWall && transform.localScale.x < 0f || physicsCheck.touchRightWall && transform.localScale.x > 0f)
+    //        {
+    //            isSlide = false;
+    //            break;//撞墙停止
+    //        }
+    //        rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x * slideSpeed, transform.position.y));
+    //
+    //    } while (MathF.Abs(target.x - transform.position.x) > 0.1f);//直到到达目标点之前不停做
+    //
+    //    isSlide = false;
+    //    gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
+    //}
 
     private void OnPause(InputAction.CallbackContext ctx)
     {
