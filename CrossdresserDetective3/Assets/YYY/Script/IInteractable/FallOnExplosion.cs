@@ -30,5 +30,6 @@ public class FallOnExplosion : MonoBehaviour
 
         rb.AddForce(dir * sideForce, ForceMode2D.Impulse);
         rb.AddTorque(Random.Range(-torqueForce, torqueForce), ForceMode2D.Impulse);
+
     }
 }

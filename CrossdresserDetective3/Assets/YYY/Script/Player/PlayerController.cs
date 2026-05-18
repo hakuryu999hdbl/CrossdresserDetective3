@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 originalOffset;
     Vector2 originalSize;
-
+    [SerializeField] private Vector2 crouchSize = new Vector2(0.06f, 1.77f);
 
     [Header("地面检测与跳跃滑铲")]
     public float jumpForce;
@@ -104,9 +104,16 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead)
         {
-            rb.velocity = Vector2.zero;
+            if (physicsCheck.isGround)
+            {
+                rb.velocity = Vector2.zero;//死亡后不能滑行
+            }
+            else
+            {
+                rb.velocity = new Vector2(0f, rb.velocity.y);//死亡后在空中的话落地
+            }
             return;
-        }//死亡后不能滑行
+        }
 
         if (!isHurt && !isAttack && !isTeleporting) { Move(); }
 
@@ -143,8 +150,16 @@ public class PlayerController : MonoBehaviour
         if (isCrouch)
         {
             //降低碰撞体高度
-            //originalOffset = new Vector2(0f, 0.78f);
-            //coll.size = new Vector2(0.8f, 1.9f);
+            //originalOffset = new Vector2(0f, 0.1f);
+            //coll.size = new Vector2(0.8f, 2.1f);
+
+            float heightDiff = originalSize.y - crouchSize.y;
+
+            coll.size = crouchSize;
+            coll.offset = new Vector2(
+                originalOffset.x,
+                originalOffset.y - heightDiff / 2f
+            );
 
         }
         else
@@ -400,7 +415,7 @@ public class PlayerController : MonoBehaviour
 
             //跳跃特效
             jumpFX.SetActive(true);
-            jumpFX.transform.position = transform.position + new Vector3(0, -0.45f, 0);
+            jumpFX.transform.position = transform.position + new Vector3(0, -1f, 0);
         }
         else if (physicsCheck.onWall)
         {
