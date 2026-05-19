@@ -382,6 +382,10 @@ public class PlayerController : MonoBehaviour
         inputControl.Gameplay.Pause.started += OnPause;
 
         inputControl.Gameplay.ZoomCamera.started += OnZoomCamera;
+
+
+        //UI等所有多端输入由PlayerController管理
+        //inputControl.UI.Cancel.started += OnCancel;
     }
 
 
@@ -396,10 +400,14 @@ public class PlayerController : MonoBehaviour
     public void EnableGameplayInput()
     {
         inputControl.Gameplay.Enable();
+        inputControl.UI.Disable();
+        Sign.SetActive(true);
     }
     public void DisableGameplayInput()
     {
         inputControl.Gameplay.Disable();
+        inputControl.UI.Enable();
+        Sign.SetActive(false);
     }
 
 
@@ -592,10 +600,24 @@ public class PlayerController : MonoBehaviour
     //    gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
     //}
 
+
+
+    [Header("打开暂停菜单隐藏交互碰撞体")]
+    public GameObject Sign;
     private void OnPause(InputAction.CallbackContext ctx)
     {
         UIManager.instance.TogglePause();
     }
+    //public void OnCancel(InputAction.CallbackContext ctx)
+    //{
+    //    if (UIManager.instance.isPaused)
+    //    {
+    //        UIManager.instance.ClosePause();
+    //    }
+    //
+    //}
+
+
 
 
     [Header("放大缩小镜头")]

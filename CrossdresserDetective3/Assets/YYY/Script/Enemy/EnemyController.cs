@@ -585,7 +585,7 @@ public class EnemyController : MonoBehaviour
 
         isDead = true;
         //gameObject.layer = 2;//ignoreRaycast
-        gameObject.layer = LayerMask.NameToLayer("Enviroment");
+        gameObject.layer = LayerMask.NameToLayer("Environment");
         CheckArea?.SetActive(false);
 
         //防止尸体堵在门前

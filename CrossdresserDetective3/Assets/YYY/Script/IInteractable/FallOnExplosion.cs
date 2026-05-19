@@ -32,4 +32,25 @@ public class FallOnExplosion : MonoBehaviour
         rb.AddTorque(Random.Range(-torqueForce, torqueForce), ForceMode2D.Impulse);
 
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
+        {
+            hasFallen = true;
+
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 1f;
+            rb.mass = fallMass;
+            rb.drag = 1.5f;
+            rb.angularDrag = 2f;
+
+            Destroy(this);
+        }
+
+       
+
+        
+    }
 }
