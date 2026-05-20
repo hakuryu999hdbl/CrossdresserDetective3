@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 16702418}
   - component: {fileID: 16702422}
   m_Layer: 5
-  m_Name: CrossdresserDetective_Player
+  m_Name: CrossdresserDetective_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2699,8 +2699,8 @@ MonoBehaviour:
   damage: 10
   attackRange: 0
   attackRate: 0
-  knockbackX: 5
-  knockbackY: 0
+  knockbackX: 15
+  knockbackY: 5
   hurtTime: 0.2
   clearVelocity: 1
   bombAvailable: 0
@@ -4149,6 +4149,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 179356525}
   - {fileID: 363030904}
   - {fileID: 908400528}
   - {fileID: 1850802439}
@@ -4156,7 +4157,6 @@ RectTransform:
   - {fileID: 1361802753}
   - {fileID: 1733168637}
   - {fileID: 952314094}
-  - {fileID: 179356525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4507,7 +4507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4677499506108583813, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6501189024370597219, guid: e27081198594a234493a28020643cc09, type: 3}
       propertyPath: m_Mesh
@@ -30541,7 +30541,7 @@ MonoBehaviour:
   attackRange: 0
   attackRate: 0
   knockbackX: 5
-  knockbackY: 0
+  knockbackY: 20
   hurtTime: 0.2
   clearVelocity: 1
   bombAvailable: 0
@@ -52958,6 +52958,7 @@ MonoBehaviour:
   character: {fileID: 1720513880}
   rb: {fileID: 1720513879}
   speed: 5
+  weaponType: 0
   coll: {fileID: 1720513878}
   crouchSize: {x: 0.8, y: 1.7}
   jumpForce: 16.5

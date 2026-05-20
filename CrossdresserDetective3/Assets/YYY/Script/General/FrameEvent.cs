@@ -385,7 +385,7 @@ public class FrameEvent : MonoBehaviour
     public void Attack_1()
     {
         StartCoroutine(AttackRoutine(AttackArea_1));
-        Debug.Log("产生攻击碰撞体");
+        //Debug.Log("产生攻击碰撞体");
     }
     public void Attack_2()
     {

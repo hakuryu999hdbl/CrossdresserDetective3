@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     float walkSpeed => speed / 2.5f;//拉姆达表达式会导致每次调用都执行
     float runSpeed;
+    public int weaponType;//0踢击 1匕首
 
     [Header("碰撞体与下蹲")]
     public CapsuleCollider2D coll;
@@ -512,7 +513,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+    #region  翻滚
     [Header("滑铲的体力消耗")]
     public float slideDuration = 0.35f;
     private Coroutine slideCoroutine;
@@ -599,7 +600,7 @@ public class PlayerController : MonoBehaviour
     //    isSlide = false;
     //    gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
     //}
-
+    #endregion
 
 
     [Header("打开暂停菜单隐藏交互碰撞体")]
