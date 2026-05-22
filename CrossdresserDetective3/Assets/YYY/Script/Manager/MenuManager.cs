@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单
+    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单
 
   
 
@@ -29,6 +29,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(newGameButton);//开头设置默认按钮
 
         inputControl.UI.Cancel.started += OnCancel;
+        inputControl.UI.Delete.started += OnDeleteSave;
 
         //InitLanguageOnce();//根据系统设置语言
 
@@ -68,7 +69,10 @@ public class MenuManager : MonoBehaviour
                 CloseChapter();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
-
+            case 3:
+                CloseSaveMenu();
+                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+                break;
 
 
 
@@ -85,8 +89,104 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    private void OnDeleteSave(InputAction.CallbackContext ctx)
+    {
+        if (CurrentOpen!=3) return;
+
+        if (CurrentSaveSlotUI == null) return;
+
+        AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
+
+
+        CurrentSaveSlotUI.OnDeleteClicked();
+    }//删除当前存档
+
     #endregion
 
+
+    /// <summary>
+    /// 存档统合
+    /// </summary>
+    #region
+    [Header("存档界面UI")]
+    public SaveSlotUI CurrentSaveSlotUI;
+    public SaveSlotUI Save_1, Save_2, Save_3;
+
+
+    public void OnConfirmNameInput()
+    {
+        if (CurrentSaveSlotUI != null)
+        {
+
+            // 新建存档
+            SaveData newData = new SaveData(CurrentSaveSlotUI.slotName);
+
+            newData.slotName = CurrentSaveSlotUI.slotName;//记住档的名字
+
+
+            SaveManager.SaveGame(newData);
+
+            CurrentSaveSlotUI.Refresh();//更新当前存档内容
+        }
+
+    }//玩家确定这个存档名称
+
+
+    public void OpenSaveURL()
+    {
+        Application.OpenURL(Application.persistentDataPath);
+    }//打开存档位置文件夹
+
+
+    public void Delete_All()
+    {
+        Save_1.OnDeleteClicked();
+        Save_2.OnDeleteClicked();
+        Save_3.OnDeleteClicked();
+
+        PlayerPrefs.DeleteAll();
+
+    }
+    #endregion
+
+
+
+    /// <summary>
+    /// 存档菜单
+    /// </summary>
+    #region
+    [Header("存档菜单")]
+    public GameObject SaveMenu;
+    public GameObject SaveFirstSelected;//打开存菜单档默认选中（可变换）
+    public GameObject SaveButton;//退出存档菜单默认选中
+
+    public void OpenSaveMenu()
+    {
+        SaveMenu.SetActive(true);
+        MainMenu.SetActive(false);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(SaveFirstSelected);
+
+        CurrentOpen = 3;
+    }
+
+    public void CloseSaveMenu()
+    {
+        SaveMenu.SetActive(false);
+        MainMenu.SetActive(true);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        SaveFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(SaveButton);
+
+        CurrentOpen = 0;
+    }
+    #endregion
 
 
 
@@ -195,7 +295,7 @@ public class MenuManager : MonoBehaviour
     public void OpenChapter()
     {
         ChapterMenu.SetActive(true);
-        MainMenu.SetActive(false);
+        SaveMenu.SetActive(false);
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
@@ -209,7 +309,7 @@ public class MenuManager : MonoBehaviour
     {
 
         ChapterMenu.SetActive(false);
-        MainMenu.SetActive(true);
+        SaveMenu.SetActive(true);
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
@@ -217,7 +317,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ChapterButton);
 
-        CurrentOpen = 0;
+        CurrentOpen = 3;
     }
 
     [Header("关卡一菜单")]
@@ -295,8 +395,9 @@ public class MenuManager : MonoBehaviour
 
     #endregion
 
-    public void NewGame()
+    public void NewGame(string _nextAreaId)
     {
+        GameFlowData.nextAreaId = _nextAreaId;
 
         SceneManager.LoadScene(1);
 

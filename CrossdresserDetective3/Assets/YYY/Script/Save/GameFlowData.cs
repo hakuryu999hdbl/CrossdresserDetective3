@@ -1,11 +1,11 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameFlowData
 {
-    //public static string nextAreaId = null;     //重刷场景名称
-    //public static string CurrentPlayer = null;   //目前使用的是哪个存档
-    public static bool suppressNextSelectSound = false;//二级菜单按钮选中声音吞掉
-    public static bool suppressNextClickSound = false;//商店购买声音吞掉
+    public static string nextAreaId = null;     //閲嶅埛鍦烘櫙鍚嶇О
+    public static string CurrentPlayer = null;   //鐩墠浣跨敤鐨勬槸鍝釜瀛樻。
+    public static bool suppressNextSelectSound = false;//浜岀骇鑿滃崟鎸夐挳閫変腑澹伴煶鍚炴帀
+    public static bool suppressNextClickSound = false;//鍟嗗簵璐拱澹伴煶鍚炴帀
 }

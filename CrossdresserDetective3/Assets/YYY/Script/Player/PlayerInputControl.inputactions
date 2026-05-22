@@ -432,6 +432,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "8b9fc3bc-6c27-40ec-83d3-937a33a281d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Point",
                     "type": "PassThrough",
                     "id": "3ace8f9f-50ba-4bbd-a2ae-c38ae01e2f4c",
@@ -988,6 +997,28 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3eb0ef25-203a-4357-876b-86363656b7d3",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17e1d14a-24af-4bba-84f2-3397d9d9a1a1",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
