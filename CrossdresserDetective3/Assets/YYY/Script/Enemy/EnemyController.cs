@@ -581,10 +581,11 @@ public class EnemyController : MonoBehaviour
 
     public void OnDie() 
     {
+
+
         PlayBloodEffect();
 
         isDead = true;
-        //gameObject.layer = 2;//ignoreRaycast
         gameObject.layer = LayerMask.NameToLayer("Environment");
         CheckArea?.SetActive(false);
 

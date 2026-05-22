@@ -513,6 +513,47 @@ public class PlayerController : MonoBehaviour
 
 
 
+    public bool isDashAttack;//这个暂时没有产生作用，但是留着看看
+    public float dashAttackSpeed = 16f;
+    public float dashAttackDuration = 0.2f;
+
+    public void Dash() 
+    {
+        StartCoroutine(DashAttack());
+    }
+
+    IEnumerator DashAttack()
+    {
+        isAttack = true;
+        isDashAttack = true;
+
+
+
+        float timer = 0f;
+        float dir = transform.localScale.x;
+
+        while (timer < dashAttackDuration)
+        {
+            yield return new WaitForFixedUpdate();
+
+            // 撞墙停止
+            if ((physicsCheck.touchLeftWall && dir < 0f) ||
+                (physicsCheck.touchRightWall && dir > 0f))
+                break;
+
+            rb.MovePosition(
+                rb.position +
+                new Vector2(dir * dashAttackSpeed * Time.fixedDeltaTime, 0f)
+            );
+
+            timer += Time.fixedDeltaTime;
+        }
+
+        isDashAttack = false;
+
+    }
+
+
     #region  翻滚
     [Header("滑铲的体力消耗")]
     public float slideDuration = 0.35f;

@@ -20,6 +20,7 @@ public class AttackFinish : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.GetComponent<PlayerAnimation>().playerController.isAttack = false;
+        animator.GetComponent<PlayerAnimation>().playerController.isDashAttack = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

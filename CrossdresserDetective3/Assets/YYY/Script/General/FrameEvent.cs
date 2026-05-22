@@ -386,15 +386,23 @@ public class FrameEvent : MonoBehaviour
     {
         StartCoroutine(AttackRoutine(AttackArea_1));
         //Debug.Log("产生攻击碰撞体");
-    }
+    }//普攻
     public void Attack_2()
     {
         StartCoroutine(AttackRoutine(AttackArea_2));
-    }
+    }//击退
     public void Attack_3()
     {
         StartCoroutine(AttackRoutine(AttackArea_3));
+       
+
+    }//击飞
+
+    public void Dash() 
+    {
+        playerController.Dash();//这个是冲刺一段
     }
+
 
     IEnumerator AttackRoutine(GameObject area)
     {
@@ -406,6 +414,10 @@ public class FrameEvent : MonoBehaviour
 
         area.SetActive(false);
     }
+
+
+
+
     #endregion
 
     #region 落地特效触发

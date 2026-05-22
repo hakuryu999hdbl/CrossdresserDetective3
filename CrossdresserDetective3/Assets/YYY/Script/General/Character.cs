@@ -22,7 +22,7 @@ public class Character : MonoBehaviour, IDamageable
     public UnityEvent<Character> OnHealthChange;//只要生命值有一点改变，就把Character广播出去到ScriptObject
     public UnityEvent<Transform> OnTakeDamge;
     public UnityEvent OnDie;
-
+    public bool isDead = false;
 
 
 
@@ -74,6 +74,7 @@ public class Character : MonoBehaviour, IDamageable
 
     public void TakeDamage(Attack attacker)
     {
+        if (isDead) { return; }//不能鞭尸
         if (invulnerable) { return; }//处于无敌
 
 
@@ -95,6 +96,8 @@ public class Character : MonoBehaviour, IDamageable
 
             //触发死亡
             OnDie?.Invoke();
+
+            isDead = true;
         }
 
 
