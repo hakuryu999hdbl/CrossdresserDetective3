@@ -88,6 +88,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
 
 
+    public AudioClip SE_Clothes;
     public AudioClip SE_WalkClip_1, SE_WalkClip_2, SE_RunClip_1, SE_RunClip_2;
     public AudioClip SE_falldown;
     public AudioClip SE_Door_Open, SE_Door_Close;

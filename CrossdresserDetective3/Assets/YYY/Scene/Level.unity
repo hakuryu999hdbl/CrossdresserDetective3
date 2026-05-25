@@ -379,7 +379,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1280
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1359,7 +1359,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1280
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3813,7 +3813,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1280
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -6180,7 +6180,6 @@ MonoBehaviour:
   character: {fileID: 1720513880}
   rb: {fileID: 1720513879}
   speed: 5
-  weaponType: 0
   coll: {fileID: 1720513878}
   crouchSize: {x: 0.8, y: 1.7}
   jumpForce: 16.5
@@ -6218,6 +6217,9 @@ MonoBehaviour:
   dashAttackDuration: 0.2
   slideDuration: 0.35
   slidePowerCost: 3
+  throwableWeaponPrefab: {fileID: 7993647595746193275, guid: f0d8ee50e4efce6419d59cd658272ce8, type: 3}
+  weaponType: 1
+  attackType: 1
   Sign: {fileID: 323732881}
   cameraControl: {fileID: 929952884}
 --- !u!70 &1720513878

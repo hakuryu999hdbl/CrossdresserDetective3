@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     float walkSpeed => speed / 2.5f;//拉姆达表达式会导致每次调用都执行
     float runSpeed;
-    public int weaponType;//0踢击 1匕首
+
 
     [Header("碰撞体与下蹲")]
     public CapsuleCollider2D coll;
@@ -379,11 +379,14 @@ public class PlayerController : MonoBehaviour
 
         inputControl.Gameplay.Slide.started += Slide;
 
+        inputControl.Gameplay.Throw.started += Throw;
+
 
         inputControl.Gameplay.Pause.started += OnPause;
 
         inputControl.Gameplay.ZoomCamera.started += OnZoomCamera;
 
+   
 
         //UI等所有多端输入由PlayerController管理
         //inputControl.UI.Cancel.started += OnCancel;
@@ -447,9 +450,9 @@ public class PlayerController : MonoBehaviour
 
 
 
-
-    public float nextAttack = 0;//攻击冷却
-    public float attackRate;//攻击频率
+   
+    public float nextAttack = 0;//炸弹攻击冷却
+    public float attackRate;//炸弹攻击频率
     private float attackPressTime;
     private float chargeThreshold = 0.35f;
     private void OnAttackStarted(InputAction.CallbackContext ctx)
@@ -512,7 +515,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
-
+    #region  冲刺
+    [Header("冲刺")]
     public bool isDashAttack;//这个暂时没有产生作用，但是留着看看
     public float dashAttackSpeed = 16f;
     public float dashAttackDuration = 0.2f;
@@ -552,6 +556,7 @@ public class PlayerController : MonoBehaviour
         isDashAttack = false;
 
     }
+    #endregion
 
 
     #region  翻滚
@@ -563,18 +568,7 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
-        //if (!isSlide && physicsCheck.isGround && character.currentPower >= slidePowerCost)//在地上才能滑铲需要体力值
-        //{
-        //    isSlide = true;//非滑铲的情况下才能滑铲
-        //    var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x, transform.position.y);//获得滑铲目标点
-        //
-        //    gameObject.layer = LayerMask.NameToLayer("NPC");//滑铲过程中保持无敌
-        //    StartCoroutine(TriggerSlide(targetPos));
-        //
-        //
-        //    //每次滑铲消耗体力
-        //    character.OnSlide(slidePowerCost);
-        //}
+      
         if (isSlide) return;
         if (!physicsCheck.isGround) return;
         if (character.currentPower < slidePowerCost) return;
@@ -618,32 +612,67 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Player");
         slideCoroutine = null;
     }
-    //IEnumerator TriggerSlide(Vector3 target)
-    //{
-    //    do
-    //    {
-    //        yield return null;
-    //
-    //        if (!physicsCheck.isGround)
-    //        {
-    //            break;//脱离地面停止
-    //        }
-    //
-    //        if (physicsCheck.touchLeftWall && transform.localScale.x < 0f || physicsCheck.touchRightWall && transform.localScale.x > 0f)
-    //        {
-    //            isSlide = false;
-    //            break;//撞墙停止
-    //        }
-    //        rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x * slideSpeed, transform.position.y));
-    //
-    //    } while (MathF.Abs(target.x - transform.position.x) > 0.1f);//直到到达目标点之前不停做
-    //
-    //    isSlide = false;
-    //    gameObject.layer = LayerMask.NameToLayer("Player");//滑铲结束
-    //}
+
     #endregion
 
 
+    #region  投掷
+    [Header("投掷")]
+    public GameObject throwableWeaponPrefab;
+    public int weaponType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public int attackType;//0踢击 1挥砍
+
+    public void Throw(InputAction.CallbackContext obj) 
+    {
+        if (!physicsCheck.isGround) { return; }//空中无法投掷
+
+        playerAnimation.PlayThrow();
+        isAttack = true;
+    }
+
+
+    float nextThrow = 0;//投掷冷却
+    float ThrowRate = 0.5f;//投掷频率
+    public void ThrowWeapon()
+    {
+        if (weaponType <= 0) return; // 空手不能扔
+
+        if (Time.time > nextThrow)
+        {
+            GameObject obj = Instantiate(
+                throwableWeaponPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+
+            ThrowableWeapon throwable = obj.GetComponent<ThrowableWeapon>();
+
+            if (throwable != null)
+            {
+                throwable.Init();
+            }
+
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                Vector2 dir = new Vector2(transform.localScale.x * 0.4f, 0.2f).normalized;
+                rb.velocity = dir * throwForce;
+            }
+
+            // 扔出去后变空手
+            weaponType = 0;
+            attackType = 0;
+
+            nextThrow = Time.time + ThrowRate;
+        }
+    }
+
+
+    #endregion
+
+
+    #region  UI层
     [Header("打开暂停菜单隐藏交互碰撞体")]
     public GameObject Sign;
     private void OnPause(InputAction.CallbackContext ctx)
@@ -658,10 +687,10 @@ public class PlayerController : MonoBehaviour
     //    }
     //
     //}
+    #endregion
 
 
-
-
+    #region 放大缩小镜头
     [Header("放大缩小镜头")]
     public CameraControl cameraControl;
 
@@ -672,6 +701,7 @@ public class PlayerController : MonoBehaviour
 
       
     }
+    #endregion
 
 
 

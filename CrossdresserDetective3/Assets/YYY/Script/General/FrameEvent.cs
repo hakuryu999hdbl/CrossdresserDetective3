@@ -420,14 +420,20 @@ public class FrameEvent : MonoBehaviour
 
     #endregion
 
-    #region 落地特效触发
-    [Header("落地特效触发")]
+    #region 玩家特殊帧事件触发
+    [Header("玩家特殊帧事件触发")]
     public PlayerController playerController;
 
     public void LandFX()
     {
         //跳落第一帧触发
         playerController.LandFX();
+    }
+
+    public void Throw()
+    {
+
+        playerController.ThrowWeapon();
     }
     #endregion
 

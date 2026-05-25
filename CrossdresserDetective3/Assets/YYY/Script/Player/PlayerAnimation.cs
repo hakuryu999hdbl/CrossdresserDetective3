@@ -31,7 +31,7 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("isAttack", playerController.isAttack);//每帧检测玩家是否处于攻击
         anim.SetBool("onWall", physicsCheck.onWall);//每帧检测玩家是否处于贴墙
         anim.SetBool("isSlide", playerController.isSlide);//每帧检测玩家是滑铲
-        anim.SetInteger("weaponType", playerController.weaponType);//每帧检测玩家武器
+        anim.SetInteger("attackType", playerController.attackType);//每帧检测玩家武器
 
         anim.SetBool("isWallCling", playerController.isWallCling);//每帧检测玩家是滑铲
 
@@ -61,8 +61,19 @@ public class PlayerAnimation : MonoBehaviour
       
     }
 
-  
+
+    public void PlayThrow()
+    {
+        if (playerController.isCrouch)
+        {
+            anim.SetTrigger("crouchThrow");
+        }
+        else
+        {
+            anim.SetTrigger("throw");
+        }
+       
+    }
 
 
-   
 }
