@@ -20,8 +20,6 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
 
-        //anim.SetBool("jump", playerController.isJump);//每帧检测是否跳跃中
-
 
         anim.SetFloat("velocityX", Mathf.Abs(playerController.rb.velocity.x));//每帧检测横向速度绝对值
         anim.SetFloat("velocityY", playerController.rb.velocity.y);//每帧检测是否位于空中下落

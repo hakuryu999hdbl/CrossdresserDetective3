@@ -37,11 +37,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-    //[Header("跳跃相关")]
-    //public bool isJump;//是否位于跳跃中
-
-
-
 
     [Header("物理材质")]
     public PhysicsMaterial2D normal;//在地面的材质防止滑动
@@ -86,6 +81,8 @@ public class PlayerController : MonoBehaviour
 
         GameManager.instance.IsPlayer(this);
 
+
+        RefreshPlayerSkin();//初始更新皮肤
     }
 
 
@@ -261,6 +258,72 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Spine外观
+    /// </summary>
+    #region
+    [Header("Spine外观")]
+    public FrameEvent frameEvent;
+    public FrameEvent frameEvent_UI;//大的放大层也需要
+    int beltIndex = 1;
+    int clothesIndex = 1;
+    int glovesIndex = 1;
+    int pantiesIndex = 1;
+    int shoesIndex = 1;
+    int skirtIndex = 1;
+    int stockingsIndex = 1;
+
+    [Header("武器与攻击方式")]
+    public int weaponType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public int attackType;//0踢击 1挥砍
+
+
+
+    public void RefreshPlayerSkin()
+    {
+        if (frameEvent == null) return;
+
+        frameEvent.ShowCurrentAll(
+            beltIndex,
+            clothesIndex,
+            glovesIndex,
+            pantiesIndex,
+            shoesIndex,
+            skirtIndex,
+            stockingsIndex,
+            weaponType
+        );
+
+        frameEvent_UI.ShowCurrentAll(
+          beltIndex,
+          clothesIndex,
+          glovesIndex,
+          pantiesIndex,
+          shoesIndex,
+          skirtIndex,
+          stockingsIndex,
+          weaponType
+      );
+
+
+    }//更新外观
+
+    public void SetWeapon(int newWeaponType)
+    {
+        weaponType = newWeaponType;
+
+        if (weaponType == 0)
+            attackType = 0;//赤手空拳
+        else
+            attackType = 1;
+
+
+
+        RefreshPlayerSkin();
+    }//捡起的武器调用这里
+
+
+    #endregion
 
 
     /// <summary>
@@ -417,6 +480,9 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
+        if (isAttack) { return; }//如果攻击已经开始不能跳跃
+
+
         if (physicsCheck.isGround)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
@@ -619,9 +685,9 @@ public class PlayerController : MonoBehaviour
     #region  投掷
     [Header("投掷")]
     public GameObject throwableWeaponPrefab;
-    public int weaponType;//0空手 1匕首 2武士刀 3尼泊尔军刀
-    public int attackType;//0踢击 1挥砍
-
+    public GameObject Weapon_Melee_01;
+    public GameObject Weapon_Melee_02;
+    public GameObject Weapon_Melee_03;
     public void Throw(InputAction.CallbackContext obj) 
     {
         if (!physicsCheck.isGround) { return; }//空中无法投掷
@@ -635,7 +701,24 @@ public class PlayerController : MonoBehaviour
     float ThrowRate = 0.5f;//投掷频率
     public void ThrowWeapon()
     {
-        if (weaponType <= 0) return; // 空手不能扔
+        if (weaponType == 0) return; // 空手不能扔
+
+
+        switch (weaponType) 
+        {
+            case 1:
+                throwableWeaponPrefab = Weapon_Melee_01;
+                break;
+            case 2:
+                throwableWeaponPrefab = Weapon_Melee_02;
+                break;
+            case 3:
+                throwableWeaponPrefab = Weapon_Melee_03;
+                break;
+        }
+
+
+
 
         if (Time.time > nextThrow)
         {
@@ -663,6 +746,8 @@ public class PlayerController : MonoBehaviour
             // 扔出去后变空手
             weaponType = 0;
             attackType = 0;
+
+            RefreshPlayerSkin();
 
             nextThrow = Time.time + ThrowRate;
         }

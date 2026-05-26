@@ -81,9 +81,17 @@ public class Bomb : MonoBehaviour
                 fall.OnBlastHit(transform.position);
             }
 
-            if (item.CompareTag("Bomb")&&item.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("bomb_off"))
+            if (item.CompareTag("Bomb"))
             {
-                item.GetComponent<Bomb>().TurnOn();
+                Animator anim = item.GetComponent<Animator>();
+                Bomb bomb = item.GetComponent<Bomb>();
+
+                if (anim != null &&
+                    bomb != null &&
+                    anim.GetCurrentAnimatorStateInfo(0).IsName("bomb_off"))
+                {
+                    bomb.TurnOn();
+                }
             }//重新点燃爆炸物
         }
 

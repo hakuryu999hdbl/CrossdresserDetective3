@@ -80,6 +80,11 @@ public class EnemyController : MonoBehaviour
         TransitionToState(patrolState);//一开始进入巡逻状态
 
         RandomizeZ();
+
+
+        RefreshPlayerSkin();//初始更新皮肤
+
+        SetWeapon(Random.Range(0, 4));//初始随机武器
     }
 
     public virtual void Update()
@@ -260,8 +265,19 @@ public class EnemyController : MonoBehaviour
             if (Time.time > nextAttack)
             {
                 // 播放攻击动画
-                anim.SetTrigger("attack");
-                Debug.Log("普通攻击");
+                switch (attackType) 
+                {
+                    case 0:
+                        anim.SetTrigger("kick");
+                        break;
+                    case 1:
+                        anim.SetTrigger("attack");
+                        break;
+
+                }
+               
+
+                //Debug.Log("普通攻击");
                 nextAttack = Time.time + attackRate;
             }
         }
@@ -421,6 +437,117 @@ public class EnemyController : MonoBehaviour
     #endregion
 
 
+    #region  投掷
+
+    [Header("投掷")]
+    public GameObject throwableWeaponPrefab;
+    public GameObject Weapon_Melee_01;
+    public GameObject Weapon_Melee_02;
+    public GameObject Weapon_Melee_03;
+
+    float throwForce = 16f;//投掷力度
+
+    public void ThrowWeapon()
+    {
+        if (weaponType == 0) return; // 空手不能扔
+
+
+        switch (weaponType)
+        {
+            case 1:
+                throwableWeaponPrefab = Weapon_Melee_01;
+                break;
+            case 2:
+                throwableWeaponPrefab = Weapon_Melee_02;
+                break;
+            case 3:
+                throwableWeaponPrefab = Weapon_Melee_03;
+                break;
+        }
+
+
+
+
+        GameObject obj = Instantiate(
+            throwableWeaponPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        ThrowableWeapon throwable = obj.GetComponent<ThrowableWeapon>();
+
+        if (throwable != null)
+        {
+            throwable.Init();
+        }
+
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            Vector2 dir = new Vector2(transform.localScale.x * 0.4f, 0.2f).normalized;
+            rb.velocity = dir * throwForce;
+        }
+
+        // 扔出去后变空手
+        weaponType = 0;
+        attackType = 0;
+
+        RefreshPlayerSkin();
+    }
+    #endregion
+
+    /// <summary>
+    /// Spine外观
+    /// </summary>
+    #region
+    [Header("Spine外观")]
+    public FrameEvent frameEvent;
+    int beltIndex = 1;
+    int clothesIndex = 1;
+    int glovesIndex = 1;
+    int pantiesIndex = 1;
+    int shoesIndex = 1;
+    int skirtIndex = 1;
+    int stockingsIndex = 1;
+
+    [Header("武器与攻击方式")]
+    public int weaponType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public int attackType;//0踢击 1挥砍
+
+
+
+    public void RefreshPlayerSkin()
+    {
+        if (frameEvent == null) return;
+
+        frameEvent.ShowCurrentAll(
+            beltIndex,
+            clothesIndex,
+            glovesIndex,
+            pantiesIndex,
+            shoesIndex,
+            skirtIndex,
+            stockingsIndex,
+            weaponType
+        );
+    }//更新外观
+
+    public void SetWeapon(int newWeaponType)
+    {
+        weaponType = newWeaponType;
+    
+        if (weaponType == 0)
+            attackType = 0;//赤手空拳
+        else
+            attackType = 1;
+    
+        RefreshPlayerSkin();
+    }//捡起的武器调用这里（暂时先不做捡起）
+
+
+    #endregion
+
 
 
     /// <summary>
@@ -557,6 +684,9 @@ public class EnemyController : MonoBehaviour
 
         PlayBloodEffect();
 
+
+        //ThrowWeapon();//受伤后将手上武器扔出
+
     }
 
 
@@ -593,6 +723,11 @@ public class EnemyController : MonoBehaviour
         //coll.enabled = false;
         //rb.bodyType = RigidbodyType2D.Static;
 
+        if (Random.Range(0, 2) == 0)
+        {
+            ThrowWeapon();//死亡后将手上武器扔出
+        }
+       
     }
     #endregion
 

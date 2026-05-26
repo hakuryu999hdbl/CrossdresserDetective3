@@ -24,17 +24,17 @@ public class FrameEvent : MonoBehaviour
         //换皮肤
         skeletonAnimation = GetComponent<SkeletonMecanim>();
 
-        // 初始皮肤
-        ShowCurrentAll(
-            1, // 吊袜带
-            1, // 衣服
-            1, // 手套：0 = 不显示
-            1, // 内裤：0 = 不显示
-            1, // 鞋子
-            1, // 裙子
-            1, // 丝袜：0 = 不显示
-            1  // 近战武器
-        );
+       
+        //ShowCurrentAll(
+        //    1, // 吊袜带
+        //    1, // 衣服
+        //    1, // 手套：0 = 不显示
+        //    1, // 内裤：0 = 不显示
+        //    1, // 鞋子
+        //    1, // 裙子
+        //    1, // 丝袜：0 = 不显示
+        //    1  // 近战武器
+        //); // 初始皮肤（在Player/Enemy里换）
 
     }
     void Update()
@@ -42,19 +42,19 @@ public class FrameEvent : MonoBehaviour
         // 按 T 随机换装测试
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            //RandomTestSkin();
+            RandomTestSkin();
 
 
-            ShowCurrentAll(
-          1, // 吊袜带
-          1, // 衣服
-          1, // 手套：0 = 不显示
-          1, // 内裤：0 = 不显示
-          1, // 鞋子
-          0, // 裙子
-          1, // 丝袜：0 = 不显示
-          1  // 近战武器
-      );
+          //  ShowCurrentAll(
+          //1, // 吊袜带
+          //1, // 衣服
+          //1, // 手套：0 = 不显示
+          //1, // 内裤：0 = 不显示
+          //1, // 鞋子
+          //0, // 裙子
+          //1, // 丝袜：0 = 不显示
+          //1  // 近战武器
+          //);
 
         }
     }
@@ -71,7 +71,7 @@ public class FrameEvent : MonoBehaviour
             Random.Range(0, 3), // 丝袜
             Random.Range(0, 2)  // 武器
 
-        );
+        );//随机皮肤
     }
 
     public void ShowCurrentAll
@@ -81,54 +81,81 @@ public class FrameEvent : MonoBehaviour
         )
     {
 
-        // 每次重新创建混合皮肤，不然旧皮肤会残留
+        //// 每次重新创建混合皮肤，不然旧皮肤会残留
+        //Skin newSkin = new Skin("BlendedSkin");
+        //
+        //
+        //if (_YYY_beltIndex != 0)
+        //    blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Belt/YYY_Belt_color{_YYY_beltIndex}"));
+        //
+        //if (_YYY_clothesIndex != 0)
+        //    blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Clothes/YYY_Clothes_color{_YYY_clothesIndex}"));
+        //
+        //// 手套：0 也要加，因为是裸体/皮肤状态
+        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Gloves/YYY_Gloves_color{_YYY_glovesIndex}"));
+        //
+        //// 内裤：0 也要加
+        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Panties/YYY_Panties_color{_YYY_pantiesIndex}"));
+        //
+        //if (_YYY_shoesIndex != 0)
+        //    blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Shoes/YYY_Shoes_color{_YYY_shoesIndex}"));
+        //
+        //if (_YYY_skirtIndex != 0)
+        //    blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Skirt/YYY_Skirt_color{_YYY_skirtIndex}"));
+        //
+        //// 丝袜：0 也要加
+        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Stockings/YYY_Stockings_color{_YYY_stockingsIndex}"));
+        //
+        //if (_Weapon_MeleeIndex != 0)
+        //    blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"Weapon/Melee/Weapon_Melee_color{_Weapon_MeleeIndex}"));
+        //
+        //
+        //skeletonAnimation.Skeleton.SetSkin(blendSkin);
+        //skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        //
+        //blendSkin = newSkin;
+
+
         Skin newSkin = new Skin("BlendedSkin");
 
-
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Belt/YYY_Belt_color{_YYY_beltIndex}"));
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Clothes/YYY_Clothes_color{_YYY_clothesIndex}")); 
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Gloves/YYY_Gloves_color{_YYY_glovesIndex}"));
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Panties/YYY_Panties_color{_YYY_pantiesIndex}")); 
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Shoes/YYY_Shoes_color{_YYY_shoesIndex}"));
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Skirt/YYY_Skirt_color{_YYY_skirtIndex}"));
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Stockings/YYY_Stockings_color{_YYY_stockingsIndex}")); 
-        //
-        //blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"Weapon/Melee/Weapon_Melee_color{_Weapon_MeleeIndex}"));
-
-
-
         if (_YYY_beltIndex != 0)
-            blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Belt/YYY_Belt_color{_YYY_beltIndex}"));
+            AddSkinSafe(newSkin, $"YYY/Belt/YYY_Belt_color{_YYY_beltIndex}");
 
         if (_YYY_clothesIndex != 0)
-            blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Clothes/YYY_Clothes_color{_YYY_clothesIndex}"));
+            AddSkinSafe(newSkin, $"YYY/Clothes/YYY_Clothes_color{_YYY_clothesIndex}");
 
-        // 手套：0 也要加，因为是裸体/皮肤状态
-        blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Gloves/YYY_Gloves_color{_YYY_glovesIndex}"));
-
-        // 内裤：0 也要加
-        blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Panties/YYY_Panties_color{_YYY_pantiesIndex}"));
+        AddSkinSafe(newSkin, $"YYY/Gloves/YYY_Gloves_color{_YYY_glovesIndex}");
+        AddSkinSafe(newSkin, $"YYY/Panties/YYY_Panties_color{_YYY_pantiesIndex}");
 
         if (_YYY_shoesIndex != 0)
-            blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Shoes/YYY_Shoes_color{_YYY_shoesIndex}"));
+            AddSkinSafe(newSkin, $"YYY/Shoes/YYY_Shoes_color{_YYY_shoesIndex}");
 
         if (_YYY_skirtIndex != 0)
-            blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Skirt/YYY_Skirt_color{_YYY_skirtIndex}"));
+            AddSkinSafe(newSkin, $"YYY/Skirt/YYY_Skirt_color{_YYY_skirtIndex}");
 
-        // 丝袜：0 也要加
-        blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"YYY/Stockings/YYY_Stockings_color{_YYY_stockingsIndex}"));
+        AddSkinSafe(newSkin, $"YYY/Stockings/YYY_Stockings_color{_YYY_stockingsIndex}");
 
         if (_Weapon_MeleeIndex != 0)
-            blendSkin.AddSkin(skeletonAnimation.Skeleton.Data.FindSkin($"Weapon/Melee/Weapon_Melee_color{_Weapon_MeleeIndex}"));
+            AddSkinSafe(newSkin, $"Weapon/Melee/Weapon_Melee_color{_Weapon_MeleeIndex}");
 
-
-        skeletonAnimation.Skeleton.SetSkin(blendSkin);
+        skeletonAnimation.Skeleton.SetSkin(newSkin);
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
 
         blendSkin = newSkin;
     }
 
- 
+    private void AddSkinSafe(Skin targetSkin, string skinName)
+    {
+        Skin skin = skeletonAnimation.Skeleton.Data.FindSkin(skinName);
+
+        if (skin == null)
+        {
+            Debug.LogWarning("找不到 Skin: " + skinName);
+            return;
+        }
+
+        targetSkin.AddSkin(skin);
+    }
 
 
 
