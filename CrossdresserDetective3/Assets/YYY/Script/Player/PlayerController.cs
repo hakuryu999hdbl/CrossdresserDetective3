@@ -395,6 +395,9 @@ public class PlayerController : MonoBehaviour
 
         isDead = true;
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
+
+
+        UIManager.instance.GameOverUI();
     }
 
 

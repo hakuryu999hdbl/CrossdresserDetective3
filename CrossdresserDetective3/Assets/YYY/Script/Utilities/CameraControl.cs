@@ -101,12 +101,12 @@ public class CameraControl : MonoBehaviour
     //设置相机边界
     private void GetNewCameraBounds() 
     {
-        var obj = GameObject.FindGameObjectWithTag("Bounds");
-        if(obj == null){ return; }
-
-        //设置边界
-        confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
-        confiner2D.InvalidateCache();
+       // var obj = GameObject.FindGameObjectWithTag("Bounds");
+       // if(obj == null){ return; }
+       //
+       // //设置边界
+       // confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
+       // confiner2D.InvalidateCache();
     }
 
 

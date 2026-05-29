@@ -125,7 +125,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Boss生命值")]
     public Slider bossHealthBar;
-    public GameObject gameOverPanel;
+ 
     public void SetBossHealth(float health)
     {
         bossHealthBar.maxValue = health;
@@ -136,13 +136,43 @@ public class UIManager : MonoBehaviour
         bossHealthBar.value = health;
     }
 
-    public void GameOverUI(bool playerDead)
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// 游戏结束菜单
+    /// </summary>
+    #region
+    [Header("游戏结束菜单")]
+    public GameObject gameOverPanel;
+    public GameObject GameOverfirstSelected; //进入设置页面最先选中 X 或 Master Slider
+    public void GameOverUI()
     {
-        gameOverPanel.SetActive(playerDead);
+        gameOverPanel.SetActive(true);
+
+        playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(GameOverfirstSelected);
     }
 
+    public GameObject WinPanel;
+    public GameObject WinfirstSelected; //进入设置页面最先选中 X 或 Master Slider
+    public void WinUI()
+    {
+        WinPanel.SetActive(true);
 
+        playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(WinfirstSelected);
+    }
+    #endregion
 
 
 

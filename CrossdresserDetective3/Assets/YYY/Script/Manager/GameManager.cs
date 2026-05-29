@@ -40,26 +40,30 @@ public class GameManager : MonoBehaviour
         switch (GameFlowData.nextAreaId)
         {
             case "":
-            default:
-            //俱乐部
+            default:       
             case "Chapter1_1":   
-                SetArea(0);
+                SetArea(4);  //废弃大楼
                 break;
 
-            //停车场
+            
             case "Chapter1_2":
-                SetArea(1);
+                SetArea(1);//停车场
                 break;
 
-            //外景
+            
             case "Chapter1_3":
-                SetArea(2);
+                SetArea(2);//外景
                 break;
 
 
-            //事务所
+            
             case "Chapter1_4":
-                SetArea(3);
+                SetArea(3);//事务所
+                break;
+
+            
+            case "Chapter1_5":
+                SetArea(0);//俱乐部
                 break;
         }
 
@@ -74,56 +78,7 @@ public class GameManager : MonoBehaviour
 
     public void SetArea(int index)
     {
-
-
-
-
-        GameObject NewArea = Instantiate(areaList[index], Vector3.zero, Quaternion.identity);
-
-
-        // 找到新区域里的 CameraBounds（PolygonCollider2D）
-        //PolygonCollider2D newBounds = NewArea.transform.Find("CameraBounds").GetComponent<PolygonCollider2D>();
-        //SetNewBounds(newBounds);
-
-
-        // 把玩家的位置设为这个出生点
-
-       //switch (GameFlowData.nextAreaId)
-       //{
-       //    default:
-       //    case "Area01_1":
-       //    case "Area02_1":
-       //    case "Area03_1":
-       //    case "Area04_1":
-       //    case "Area05_1":
-       //    case "Area06_1":
-       //    case "Area07_1":
-       //        Transform PlayerPoint = NewArea.transform.Find("PointForPlayer_1");
-       //        player.transform.position = PlayerPoint.position;
-       //        break;
-       //
-       //    case "Area01_2":
-       //    case "Area02_2":
-       //    case "Area04_2":
-       //    case "Area05_2":
-       //    case "Area06_2":
-       //        Transform PlayerPoint_2 = NewArea.transform.Find("PointForPlayer_2");
-       //        player.transform.position = PlayerPoint_2.position;
-       //        break;
-       //
-       //
-       //    case "Area05_3":
-       //    case "Area01_3":
-       //        Transform PlayerPoint_3 = NewArea.transform.Find("PointForPlayer_3");
-       //        player.transform.position = PlayerPoint_3.position;
-       //        break;
-       //    case "Area01_4":
-       //        Transform PlayerPoint_4 = NewArea.transform.Find("PointForPlayer_4");
-       //        player.transform.position = PlayerPoint_4.position;
-       //        break;
-       //}
-
-
+        Instantiate(areaList[index], Vector3.zero, Quaternion.identity);
     }
 
     #endregion
@@ -133,8 +88,10 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        gameOver = player.isDead;
-        UIManager.instance.GameOverUI(gameOver);
+
+        gameOver = player.isDead;//未来要是没用就删除
+       
+        
     }
 
     public void RestartScene() 
@@ -166,6 +123,8 @@ public class GameManager : MonoBehaviour
         if (enemies.Count<=0) 
         {
             //doorExit.OpenDoor();
+
+            UIManager.instance.WinUI();
         }
 
     }
