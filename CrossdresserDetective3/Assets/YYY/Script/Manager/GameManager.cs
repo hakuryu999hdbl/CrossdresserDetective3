@@ -37,38 +37,32 @@ public class GameManager : MonoBehaviour
         //AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Level_1, true);
 
         //根据当前临时存档读取位置
-        switch (GameFlowData.nextAreaId)
-        {
-            case "":
+        switch (GameFlowData.CurrentChapter)
+        {           
             default:       
-            case "Chapter1_1":   
-                SetArea(4);  //废弃大楼
+            case 1:
+
+                switch (GameFlowData.CurrentStage)
+                {
+         
+                    case 1:
+                        SetArea(4); 
+                        break;
+                    case 2:
+                        SetArea(5);  
+                        break;
+                    case 3:
+                        SetArea(6);
+                        break;
+                }
                 break;
 
-            
-            case "Chapter1_2":
-                SetArea(1);//停车场
-                break;
-
-            
-            case "Chapter1_3":
-                SetArea(2);//外景
-                break;
-
-
-            
-            case "Chapter1_4":
-                SetArea(3);//事务所
-                break;
-
-            
-            case "Chapter1_5":
-                SetArea(0);//俱乐部
-                break;
         }
 
-
+       
     }
+
+
     /// <summary>
     /// 关卡
     /// </summary>
@@ -83,13 +77,17 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+
+
+
+
     [Header("其他设置")]
     public bool gameOver = false;//玩家死亡游戏结束
-
+    public bool PlayerWin = false;//好像获胜界面会触发很多下的样子，为了只触发一下
     public void Update()
     {
 
-        gameOver = player.isDead;//未来要是没用就删除
+        gameOver = player.isDead;//玩家死亡的时候所有敌人不能动
        
         
     }
@@ -97,18 +95,33 @@ public class GameManager : MonoBehaviour
     public void RestartScene() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+     
+    }
 
-        
+    public void NextScene()
+    {
+        GameFlowData.CurrentStage++;
+
+        // 每章10关
+        if (GameFlowData.CurrentStage > 10)
+        {
+            GameFlowData.CurrentStage = 1;
+            GameFlowData.CurrentChapter++;
+        }
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 
 
 
-    
 
 
-
-
+    /// <summary>
+    /// 检测敌人
+    /// </summary>
+    #region
+    [Header("检测敌人")]
     public List<EnemyController> enemies = new List<EnemyController>();//游戏开始的时候所有敌人登记进入这个列表，当这个列表空了后打开大门
 
     public void IsEnemy(EnemyController enemy) 
@@ -120,13 +133,16 @@ public class GameManager : MonoBehaviour
     {
         enemies.Remove(enemy);
 
-        if (enemies.Count<=0) 
+        if (enemies.Count<=0&& !PlayerWin) 
         {
             //doorExit.OpenDoor();
 
             UIManager.instance.WinUI();
+
+            PlayerWin = true;
         }
 
     }
+    #endregion
 
 }

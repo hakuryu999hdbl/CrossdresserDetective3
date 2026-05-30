@@ -5,8 +5,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
+
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager instance;
+
 
     /// <summary>
     /// 多端输入
@@ -23,6 +26,8 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+
         inputControl = new PlayerInputControl();
 
         EventSystem.current.SetSelectedGameObject(null);
@@ -37,11 +42,27 @@ public class MenuManager : MonoBehaviour
         //Debug.Log("目前是否根据系统语言进行设置" + PlayerPrefs.GetInt("language_initialized"));//0无设置  1已经设置好
         Debug.Log("目前储存的语言" + PlayerPrefs.GetInt("language"));//0日语 1简体中文 2繁体中文 3英语 4韩语
 
-
+        
     }
     private void Start()
     {
         AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Theme, true);
+
+        switch (GameFlowData.returnPath)
+        {
+            case "chapter_1":
+                OpenChapter_Number(1);
+                break;
+
+            case "cg":             
+                break;
+
+        }
+
+        GameFlowData.returnPath = null; // 用完清掉
+
+
+       
     }
     private void OnEnable()
     {
@@ -123,6 +144,7 @@ public class MenuManager : MonoBehaviour
 
             newData.slotName = CurrentSaveSlotUI.slotName;//记住档的名字
 
+            newData.InitStageData();//新建存档的时候就更新一下关卡记录
 
             SaveManager.SaveGame(newData);
 
@@ -186,6 +208,8 @@ public class MenuManager : MonoBehaviour
 
         CurrentOpen = 0;
     }
+
+
     #endregion
 
 
@@ -331,6 +355,9 @@ public class MenuManager : MonoBehaviour
 
     public void OpenChapter_Number(int Number) 
     {
+        RefreshChapter1Buttons();//读取更新关卡（每次只有在打开关卡进度的时候更新）
+        MainMenu.SetActive(false);//这个主要用于从关卡回退到主菜单的时候隐藏
+
         switch (Number)
         {
             case 1:
@@ -395,11 +422,58 @@ public class MenuManager : MonoBehaviour
 
     #endregion
 
-    public void NewGame(string _nextAreaId)
-    {
-        GameFlowData.nextAreaId = _nextAreaId;
 
-        SceneManager.LoadScene(1);
+    /// <summary>
+    /// 关卡解锁进度
+    /// </summary>
+    #region
+
+    [Header("第一章关卡按钮")]
+    public StageButtonUI[] chapter1Buttons;
+
+    private SaveData currentData;
+
+    public void ReadChapter()
+    {
+        currentData = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+        currentData.InitStageData();
+    }
+
+    // 打开第一章时调用这个
+    public void RefreshChapter1Buttons()
+    {
+        ReadChapter();
+        RefreshChapterButtons(1, chapter1Buttons);
+    }
+
+    // 通用刷新：第几章 + 这一章的按钮数组
+    public void RefreshChapterButtons(int chapter, StageButtonUI[] buttons)
+    {
+        int startIndex = (chapter - 1) * currentData.stagePerChapter;
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            int index = startIndex + i;
+
+            if (index >= currentData.stageStars.Length)
+                break;
+
+            int star = currentData.stageStars[index];
+
+            buttons[i].SetStageState(star);
+        }
+    }
+
+    #endregion
+
+
+
+    public void NewGame(int Chapter, int Stage)
+    { 
+
+        GameFlowData.CurrentChapter = Chapter; 
+        GameFlowData.CurrentStage = Stage; 
+        SceneManager.LoadScene(1); 
 
     }//跳转编号场景
 

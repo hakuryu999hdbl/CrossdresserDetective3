@@ -12,14 +12,14 @@ public class Door_Side : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")&& anim!=null)
         {
             anim.SetBool("isOpen", true);
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && anim != null)
         {
             anim.SetBool("isOpen", false);
         }

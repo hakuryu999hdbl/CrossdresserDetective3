@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 45721485}
   - component: {fileID: 45721484}
   - component: {fileID: 45721483}
+  - component: {fileID: 45721487}
   m_Layer: 5
   m_Name: 1_10
   m_TagString: Untagged
@@ -523,10 +524,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 45721487}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -573,6 +574,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45721481}
   m_CullTransparentMesh: 1
+--- !u!114 &45721487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45721481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 45721484}
+  star1: {fileID: 908007116}
+  star2: {fileID: 1177778822}
+  star3: {fileID: 463975808}
+  chapter: 1
+  stage: 10
 --- !u!1 &45733959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,6 +2194,7 @@ GameObject:
   - component: {fileID: 299191845}
   - component: {fileID: 299191844}
   - component: {fileID: 299191843}
+  - component: {fileID: 299191847}
   m_Layer: 5
   m_Name: 1_4
   m_TagString: Untagged
@@ -2262,10 +2282,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 299191847}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2312,6 +2332,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299191841}
   m_CullTransparentMesh: 1
+--- !u!114 &299191847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299191841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 299191844}
+  star1: {fileID: 1133592073}
+  star2: {fileID: 1371863381}
+  star3: {fileID: 1950310129}
+  chapter: 1
+  stage: 4
 --- !u!1 &300211784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,6 +2749,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1876255469}
+  - {fileID: 1512471425}
   - {fileID: 2072017873}
   - {fileID: 2147322618}
   - {fileID: 1727086775}
@@ -3439,6 +3478,7 @@ GameObject:
   - component: {fileID: 480922070}
   - component: {fileID: 480922069}
   - component: {fileID: 480922068}
+  - component: {fileID: 480922072}
   m_Layer: 5
   m_Name: 1_3
   m_TagString: Untagged
@@ -3526,10 +3566,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 480922072}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3576,6 +3616,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480922066}
   m_CullTransparentMesh: 1
+--- !u!114 &480922072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480922066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 480922069}
+  star1: {fileID: 672129570}
+  star2: {fileID: 763758741}
+  star3: {fileID: 1739391775}
+  chapter: 1
+  stage: 3
 --- !u!1 &490989216
 GameObject:
   m_ObjectHideFlags: 0
@@ -3825,7 +3883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &505705672
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4367,6 +4425,7 @@ GameObject:
   - component: {fileID: 589429570}
   - component: {fileID: 589429569}
   - component: {fileID: 589429568}
+  - component: {fileID: 589429572}
   m_Layer: 5
   m_Name: 1_2
   m_TagString: Untagged
@@ -4454,10 +4513,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 589429572}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4504,6 +4563,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589429566}
   m_CullTransparentMesh: 1
+--- !u!114 &589429572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589429566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 589429569}
+  star1: {fileID: 1167409450}
+  star2: {fileID: 1455215772}
+  star3: {fileID: 32847986}
+  chapter: 1
+  stage: 2
 --- !u!1 &605297982
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,6 +5484,7 @@ GameObject:
   - component: {fileID: 719486434}
   - component: {fileID: 719486433}
   - component: {fileID: 719486432}
+  - component: {fileID: 719486436}
   m_Layer: 5
   m_Name: 1_9
   m_TagString: Untagged
@@ -5494,10 +5572,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 719486436}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5544,6 +5622,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719486430}
   m_CullTransparentMesh: 1
+--- !u!114 &719486436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719486430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 719486433}
+  star1: {fileID: 1515697266}
+  star2: {fileID: 362667175}
+  star3: {fileID: 300211784}
+  chapter: 1
+  stage: 9
 --- !u!1 &726989082
 GameObject:
   m_ObjectHideFlags: 0
@@ -5864,7 +5960,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &812996373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7905,6 +8001,7 @@ GameObject:
   - component: {fileID: 1095612504}
   - component: {fileID: 1095612503}
   - component: {fileID: 1095612502}
+  - component: {fileID: 1095612506}
   m_Layer: 5
   m_Name: 1_7
   m_TagString: Untagged
@@ -7992,10 +8089,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 1095612506}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8042,6 +8139,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095612500}
   m_CullTransparentMesh: 1
+--- !u!114 &1095612506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095612500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1095612503}
+  star1: {fileID: 1637120567}
+  star2: {fileID: 1967921089}
+  star3: {fileID: 1955229251}
+  chapter: 1
+  stage: 7
 --- !u!1 &1133592073
 GameObject:
   m_ObjectHideFlags: 0
@@ -8137,7 +8252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1139879256
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9268,6 +9383,7 @@ GameObject:
   - component: {fileID: 1266624445}
   - component: {fileID: 1266624444}
   - component: {fileID: 1266624443}
+  - component: {fileID: 1266624447}
   m_Layer: 5
   m_Name: 1_6
   m_TagString: Untagged
@@ -9355,10 +9471,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 1266624447}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9405,6 +9521,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266624441}
   m_CullTransparentMesh: 1
+--- !u!114 &1266624447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266624441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1266624444}
+  star1: {fileID: 1629304711}
+  star2: {fileID: 372101315}
+  star3: {fileID: 1420447139}
+  chapter: 1
+  stage: 6
 --- !u!1 &1275981702
 GameObject:
   m_ObjectHideFlags: 0
@@ -9944,6 +10078,7 @@ GameObject:
   - component: {fileID: 1395299695}
   - component: {fileID: 1395299694}
   - component: {fileID: 1395299693}
+  - component: {fileID: 1395299697}
   m_Layer: 5
   m_Name: 1_8
   m_TagString: Untagged
@@ -10031,10 +10166,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 1395299697}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10081,6 +10216,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395299691}
   m_CullTransparentMesh: 1
+--- !u!114 &1395299697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395299691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1395299694}
+  star1: {fileID: 881244211}
+  star2: {fileID: 913452731}
+  star3: {fileID: 1365370049}
+  chapter: 1
+  stage: 8
 --- !u!1 &1396677571
 GameObject:
   m_ObjectHideFlags: 0
@@ -10923,6 +11076,156 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506170002}
   m_CullTransparentMesh: 1
+--- !u!1 &1512471424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512471425}
+  - component: {fileID: 1512471429}
+  - component: {fileID: 1512471428}
+  - component: {fileID: 1512471427}
+  - component: {fileID: 1512471426}
+  m_Layer: 5
+  m_Name: SaveURL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1512471425
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512471424}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.51000303, y: 0.51000303, z: 0.51000303}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 362151254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -148, y: -65}
+  m_SizeDelta: {x: 490.3708, y: 164.5747}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1512471426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512471424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce02b2c36df08d943accc9e26ab73679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playHoverOnSelect: 1
+--- !u!114 &1512471427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512471424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 2
+    m_WrapAround: 1
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.42731255, g: 1, b: 0.4009434, a: 1}
+    m_PressedColor: {r: 0, g: 0.5377358, b: 0.05950973, a: 1}
+    m_SelectedColor: {r: 0.42745098, g: 1, b: 0.4, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1512471428}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1890368031}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: OpenSaveURL
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1512471428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512471424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 100
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 259
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: SaveURL
+--- !u!222 &1512471429
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512471424}
+  m_CullTransparentMesh: 1
 --- !u!1 &1515697266
 GameObject:
   m_ObjectHideFlags: 0
@@ -11576,6 +11879,7 @@ GameObject:
   - component: {fileID: 1619495720}
   - component: {fileID: 1619495719}
   - component: {fileID: 1619495718}
+  - component: {fileID: 1619495722}
   m_Layer: 5
   m_Name: 1_5
   m_TagString: Untagged
@@ -11663,10 +11967,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 1619495722}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11713,6 +12017,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619495716}
   m_CullTransparentMesh: 1
+--- !u!114 &1619495722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619495716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1619495719}
+  star1: {fileID: 56940372}
+  star2: {fileID: 990242080}
+  star3: {fileID: 866934237}
+  chapter: 1
+  stage: 5
 --- !u!1 &1629304711
 GameObject:
   m_ObjectHideFlags: 0
@@ -12566,7 +12888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1679411830
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12926,7 +13248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1700789370
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14330,6 +14652,17 @@ MonoBehaviour:
   Chapter_2_Menu: {fileID: 1894543392}
   Chapter_2_FirstSelected: {fileID: 619312678}
   Chapter_2_Button: {fileID: 1139879255}
+  chapter1Buttons:
+  - {fileID: 2106459980}
+  - {fileID: 589429572}
+  - {fileID: 480922072}
+  - {fileID: 299191847}
+  - {fileID: 1619495722}
+  - {fileID: 1266624447}
+  - {fileID: 1095612506}
+  - {fileID: 1395299697}
+  - {fileID: 719486436}
+  - {fileID: 45721487}
 --- !u!1 &1894543392
 GameObject:
   m_ObjectHideFlags: 0
@@ -14987,7 +15320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1969971848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16454,6 +16787,7 @@ GameObject:
   - component: {fileID: 2106459978}
   - component: {fileID: 2106459977}
   - component: {fileID: 2106459976}
+  - component: {fileID: 2106459980}
   m_Layer: 5
   m_Name: 1_1
   m_TagString: Untagged
@@ -16537,14 +16871,14 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 2106459978}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: NewGame
-        m_Mode: 5
+      - m_Target: {fileID: 2106459980}
+        m_TargetAssemblyTypeName: StageButtonUI, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16591,6 +16925,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106459974}
   m_CullTransparentMesh: 1
+--- !u!114 &2106459980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106459974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9845f88bba20c374cb84fa25477753ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 2106459977}
+  star1: {fileID: 202450008}
+  star2: {fileID: 2088389816}
+  star3: {fileID: 327795698}
+  chapter: 1
+  stage: 1
 --- !u!1 &2110862387
 GameObject:
   m_ObjectHideFlags: 0
@@ -16686,7 +17038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2119101462
 RectTransform:
   m_ObjectHideFlags: 0

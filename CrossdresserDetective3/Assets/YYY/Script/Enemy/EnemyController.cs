@@ -115,12 +115,19 @@ public class EnemyController : MonoBehaviour
 
         if (GameManager.instance != null && GameManager.instance.gameOver)
         {
-            attackList.Clear();
-            targetPoint = null;
-            anim.ResetTrigger("attack");
-            anim.ResetTrigger("skill");
-            animState = 0;
-            anim.SetInteger("state", animState);
+            //attackList.Clear();
+            //targetPoint = null;
+            //anim.ResetTrigger("attack");
+            //anim.ResetTrigger("skill");
+            //animState = 0;
+            //anim.SetInteger("state", animState);
+
+            if (!gameOverStopped)
+            {
+                StopEnemyOnGameOver();
+                gameOverStopped = true;
+            }
+
             return;
         }//玩家死后强制停战
 
@@ -162,8 +169,35 @@ public class EnemyController : MonoBehaviour
 
 
 
+    private bool gameOverStopped = false;
+    private void StopEnemyOnGameOver()
+    {
+        attackList.Clear();
+        targetPoint = null;
 
+        // 停止物理运动
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
 
+        // 停止攻击触发
+        anim.ResetTrigger("attack");
+        anim.ResetTrigger("skill");
+        anim.ResetTrigger("kick");
+        anim.ResetTrigger("hit");
+
+        // 强制回到待机动画
+        animState = 0;
+        anim.SetInteger("state", 0);
+        anim.SetBool("isGround", true);
+        anim.SetFloat("yVelocity", 0f);
+
+        // 关掉跳跃层，避免卡在跳跃动作
+        anim.SetLayerWeight(jumpLayer, 0f);
+    }
 
 
 

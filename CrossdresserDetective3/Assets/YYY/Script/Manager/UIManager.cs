@@ -88,6 +88,17 @@ public class UIManager : MonoBehaviour
     }
     public void BackToMenu()
     {
+        //根据当前临时存档确认回退到主菜单后的位置
+        switch (GameFlowData.CurrentChapter)
+        {
+            default:
+            case 1:
+                GameFlowData.returnPath = "chapter_1";
+                break;
+          
+        }
+
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
 
@@ -151,27 +162,88 @@ public class UIManager : MonoBehaviour
     [Header("游戏结束菜单")]
     public GameObject gameOverPanel;
     public GameObject GameOverfirstSelected; //进入设置页面最先选中 X 或 Master Slider
+
+    public GameObject MissionFailure;
+
     public void GameOverUI()
     {
-        gameOverPanel.SetActive(true);
-
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
+        MissionFailure.SetActive(true);
+
+        StartCoroutine(GameOverDelay());
+    }
+
+    IEnumerator GameOverDelay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        gameOverPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(GameOverfirstSelected);
     }
 
+
     public GameObject WinPanel;
     public GameObject WinfirstSelected; //进入设置页面最先选中 X 或 Master Slider
+    
+    public GameObject MissionComplete;
+
     public void WinUI()
     {
-        WinPanel.SetActive(true);
+        SaveStageResult();//储存通关星数
 
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
+        MissionComplete.SetActive(true);
+
+        StartCoroutine(WinDelay());
+    }
+
+    IEnumerator WinDelay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        WinPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(WinfirstSelected);
     }
+
+    private void SaveStageResult()
+    {
+        SaveData data =
+            SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+
+        data.InitStageData();
+
+        int chapter = GameFlowData.CurrentChapter;
+        int stage = GameFlowData.CurrentStage;
+
+        int index =
+            (chapter - 1) * data.stagePerChapter
+            + (stage - 1);
+
+        int star = 3; // 以后换成实际计算
+
+        // 保留最高评价
+        data.stageStars[index] =
+            Mathf.Max(data.stageStars[index], star);
+
+        // 解锁下一关
+        int nextIndex = index + 1;
+
+        if (nextIndex < data.stageStars.Length)
+        {
+            if (data.stageStars[nextIndex] < 0)
+            {
+                data.stageStars[nextIndex] = 0;
+            }
+        }
+
+        SaveManager.SaveGame(data);
+    }
+
+
     #endregion
 
 
