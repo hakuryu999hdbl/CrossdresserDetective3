@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
                 switch (GameFlowData.CurrentStage)
                 {
-         
+                    default:
                     case 1:
                         SetArea(4); 
                         break;

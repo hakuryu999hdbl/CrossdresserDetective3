@@ -250,6 +250,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
+  - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3291,6 +3292,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
+  - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3869,6 +3871,37 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &708380190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708380191}
+  m_Layer: 3
+  m_Name: ShootPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &708380191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708380190}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7, y: 1.086, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1720513875}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &712798826
 GameObject:
   m_ObjectHideFlags: 0
@@ -6876,6 +6909,7 @@ Transform:
   - {fileID: 500547789}
   - {fileID: 323732882}
   - {fileID: 1201616458}
+  - {fileID: 708380191}
   m_Father: {fileID: 934071645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1720513876
@@ -6945,8 +6979,9 @@ MonoBehaviour:
   isWallCling: 0
   frameEvent: {fileID: 500547790}
   frameEvent_UI: {fileID: 16702422}
-  weaponType: 1
-  attackType: 1
+  meleeType: 0
+  pistolType: 1
+  attackType: -1
   hurtForce: 8
   frameEvent_Audio: {fileID: 500547792}
   Effect_Blood: {fileID: 1622069723160390679, guid: 3cbb102f876966040a9c79278e3e6a63, type: 3}
@@ -6963,6 +6998,11 @@ MonoBehaviour:
   Weapon_Melee_01: {fileID: 7993647595746193275, guid: f0d8ee50e4efce6419d59cd658272ce8, type: 3}
   Weapon_Melee_02: {fileID: 3046158814502348172, guid: 5b6d497d23e41ac4eacae8282190d380, type: 3}
   Weapon_Melee_03: {fileID: 6376496097679900934, guid: 4dd90db6d39bc00459a1978d88bb9f92, type: 3}
+  bulletPrefab: {fileID: 3004764211289256876, guid: 7b4fe79288a747e419cf5ea1c99fbfe1, type: 3}
+  firePoint: {fileID: 708380191}
+  bulletSpeed: 20
+  bulletLifeTime: 2
+  spreadAngle: 3
   Sign: {fileID: 323732881}
   cameraControl: {fileID: 929952884}
 --- !u!70 &1720513878
@@ -7983,6 +8023,7 @@ MonoBehaviour:
   WinPanel: {fileID: 1969368807}
   WinfirstSelected: {fileID: 1108552711}
   MissionComplete: {fileID: 716552879}
+  isResultShowing: 0
   healthEvent: {fileID: 11400000, guid: 81f19212b357f1a4b8ebd7d277aaef30, type: 2}
   healthImage: {fileID: 2135027390}
   healthDelayImage: {fileID: 1300615759}

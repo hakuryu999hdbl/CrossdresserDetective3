@@ -85,6 +85,15 @@ public class AudioManager : MonoBehaviour
                      Attack_blood1, Attack_blood2, Attack_blood3,
                      Attack_bomb_bounce_1, Attack_bomb_bounce_2, Attack_bomb_bounce_3;
 
+    public AudioClip　Attack_largeSword;
+
+    public AudioClip Bullet_OutOfBullet;
+    public AudioClip Bullet_Wall;
+    public AudioClip Bullet_Pistol_1, Bullet_Pistol_2, Bullet_Pistol_3;
+    public AudioClip Bullet_Pistol_Load;
+    public AudioClip Bullet_AK, Bullet_SD;
+    public AudioClip Bullet_SD_Load;
+
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
 
 

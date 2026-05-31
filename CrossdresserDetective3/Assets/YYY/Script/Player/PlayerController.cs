@@ -274,8 +274,9 @@ public class PlayerController : MonoBehaviour
     int stockingsIndex = 1;
 
     [Header("武器与攻击方式")]
-    public int weaponType;//0空手 1匕首 2武士刀 3尼泊尔军刀
-    public int attackType;//0踢击 1挥砍
+    public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public int pistolType;//0空手 1格洛克手枪 2沙鹰手枪 3伯莱塔92F手枪
+    public int attackType;//-1射击 0踢击 1挥砍
 
 
 
@@ -291,7 +292,8 @@ public class PlayerController : MonoBehaviour
             shoesIndex,
             skirtIndex,
             stockingsIndex,
-            weaponType
+            meleeType,
+            pistolType
         );
 
         frameEvent_UI.ShowCurrentAll(
@@ -302,7 +304,8 @@ public class PlayerController : MonoBehaviour
           shoesIndex,
           skirtIndex,
           stockingsIndex,
-          weaponType
+          meleeType,
+          pistolType
       );
 
 
@@ -310,9 +313,9 @@ public class PlayerController : MonoBehaviour
 
     public void SetWeapon(int newWeaponType)
     {
-        weaponType = newWeaponType;
+        meleeType = newWeaponType;
 
-        if (weaponType == 0)
+        if (meleeType == 0)
             attackType = 0;//赤手空拳
         else
             attackType = 1;
@@ -512,7 +515,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    #region  攻击触发
+    #region  攻击
     [Header("攻击触发/炸弹")]
     public GameObject bombPrefab;
     float throwForce = 16f;//投掷炸弹力度
@@ -704,10 +707,10 @@ public class PlayerController : MonoBehaviour
     float ThrowRate = 0.5f;//投掷频率
     public void ThrowWeapon()
     {
-        if (weaponType == 0) return; // 空手不能扔
+        if (meleeType == 0) return; // 空手不能扔
 
 
-        switch (weaponType) 
+        switch (meleeType) 
         {
             case 1:
                 throwableWeaponPrefab = Weapon_Melee_01;
@@ -747,7 +750,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // 扔出去后变空手
-            weaponType = 0;
+            meleeType = 0;
             attackType = 0;
 
             RefreshPlayerSkin();
@@ -759,6 +762,49 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region  射击
+    [Header("射击")]
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+
+    public float bulletSpeed = 20f;
+    public float bulletLifeTime = 2f;
+
+    [Header("枪械精度")]
+    public float spreadAngle = 3f; // 误差角度，0 = 完全精准
+
+    public void Shoot()
+    {
+        if (bulletPrefab == null) return;
+
+        Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position;
+
+        GameObject bullet = Instantiate(
+            bulletPrefab,
+            spawnPos,
+            Quaternion.identity
+        );
+
+        float dirX = transform.localScale.x >= 0 ? 1f : -1f;
+
+        Vector2 dir = new Vector2(dirX, 0f);
+
+        // 准头误差
+        float randomAngle = UnityEngine.Random.Range(-spreadAngle, spreadAngle);
+        dir = Quaternion.Euler(0f, 0f, randomAngle) * dir;
+
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.Init(dir, bulletSpeed, bulletLifeTime);
+        }
+
+
+        frameEvent_Audio._Bullet_Pistol_1();
+
+    }
+    #endregion
 
     #region  UI层
     [Header("打开暂停菜单隐藏交互碰撞体")]

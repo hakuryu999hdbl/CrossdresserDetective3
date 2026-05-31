@@ -483,10 +483,10 @@ public class EnemyController : MonoBehaviour
 
     public void ThrowWeapon()
     {
-        if (weaponType == 0) return; // 空手不能扔
+        if (meleeType == 0) return; // 空手不能扔
 
 
-        switch (weaponType)
+        switch (meleeType)
         {
             case 1:
                 throwableWeaponPrefab = Weapon_Melee_01;
@@ -524,7 +524,7 @@ public class EnemyController : MonoBehaviour
         }
 
         // 扔出去后变空手
-        weaponType = 0;
+        meleeType = 0;
         attackType = 0;
 
         RefreshPlayerSkin();
@@ -546,7 +546,8 @@ public class EnemyController : MonoBehaviour
     int stockingsIndex = 1;
 
     [Header("武器与攻击方式")]
-    public int weaponType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public int pistolType;//0空手 1格洛克手枪 2沙鹰手枪 3伯莱塔92F手枪
     public int attackType;//0踢击 1挥砍
 
 
@@ -563,15 +564,17 @@ public class EnemyController : MonoBehaviour
             shoesIndex,
             skirtIndex,
             stockingsIndex,
-            weaponType
+            meleeType,
+            pistolType
+
         );
     }//更新外观
 
     public void SetWeapon(int newWeaponType)
     {
-        weaponType = newWeaponType;
+        meleeType = newWeaponType;
     
-        if (weaponType == 0)
+        if (meleeType == 0)
             attackType = 0;//赤手空拳
         else
             attackType = 1;

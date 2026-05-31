@@ -62,7 +62,50 @@ public class FrameEvent_Audio : MonoBehaviour
     //public void _Attack_blood2() { audioS.PlayOneShot(AudioManager.Attack_blood2); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
     //public void _Attack_blood3() { audioS.PlayOneShot(AudioManager.Attack_blood3); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
 
+    public void _Attack_largeSword() 
+    {
+        audioS.PlayOneShot(AudioManager.Attack_largeSword);
+    }//这个由敌人脚本调用
 
+
+
+    //public void _Bullet_Wall()
+    //{
+    //    audioS.PlayOneShot(AudioManager.Bullet_Wall);
+    //}
+    public void _Bullet_OutOfBullet() 
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_OutOfBullet);
+    }//这个由Player中代码调用   
+    public void _Bullet_Pistol_1()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_Pistol_1);
+    }//这个由Player中代码调用
+    public void _Bullet_Pistol_2()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_Pistol_2);
+    }//这个由Player中代码调用
+    public void _Bullet_Pistol_3()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_Pistol_3);
+    }//这个由Player中代码调用
+    public void _Bullet_AK()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_AK);
+    }//这个由Player中代码调用
+    public void _Bullet_SD()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_SD);
+    }//这个由Player中代码调用
+
+    public void _Bullet_Pistol_Load()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_Pistol_Load);
+    }
+    public void _Bullet_SD_Load()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_SD_Load);
+    }
 
 
 

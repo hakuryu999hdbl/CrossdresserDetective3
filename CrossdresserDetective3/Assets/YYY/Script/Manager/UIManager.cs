@@ -164,9 +164,12 @@ public class UIManager : MonoBehaviour
     public GameObject GameOverfirstSelected; //进入设置页面最先选中 X 或 Master Slider
 
     public GameObject MissionFailure;
-
     public void GameOverUI()
     {
+        //一旦开始结算，另一种结果不能出现
+        if (isResultShowing) return;
+        isResultShowing = true;
+
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
         MissionFailure.SetActive(true);
@@ -191,6 +194,11 @@ public class UIManager : MonoBehaviour
 
     public void WinUI()
     {
+        //一旦开始结算，另一种结果不能出现
+        if (isResultShowing) return;
+        isResultShowing = true;
+
+
         SaveStageResult();//储存通关星数
 
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
@@ -208,6 +216,8 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(WinfirstSelected);
     }
+
+    public bool isResultShowing = false;//一旦开始结算，另一种结果不能出现
 
     private void SaveStageResult()
     {

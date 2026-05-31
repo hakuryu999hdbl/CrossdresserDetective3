@@ -45,16 +45,17 @@ public class FrameEvent : MonoBehaviour
             RandomTestSkin();
 
 
-          //  ShowCurrentAll(
-          //1, // 吊袜带
-          //1, // 衣服
-          //1, // 手套：0 = 不显示
-          //1, // 内裤：0 = 不显示
-          //1, // 鞋子
-          //0, // 裙子
-          //1, // 丝袜：0 = 不显示
-          //1  // 近战武器
-          //);
+            //  ShowCurrentAll(
+            //1, // 吊袜带
+            //1, // 衣服
+            //1, // 手套：0 = 不显示
+            //1, // 内裤：0 = 不显示
+            //1, // 鞋子
+            //0, // 裙子
+            //1, // 丝袜：0 = 不显示
+            //1,  //刀剑
+            //1  // 手枪
+            //);
 
         }
     }
@@ -69,7 +70,8 @@ public class FrameEvent : MonoBehaviour
             Random.Range(0, 2), // 鞋子
             Random.Range(0, 2), // 裙子
             Random.Range(0, 3), // 丝袜
-            Random.Range(0, 2)  // 武器
+            Random.Range(0, 2), // 刀剑
+            Random.Range(0, 2)  // 手枪
 
         );//随机皮肤
     }
@@ -77,7 +79,7 @@ public class FrameEvent : MonoBehaviour
     public void ShowCurrentAll
         (
            int _YYY_beltIndex, int _YYY_clothesIndex, int _YYY_glovesIndex, int _YYY_pantiesIndex, int _YYY_shoesIndex, int _YYY_skirtIndex, int _YYY_stockingsIndex,
-           int _Weapon_MeleeIndex
+           int _Weapon_MeleeIndex, int _Weapon_PistolIndex
         )
     {
 
@@ -137,6 +139,9 @@ public class FrameEvent : MonoBehaviour
 
         if (_Weapon_MeleeIndex != 0)
             AddSkinSafe(newSkin, $"Weapon/Melee/Weapon_Melee_color{_Weapon_MeleeIndex}");
+
+        if (_Weapon_PistolIndex != 0)
+            AddSkinSafe(newSkin, $"Weapon/Pistol/Weapon_Pistol_color{_Weapon_PistolIndex}");
 
         skeletonAnimation.Skeleton.SetSkin(newSkin);
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -461,6 +466,12 @@ public class FrameEvent : MonoBehaviour
     {
 
         playerController.ThrowWeapon();
+    }
+
+    public void Shoot()
+    {
+
+        playerController.Shoot();
     }
     #endregion
 

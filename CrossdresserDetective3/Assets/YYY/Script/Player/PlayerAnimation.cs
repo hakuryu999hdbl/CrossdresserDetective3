@@ -43,9 +43,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlayAttack()
     {
-
-     
-
+   
         if (playerController.isCrouch)
         {
             anim.SetTrigger("crouchAttack");
@@ -54,11 +52,13 @@ public class PlayerAnimation : MonoBehaviour
         {
             anim.SetTrigger("attack");
         }
-
-
       
     }
+    public void PlayReload()
+    {
 
+        anim.SetTrigger("reload");
+    }
 
     public void PlayThrow()
     {
