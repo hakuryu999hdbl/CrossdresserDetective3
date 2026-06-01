@@ -83,6 +83,9 @@ public class PlayerController : MonoBehaviour
 
 
         RefreshPlayerSkin();//初始更新皮肤
+
+        
+        OnReloadAnimationEnd();//更新子弹
     }
 
 
@@ -322,7 +325,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-        RefreshPlayerSkin();
+        RefreshPlayerSkin();//捡起的武器调用这里
     }//捡起的武器调用这里
 
 
@@ -448,14 +451,14 @@ public class PlayerController : MonoBehaviour
 
         inputControl.Gameplay.Slide.started += Slide;
 
-        inputControl.Gameplay.Throw.started += Throw;
+        inputControl.Gameplay.Throw.started += OnThrowStart;
+        inputControl.Gameplay.Throw.canceled += OnThrowCanceled;
 
 
         inputControl.Gameplay.Pause.started += OnPause;
 
         inputControl.Gameplay.ZoomCamera.started += OnZoomCamera;
 
-   
 
         //UI等所有多端输入由PlayerController管理
         //inputControl.UI.Cancel.started += OnCancel;
@@ -538,7 +541,8 @@ public class PlayerController : MonoBehaviour
 
         if (holdTime >= chargeThreshold)
         {
-            ThrowBomb();//蓄力攻击
+            //蓄力攻击
+            Reload();//蓄力换弹
         }
         else
         {
@@ -580,8 +584,20 @@ public class PlayerController : MonoBehaviour
 
         if (!physicsCheck.isGround) { return; }//空中无法攻击
 
-        playerAnimation.PlayAttack();
+        
         isAttack = true;
+
+
+        if (attackType < 0 && currentAmmo <= 0)//如果是枪械类 ,子弹不够就会触发换单
+        {
+            frameEvent_Audio._Bullet_OutOfBullet();
+            Reload();
+        }
+        else 
+        {
+            playerAnimation.PlayAttack();
+        }
+       
 
     }
     #endregion
@@ -688,13 +704,38 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
-    #region  投掷
-    [Header("投掷")]
+    #region  投掷与更换武器
+    [Header("投掷与更换武器")]
     public GameObject throwableWeaponPrefab;
     public GameObject Weapon_Melee_01;
     public GameObject Weapon_Melee_02;
     public GameObject Weapon_Melee_03;
-    public void Throw(InputAction.CallbackContext obj) 
+
+
+    private float throwPressTime;
+
+    public void OnThrowStart(InputAction.CallbackContext obj) 
+    {
+        throwPressTime = Time.time;
+    }
+    private void OnThrowCanceled(InputAction.CallbackContext ctx)
+    {
+        float holdTime = Time.time - throwPressTime;
+
+        if (holdTime >= chargeThreshold)
+        {
+            //Throw();
+            ThrowBomb();
+        }
+        else
+        {
+            
+            ChangeWeapon();
+        }
+    }
+
+
+    public void Throw() 
     {
         if (!physicsCheck.isGround) { return; }//空中无法投掷
 
@@ -753,12 +794,24 @@ public class PlayerController : MonoBehaviour
             meleeType = 0;
             attackType = 0;
 
-            RefreshPlayerSkin();
+            RefreshPlayerSkin(); // 扔出去后变空手
 
             nextThrow = Time.time + ThrowRate;
         }
     }
 
+    public void ChangeWeapon() 
+    {
+        if (attackType == 0 || attackType == 1)
+        {
+            attackType = -1;//切换射击
+        }
+        else 
+        {
+            attackType = 1;//切换近战
+            frameEvent_Audio._Attack_katana_draw();//暂时这么写
+        }
+    }
 
     #endregion
 
@@ -766,6 +819,8 @@ public class PlayerController : MonoBehaviour
     [Header("射击")]
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public Transform firePoint_Crouch;
+    Vector3 spawnPos;
 
     public float bulletSpeed = 20f;
     public float bulletLifeTime = 2f;
@@ -773,11 +828,70 @@ public class PlayerController : MonoBehaviour
     [Header("枪械精度")]
     public float spreadAngle = 3f; // 误差角度，0 = 完全精准
 
+    [Header("枪械弹药")]
+    public int maxAmmo = 10;
+    public int currentAmmo = 10;
+    public bool isReloading;
+
+    [Header("弹壳")]
+    public GameObject magazinePrefab;
+    public float magazineForceX = 2f;
+    public float magazineForceY = 4f;
+
+    private void SpawnMagazine()
+    {
+        if (magazinePrefab == null) return;
+
+        if (isCrouch)
+        {
+            spawnPos = firePoint_Crouch != null
+                ? firePoint_Crouch.position
+                : transform.position;
+        }
+        else
+        {
+            spawnPos = firePoint != null
+                ? firePoint.position
+                : transform.position;
+        }
+
+        GameObject mag = Instantiate(
+            magazinePrefab,
+            spawnPos,
+            Quaternion.identity
+        );
+
+        Rigidbody2D rb = mag.GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            float dirX = -Mathf.Sign(transform.localScale.x); // 往角色后方弹
+
+            Vector2 force = new Vector2(
+                dirX * UnityEngine.Random.Range(magazineForceX * 0.7f, magazineForceX * 1.3f),
+                UnityEngine.Random.Range(magazineForceY * 0.7f, magazineForceY * 1.3f)
+            );
+
+            rb.AddForce(force, ForceMode2D.Impulse);
+            rb.AddTorque(UnityEngine.Random.Range(-180f, 180f));
+        }
+    }//弹壳飞舞
     public void Shoot()
     {
         if (bulletPrefab == null) return;
 
-        Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position;
+        if (isCrouch)
+        {
+            spawnPos = firePoint_Crouch != null
+                ? firePoint_Crouch.position
+                : transform.position;
+        }
+        else
+        {
+            spawnPos = firePoint != null
+                ? firePoint.position
+                : transform.position;
+        }
 
         GameObject bullet = Instantiate(
             bulletPrefab,
@@ -800,10 +914,68 @@ public class PlayerController : MonoBehaviour
             bulletScript.Init(dir, bulletSpeed, bulletLifeTime);
         }
 
+        switch (pistolType) 
+        {
+            case 1:
+                frameEvent_Audio._Bullet_Pistol_1();
+                break;
+            case 2:
+                frameEvent_Audio._Bullet_Pistol_2();
+                break;
+            case 3:
+                frameEvent_Audio._Bullet_Pistol_3();
+                break;
+        }
 
-        frameEvent_Audio._Bullet_Pistol_1();
-
+        ChangeAmmo(-1);//削减子弹数
+        SpawnMagazine();//弹壳飞舞
     }
+
+
+
+    public void ChangeAmmo(int value)
+    {
+        currentAmmo += value;
+
+        currentAmmo = Mathf.Clamp(
+            currentAmmo,
+            0,
+            maxAmmo
+        );
+
+        UIManager.instance.RefreshAmmoUI(
+            currentAmmo,
+            maxAmmo
+        );
+    }//更改子弹数
+    private void OnReload(InputAction.CallbackContext obj)
+    {
+        Reload();
+    }
+    public void Reload()
+    {
+        if (isReloading) return;
+        if (currentAmmo >= maxAmmo) return;
+        if (attackType >= 0) return; // 不是枪
+
+        isReloading = true;
+        isAttack = true;
+
+        playerAnimation.PlayReload();
+    }
+
+
+    public void OnReloadAnimationEnd()
+    {
+        currentAmmo = maxAmmo;
+        isReloading = false;
+        isAttack = false;
+
+        UIManager.instance.RefreshAmmoUI(currentAmmo,maxAmmo);
+    }//换单结束帧事件触发
+
+    
+
     #endregion
 
     #region  UI层

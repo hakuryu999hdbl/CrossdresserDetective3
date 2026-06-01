@@ -59,6 +59,7 @@ public class Sign : MonoBehaviour
 
     private void OnConfirm(InputAction.CallbackContext obj)
     {
+
         if (canPress && targetItem != null)
         {
             targetItem.TriggerAction();

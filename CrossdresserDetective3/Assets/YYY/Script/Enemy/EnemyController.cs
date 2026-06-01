@@ -527,7 +527,7 @@ public class EnemyController : MonoBehaviour
         meleeType = 0;
         attackType = 0;
 
-        RefreshPlayerSkin();
+        RefreshPlayerSkin();//投掷完空手
     }
     #endregion
 
@@ -671,6 +671,7 @@ public class EnemyController : MonoBehaviour
         // 👉 巡逻状态被偷袭 = 直接死
         if (currentState == patrolState)
         {
+            frameEvent_Audio._Attack_largeSword();//暂时先把暗杀声音写在这
             OnDie();
             return;
         }

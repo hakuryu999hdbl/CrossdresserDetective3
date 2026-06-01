@@ -273,7 +273,7 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// 生命值，体力值等UI
+    /// 生命值，体力值，弹药等UI
     /// </summary>
     #region
 
@@ -341,5 +341,31 @@ public class UIManager : MonoBehaviour
         }
 
     }
+
+
+
+    [Header("弹药UI")]
+    public Transform bulletRoot;
+    public GameObject bulletPrefab;
+
+    public void RefreshAmmoUI(
+     int currentAmmo,
+     int maxAmmo
+ )
+    {
+        foreach (Transform child in bulletRoot)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < currentAmmo; i++)
+        {
+            Instantiate(
+                bulletPrefab,
+                bulletRoot
+            );
+        }
+    }
+
     #endregion
 }

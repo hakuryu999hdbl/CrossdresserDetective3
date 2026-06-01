@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3412515313432725580}
   - component: {fileID: 8933580250604072754}
   - component: {fileID: 1413810239688296891}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,8 +101,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  destroyOnEnemyHit: 0
+  destroyOnEnemyHit: 1
   destroyOnWallHit: 1
+  SparkEffect: {fileID: 7728504138125796143, guid: a4cecd0c4e33bcd4292a4e653121b828, type: 3}
+  destroyDelay: 0.03
 --- !u!50 &1413810239688296891
 Rigidbody2D:
   serializedVersion: 4
@@ -303,7 +305,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0053605586, y: 0.010284841}
+  m_Offset: {x: -0.0053605437, y: -0.0028075539}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -313,5 +315,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.8410901, y: 0.24631444}
+  m_Size: {x: 0.8410901, y: 0.22012964}
   m_EdgeRadius: 0

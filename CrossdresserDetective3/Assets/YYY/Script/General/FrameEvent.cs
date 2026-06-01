@@ -473,6 +473,12 @@ public class FrameEvent : MonoBehaviour
 
         playerController.Shoot();
     }
+
+    public void Reload() 
+    {
+        playerController.OnReloadAnimationEnd();
+    }
+
     #endregion
 
 

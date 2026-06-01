@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
 
     private float lifeTimer;
 
-  
+    public GameObject SparkEffect;
 
     private void Awake()
     {
@@ -49,15 +49,25 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    [Header("延后销毁")]
+    public float destroyDelay = 0.03f;
+    private bool isDestroying;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDestroying) return;
+
+
         int hitObjLayer = collision.gameObject.layer;
 
         if (((1 << hitObjLayer) & wallLayer) != 0)
         {
             if (destroyOnWallHit)
             {
-                Destroy(gameObject);
+                GameObject spark = Instantiate(SparkEffect,transform.position, Quaternion.identity);
+                Destroy(spark, 1f);
+
+                StartCoroutine(DestroyDelay());
             }
 
             return;
@@ -67,10 +77,22 @@ public class Bullet : MonoBehaviour
         {
             if (destroyOnEnemyHit)
             {
-                Destroy(gameObject);
+                StartCoroutine(DestroyDelay());
             }
 
             return;
         }
+    }
+
+    IEnumerator DestroyDelay()
+    {
+        isDestroying = true;
+
+        if (rb != null)
+            rb.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(destroyDelay);
+
+        Destroy(gameObject);
     }
 }
