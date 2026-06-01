@@ -7,6 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     [Header("联系玩家脚本")]
     public Animator anim;
     public PlayerController playerController;
+    public Animator anim_UI;
     [Header("地面检测")]
     public PhysicsCheck physicsCheck;
 
@@ -30,6 +31,7 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("onWall", physicsCheck.onWall);//每帧检测玩家是否处于贴墙
         anim.SetBool("isSlide", playerController.isSlide);//每帧检测玩家是滑铲
         anim.SetInteger("attackType", playerController.attackType);//每帧检测玩家武器
+        anim_UI.SetInteger("attackType", playerController.attackType);
 
         anim.SetBool("isWallCling", playerController.isWallCling);//每帧检测玩家是滑铲
 
@@ -38,6 +40,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlayHurt() 
     {
+        anim.SetInteger("hurtType", Random.Range(1,3));
         anim.SetTrigger("hurt");
     }
 

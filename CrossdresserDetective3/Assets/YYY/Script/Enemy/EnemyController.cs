@@ -84,7 +84,7 @@ public class EnemyController : MonoBehaviour
 
         RefreshPlayerSkin();//初始更新皮肤
 
-        SetWeapon(Random.Range(0, 4));//初始随机武器
+        SetWeapon();//初始随机武器
     }
 
     public virtual void Update()
@@ -475,9 +475,10 @@ public class EnemyController : MonoBehaviour
 
     [Header("投掷")]
     public GameObject throwableWeaponPrefab;
-    public GameObject Weapon_Melee_01;
-    public GameObject Weapon_Melee_02;
-    public GameObject Weapon_Melee_03;
+    public GameObject bombPrefab;//手榴弹
+    public GameObject smokePrefab;//烟雾弹
+    public GameObject flashPrefab;//闪光弹
+    public GameObject knifePrefab;//飞刀
 
     float throwForce = 16f;//投掷力度
 
@@ -486,16 +487,19 @@ public class EnemyController : MonoBehaviour
         if (meleeType == 0) return; // 空手不能扔
 
 
-        switch (meleeType)
+        switch (throwType)
         {
             case 1:
-                throwableWeaponPrefab = Weapon_Melee_01;
+                throwableWeaponPrefab = bombPrefab;
                 break;
             case 2:
-                throwableWeaponPrefab = Weapon_Melee_02;
+                throwableWeaponPrefab = smokePrefab;
                 break;
             case 3:
-                throwableWeaponPrefab = Weapon_Melee_03;
+                throwableWeaponPrefab = flashPrefab;
+                break;
+            case 4:
+                throwableWeaponPrefab = knifePrefab;
                 break;
         }
 
@@ -523,11 +527,7 @@ public class EnemyController : MonoBehaviour
             rb.velocity = dir * throwForce;
         }
 
-        // 扔出去后变空手
-        meleeType = 0;
-        attackType = 0;
-
-        RefreshPlayerSkin();//投掷完空手
+   
     }
     #endregion
 
@@ -548,6 +548,7 @@ public class EnemyController : MonoBehaviour
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1格洛克手枪 2沙鹰手枪 3伯莱塔92F手枪
+    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
     public int attackType;//0踢击 1挥砍
 
 
@@ -570,15 +571,12 @@ public class EnemyController : MonoBehaviour
         );
     }//更新外观
 
-    public void SetWeapon(int newWeaponType)
+    public void SetWeapon()
     {
-        meleeType = newWeaponType;
-    
-        if (meleeType == 0)
-            attackType = 0;//赤手空拳
-        else
-            attackType = 1;
-    
+        meleeType = Random.Range(1, 4);
+        pistolType = Random.Range(1, 4);
+        //attackType = Random.Range(-1, 2);
+
         RefreshPlayerSkin();
     }//捡起的武器调用这里（暂时先不做捡起）
 
@@ -703,7 +701,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-
+        anim.SetInteger("hitType", Random.Range(1, 3));
         anim.SetTrigger("hit");
 
 
@@ -723,7 +721,6 @@ public class EnemyController : MonoBehaviour
         PlayBloodEffect();
 
 
-        //ThrowWeapon();//受伤后将手上武器扔出
 
     }
 
@@ -761,10 +758,7 @@ public class EnemyController : MonoBehaviour
         //coll.enabled = false;
         //rb.bodyType = RigidbodyType2D.Static;
 
-        if (Random.Range(0, 2) == 0)
-        {
-            ThrowWeapon();//死亡后将手上武器扔出
-        }
+     
        
     }
     #endregion

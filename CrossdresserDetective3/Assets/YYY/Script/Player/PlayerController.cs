@@ -279,6 +279,7 @@ public class PlayerController : MonoBehaviour
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1格洛克手枪 2沙鹰手枪 3伯莱塔92F手枪
+    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
     public int attackType;//-1射击 0踢击 1挥砍
 
 
@@ -520,14 +521,8 @@ public class PlayerController : MonoBehaviour
 
     #region  攻击
     [Header("攻击触发/炸弹")]
-    public GameObject bombPrefab;
-    float throwForce = 16f;//投掷炸弹力度
 
 
-
-   
-    public float nextAttack = 0;//炸弹攻击冷却
-    public float attackRate;//炸弹攻击频率
     private float attackPressTime;
     private float chargeThreshold = 0.35f;
     private void OnAttackStarted(InputAction.CallbackContext ctx)
@@ -549,36 +544,7 @@ public class PlayerController : MonoBehaviour
             PlayerAttack(ctx);//单按一下
         }
     }
-    public void ThrowBomb()
-    {
-        if (Time.time > nextAttack)
-        {
-            //Instantiate(bombPrefab, transform.position, bombPrefab.transform.rotation);
-
-            //将炸弹扔出去
-            GameObject bomb =
-           Instantiate(
-               bombPrefab,
-               transform.position,
-               Quaternion.identity
-           );
-
-            Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-
-            if (rb != null)
-            {
-                Vector2 dir =
-                    new Vector2(transform.localScale.x * 0.6f, 1f).normalized;
-
-                rb.velocity = dir * throwForce;
-            }
-
-
-
-
-            nextAttack = Time.time + attackRate;
-        }
-    }
+  
     void PlayerAttack(InputAction.CallbackContext obj)
     {
 
@@ -707,10 +673,14 @@ public class PlayerController : MonoBehaviour
     #region  投掷与更换武器
     [Header("投掷与更换武器")]
     public GameObject throwableWeaponPrefab;
-    public GameObject Weapon_Melee_01;
-    public GameObject Weapon_Melee_02;
-    public GameObject Weapon_Melee_03;
+    public GameObject bombPrefab;//手榴弹
+    public GameObject smokePrefab;//烟雾弹
+    public GameObject flashPrefab;//闪光弹
+    public GameObject knifePrefab;//飞刀
 
+    float throwForce = 16f;//投掷炸弹力度
+    float nextThrow = 0;//投掷冷却
+    float ThrowRate = 0.5f;//投掷频率
 
     private float throwPressTime;
 
@@ -724,8 +694,7 @@ public class PlayerController : MonoBehaviour
 
         if (holdTime >= chargeThreshold)
         {
-            //Throw();
-            ThrowBomb();
+            Throw();        
         }
         else
         {
@@ -744,27 +713,26 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    float nextThrow = 0;//投掷冷却
-    float ThrowRate = 0.5f;//投掷频率
+
     public void ThrowWeapon()
     {
-        if (meleeType == 0) return; // 空手不能扔
 
 
-        switch (meleeType) 
+        switch (throwType) 
         {
             case 1:
-                throwableWeaponPrefab = Weapon_Melee_01;
+                throwableWeaponPrefab = bombPrefab;
                 break;
             case 2:
-                throwableWeaponPrefab = Weapon_Melee_02;
+                throwableWeaponPrefab = smokePrefab;
                 break;
             case 3:
-                throwableWeaponPrefab = Weapon_Melee_03;
+                throwableWeaponPrefab = flashPrefab;
+                break;
+            case 4:
+                throwableWeaponPrefab = knifePrefab;
                 break;
         }
-
-
 
 
         if (Time.time > nextThrow)
@@ -786,31 +754,33 @@ public class PlayerController : MonoBehaviour
 
             if (rb != null)
             {
-                Vector2 dir = new Vector2(transform.localScale.x * 0.4f, 0.2f).normalized;
+                Vector2 dir = new Vector2(transform.localScale.x * 0.6f,1f).normalized;
                 rb.velocity = dir * throwForce;
             }
 
-            // 扔出去后变空手
-            meleeType = 0;
-            attackType = 0;
-
-            RefreshPlayerSkin(); // 扔出去后变空手
 
             nextThrow = Time.time + ThrowRate;
         }
     }
 
+
+    
+
     public void ChangeWeapon() 
     {
+        
         if (attackType == 0 || attackType == 1)
         {
             attackType = -1;//切换射击
+            frameEvent_Audio._SE_Clothes();//暂时这么写
         }
         else 
         {
             attackType = 1;//切换近战
             frameEvent_Audio._Attack_katana_draw();//暂时这么写
         }
+
+        
     }
 
     #endregion

@@ -92,7 +92,7 @@ public class ThrowableWeapon : MonoBehaviour
         if (player != null)
         {
 
-            if (player.meleeType == 0)
+            if (player.throwType == 0)
             {
                 if (player.isCrouch || player.isSlide)
                 {
@@ -107,21 +107,6 @@ public class ThrowableWeapon : MonoBehaviour
 
         }
 
-       //EnemyController enemy = collision.GetComponentInParent<EnemyController>();
-       //
-       //if (enemy != null)
-       //{
-       //    Debug.Log("敌人捡起");
-       //    if (enemy.weaponType == 0)
-       //    {
-       //        enemy.SetWeapon(WeaponType);
-       //
-       //        enemy.frameEvent_Audio._Attack_bomb_bounce();
-       //
-       //        Destroy(gameObject);
-       //        return;
-       //    }
-       //}//敌人没有武器的情况下捡起武器
 
 
     }//拾取范围
