@@ -59,8 +59,17 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void PlayReload()
     {
+        if (playerController.isCrouch)
+        {
+            anim.SetTrigger("crouchReload");
+        }
+        else
+        {
+            anim.SetTrigger("reload");
+        }
 
-        anim.SetTrigger("reload");
+
+       
     }
 
     public void PlayThrow()

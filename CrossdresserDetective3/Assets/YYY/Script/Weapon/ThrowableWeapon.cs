@@ -92,7 +92,7 @@ public class ThrowableWeapon : MonoBehaviour
         if (player != null)
         {
 
-            if (player.throwType == 0)
+            if (player.attackType == 0)
             {
                 if (player.isCrouch || player.isSlide)
                 {

@@ -549,7 +549,7 @@ public class EnemyController : MonoBehaviour
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1格洛克手枪 2沙鹰手枪 3伯莱塔92F手枪
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
-    public int attackType;//0踢击 1挥砍
+    public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
 
 
