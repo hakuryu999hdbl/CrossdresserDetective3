@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Bullet_Wall;
     public AudioClip Bullet_Pistol_1, Bullet_Pistol_2, Bullet_Pistol_3;
     public AudioClip Bullet_Pistol_Load;
-    public AudioClip Bullet_AK, Bullet_SD;
+    public AudioClip Bullet_AK, Bullet_M4a1, Bullet_SD;
     public AudioClip Bullet_SD_Load;
 
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;

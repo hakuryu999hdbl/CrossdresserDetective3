@@ -245,11 +245,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
+  - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
+  - {fileID: 2100000, guid: 56856fc5aa1bfa442a4cb83f6a4a7160, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3239,11 +3240,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
+  - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
+  - {fileID: 2100000, guid: 56856fc5aa1bfa442a4cb83f6a4a7160, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3282,7 +3284,7 @@ Transform:
   m_GameObject: {fileID: 500547783}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13, y: -0.923, z: 0}
+  m_LocalPosition: {x: -0.13, y: -0.95, z: 0}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6963,8 +6965,9 @@ MonoBehaviour:
   frameEvent_UI: {fileID: 16702422}
   meleeType: 1
   pistolType: 3
+  RifleType: 1
   throwType: 4
-  attackType: -1
+  attackType: -2
   hurtForce: 8
   frameEvent_Audio: {fileID: 500547792}
   Effect_Blood: {fileID: 1622069723160390679, guid: 3cbb102f876966040a9c79278e3e6a63, type: 3}
@@ -8049,7 +8052,8 @@ MonoBehaviour:
   powerImage: {fileID: 794916030}
   isRecovering: 0
   bulletRoot: {fileID: 1251707765}
-  bulletPrefab: {fileID: 2108658677880319258, guid: 40aa62ab83090f84e86c559820720688, type: 3}
+  bulletPrefab_Pistol: {fileID: 2108658677880319258, guid: 40aa62ab83090f84e86c559820720688, type: 3}
+  bulletPrefab_Rifle: {fileID: 4378717374212625133, guid: dc1dbcc7a1306f94480f1615ed255c5e, type: 3}
 --- !u!1 &1966220419
 GameObject:
   m_ObjectHideFlags: 0

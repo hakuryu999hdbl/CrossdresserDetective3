@@ -221,8 +221,25 @@ public class UIManager : MonoBehaviour
 
     private void SaveStageResult()
     {
-        SaveData data =
-            SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+        // 直接从游戏场景启动时，可能没有选择存档
+        if (string.IsNullOrEmpty(GameFlowData.CurrentPlayer))
+        {
+            Debug.LogWarning("没有当前存档，跳过关卡保存。");
+            return;
+        }
+
+
+
+        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+
+
+        // 存档不存在 / 读取失败
+        if (data == null)
+        {
+            Debug.LogWarning("读取存档失败，跳过关卡保存。");
+            return;
+        }
+
 
         data.InitStageData();
 
@@ -346,13 +363,18 @@ public class UIManager : MonoBehaviour
 
     [Header("弹药UI")]
     public Transform bulletRoot;
-    public GameObject bulletPrefab;
+    GameObject bulletPrefab;
+    public GameObject bulletPrefab_Pistol;
+    public GameObject bulletPrefab_Rifle;
 
     public void RefreshAmmoUI(
      int currentAmmo,
      int maxAmmo
  )
     {
+        if (playerController.attackType == -1){ bulletPrefab = bulletPrefab_Pistol; }
+        if (playerController.attackType == -2) { bulletPrefab = bulletPrefab_Rifle; }
+
         foreach (Transform child in bulletRoot)
         {
             Destroy(child.gameObject);

@@ -35,7 +35,7 @@ public class PlayerAnimation : MonoBehaviour
 
         anim.SetBool("isWallCling", playerController.isWallCling);//每帧检测玩家是滑铲
 
-
+        anim.SetBool("isHoldingAttack", playerController.isHoldingAttack);//每帧检测玩家是持续攻击
     }
 
     public void PlayHurt() 

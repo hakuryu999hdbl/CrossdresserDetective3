@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
-    public int pistolType;//0空手 1格洛克手枪 2沙鹰手枪 3伯莱塔92F手枪
+    public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
     public int RifleType;//0空手 1步枪M4A1 2步枪AK47
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
@@ -298,7 +298,8 @@ public class PlayerController : MonoBehaviour
             skirtIndex,
             stockingsIndex,
             meleeType,
-            pistolType
+            pistolType,
+            RifleType
         );
 
         frameEvent_UI.ShowCurrentAll(
@@ -310,7 +311,8 @@ public class PlayerController : MonoBehaviour
           skirtIndex,
           stockingsIndex,
           meleeType,
-          pistolType
+          pistolType,
+          RifleType
       );
 
 
@@ -526,19 +528,43 @@ public class PlayerController : MonoBehaviour
 
     private float attackPressTime;
     private float chargeThreshold = 0.35f;
+
+    public bool isHoldingAttack;//是否持续按下攻击键
+
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
+        
+      
+
+       // if (attackType<0)
+       // {
+       //     isHoldingAttack = true;
+       //     isAttack = true;
+       //     return;
+       // }//远程武器的
+
         attackPressTime = Time.time;
     }
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
+       
+
+       // if (attackType < 0)
+       // {
+       //     isHoldingAttack = false;
+       //     isAttack = false;
+       //     return;
+       // }//远程武器的
+
+
+
         float holdTime = Time.time - attackPressTime;
 
         if (holdTime >= chargeThreshold)
         {
             //蓄力攻击
-            Reload();//蓄力换弹
+          
         }
         else
         {
@@ -567,6 +593,9 @@ public class PlayerController : MonoBehaviour
        
 
     }
+
+   
+
     #endregion
 
 
@@ -764,8 +793,8 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        attackType = 0;
-        RefreshPlayerSkin();
+       //attackType = 0;
+       //RefreshPlayerSkin();
     }
 
 
@@ -776,7 +805,7 @@ public class PlayerController : MonoBehaviour
         
         if (attackType == 0 || attackType == 1)
         {
-            attackType = -1;//切换射击
+            attackType = -2;//切换射击
             frameEvent_Audio._SE_Clothes();//暂时这么写
         }
         else 
@@ -889,18 +918,38 @@ public class PlayerController : MonoBehaviour
             bulletScript.Init(dir, bulletSpeed, bulletLifeTime);
         }
 
-        switch (pistolType) 
+        if (attackType == -1)
         {
-            case 1:
-                frameEvent_Audio._Bullet_Pistol_1();
-                break;
-            case 2:
-                frameEvent_Audio._Bullet_Pistol_2();
-                break;
-            case 3:
-                frameEvent_Audio._Bullet_Pistol_3();
-                break;
+            switch (pistolType)
+            {
+                case 1:
+                    frameEvent_Audio._Bullet_Pistol_1();
+                    break;
+                case 2:
+                    frameEvent_Audio._Bullet_Pistol_2();
+                    break;
+                case 3:
+                    frameEvent_Audio._Bullet_Pistol_3();
+                    break;
+            }
         }
+        else
+        {
+            switch (RifleType)
+            {
+                case 1:
+                    frameEvent_Audio._Bullet_M4a1();
+                    break;
+                case 2:
+                    frameEvent_Audio._Bullet_AK();
+                    break;
+           
+            }
+        }
+
+       
+
+
 
         ChangeAmmo(-1);//削减子弹数
         SpawnMagazine();//弹壳飞舞

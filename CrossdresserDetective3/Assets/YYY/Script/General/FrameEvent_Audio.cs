@@ -90,6 +90,10 @@ public class FrameEvent_Audio : MonoBehaviour
     {
         audioS.PlayOneShot(AudioManager.Bullet_AK);
     }//这个由Player中代码调用
+    public void _Bullet_M4a1()
+    {
+        audioS.PlayOneShot(AudioManager.Bullet_M4a1);
+    }//这个由Player中代码调用
     public void _Bullet_SD()
     {
         audioS.PlayOneShot(AudioManager.Bullet_SD);
