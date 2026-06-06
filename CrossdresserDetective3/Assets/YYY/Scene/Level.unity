@@ -3215,8 +3215,8 @@ MonoBehaviour:
   translator:
     autoReset: 1
     useCustomMixMode: 1
-    layerMixModes: 01000000010000000100000001000000
-    layerBlendModes: 01000000020000000200000002000000
+    layerMixModes: 0100000001000000010000000100000001000000
+    layerBlendModes: 0100000002000000020000000200000002000000
   updateTiming: 1
 --- !u!23 &500547787
 MeshRenderer:
@@ -6972,6 +6972,7 @@ MonoBehaviour:
   frameEvent_Audio: {fileID: 500547792}
   Effect_Blood: {fileID: 1622069723160390679, guid: 3cbb102f876966040a9c79278e3e6a63, type: 3}
   inputDirection: {x: 0, y: 0}
+  isHoldingAttack: 0
   isDashAttack: 0
   dashAttackSpeed: 16
   dashAttackDuration: 0.2

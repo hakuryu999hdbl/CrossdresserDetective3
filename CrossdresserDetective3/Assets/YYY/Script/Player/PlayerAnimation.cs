@@ -47,42 +47,19 @@ public class PlayerAnimation : MonoBehaviour
     public void PlayAttack()
     {
    
-        if (playerController.isCrouch)
-        {
-            anim.SetTrigger("crouchAttack");
-        }
-        else
-        {
-            anim.SetTrigger("attack");
-        }
-      
+        anim.SetTrigger("attack");
     }
     public void PlayReload()
     {
-        if (playerController.isCrouch)
-        {
-            anim.SetTrigger("crouchReload");
-        }
-        else
-        {
-            anim.SetTrigger("reload");
-        }
 
 
-       
+        anim.SetTrigger("reload");
     }
 
     public void PlayThrow()
     {
-        if (playerController.isCrouch)
-        {
-            anim.SetTrigger("crouchThrow");
-        }
-        else
-        {
-            anim.SetTrigger("throw");
-        }
-       
+
+        anim.SetTrigger("throw");
     }
 
 

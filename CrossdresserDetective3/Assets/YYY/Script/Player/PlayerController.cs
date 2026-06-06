@@ -536,12 +536,13 @@ public class PlayerController : MonoBehaviour
         
       
 
-       // if (attackType<0)
-       // {
-       //     isHoldingAttack = true;
-       //     isAttack = true;
-       //     return;
-       // }//远程武器的
+        //if (attackType==-2 && currentAmmo >= 0 && physicsCheck.isGround)
+        //{
+        //    isHoldingAttack = true;
+        //    isAttack = true;
+        //
+        //    return;
+        //}//步枪可以连发
 
         attackPressTime = Time.time;
     }
@@ -550,12 +551,13 @@ public class PlayerController : MonoBehaviour
     {
        
 
-       // if (attackType < 0)
-       // {
-       //     isHoldingAttack = false;
-       //     isAttack = false;
-       //     return;
-       // }//远程武器的
+        //if (attackType == -2 && currentAmmo >= 0 && physicsCheck.isGround)
+        //{
+        //    isHoldingAttack = false;
+        //    isAttack = false;
+        //
+        //    return;
+        //}//步枪可以连发
 
 
 
