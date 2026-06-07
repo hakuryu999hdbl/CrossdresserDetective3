@@ -91,9 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 2229290332801708197}
   damage: 10
-  attackRange: 0
-  attackRate: 0
   knockbackX: 5
   knockbackY: 0
   hurtTime: 0.2
@@ -175,6 +174,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
+  - {fileID: 2100000, guid: 56856fc5aa1bfa442a4cb83f6a4a7160, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -804,9 +804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 2229290332801708197}
   damage: 30
-  attackRange: 5
-  attackRate: 20
   knockbackX: 5
   knockbackY: 0
   hurtTime: 0.2
@@ -903,9 +902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 2229290332801708197}
   damage: 30
-  attackRange: 13
-  attackRate: 5
   knockbackX: 5
   knockbackY: 0
   hurtTime: 0.2
@@ -1121,11 +1119,15 @@ MonoBehaviour:
   patrolDir: 1
   checkArea: {fileID: 7915324334771178376}
   throwableWeaponPrefab: {fileID: 0}
-  Weapon_Melee_01: {fileID: 7993647595746193275, guid: f0d8ee50e4efce6419d59cd658272ce8, type: 3}
-  Weapon_Melee_02: {fileID: 3046158814502348172, guid: 5b6d497d23e41ac4eacae8282190d380, type: 3}
-  Weapon_Melee_03: {fileID: 6376496097679900934, guid: 4dd90db6d39bc00459a1978d88bb9f92, type: 3}
+  bombPrefab: {fileID: 0}
+  smokePrefab: {fileID: 0}
+  flashPrefab: {fileID: 0}
+  knifePrefab: {fileID: 0}
   frameEvent: {fileID: 5091796599713452983}
-  weaponType: 0
+  meleeType: 0
+  pistolType: 0
+  RifleType: 0
+  throwType: 0
   attackType: 0
   rb: {fileID: 7494586419825881798}
   coll: {fileID: 7821719584771130106}

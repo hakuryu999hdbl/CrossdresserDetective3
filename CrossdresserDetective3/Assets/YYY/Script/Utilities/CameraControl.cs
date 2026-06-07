@@ -24,14 +24,15 @@ public class CameraControl : MonoBehaviour
 
 
 
-
-
+    //为了放大后相机能只让它继续水平跟随角色
+    private CinemachineFramingTransposer framing;
 
 
     void Awake()
     {
         confiner2D = GetComponent<CinemachineConfiner2D>();
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
+          framing = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
 
     }
 
@@ -101,12 +102,12 @@ public class CameraControl : MonoBehaviour
     //设置相机边界
     private void GetNewCameraBounds() 
     {
-       // var obj = GameObject.FindGameObjectWithTag("Bounds");
-       // if(obj == null){ return; }
-       //
-       // //设置边界
-       // confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
-       // confiner2D.InvalidateCache();
+        //var obj = GameObject.FindGameObjectWithTag("Bounds");
+        //if(obj == null){ return; }
+        //
+        ////设置边界
+        //confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
+        //confiner2D.InvalidateCache();
     }
 
 

@@ -658,7 +658,15 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
+    private bool IsHitFromBehind(Vector3 attackPos)
+    {
+        float enemyFacing = transform.localScale.x >= 0 ? 1f : -1f;
 
+        float dirToAttack = attackPos.x - transform.position.x;
+
+        // 攻击来自敌人背后
+        return Mathf.Sign(dirToAttack) != Mathf.Sign(enemyFacing);
+    }
 
     public void OnTakeDamage(Attack attack)
     {
@@ -668,8 +676,12 @@ public class EnemyController : MonoBehaviour
 
 
 
-        // 👉 巡逻状态被偷袭 = 直接死
-        if (currentState == patrolState)
+        Character attackerCharacter = attack.owner;//一旦受伤，立刻读取Attack的主人
+
+        bool hitFromBehind = IsHitFromBehind(attack.transform.position);
+
+        // 👉 攻击从背后打来 = 直接死
+        if (hitFromBehind)
         {
             frameEvent_Audio._Attack_largeSword();//暂时先把暗杀声音写在这
             OnDie();
@@ -678,8 +690,18 @@ public class EnemyController : MonoBehaviour
 
 
 
-        //一旦受伤立刻把Attack的根物体的character所在物体立为目标
-        Character attackerCharacter = attack.GetComponentInParent<Character>();
+        // 👉 巡逻状态被偷袭 = 直接死
+        //if (currentState == patrolState)
+        //{
+        //    
+        //    OnDie();
+        //    return;
+        //}
+
+
+
+        //一旦受伤立刻把Attack的根物体的character所在物体立为目标（这个是用于近战）
+        //Character attackerCharacter = attack.GetComponentInParent<Character>();
 
         if (attackerCharacter != null)
         {

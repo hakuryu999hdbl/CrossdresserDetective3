@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 1720513880}
   damage: 10
   knockbackX: 5
   knockbackY: 0
@@ -1248,6 +1249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 1720513880}
   damage: 30
   knockbackX: 13
   knockbackY: 5
@@ -1457,7 +1459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 279753276}
   m_Layer: 3
-  m_Name: ShootPosition_Crouch
+  m_Name: ShootPosition_Crouch_Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4049,6 +4051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 1720513880}
   damage: 30
   knockbackX: 5
   knockbackY: 20
@@ -6440,6 +6443,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1542512375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1542512376}
+  m_Layer: 3
+  m_Name: ShootPosition_Crouch_Rifle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1542512376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542512375}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.41, y: 0.38, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1720513875}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1592222390
 GameObject:
   m_ObjectHideFlags: 0
@@ -6893,6 +6927,7 @@ Transform:
   - {fileID: 323732882}
   - {fileID: 1735686961}
   - {fileID: 279753276}
+  - {fileID: 1542512376}
   - {fileID: 1201616458}
   m_Father: {fileID: 934071645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6985,14 +7020,16 @@ MonoBehaviour:
   knifePrefab: {fileID: 7993647595746193275, guid: f0d8ee50e4efce6419d59cd658272ce8, type: 3}
   bulletPrefab: {fileID: 3004764211289256876, guid: 7b4fe79288a747e419cf5ea1c99fbfe1, type: 3}
   firePoint: {fileID: 1735686961}
-  firePoint_Crouch: {fileID: 279753276}
+  firePoint_Crouch_Pistol: {fileID: 279753276}
+  firePoint_Crouch_Rifle: {fileID: 1542512376}
   bulletSpeed: 40
   bulletLifeTime: 2
   spreadAngle: 3
   maxAmmo: 10
   currentAmmo: 10
   isReloading: 0
-  magazinePrefab: {fileID: 7370808175935258666, guid: 36088f86d59cdd04dab9c47126869445, type: 3}
+  magazinePrefab_Pistol: {fileID: 7370808175935258666, guid: 36088f86d59cdd04dab9c47126869445, type: 3}
+  magazinePrefab_Rifle: {fileID: 3751152144896580158, guid: 5dafc34508976774aa576bffe9a1717b, type: 3}
   magazineForceX: 2
   magazineForceY: 4
   Sign: {fileID: 323732881}

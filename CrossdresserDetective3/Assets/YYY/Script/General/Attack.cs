@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    public Character owner;
+
     [Header("伤害数值")]
     public int damage;
     //public float attackRange;

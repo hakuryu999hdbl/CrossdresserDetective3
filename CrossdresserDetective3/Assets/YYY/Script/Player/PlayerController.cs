@@ -807,12 +807,12 @@ public class PlayerController : MonoBehaviour
         
         if (attackType == 0 || attackType == 1)
         {
-            attackType = -2;//切换射击
+            attackType = UnityEngine.Random.Range(-2, 0);//切换射击
             frameEvent_Audio._SE_Clothes();//暂时这么写
         }
         else 
         {
-            attackType = 1;//切换近战
+            attackType = UnityEngine.Random.Range(0,2);//切换近战
             frameEvent_Audio._Attack_katana_draw();//暂时这么写
         }
 
@@ -825,7 +825,8 @@ public class PlayerController : MonoBehaviour
     [Header("射击")]
     public GameObject bulletPrefab;
     public Transform firePoint;
-    public Transform firePoint_Crouch;
+    public Transform firePoint_Crouch_Pistol;
+    public Transform firePoint_Crouch_Rifle;
     Vector3 spawnPos;
 
     public float bulletSpeed = 20f;
@@ -840,25 +841,27 @@ public class PlayerController : MonoBehaviour
     public bool isReloading;
 
     [Header("弹壳")]
-    public GameObject magazinePrefab;
+    GameObject magazinePrefab;
+    public GameObject magazinePrefab_Pistol;
+    public GameObject magazinePrefab_Rifle;
     public float magazineForceX = 2f;
     public float magazineForceY = 4f;
 
     private void SpawnMagazine()
     {
+        if (attackType == -1){ magazinePrefab = magazinePrefab_Pistol; }
+        if (attackType == -2) { magazinePrefab = magazinePrefab_Rifle; }
+
         if (magazinePrefab == null) return;
 
         if (isCrouch)
         {
-            spawnPos = firePoint_Crouch != null
-                ? firePoint_Crouch.position
-                : transform.position;
+            if (attackType == -1) { spawnPos = firePoint_Crouch_Pistol.position; }
+            if (attackType == -2) { spawnPos = firePoint_Crouch_Rifle.position; }
         }
         else
         {
-            spawnPos = firePoint != null
-                ? firePoint.position
-                : transform.position;
+            spawnPos = firePoint.position;
         }
 
         GameObject mag = Instantiate(
@@ -888,15 +891,12 @@ public class PlayerController : MonoBehaviour
 
         if (isCrouch)
         {
-            spawnPos = firePoint_Crouch != null
-                ? firePoint_Crouch.position
-                : transform.position;
+            if (attackType == -1){ spawnPos = firePoint_Crouch_Pistol.position; }
+            if (attackType == -2) { spawnPos = firePoint_Crouch_Rifle.position; }
         }
         else
         {
-            spawnPos = firePoint != null
-                ? firePoint.position
-                : transform.position;
+            spawnPos =  firePoint.position;
         }
 
         GameObject bullet = Instantiate(
@@ -919,6 +919,16 @@ public class PlayerController : MonoBehaviour
         {
             bulletScript.Init(dir, bulletSpeed, bulletLifeTime);
         }
+
+        //把远程伤害来源告诉子弹
+        Attack attack = bullet.GetComponentInChildren<Attack>();
+
+        if (attack != null)
+        {
+            attack.owner = GetComponent<Character>();
+        }
+
+
 
         if (attackType == -1)
         {
