@@ -28,6 +28,11 @@ public class FrameEvent : MonoBehaviour
 
 
     }
+    private void Start()
+    {
+        FadeIn(0.4f);//所有Spine都淡入
+    }
+
     void Update()
     {
         // 按 T 随机换装测试
@@ -158,23 +163,86 @@ public class FrameEvent : MonoBehaviour
         targetSkin.AddSkin(skin);
     }
 
+    #region  渐变进入 渐变消失
 
 
+  
+    public void FadeIn(float duration = 0.5f)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeInCoroutine(duration));
+    }
+
+    private IEnumerator FadeInCoroutine(float duration)
+    {
+        float timer = 0f;
+
+        skeletonAnimation.Skeleton.A = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+
+            float alpha = Mathf.Lerp(
+                0f,
+                1f,
+                timer / duration
+            );
+
+            skeletonAnimation.Skeleton.A = alpha;
+
+            yield return null;
+        }
+
+        skeletonAnimation.Skeleton.A = 1f;
+    }
+
+    public void FadeOut(float duration = 0.5f)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeOutCoroutine(duration));
+    }
+
+    private IEnumerator FadeOutCoroutine(float duration)
+    {
+        float timer = 0f;
+
+        skeletonAnimation.Skeleton.A = 1f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+
+            float alpha = Mathf.Lerp(
+                1f,
+                0f,
+                timer / duration
+            );
+
+            skeletonAnimation.Skeleton.A = alpha;
+
+            yield return null;
+        }
+
+        skeletonAnimation.Skeleton.A = 0f;
+    }
     public void HideSkeleton()
     {
         skeletonAnimation.Skeleton.A = 0f; // 完全透明
-    }
-
-    public void HalfShowSkeleton()
-    {
-        skeletonAnimation.Skeleton.A = 0.3f; // 半透明
     }
 
     public void ShowSkeleton()
     {
         skeletonAnimation.Skeleton.A = 1f; // 完全不透明
     }
+    //public void HalfShowSkeleton()
+    //{
+    //    skeletonAnimation.Skeleton.A = 0.3f; // 半透明
+    //}
 
+    #endregion
+
+ 
     public void SetBlack()
     {
         skeletonAnimation.Skeleton.SetColor(new Color(0f, 0f, 0f, 1f));

@@ -1041,7 +1041,14 @@ public class PlayerController : MonoBehaviour
 
         cameraControl.ToggleZoom();
 
-      
+        //if (cameraControl.isZoomIn)
+        //{
+        //    frameEvent_UI.FadeOut(0.4f);
+        //}
+        //else 
+        //{
+        //    frameEvent_UI.FadeIn(0.4f);
+        //}
     }
     #endregion
 

@@ -75,7 +75,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
 
-        GameManager.instance.IsEnemy(this);
+      
 
         TransitionToState(patrolState);//一开始进入巡逻状态
 
@@ -105,7 +105,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-            GameManager.instance.EnemyDead(this);//死后移除列表
+         
            
             return;
         }

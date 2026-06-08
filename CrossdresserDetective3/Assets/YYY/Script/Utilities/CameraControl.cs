@@ -17,7 +17,7 @@ public class CameraControl : MonoBehaviour
     float zoomSize = 2.5f;
     float zoomSpeed = 8f;
 
-    private bool isZoomIn;
+    public bool isZoomIn;
     private float targetSize;
 
 
@@ -38,7 +38,7 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        GetNewCameraBounds();//设置相机边界
+       // GetNewCameraBounds();//设置相机边界
 
 
         //获取缩小放大距离
@@ -124,9 +124,9 @@ public class CameraControl : MonoBehaviour
         cameraShakeEvent.OnEventRaised -= OnCameraShakeEvent;
     }
 
-    private void OnCameraShakeEvent()
+    private void OnCameraShakeEvent(float force)
     {
-        impulseSource.GenerateImpulse();
+        impulseSource.GenerateImpulse(force);
     }
 
 }

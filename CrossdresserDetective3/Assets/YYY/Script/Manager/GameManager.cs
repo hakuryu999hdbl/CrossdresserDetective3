@@ -125,19 +125,19 @@ public class GameManager : MonoBehaviour
     /// 检测敌人
     /// </summary>
     #region
-    [Header("检测敌人")]
-    public List<EnemyController> enemies = new List<EnemyController>();//游戏开始的时候所有敌人登记进入这个列表，当这个列表空了后打开大门
+    [Header("检测敌人生成器")]
+    public List<AreaEncounterController> EnemyCreators = new List<AreaEncounterController>();//游戏开始的时候所有敌人生成器登记进入这个列表，当这个列表空了后打开大门
 
-    public void IsEnemy(EnemyController enemy) 
+    public void IsEnemyCreator(AreaEncounterController areaEncounterController) 
     {
-        enemies.Add(enemy);
+        EnemyCreators.Add(areaEncounterController);
     }
 
-    public void EnemyDead(EnemyController enemy) 
+    public void EnemyCleanOver(AreaEncounterController areaEncounterController) 
     {
-        enemies.Remove(enemy);
+        EnemyCreators.Remove(areaEncounterController);
 
-        if (enemies.Count<=0&& !PlayerWin) 
+        if (EnemyCreators.Count<=0&& !PlayerWin) 
         {
             //doorExit.OpenDoor();
 
