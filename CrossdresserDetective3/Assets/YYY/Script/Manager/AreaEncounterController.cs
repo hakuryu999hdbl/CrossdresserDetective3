@@ -30,8 +30,8 @@ public class AreaEncounterController : MonoBehaviour
 
         if (player == null)
             return;
-
-        Invoke(nameof(ActivateArea), 0.5f);//有些场景直接出来会碰到来不及触发
+        ActivateArea();
+        //Invoke(nameof(ActivateArea), 0.5f);//有些场景直接出来会碰到来不及触发
 
     }
 

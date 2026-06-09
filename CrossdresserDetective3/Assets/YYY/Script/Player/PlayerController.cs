@@ -268,13 +268,13 @@ public class PlayerController : MonoBehaviour
     [Header("Spine外观")]
     public FrameEvent frameEvent;
     public FrameEvent frameEvent_UI;//大的放大层也需要
-    int beltIndex = 1;
-    int clothesIndex = 1;
-    int glovesIndex = 1;
-    int pantiesIndex = 1;
-    int shoesIndex = 1;
-    int skirtIndex = 1;
-    int stockingsIndex = 1;
+    int beltIndex = 0;
+    int clothesIndex = 2;
+    int glovesIndex = 3;
+    int pantiesIndex = 3;
+    int shoesIndex = 3;
+    int skirtIndex = 0;
+    int stockingsIndex = 3;
 
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
