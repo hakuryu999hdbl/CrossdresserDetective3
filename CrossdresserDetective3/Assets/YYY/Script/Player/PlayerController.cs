@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
 
         
         OnReloadAnimationEnd();//更新子弹
+
+        frameEvent.FadeIn(0.4f);//所有Spine都淡入
     }
 
 
@@ -287,7 +289,6 @@ public class PlayerController : MonoBehaviour
 
     public void RefreshPlayerSkin()
     {
-        if (frameEvent == null) return;
 
         frameEvent.ShowCurrentAll(
             beltIndex,
@@ -331,6 +332,60 @@ public class PlayerController : MonoBehaviour
 
         RefreshPlayerSkin();//捡起的武器调用这里
     }//捡起的武器调用这里
+
+
+
+    public void ChangeEquip(GameFlowData.EquipPart part, int index)
+    {
+        switch (part)
+        {
+            case GameFlowData.EquipPart.Belt:
+                beltIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Clothes:
+                clothesIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Gloves:
+                glovesIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Panties:
+                pantiesIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Shoes:
+                shoesIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Skirt:
+                skirtIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Stockings:
+                stockingsIndex = index;
+                break;
+
+            case GameFlowData.EquipPart.Melee:
+                meleeType = index;
+                break;
+
+            case GameFlowData.EquipPart.Pistol:
+                pistolType = index;
+                break;
+
+            case GameFlowData.EquipPart.Rifle:
+                RifleType = index;
+                break;
+
+            case GameFlowData.EquipPart.Throw:
+                throwType = index;
+                break;
+        }
+
+        RefreshPlayerSkin();
+    }//换装口子
 
 
     #endregion
@@ -465,7 +520,7 @@ public class PlayerController : MonoBehaviour
 
 
         //UI等所有多端输入由PlayerController管理
-        //inputControl.UI.Cancel.started += OnCancel;
+        inputControl.UI.Cancel.started += OnCancel;
     }
 
 
@@ -1021,14 +1076,14 @@ public class PlayerController : MonoBehaviour
     {
         UIManager.instance.TogglePause();
     }
-    //public void OnCancel(InputAction.CallbackContext ctx)
-    //{
-    //    if (UIManager.instance.isPaused)
-    //    {
-    //        UIManager.instance.ClosePause();
-    //    }
-    //
-    //}
+    public void OnCancel(InputAction.CallbackContext ctx)
+    {
+        //if (UIManager.instance.isPaused)
+        //{
+        //    UIManager.instance.ClosePause();
+        //}
+        UIManager.instance.OnCancel();
+    }
     #endregion
 
 
@@ -1038,17 +1093,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnZoomCamera(InputAction.CallbackContext ctx)
     {
+        frameEvent_Audio._UI_Click();//切换相机发出按钮声
 
         cameraControl.ToggleZoom();
-
-        //if (cameraControl.isZoomIn)
-        //{
-        //    frameEvent_UI.FadeOut(0.4f);
-        //}
-        //else 
-        //{
-        //    frameEvent_UI.FadeIn(0.4f);
-        //}
     }
     #endregion
 

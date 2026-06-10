@@ -66,6 +66,9 @@ public class EnemyController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<CapsuleCollider2D>();
+
+        
+
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
 
     private void Awake()
@@ -75,7 +78,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
 
-      
+        frameEvent.FadeIn(0.4f);//所有Spine都淡入
 
         TransitionToState(patrolState);//一开始进入巡逻状态
 
@@ -592,71 +595,12 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     #region
     [Header("受伤死亡")]
-    //Transform attacker;
-    //public bool isHurt = false;
-    //public float hurtForce=4.5f;
     public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
     public CapsuleCollider2D coll;
     public FrameEvent_Audio frameEvent_Audio;
     public GameObject Effect_Blood;
 
-    #region 旧击退
-    // public void OnTakeDamage(Transform attackTrans) 
-    // {
-    //
-    //     Debug.Log("敌人受伤");
-    //
-    //     attacker = attackTrans;
-    //
-    //     //转身
-    //     //if (attackTrans.position.x - transform.position.x > 0) 
-    //     //{
-    //     //    transform.localScale = new Vector3(1,1,1);
-    //     //}
-    //     //if (attackTrans.position.x - transform.position.x < 0)
-    //     //{
-    //     //    transform.localScale = new Vector3(-1, 1, 1);
-    //     //}
-    //
-    //     //受伤被击退
-    //     isHurt = true;//主要用于停止移动
-    //     anim.SetTrigger("hit");
-    //
-    //
-    //     rb.velocity = Vector2.zero;
-    //     Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
-    //     rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
-    //
-    //     isHurt = false;//主要用于停止移动
-    //
-    //
-    //
-    //
-    //     // 如果之前有协程，先停掉（保险）
-    //     if (hurtCoroutine != null)
-    //     {
-    //         StopCoroutine(hurtCoroutine);
-    //     }
-    //     
-    //     hurtCoroutine = StartCoroutine(OnHurt(dir));
-    // }
-    // private Coroutine hurtCoroutine;
-    //
-    // private IEnumerator OnHurt(Vector2 dir)
-    // {
-    //     // 清空当前速度（防止叠加）
-    //     rb.velocity = Vector2.zero;
-    //
-    //     // 击退
-    //     rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
-    //
-    //     // 硬直时间
-    //     yield return new WaitForSeconds(0.45f);
-    //
-    //     isHurt = false;
-    // }
-
-    #endregion
+  
 
     private bool IsHitFromBehind(Vector3 attackPos)
     {

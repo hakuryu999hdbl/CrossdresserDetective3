@@ -28,10 +28,7 @@ public class FrameEvent : MonoBehaviour
 
 
     }
-    private void Start()
-    {
-        FadeIn(0.4f);//所有Spine都淡入
-    }
+  
 
     void Update()
     {
@@ -165,8 +162,6 @@ public class FrameEvent : MonoBehaviour
 
     #region  渐变进入 渐变消失
 
-
-  
     public void FadeIn(float duration = 0.5f)
     {
         StopAllCoroutines();

@@ -200,5 +200,14 @@ public class FrameEvent_Audio : MonoBehaviour
                 break;
         }
     }//这个由Bomb中代码调用
+
+
+    public void _UI_Click()
+    {
+        audioS.PlayOneShot(AudioManager.UI_Click);
+    }//这个由Player中代码调用
+
+
+
     #endregion
 }

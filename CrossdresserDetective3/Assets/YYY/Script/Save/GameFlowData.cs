@@ -14,4 +14,20 @@ public static class GameFlowData
 
     public static bool suppressNextSelectSound = false;//二级菜单按钮选中声音吞掉
     public static bool suppressNextClickSound = false;//商店购买声音吞掉
+
+    public enum EquipPart
+    {
+        Belt,
+        Clothes,
+        Gloves,
+        Panties,
+        Shoes,
+        Skirt,
+        Stockings,
+
+        Melee,
+        Pistol,
+        Rifle,
+        Throw
+    }
 }

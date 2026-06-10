@@ -37,7 +37,10 @@ public class UIManager : MonoBehaviour
 
     }
 
-   
+    public void Start()
+    {
+        OpenSetUp();
+    }
 
 
 
@@ -47,13 +50,16 @@ public class UIManager : MonoBehaviour
     #region
 
     [Header("暂停菜单")]
-    public GameObject PauseMenu;
-    public GameObject firstSelected; //进入设置页面最先选中 X 或 Master Slider
+    public GameObject PauseMenu,PauseButton;//隐藏暂停按钮
+    public GameObject PauseSetUpFirstSelected; //进入设置页面最先选中 X 或 Master Slider
 
     public bool isPaused=false;
     public PlayerController playerController;//玩家脚本
     public void TogglePause() 
     {
+
+        if (isSetUp) { return; }//设置界面内把暂停界面挡住
+
         if (isPaused)
         {
             ClosePause();
@@ -67,23 +73,23 @@ public class UIManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
-        PauseMenu.SetActive(true);
+        PauseMenu.SetActive(true); PauseButton.SetActive(false);
 
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(firstSelected);
+        EventSystem.current.SetSelectedGameObject(PauseSetUpFirstSelected);
     }
 
     public void ClosePause()
     {
         isPaused = false;
-        PauseMenu.SetActive(false);
+        PauseMenu.SetActive(false); PauseButton.SetActive(true);
         Time.timeScale = 1f;
 
         playerController.EnableGameplayInput();// 关闭 UI 输入
 
-        firstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        PauseSetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
     }
     public void BackToMenu()
@@ -100,11 +106,600 @@ public class UIManager : MonoBehaviour
 
 
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
 
     }//跳转编号场景
 
-  
+
+    #endregion
+
+
+
+    /// <summary>
+    /// 整备菜单
+    /// </summary>
+    #region
+
+    [Header("整备菜单")]
+    public GameObject SetUpMenu;
+    public GameObject ContactMenu;
+    public GameObject EquipMenu,WeaponMenu;
+    public GameObject MeleeMenu, RangedMenu, ThrowableMenu;
+    public GameObject ClothesMenu, GlovesMenu, SkirtMenu, PantiesMenu, StockingsMenu, ShoesMenu;
+
+    //进入页面最先选中
+    public GameObject SetUpFirstSelected; 
+    public GameObject EquipFirstSelected; 
+    public GameObject WeaponFirstSelected;
+
+    public GameObject MeleeFirstSelected;
+    public GameObject RangedFirstSelected;
+    public GameObject ThrowableFirstSelected;
+
+    public GameObject ClothesFirstSelected;
+    public GameObject GlovesFirstSelected;
+    public GameObject SkirtFirstSelected;
+    public GameObject PantiesFirstSelected;
+    public GameObject StockingsFirstSelected;
+    public GameObject ShoesFirstSelected;
+
+
+    public bool isSetUp = true;
+
+    private int CurrentOpen;//-7鞋子菜单  -6丝袜菜单  -5内裤菜单 -4裙子菜单  -3手套菜单 -2衣服菜单  -1服装菜单  0整备主菜单  1武器菜单  2近战武器菜单  3远程武器菜单  4投掷武器菜单
+
+    public void ToggleSetUp()
+    {
+        if (isSetUp)
+        {
+            CloseSetUp();
+        }
+        else
+        {
+            OpenSetUp();
+        }
+    }
+    public void OpenSetUp()
+    {
+        isSetUp = true;
+        CurrentOpen = 0;
+
+        SetUpMenu.SetActive(true); PauseButton.SetActive(false);
+        //Time.timeScale = 0f;
+
+        playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+    }
+
+    public void CloseSetUp()
+    {
+        isSetUp = false;
+        CurrentOpen = 0;
+
+        SetUpMenu.SetActive(false); PauseButton.SetActive(true);
+        //Time.timeScale = 1f;
+
+        playerController.EnableGameplayInput();// 关闭 UI 输入
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+
+    #region 服装菜单
+    public void OpenEquipMenu()
+    {
+        EquipMenu.SetActive(true);
+        ContactMenu.SetActive(false);
+
+        CurrentOpen = -1;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+
+    public void CloseEquipMenu()
+    {
+        EquipMenu.SetActive(false);
+        ContactMenu.SetActive(true);
+
+        CurrentOpen = 0;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+
+        EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+    }
+    #endregion
+
+    #region 武器菜单
+
+    public void OpenWeaponMenu()
+    {
+        WeaponMenu.SetActive(true);
+        ContactMenu.SetActive(false);
+
+        CurrentOpen = 1;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+    }
+
+    public void CloseWeaponMenu()
+    {
+        WeaponMenu.SetActive(false);
+        ContactMenu.SetActive(true);
+
+        CurrentOpen = 0;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+
+        EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+    }
+
+    #endregion
+
+    #region 近战武器菜单
+
+    public void OpenMeleeMenu()
+    {
+        MeleeMenu.SetActive(true);
+        WeaponMenu.SetActive(false);
+
+        CurrentOpen = 2;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(MeleeFirstSelected);
+    }
+
+    public void CloseMeleeMenu()
+    {
+        MeleeMenu.SetActive(false);
+        WeaponMenu.SetActive(true);
+
+        CurrentOpen = 1;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        MeleeFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+
+        EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+    }
+
+
+    public void ChangeMelee(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Melee, index);
+        playerController.attackType = 1;
+    }
+
+    #endregion
+
+    #region 远程武器菜单
+
+    public void OpenRangedMenu()
+    {
+        RangedMenu.SetActive(true);
+        WeaponMenu.SetActive(false);
+
+        CurrentOpen = 3;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(RangedFirstSelected);
+    }
+
+    public void CloseRangedMenu()
+    {
+        RangedMenu.SetActive(false);
+        WeaponMenu.SetActive(true);
+
+        CurrentOpen = 1;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        RangedFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+
+        EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+    }
+
+    public void ChangeRanged(int index)
+    {
+
+        switch (index) 
+        {
+            case 1:
+                playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 1);
+                playerController.attackType = -1;
+                break;
+            case 2:
+                playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 2);
+                playerController.attackType = -1;
+                break;
+            case 3:
+                playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 3);
+                playerController.attackType = -1;
+                break;
+            case 4:
+                playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 1);
+                playerController.attackType = -2;
+                break;
+            case 5:
+                playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 2);
+                playerController.attackType = -2;
+                break;
+        }
+
+    }
+
+    #endregion
+
+    #region 投掷武器菜单
+
+    public void OpenThrowableMenu()
+    {
+        ThrowableMenu.SetActive(true);
+        WeaponMenu.SetActive(false);
+
+        CurrentOpen = 4;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(ThrowableFirstSelected);
+    }
+
+    public void CloseThrowableMenu()
+    {
+        ThrowableMenu.SetActive(false);
+        WeaponMenu.SetActive(true);
+
+        CurrentOpen = 1;
+
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        ThrowableFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+
+        EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+    }
+
+    public void ChangeThrowable(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Throw, index);
+    }
+
+    #endregion
+
+    #region 衣服菜单
+
+    public void OpenClothesMenu()
+    {
+        ClothesMenu.SetActive(true);
+        EquipMenu.SetActive(false);
+
+        CurrentOpen = -2;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(ClothesFirstSelected);
+    }
+
+    public void CloseClothesMenu()
+    {
+        ClothesMenu.SetActive(false);
+        EquipMenu.SetActive(true);
+
+        CurrentOpen = -1;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        ClothesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+
+
+    public void ChangeClothes(int index) 
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Clothes, index);
+
+        if (index == 3)
+        {
+            playerController.ChangeEquip(GameFlowData.EquipPart.Skirt, 0);
+        }//兔女郎装不能穿裙子
+    }
+
+
+    #endregion
+
+    #region 手套菜单
+
+    public void OpenGlovesMenu()
+    {
+        GlovesMenu.SetActive(true);
+        EquipMenu.SetActive(false);
+
+        CurrentOpen = -3;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(GlovesFirstSelected);
+    }
+
+    public void CloseGloveMenu()
+    {
+        GlovesMenu.SetActive(false);
+        EquipMenu.SetActive(true);
+
+        CurrentOpen = -1;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        GlovesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+    public void ChangeGloves(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Gloves, index);
+    }
+    #endregion
+
+    #region 裙子菜单
+
+    public void OpenSkirtMenu()
+    {
+        SkirtMenu.SetActive(true);
+        EquipMenu.SetActive(false);
+
+        CurrentOpen = -4;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(SkirtFirstSelected);
+    }
+
+    public void CloseSkirtMenu()
+    {
+        SkirtMenu.SetActive(false);
+        EquipMenu.SetActive(true);
+
+        CurrentOpen = -1;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        SkirtFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+
+    public void ChangeSkirt(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Skirt, index);
+    }
+
+    #endregion
+
+    #region 内裤菜单
+
+    public void OpenPantiesMenu()
+    {
+        PantiesMenu.SetActive(true);
+        EquipMenu.SetActive(false);
+
+        CurrentOpen = -5;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(PantiesFirstSelected);
+    }
+
+    public void ClosePantiesMenu()
+    {
+        PantiesMenu.SetActive(false);
+        EquipMenu.SetActive(true);
+
+        CurrentOpen = -1;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        PantiesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+
+    public void ChangePanties(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Panties, index);
+    }
+
+    #endregion
+
+    #region 丝袜菜单
+
+    public void OpenStockingsMenu()
+    {
+        StockingsMenu.SetActive(true);
+        EquipMenu.SetActive(false);
+
+        CurrentOpen = -6;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(StockingsFirstSelected);
+    }
+
+    public void CloseStockingsMenu()
+    {
+        StockingsMenu.SetActive(false);
+        EquipMenu.SetActive(true);
+
+        CurrentOpen = -1;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        StockingsFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+
+    public void ChangeStockings(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Stockings, index);
+
+
+
+
+        if (index == 3)
+        {
+            playerController.ChangeEquip(GameFlowData.EquipPart.Panties, 3);
+
+        }//裤袜固定部件
+    }
+
+    #endregion
+
+    #region 鞋子菜单
+
+    public void OpenShoesMenu()
+    {
+        ShoesMenu.SetActive(true);
+        EquipMenu.SetActive(false);
+
+        CurrentOpen = -7;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(ShoesFirstSelected);
+    }
+
+    public void CloseShoesMenu()
+    {
+        ShoesMenu.SetActive(false);
+        EquipMenu.SetActive(true);
+
+        CurrentOpen = -1;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        ShoesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+    }
+
+    public void ChangeShoes(int index)
+    {
+        playerController.ChangeEquip(GameFlowData.EquipPart.Shoes, index);
+    }
+
+    #endregion
+
+
+
+    public void OnCancel() 
+    {
+
+        switch (CurrentOpen) 
+        {
+            case 4:
+                CloseThrowableMenu();
+                break;
+            case 3:
+                CloseRangedMenu();
+                break;
+            case 2:
+                CloseMeleeMenu();
+                break;
+            case 1:
+                CloseWeaponMenu();
+                break;
+            case -1:
+                CloseEquipMenu();
+                break;
+            case -2:
+                CloseClothesMenu();
+                break;
+            case -3:
+                CloseGloveMenu();
+                break;
+            case -4:
+                CloseSkirtMenu();
+                break;
+            case -5:
+                ClosePantiesMenu();
+                break;
+            case -6:
+                CloseStockingsMenu();
+                break;
+            case -7:
+                CloseShoesMenu();
+                break;
+        }
+
+        AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+
+    }
+
+
     #endregion
 
 

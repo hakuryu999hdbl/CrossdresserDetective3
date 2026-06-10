@@ -36,7 +36,6 @@ public class MenuManager : MonoBehaviour
         inputControl.UI.Cancel.started += OnCancel;
         inputControl.UI.Delete.started += OnDeleteSave;
 
-        //InitLanguageOnce();//根据系统设置语言
 
 
         //Debug.Log("目前是否根据系统语言进行设置" + PlayerPrefs.GetInt("language_initialized"));//0无设置  1已经设置好
@@ -269,18 +268,7 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    void InitLanguageOnce()
-    {
-        //
-        if (PlayerPrefs.HasKey("language_initialized"))
-            return;
-
-        int lang = DetectSystemLanguage();
-
-        PlayerPrefs.SetInt("language", lang);
-        PlayerPrefs.SetInt("language_initialized", 1);
-        PlayerPrefs.Save();
-    }
+    
 
     int DetectSystemLanguage()
     {
@@ -472,8 +460,8 @@ public class MenuManager : MonoBehaviour
     { 
 
         GameFlowData.CurrentChapter = Chapter; 
-        GameFlowData.CurrentStage = Stage; 
-        SceneManager.LoadScene(1); 
+        GameFlowData.CurrentStage = Stage;
+        SceneManager.LoadScene("Level");
 
     }//跳转编号场景
 
