@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -88,6 +89,8 @@ public class PlayerController : MonoBehaviour
         OnReloadAnimationEnd();//更新子弹
 
         frameEvent.FadeIn(0.4f);//所有Spine都淡入
+
+        ReadCurrentGame();//初始读取
     }
 
 
@@ -270,18 +273,18 @@ public class PlayerController : MonoBehaviour
     [Header("Spine外观")]
     public FrameEvent frameEvent;
     public FrameEvent frameEvent_UI;//大的放大层也需要
-    int beltIndex = 0;
-    int clothesIndex = 2;
-    int glovesIndex = 3;
-    int pantiesIndex = 3;
-    int shoesIndex = 3;
-    int skirtIndex = 0;
-    int stockingsIndex = 3;
+    public int beltIndex;
+    public int clothesIndex;
+    public int glovesIndex;
+    public int pantiesIndex;
+    public int shoesIndex;
+    public int skirtIndex;
+    public int stockingsIndex;
 
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
-    public int RifleType;//0空手 1步枪M4A1 2步枪AK47
+    public int rifleType;//0空手 1步枪M4A1 2步枪AK47
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
@@ -300,7 +303,7 @@ public class PlayerController : MonoBehaviour
             stockingsIndex,
             meleeType,
             pistolType,
-            RifleType
+            rifleType
         );
 
         frameEvent_UI.ShowCurrentAll(
@@ -313,7 +316,7 @@ public class PlayerController : MonoBehaviour
           stockingsIndex,
           meleeType,
           pistolType,
-          RifleType
+          rifleType
       );
 
 
@@ -337,14 +340,21 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeEquip(GameFlowData.EquipPart part, int index)
     {
+
+       
+
         switch (part)
         {
-            case GameFlowData.EquipPart.Belt:
-                beltIndex = index;
-                break;
+            //case GameFlowData.EquipPart.Belt:
+            //    beltIndex = index;
+            //    break;
 
             case GameFlowData.EquipPart.Clothes:
                 clothesIndex = index;
+
+                if (clothesIndex == 3)
+                    skirtIndex = 0;//兔女郎装不能穿裙子
+
                 break;
 
             case GameFlowData.EquipPart.Gloves:
@@ -353,6 +363,12 @@ public class PlayerController : MonoBehaviour
 
             case GameFlowData.EquipPart.Panties:
                 pantiesIndex = index;
+
+                if (pantiesIndex != 3 && stockingsIndex == 3)
+                {
+                    stockingsIndex = 0;
+                }//在裤袜的情况下，更换内裤会把丝袜换掉
+
                 break;
 
             case GameFlowData.EquipPart.Shoes:
@@ -361,10 +377,36 @@ public class PlayerController : MonoBehaviour
 
             case GameFlowData.EquipPart.Skirt:
                 skirtIndex = index;
+
+                if (skirtIndex != 0 && clothesIndex == 3)
+                    clothesIndex = 0;//裙子自动脱兔女郎装
+
                 break;
 
             case GameFlowData.EquipPart.Stockings:
                 stockingsIndex = index;
+
+                if (stockingsIndex == 3)
+                {
+                    pantiesIndex = 3;
+
+                }
+                else
+                {
+                    pantiesIndex = 0;
+
+                }//裤袜固定部件
+                if (stockingsIndex == 1 && pantiesIndex != 0)
+                {
+                    beltIndex = 1;
+                }
+                else
+                {
+                    beltIndex = 0;
+
+                } //吊带袜裤袜固定有内裤的情况下吊带出现
+
+
                 break;
 
             case GameFlowData.EquipPart.Melee:
@@ -376,16 +418,63 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case GameFlowData.EquipPart.Rifle:
-                RifleType = index;
+                rifleType = index;
                 break;
 
             case GameFlowData.EquipPart.Throw:
                 throwType = index;
                 break;
         }
+     
+
 
         RefreshPlayerSkin();
+
+        SaveCurrentGame();
     }//换装口子
+
+    public void SaveCurrentGame()
+    {
+        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+
+
+        data.clothesIndex = clothesIndex;
+        data.glovesIndex = glovesIndex;
+        data.pantiesIndex = pantiesIndex;
+        data.shoesIndex = shoesIndex;
+        data.skirtIndex = skirtIndex;
+        data.stockingsIndex = stockingsIndex;
+
+        data.meleeType = meleeType;
+        data.pistolType = pistolType;
+        data.rifleType = rifleType;
+        data.throwType = throwType;
+
+        data.attackType = attackType;
+
+        SaveManager.SaveGame(data);
+    }
+
+    public void ReadCurrentGame() 
+    {
+        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+
+        clothesIndex = data.clothesIndex;
+        glovesIndex = data.glovesIndex;
+        pantiesIndex = data.pantiesIndex;
+        shoesIndex = data.shoesIndex;
+        skirtIndex = data.skirtIndex;
+        stockingsIndex = data.stockingsIndex;
+
+        meleeType = data.meleeType;
+        pistolType = data.pistolType;
+        rifleType = data.rifleType;
+        throwType = data.throwType;
+
+        attackType = data.attackType;
+
+        RefreshPlayerSkin(); 
+    }
 
 
     #endregion
@@ -1002,7 +1091,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            switch (RifleType)
+            switch (rifleType)
             {
                 case 1:
                     frameEvent_Audio._Bullet_M4a1();

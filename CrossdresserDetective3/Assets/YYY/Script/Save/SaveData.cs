@@ -32,6 +32,30 @@ public class SaveData
     }
 
 
+    //服装
+    public int clothesIndex;
+    public int glovesIndex;
+    public int pantiesIndex;
+    public int shoesIndex;
+    public int skirtIndex;
+    public int stockingsIndex;
+
+    //武器
+    public int meleeType;
+    public int pistolType;
+    public int rifleType;
+    public int throwType;
+
+
+    //当前状态
+    public int attackType;
+
+
+
+
+
+
+
 
 
     // ✅ 加上这个构造函数 ↓↓↓↓↓↓↓↓↓
@@ -45,5 +69,24 @@ public class SaveData
     public SaveData()
     {
         saveTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
     }
+
+
+    public void InitDefaultEquip()
+    {
+        clothesIndex = 1;
+        glovesIndex = 1;
+        pantiesIndex = 1;
+        shoesIndex = 1;
+        skirtIndex = 1;
+        stockingsIndex = 1;
+
+        meleeType = 0;
+        pistolType = 0;
+        rifleType = 0;
+        throwType = 0;
+
+        attackType = 0;
+    }//默认状态
 }

@@ -551,7 +551,7 @@ public class EnemyController : MonoBehaviour
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
-    public int RifleType;//0空手 1步枪M4A1 2步枪AK47
+    public int rifleType;//0空手 1步枪M4A1 2步枪AK47
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
@@ -571,7 +571,7 @@ public class EnemyController : MonoBehaviour
            stockingsIndex,
            meleeType,
            pistolType,
-           RifleType
+           rifleType
        );
 
     }//更新外观

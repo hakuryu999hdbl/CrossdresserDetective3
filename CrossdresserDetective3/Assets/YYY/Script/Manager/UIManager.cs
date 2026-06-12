@@ -356,11 +356,15 @@ public class UIManager : MonoBehaviour
                 playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 3);
                 playerController.attackType = -1;
                 break;
-            case 4:
+
+
+
+
+            case 11:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 1);
                 playerController.attackType = -2;
                 break;
-            case 5:
+            case 12:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 2);
                 playerController.attackType = -2;
                 break;
@@ -447,10 +451,7 @@ public class UIManager : MonoBehaviour
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Clothes, index);
 
-        if (index == 3)
-        {
-            playerController.ChangeEquip(GameFlowData.EquipPart.Skirt, 0);
-        }//兔女郎装不能穿裙子
+        
     }
 
 
@@ -603,14 +604,7 @@ public class UIManager : MonoBehaviour
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Stockings, index);
 
-
-
-
-        if (index == 3)
-        {
-            playerController.ChangeEquip(GameFlowData.EquipPart.Panties, 3);
-
-        }//裤袜固定部件
+      
     }
 
     #endregion
@@ -836,7 +830,7 @@ public class UIManager : MonoBehaviour
         }
 
 
-        data.InitStageData();
+        data.InitStageData();//通关触发
 
         int chapter = GameFlowData.CurrentChapter;
         int stage = GameFlowData.CurrentStage;

@@ -144,6 +144,7 @@ public class MenuManager : MonoBehaviour
             newData.slotName = CurrentSaveSlotUI.slotName;//记住档的名字
 
             newData.InitStageData();//新建存档的时候就更新一下关卡记录
+            newData.InitDefaultEquip();//新建存档的时候就更新一下默认服装防止裸体
 
             SaveManager.SaveGame(newData);
 
@@ -424,7 +425,7 @@ public class MenuManager : MonoBehaviour
     public void ReadChapter()
     {
         currentData = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
-        currentData.InitStageData();
+        currentData.InitStageData();//刷新调用
     }
 
     // 打开第一章时调用这个
