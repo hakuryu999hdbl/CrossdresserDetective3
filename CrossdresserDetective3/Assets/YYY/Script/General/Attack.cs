@@ -8,8 +8,7 @@ public class Attack : MonoBehaviour
 
     [Header("伤害数值")]
     public int damage;
-    //public float attackRange;
-    //public float attackRate;
+    public int hitEffectType;//0打击 1斩击
 
     [Header("击飞参数")]
     public float knockbackX = 5f;
@@ -24,11 +23,13 @@ public class Attack : MonoBehaviour
     private HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
 
+
+
     private void OnEnable()
     {
         hitTargets.Clear();
     }
-   
+
     private void OnTriggerStay2D(Collider2D other)
     {
         IDamageable target = other.GetComponentInParent<IDamageable>();
@@ -42,17 +43,17 @@ public class Attack : MonoBehaviour
         // 炸弹不走 IDamageable，暂时单独处理
         if (bombAvailable && other.CompareTag("Bomb"))
         {
-        
+
             Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 float dir = transform.position.x > other.transform.position.x ? -1f : 1f;
-            
+
                 if (clearVelocity)
                 {
                     rb.velocity = Vector2.zero;
                 }
-            
+
                 rb.AddForce(
                     new Vector2(dir * knockbackX, knockbackY),
                     ForceMode2D.Impulse
@@ -61,6 +62,6 @@ public class Attack : MonoBehaviour
         }
     }
 
-   
+
 }
 

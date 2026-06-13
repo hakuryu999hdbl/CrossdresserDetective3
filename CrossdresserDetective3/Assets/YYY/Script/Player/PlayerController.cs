@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
         frameEvent.FadeIn(0.4f);//所有Spine都淡入
 
         ReadCurrentGame();//初始读取
+
     }
 
 
@@ -289,7 +290,6 @@ public class PlayerController : MonoBehaviour
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
 
-
     public void RefreshPlayerSkin()
     {
 
@@ -486,25 +486,45 @@ public class PlayerController : MonoBehaviour
     #region
     [Header("受伤死亡")]
     public float hurtForce;
+    public GameObject RedScreen;
     public FrameEvent_Audio frameEvent_Audio;
-    public GameObject Effect_Blood;
+    public GameObject Effect_Blood;//受伤特效
+    public GameObject Strike_Effect;//剑光特效
+    public GameObject Hit_Effect;//打击特效
 
-    #region  旧击退
-    public void GetHurt(Transform attacker)
-    {
-        // isHurt = true;//主要用于屏蔽输入
-        //
-        // rb.velocity = Vector2.zero;
-        // Vector2 dir = new Vector2((transform.position.x - attacker.position.x), 0).normalized;
-        // rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
-    }
-    #endregion
+
+
+    private Vector3 hitEffectOriginPos;
+
+
+
 
     public void OnTakeDamage(Attack attack)
     {
 
         if (attack == null)
             return;
+
+
+        PlayBloodEffect();
+
+        switch (attack.hitEffectType)
+        {
+            case 0:
+                // 打击特效
+                Hit_Effect.SetActive(true);
+                break;
+
+            case 1:
+                // 斩击特效
+                Strike_Effect.transform.localRotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-45f, 45f));
+                Strike_Effect.SetActive(true);
+                break;
+        }
+
+
+
+
 
         isHurt = true;//主要用于屏蔽输入
 
@@ -523,7 +543,7 @@ public class PlayerController : MonoBehaviour
             ForceMode2D.Impulse
         );
 
-        PlayBloodEffect();
+      
     }
 
     void PlayBloodEffect()
@@ -545,7 +565,6 @@ public class PlayerController : MonoBehaviour
     public void PlayerDead()
     {
 
-        PlayBloodEffect();
 
         isDead = true;
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
@@ -944,7 +963,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    
+    public Attack[] playerAttacks;//每当武器切换了之后，attack伤害效果也要更换
+
+
 
     public void ChangeWeapon() 
     {
@@ -960,7 +981,14 @@ public class PlayerController : MonoBehaviour
             frameEvent_Audio._Attack_katana_draw();//暂时这么写
         }
 
-        
+
+
+        foreach (Attack attack in playerAttacks)
+        {
+            if (attack == null) continue;
+
+            attack.hitEffectType = attackType;//暂时这么写
+        }
     }
 
     #endregion

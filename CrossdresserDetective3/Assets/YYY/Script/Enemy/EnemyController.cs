@@ -598,9 +598,11 @@ public class EnemyController : MonoBehaviour
     public Rigidbody2D rb;//我发现这个Enemy居然是transform移动驱动的
     public CapsuleCollider2D coll;
     public FrameEvent_Audio frameEvent_Audio;
-    public GameObject Effect_Blood;
+    public GameObject Effect_Blood;//受伤特效
+    public GameObject Strike_Effect;//剑光特效
+    public GameObject Hit_Effect;//打击特效
 
-  
+    
 
     private bool IsHitFromBehind(Vector3 attackPos)
     {
@@ -617,6 +619,28 @@ public class EnemyController : MonoBehaviour
 
         if (attack == null)
             return;
+
+
+        PlayBloodEffect();
+
+
+        switch (attack.hitEffectType)
+        {
+            case 0:
+                // 打击特效
+                Hit_Effect.SetActive(true);
+                break;
+
+            case 1:
+                // 斩击特效
+                Strike_Effect.transform.localRotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-45f, 45f));
+                Strike_Effect.SetActive(true);
+                break;
+        }
+
+
+
+
 
 
 
@@ -686,10 +710,7 @@ public class EnemyController : MonoBehaviour
         );
 
 
-        PlayBloodEffect();
-
-
-
+     
     }
 
 
@@ -716,7 +737,6 @@ public class EnemyController : MonoBehaviour
     {
 
 
-        PlayBloodEffect();
 
         isDead = true;
         gameObject.layer = LayerMask.NameToLayer("Environment");
