@@ -173,6 +173,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+
+        UI_CameraChangeAll();
     }
 
     public void CloseSetUp()
@@ -189,6 +191,13 @@ public class UIManager : MonoBehaviour
 
         SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
+
+
+        //每次关上界面的时候，让放大图出现一个进来的动画
+        anim.Play("Show", 0, 0f);
+
+
+        UI_CameraChangeMiddle();
     }
 
 
@@ -207,6 +216,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+
+        UI_CameraChangeMiddle();
     }
 
     public void CloseEquipMenu()
@@ -223,6 +234,8 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+
+        UI_CameraChangeAll();
     }
     #endregion
 
@@ -242,6 +255,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+
+        UI_CameraChangeMiddle();
     }
 
     public void CloseWeaponMenu()
@@ -258,6 +273,8 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+
+        UI_CameraChangeAll();
     }
 
     #endregion
@@ -300,7 +317,6 @@ public class UIManager : MonoBehaviour
     public void ChangeMelee(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Melee, index);
-        playerController.attackType = 1;
     }
 
     #endregion
@@ -346,15 +362,12 @@ public class UIManager : MonoBehaviour
         {
             case 1:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 1);
-                playerController.attackType = -1;
                 break;
             case 2:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 2);
-                playerController.attackType = -1;
                 break;
             case 3:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 3);
-                playerController.attackType = -1;
                 break;
 
 
@@ -362,11 +375,9 @@ public class UIManager : MonoBehaviour
 
             case 11:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 1);
-                playerController.attackType = -2;
                 break;
             case 12:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 2);
-                playerController.attackType = -2;
                 break;
         }
 
@@ -508,6 +519,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(SkirtFirstSelected);
+
+        UI_CameraChangeMiddleDown();
     }
 
     public void CloseSkirtMenu()
@@ -522,6 +535,9 @@ public class UIManager : MonoBehaviour
         SkirtFirstSelected = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+
+
+        UI_CameraChangeMiddle();
     }
 
     public void ChangeSkirt(int index)
@@ -546,6 +562,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(PantiesFirstSelected);
+
+        UI_CameraChangeMiddleDown();
     }
 
     public void ClosePantiesMenu()
@@ -560,6 +578,8 @@ public class UIManager : MonoBehaviour
         PantiesFirstSelected = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+
+        UI_CameraChangeMiddle();
     }
 
     public void ChangePanties(int index)
@@ -584,6 +604,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(StockingsFirstSelected);
+
+        UI_CameraChangeDown();
     }
 
     public void CloseStockingsMenu()
@@ -598,6 +620,8 @@ public class UIManager : MonoBehaviour
         StockingsFirstSelected = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+
+        UI_CameraChangeMiddle();
     }
 
     public void ChangeStockings(int index)
@@ -624,6 +648,8 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ShoesFirstSelected);
+
+        UI_CameraChangeDown();
     }
 
     public void CloseShoesMenu()
@@ -638,6 +664,8 @@ public class UIManager : MonoBehaviour
         ShoesFirstSelected = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
+
+        UI_CameraChangeMiddle();
     }
 
     public void ChangeShoes(int index)
@@ -699,12 +727,12 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// 放大显示人体
+    /// 放大显示人体和放大镜头控制
     /// </summary>
     #region
     [Header("放大显示人体")]
     public Animator anim;
-
+    public Animator anim_Camera;
     public void ShowPortrait()
     {
         anim.SetBool("isShow", true);
@@ -715,6 +743,22 @@ public class UIManager : MonoBehaviour
         anim.SetBool("isShow", false);
     }
 
+    public void UI_CameraChangeMiddle() 
+    {
+        anim_Camera.SetInteger("CameraWork", 0);
+    }
+    public void UI_CameraChangeDown()
+    {
+        anim_Camera.SetInteger("CameraWork", 1);
+    }
+    public void UI_CameraChangeAll()
+    {
+        anim_Camera.SetInteger("CameraWork", 2);
+    }
+    public void UI_CameraChangeMiddleDown()
+    {
+        anim_Camera.SetInteger("CameraWork", 3);
+    }
     #endregion
 
 
@@ -879,7 +923,7 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// 生命值，体力值，弹药等UI
+    /// 生命值，体力值，弹药，武器等UI
     /// </summary>
     #region
 
@@ -976,6 +1020,97 @@ public class UIManager : MonoBehaviour
                 bulletRoot
             );
         }
+    }
+
+    [Header("近战UI")]
+    public GameObject[] meleeIcons;
+
+    [Header("远程UI")]
+    public GameObject[] pistolIcons;
+    public GameObject[] rifleIcons;
+  
+
+    [Header("投掷UI")]
+    public GameObject[] throwableIcons;
+
+    public void RefreshWeaponSlotUI(PlayerController player)
+    {
+        foreach (GameObject obj in meleeIcons)
+            obj.SetActive(false);
+
+        foreach (GameObject obj in pistolIcons)
+            obj.SetActive(false);
+
+        foreach (GameObject obj in rifleIcons)
+            obj.SetActive(false);
+
+        foreach (GameObject obj in throwableIcons)
+            obj.SetActive(false);
+
+
+        //近战(空手不显示)
+        switch (player.meleeType) 
+        {
+            case 1:
+                meleeIcons[0].SetActive(true);
+                break;
+
+            case 2:
+                meleeIcons[1].SetActive(true);
+                break;
+            case 3:
+                meleeIcons[2].SetActive(true);
+                break;
+        }
+
+
+
+
+        //远程
+        if(player.rangedSlot == -1)
+        {
+            switch (player.pistolType)
+            {
+                case 1:
+                    pistolIcons[0].SetActive(true);
+                    break;
+                case 2:
+                    pistolIcons[1].SetActive(true);
+                    break;
+                case 3:
+                    pistolIcons[2].SetActive(true);
+                    break;
+            }
+        }
+        if (player.rangedSlot == -2)
+        {
+            switch (player.rifleType)
+            {
+                case 1:
+                    rifleIcons[0].SetActive(true);
+                    break;
+                case 2:
+                    rifleIcons[1].SetActive(true);
+                    break;
+            }
+        }
+      
+
+        //投掷
+        switch (player.throwType)
+        {
+            case 1:
+                throwableIcons[0].SetActive(true);
+                break;
+
+            case 2:
+                meleeIcons[1].SetActive(true);
+                break;
+            case 3:
+                meleeIcons[2].SetActive(true);
+                break;
+        }
+
     }
 
     #endregion

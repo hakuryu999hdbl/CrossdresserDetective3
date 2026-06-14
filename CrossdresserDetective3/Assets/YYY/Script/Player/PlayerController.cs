@@ -83,8 +83,6 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.IsPlayer(this);
 
 
-        RefreshPlayerSkin();//初始更新皮肤
-
         
         OnReloadAnimationEnd();//更新子弹
 
@@ -411,14 +409,67 @@ public class PlayerController : MonoBehaviour
 
             case GameFlowData.EquipPart.Melee:
                 meleeType = index;
+
+                if (index == 0)
+                {
+                    //为徒手
+
+                    attackType = 0;
+                    meleeSlot = 0;
+                }
+                if (index != 0)
+                {
+                    //为匕首攻击方式
+
+                    attackType = 1;
+                    meleeSlot = 1;
+                }
+                Slot = 0;//为近战
+
+
                 break;
 
             case GameFlowData.EquipPart.Pistol:
                 pistolType = index;
+
+                if (index == 0)
+                {
+                    //为徒手
+
+                    attackType = 0;
+                    rangedSlot = 0;
+                }
+                if (index != 0)
+                {
+                    //为手枪的攻击方式
+
+                    attackType = -1;
+                    rangedSlot = -1;
+                }
+                Slot = 1;//为远程
+
                 break;
 
             case GameFlowData.EquipPart.Rifle:
                 rifleType = index;
+
+                if (index == 0)
+                {
+                    //为徒手
+
+                    attackType = 0;
+                    rangedSlot = 0;
+                }
+                if (index != 0)
+                {
+                    //为步枪枪的攻击方式
+
+                    attackType = -2;
+                    rangedSlot = -2;
+                }
+                Slot = 1;//为远程
+
+
                 break;
 
             case GameFlowData.EquipPart.Throw:
@@ -428,9 +479,12 @@ public class PlayerController : MonoBehaviour
      
 
 
-        RefreshPlayerSkin();
+        RefreshPlayerSkin();//换装界面调用
 
-        SaveCurrentGame();
+        RefreshCurrentWeapon();//换装界面调用
+
+        SaveCurrentGame();//换装界面记录
+
     }//换装口子
 
     public void SaveCurrentGame()
@@ -450,7 +504,10 @@ public class PlayerController : MonoBehaviour
         data.rifleType = rifleType;
         data.throwType = throwType;
 
-        data.attackType = attackType;
+
+        data.meleeSlot = meleeSlot;
+        data.rangedSlot = rangedSlot;
+        data.Slot = Slot;
 
         SaveManager.SaveGame(data);
     }
@@ -471,9 +528,14 @@ public class PlayerController : MonoBehaviour
         rifleType = data.rifleType;
         throwType = data.throwType;
 
-        attackType = data.attackType;
+        meleeSlot = data.meleeSlot;
+        rangedSlot = data.rangedSlot;
+        Slot = data.Slot;
 
-        RefreshPlayerSkin(); 
+        RefreshPlayerSkin();//初始更新皮肤
+
+        RefreshCurrentWeapon();//初始更新武器动作和UI
+
     }
 
 
@@ -492,9 +554,6 @@ public class PlayerController : MonoBehaviour
     public GameObject Strike_Effect;//剑光特效
     public GameObject Hit_Effect;//打击特效
 
-
-
-    private Vector3 hitEffectOriginPos;
 
 
 
@@ -556,6 +615,7 @@ public class PlayerController : MonoBehaviour
 
         frameEvent_Audio._Attack_blood();
 
+        RedScreen.SetActive(true);
 
         Destroy(blood, 1f); // 1秒后销毁
     }
@@ -564,7 +624,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDead()
     {
-
+        PlayBloodEffect();
 
         isDead = true;
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
@@ -963,33 +1023,67 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+
+    [Header("武器槽")]
+    public int meleeSlot = 0;   // 0空手 1匕首类
+    public int rangedSlot = 0;   // 0空手 -1手枪类  -2步枪类
+    public int Slot = 0;// 0近战插槽  1手枪插槽
+
     public Attack[] playerAttacks;//每当武器切换了之后，attack伤害效果也要更换
-
-
 
     public void ChangeWeapon() 
     {
-        
-        if (attackType == 0 || attackType == 1)
-        {
-            attackType = UnityEngine.Random.Range(-2, 0);//切换射击
-            frameEvent_Audio._SE_Clothes();//暂时这么写
-        }
-        else 
-        {
-            attackType = UnityEngine.Random.Range(0,2);//切换近战
-            frameEvent_Audio._Attack_katana_draw();//暂时这么写
-        }
 
+        Slot = Slot == 0 ? 1 : 0;
 
+        RefreshCurrentWeapon();//局内更换武器
+        SaveCurrentGame();//每次局内切换武器记录
 
-        foreach (Attack attack in playerAttacks)
-        {
-            if (attack == null) continue;
-
-            attack.hitEffectType = attackType;//暂时这么写
-        }
     }
+    public void RefreshCurrentWeapon()
+    {
+        if (Slot == 0)
+        {
+
+            frameEvent_Audio._Attack_katana_draw();
+
+            if (meleeType == 0)
+            {
+                attackType = 0; // 踢击
+
+            }
+            else
+            {
+                attackType = 1; // 挥砍
+            }
+
+            foreach (Attack attack in playerAttacks)
+            {
+                if (attack == null) continue;
+
+                attack.hitEffectType = attackType;//暂时这么写
+            }
+        }
+        else
+        {
+            frameEvent_Audio._Attack_katana_in();
+
+
+            if (rangedSlot == -1 && pistolType != 0)
+                attackType = -1; // 手枪射击
+            else if (rangedSlot == -2 && rifleType != 0)
+                attackType = -2; // 步枪射击
+            else
+                attackType = 0; // 没远程武器时回到踢击
+        }
+
+
+        UIManager.instance.RefreshWeaponSlotUI(this);
+
+      
+    }//更换玩家当前装备显示与UI层显示
+
 
     #endregion
 

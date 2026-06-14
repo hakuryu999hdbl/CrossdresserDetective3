@@ -48,8 +48,9 @@ public class SaveData
 
 
     //当前状态
-    public int attackType;
-
+    public int meleeSlot = 0;// 0空手 1匕首类
+    public int rangedSlot = 0;// 0空手 -1手枪类  -2步枪类
+    public int Slot = 0;// 0近战插槽  1手枪插槽
 
 
 
@@ -87,6 +88,9 @@ public class SaveData
         rifleType = 0;
         throwType = 0;
 
-        attackType = 0;
+        meleeSlot = 0;
+        rangedSlot = 0;
+        Slot = 0;
+
     }//默认状态
 }
