@@ -48,7 +48,8 @@ public class FrameEvent : MonoBehaviour
             1, // 丝袜：0 = 不显示
             1,  //刀剑
             1,  // 手枪
-            1
+            1, // 步枪
+            0 //投掷品
             );
 
         }
@@ -66,15 +67,15 @@ public class FrameEvent : MonoBehaviour
             Random.Range(0, 3), // 丝袜
             Random.Range(0, 2), // 刀剑
             Random.Range(0, 2), // 手枪
-            Random.Range(0, 2)  // 步枪
-
+            Random.Range(0, 2), // 步枪
+            Random.Range(0, 2)  // 投掷品
         );//随机皮肤
     }
 
     public void ShowCurrentAll
         (
            int _YYY_beltIndex, int _YYY_clothesIndex, int _YYY_glovesIndex, int _YYY_pantiesIndex, int _YYY_shoesIndex, int _YYY_skirtIndex, int _YYY_stockingsIndex,
-           int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex
+           int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex, int _Weapon_ThrowableIndex
         )
     {
 
@@ -140,6 +141,9 @@ public class FrameEvent : MonoBehaviour
 
         if (_Weapon_RifleIndex != 0)
             AddSkinSafe(newSkin, $"Weapon/Rifle/Weapon_Rifle_color{_Weapon_RifleIndex}");
+
+        if (_Weapon_ThrowableIndex != 0)
+            AddSkinSafe(newSkin, $"Weapon/Throwable/Weapon_Throwable_color{_Weapon_ThrowableIndex}");
 
         skeletonAnimation.Skeleton.SetSkin(newSkin);
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();

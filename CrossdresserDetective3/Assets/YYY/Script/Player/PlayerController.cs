@@ -301,7 +301,8 @@ public class PlayerController : MonoBehaviour
             stockingsIndex,
             meleeType,
             pistolType,
-            rifleType
+            rifleType,
+            throwType
         );
 
         frameEvent_UI.ShowCurrentAll(
@@ -314,7 +315,8 @@ public class PlayerController : MonoBehaviour
           stockingsIndex,
           meleeType,
           pistolType,
-          rifleType
+          rifleType,
+          throwType
       );
 
 
@@ -334,7 +336,7 @@ public class PlayerController : MonoBehaviour
         RefreshPlayerSkin();//捡起的武器调用这里
     }//捡起的武器调用这里
 
-
+    public Animator UI_anim;//每次换装提醒一下
 
     public void ChangeEquip(GameFlowData.EquipPart part, int index)
     {
@@ -393,7 +395,11 @@ public class PlayerController : MonoBehaviour
                 {
                     pantiesIndex = 0;
 
+                    if (clothesIndex == 3)
+                        clothesIndex = 0;//兔女郎装的情况下也一并脱掉
+
                 }//裤袜固定部件
+
                 if (stockingsIndex == 1 && pantiesIndex != 0)
                 {
                     beltIndex = 1;
@@ -427,6 +433,7 @@ public class PlayerController : MonoBehaviour
                 Slot = 0;//为近战
 
 
+
                 break;
 
             case GameFlowData.EquipPart.Pistol:
@@ -438,6 +445,8 @@ public class PlayerController : MonoBehaviour
 
                     attackType = 0;
                     rangedSlot = 0;
+
+                    Debug.Log("为徒手");
                 }
                 if (index != 0)
                 {
@@ -459,6 +468,8 @@ public class PlayerController : MonoBehaviour
 
                     attackType = 0;
                     rangedSlot = 0;
+
+                    Debug.Log("为徒手");
                 }
                 if (index != 0)
                 {
@@ -469,15 +480,24 @@ public class PlayerController : MonoBehaviour
                 }
                 Slot = 1;//为远程
 
-
+ 
                 break;
 
             case GameFlowData.EquipPart.Throw:
                 throwType = index;
+
+                if (index == 0)
+                {
+                    //为徒手
+
+                    attackType = 0;
+
+                    Debug.Log("为徒手");
+                }       
                 break;
         }
-     
 
+      
 
         RefreshPlayerSkin();//换装界面调用
 
@@ -972,6 +992,7 @@ public class PlayerController : MonoBehaviour
     public void ThrowWeapon()
     {
 
+        if (throwType == 0){ return; }
 
         switch (throwType) 
         {

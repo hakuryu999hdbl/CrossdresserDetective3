@@ -571,7 +571,8 @@ public class EnemyController : MonoBehaviour
            stockingsIndex,
            meleeType,
            pistolType,
-           rifleType
+           rifleType,
+           throwType
        );
 
     }//更新外观

@@ -198,6 +198,12 @@ public class UIManager : MonoBehaviour
 
 
         UI_CameraChangeMiddle();
+
+
+        if (playerController.attackType == -10)
+        {
+            playerController.attackType = playerController.meleeSlot;
+        }//炸弹动画被武器槽替换
     }
 
 
@@ -295,6 +301,9 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(MeleeFirstSelected);
+
+        UI_CameraChangeMiddleLeft();
+        playerController.UI_anim.SetTrigger("Change_2");
     }
 
     public void CloseMeleeMenu()
@@ -311,6 +320,9 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+
+        UI_CameraChangeMiddle();
+        playerController.UI_anim.SetTrigger("Change");
     }
 
 
@@ -337,6 +349,9 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(RangedFirstSelected);
+
+        UI_CameraChangeMiddleLeft();
+        playerController.UI_anim.SetTrigger("Change_2");
     }
 
     public void CloseRangedMenu()
@@ -353,6 +368,9 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+
+        UI_CameraChangeMiddle();
+        playerController.UI_anim.SetTrigger("Change");
     }
 
     public void ChangeRanged(int index)
@@ -360,6 +378,13 @@ public class UIManager : MonoBehaviour
 
         switch (index) 
         {
+            case 0:
+                //步枪手枪哪个变成0都不影响
+                playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 0);
+                playerController.ChangeEquip(GameFlowData.EquipPart.Rifle, 0);
+                break;
+
+
             case 1:
                 playerController.ChangeEquip(GameFlowData.EquipPart.Pistol, 1);
                 break;
@@ -401,6 +426,10 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ThrowableFirstSelected);
+
+        UI_CameraChangeMiddleLeft();
+
+        playerController.UI_anim.SetTrigger("Change_2");
     }
 
     public void CloseThrowableMenu()
@@ -417,11 +446,25 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
+
+        UI_CameraChangeMiddle();
+      
+        playerController.UI_anim.SetTrigger("Change");
     }
 
     public void ChangeThrowable(int index)
     {
-        playerController.ChangeEquip(GameFlowData.EquipPart.Throw, index);
+        if (index == 0)
+        {
+            //站姿变化
+            playerController.ChangeEquip(GameFlowData.EquipPart.Throw, 0);
+        }
+        else
+        {
+            playerController.ChangeEquip(GameFlowData.EquipPart.Throw, index);
+            playerController.attackType = -10;//仅仅是为了触发炸弹装备动画
+        }
+
     }
 
     #endregion
@@ -758,6 +801,11 @@ public class UIManager : MonoBehaviour
     public void UI_CameraChangeMiddleDown()
     {
         anim_Camera.SetInteger("CameraWork", 3);
+    }
+
+    public void UI_CameraChangeMiddleLeft()
+    {
+        anim_Camera.SetInteger("CameraWork", 4);
     }
     #endregion
 
@@ -1102,12 +1150,11 @@ public class UIManager : MonoBehaviour
             case 1:
                 throwableIcons[0].SetActive(true);
                 break;
-
             case 2:
-                meleeIcons[1].SetActive(true);
+                throwableIcons[1].SetActive(true);
                 break;
             case 3:
-                meleeIcons[2].SetActive(true);
+                throwableIcons[2].SetActive(true);
                 break;
         }
 
