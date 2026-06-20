@@ -386,6 +386,7 @@ public class PlayerController : MonoBehaviour
             case GameFlowData.EquipPart.Stockings:
                 stockingsIndex = index;
 
+               
                 if (stockingsIndex == 3)
                 {
                     pantiesIndex = 3;
@@ -400,15 +401,7 @@ public class PlayerController : MonoBehaviour
 
                 }//裤袜固定部件
 
-                if (stockingsIndex == 1 && pantiesIndex != 0)
-                {
-                    beltIndex = 1;
-                }
-                else
-                {
-                    beltIndex = 0;
-
-                } //吊带袜裤袜固定有内裤的情况下吊带出现
+               
 
 
                 break;
@@ -497,7 +490,16 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-      
+        if (stockingsIndex == 1 && pantiesIndex != 0)
+        {
+            beltIndex = 1;
+        }
+        else
+        {
+            beltIndex = 0;
+
+        } //吊带袜裤袜固定有内裤的情况下吊带出现
+
 
         RefreshPlayerSkin();//换装界面调用
 

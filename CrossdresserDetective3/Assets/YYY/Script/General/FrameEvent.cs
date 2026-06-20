@@ -40,7 +40,7 @@ public class FrameEvent : MonoBehaviour
 
               ShowCurrentAll(
             0, // 吊袜带
-            1, // 衣服
+            2, // 衣服：0 = 不显示
             1, // 手套：0 = 不显示
             0, // 内裤：0 = 不显示
             1, // 鞋子
@@ -119,8 +119,8 @@ public class FrameEvent : MonoBehaviour
         if (_YYY_beltIndex != 0)
             AddSkinSafe(newSkin, $"YYY/Belt/YYY_Belt_color{_YYY_beltIndex}");
 
-        if (_YYY_clothesIndex != 0)
-            AddSkinSafe(newSkin, $"YYY/Clothes/YYY_Clothes_color{_YYY_clothesIndex}");
+
+        AddSkinSafe(newSkin, $"YYY/Clothes/YYY_Clothes_color{_YYY_clothesIndex}");
 
         AddSkinSafe(newSkin, $"YYY/Gloves/YYY_Gloves_color{_YYY_glovesIndex}");
         AddSkinSafe(newSkin, $"YYY/Panties/YYY_Panties_color{_YYY_pantiesIndex}");
