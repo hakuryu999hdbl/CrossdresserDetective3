@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class GameFlowData
 {
-    //public static string nextAreaId = null;     //重刷场景名称
+    public static string nextAreaId = null;     //重刷场景名称("CG_Clock" / null 等)
 
     public static int CurrentChapter;//目前的章节
     public static int CurrentStage;//目前的章节内关卡

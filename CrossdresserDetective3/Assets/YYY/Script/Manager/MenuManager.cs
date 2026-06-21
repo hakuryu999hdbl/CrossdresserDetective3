@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单
+    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单
 
   
 
@@ -53,7 +53,8 @@ public class MenuManager : MonoBehaviour
                 OpenChapter_Number(1);
                 break;
 
-            case "cg":             
+            case "cg":
+                OpenGalleryMenu();
                 break;
 
         }
@@ -91,6 +92,10 @@ public class MenuManager : MonoBehaviour
                 break;
             case 3:
                 CloseSaveMenu();
+                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+                break;
+            case 4:
+                CloseGalleryMenu();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
 
@@ -294,7 +299,57 @@ public class MenuManager : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// 回想菜单
+    /// </summary>
+    #region
 
+    [Header("回想菜单")]
+    public GameObject GalleryMenu;
+    public GameObject GalleryFirstSelected;//打开存菜单档默认选中（可变换）
+    public GameObject GalleryButton;//退出存档菜单默认选中
+
+    public void OpenGalleryMenu()
+    {
+        GalleryMenu.SetActive(true);
+        MainMenu.SetActive(false);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(GalleryFirstSelected);
+
+        CurrentOpen = 4;
+    }
+
+    public void CloseGalleryMenu()
+    {
+        GalleryMenu.SetActive(false);
+        MainMenu.SetActive(true);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        GalleryFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(GalleryButton);
+
+        CurrentOpen = 0;
+    }
+
+
+    public void ToCG(string Name)
+    {
+
+        GameFlowData.nextAreaId = Name;
+        GameFlowData.returnPath = "cg";
+
+       SceneManager.LoadScene("Spine");
+
+    }//跳转CG场景
+
+
+
+    #endregion
 
     /// <summary>
     /// 关卡菜单
