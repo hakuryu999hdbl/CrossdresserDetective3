@@ -84,7 +84,7 @@ public class EnemyController : MonoBehaviour
 
         RandomizeZ();
 
-
+        RandomSkin();
         RefreshPlayerSkin();//初始更新皮肤
 
         SetWeapon();//初始随机武器
@@ -548,12 +548,52 @@ public class EnemyController : MonoBehaviour
     int skirtIndex = 1;
     int stockingsIndex = 1;
 
+
+
+    int Girl_clothesIndex;
+    int Girl_glovesIndex;
+    int Girl_underwearIndex;
+    int Girl_shoesIndex;
+    int Girl_stockingsIndex;
+
+
+
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
     public int rifleType;//0空手 1步枪M4A1 2步枪AK47
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
+
+
+
+
+    public void RandomSkin()
+    {
+        Girl_clothesIndex = Random.Range(0, 3);
+        Girl_glovesIndex = Random.Range(0, 2);
+       
+        Girl_shoesIndex = Random.Range(0, 3);
+      
+
+        switch(Random.Range(0, 3))
+        {
+            case 0:
+                Girl_underwearIndex = 0;
+                Girl_stockingsIndex = 0;
+                break;
+            case 1:
+                Girl_underwearIndex = 1;
+                Girl_stockingsIndex = 0;
+                break;
+            case 2:
+                Girl_underwearIndex = 2;
+                Girl_stockingsIndex = 2;
+                break;
+        }
+
+    }
+
 
 
 
@@ -569,6 +609,13 @@ public class EnemyController : MonoBehaviour
            shoesIndex,
            skirtIndex,
            stockingsIndex,
+
+           Girl_clothesIndex,
+           Girl_glovesIndex,
+           Girl_underwearIndex,
+           Girl_shoesIndex,
+           Girl_stockingsIndex,
+
            meleeType,
            pistolType,
            rifleType,

@@ -39,13 +39,20 @@ public class FrameEvent : MonoBehaviour
 
 
               ShowCurrentAll(
-            0, // 吊袜带
-            2, // 衣服：0 = 不显示
-            1, // 手套：0 = 不显示
-            0, // 内裤：0 = 不显示
-            1, // 鞋子
-            0, // 裙子
-            1, // 丝袜：0 = 不显示
+            0, // 伪娘吊袜带
+            2, // 伪娘衣服：0 = 不显示
+            1, // 伪娘手套：0 = 不显示
+            0, // 伪娘内裤：0 = 不显示
+            1, // 伪娘鞋子
+            0, // 伪娘裙子
+            1, // 伪娘丝袜：0 = 不显示
+
+            2, // 御姐衣服
+            1, // 御姐手套：0 = 不显示
+            0, // 御姐内衣：0 = 不显示
+            1, // 御姐鞋子
+            1, // 御姐丝袜：0 = 不显示
+
             1,  //刀剑
             1,  // 手枪
             1, // 步枪
@@ -58,13 +65,24 @@ public class FrameEvent : MonoBehaviour
     {
         ShowCurrentAll(
 
-            Random.Range(0, 2), // 吊袜带
-            Random.Range(0, 2), // 衣服
-            Random.Range(0, 2), // 手套
-            Random.Range(0, 2), // 内裤
-            Random.Range(0, 2), // 鞋子
-            Random.Range(0, 2), // 裙子
-            Random.Range(0, 3), // 丝袜
+            Random.Range(0, 2), // 伪娘吊袜带
+            Random.Range(0, 2), // 伪娘衣服
+            Random.Range(0, 2), // 伪娘手套
+            Random.Range(0, 2), // 伪娘内裤
+            Random.Range(0, 2), // 伪娘鞋子
+            Random.Range(0, 2), // 伪娘裙子
+            Random.Range(0, 3), // 伪娘丝袜
+
+
+
+            Random.Range(0, 2), // 御姐衣服
+            Random.Range(0, 2), // 御姐手套
+            Random.Range(0, 2), // 御姐内衣
+            Random.Range(0, 2), // 御姐鞋子
+            Random.Range(0, 3), // 御姐丝袜
+
+
+
             Random.Range(0, 2), // 刀剑
             Random.Range(0, 2), // 手枪
             Random.Range(0, 2), // 步枪
@@ -75,6 +93,7 @@ public class FrameEvent : MonoBehaviour
     public void ShowCurrentAll
         (
            int _YYY_beltIndex, int _YYY_clothesIndex, int _YYY_glovesIndex, int _YYY_pantiesIndex, int _YYY_shoesIndex, int _YYY_skirtIndex, int _YYY_stockingsIndex,
+           int _Girl_clothesIndex, int _Girl_glovesIndex, int _Girl_underwearIndex, int _Girl_shoesIndex, int _Girl_stockingsIndex,
            int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex, int _Weapon_ThrowableIndex
         )
     {
@@ -132,6 +151,20 @@ public class FrameEvent : MonoBehaviour
             AddSkinSafe(newSkin, $"YYY/Skirt/YYY_Skirt_color{_YYY_skirtIndex}");
 
         AddSkinSafe(newSkin, $"YYY/Stockings/YYY_Stockings_color{_YYY_stockingsIndex}");
+
+
+        if (_Girl_clothesIndex != 0)
+            AddSkinSafe(newSkin, $"Girl/Clothes/Girl_Clothes_color{_Girl_clothesIndex}");
+
+        AddSkinSafe(newSkin, $"Girl/Gloves/Girl_Gloves_color{_Girl_glovesIndex}");
+
+        AddSkinSafe(newSkin, $"Girl/Underwear/Girl_Underwear_color{_Girl_underwearIndex}");
+
+        if (_Girl_shoesIndex != 0)
+            AddSkinSafe(newSkin, $"Girl/Shoes/Girl_Shoes_color{_Girl_shoesIndex}");
+
+        AddSkinSafe(newSkin, $"Girl/Stockings/Girl_Stockings_color{_Girl_stockingsIndex}");
+
 
         if (_Weapon_MeleeIndex != 0)
             AddSkinSafe(newSkin, $"Weapon/Melee/Weapon_Melee_color{_Weapon_MeleeIndex}");

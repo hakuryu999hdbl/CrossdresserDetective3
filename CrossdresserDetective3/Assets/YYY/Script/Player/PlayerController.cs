@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.IsPlayer(this);
 
 
-        
+
         OnReloadAnimationEnd();//更新子弹
 
         frameEvent.FadeIn(0.4f);//所有Spine都淡入
@@ -280,6 +280,14 @@ public class PlayerController : MonoBehaviour
     public int skirtIndex;
     public int stockingsIndex;
 
+
+    public int Girl_clothesIndex;
+    public int Girl_glovesIndex;
+    public int Girl_underwearIndex;
+    public int Girl_shoesIndex;
+    public int Girl_stockingsIndex;
+
+
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
@@ -299,6 +307,13 @@ public class PlayerController : MonoBehaviour
             shoesIndex,
             skirtIndex,
             stockingsIndex,
+
+            Girl_clothesIndex,
+            Girl_glovesIndex,
+            Girl_underwearIndex,
+            Girl_shoesIndex,
+            Girl_stockingsIndex,
+
             meleeType,
             pistolType,
             rifleType,
@@ -306,17 +321,27 @@ public class PlayerController : MonoBehaviour
         );
 
         frameEvent_UI.ShowCurrentAll(
-          beltIndex,
-          clothesIndex,
-          glovesIndex,
-          pantiesIndex,
-          shoesIndex,
-          skirtIndex,
-          stockingsIndex,
-          meleeType,
-          pistolType,
-          rifleType,
-          throwType
+           beltIndex,
+           clothesIndex,
+           glovesIndex,
+           pantiesIndex,
+           shoesIndex,
+           skirtIndex,
+           stockingsIndex,
+
+           Girl_clothesIndex,
+           Girl_glovesIndex,
+           Girl_underwearIndex,
+           Girl_shoesIndex,
+           Girl_stockingsIndex,
+
+
+
+
+           meleeType,
+           pistolType,
+           rifleType,
+           throwType
       );
 
 
@@ -341,7 +366,7 @@ public class PlayerController : MonoBehaviour
     public void ChangeEquip(GameFlowData.EquipPart part, int index)
     {
 
-       
+
 
         switch (part)
         {
@@ -386,7 +411,7 @@ public class PlayerController : MonoBehaviour
             case GameFlowData.EquipPart.Stockings:
                 stockingsIndex = index;
 
-               
+
                 if (stockingsIndex == 3)
                 {
                     pantiesIndex = 3;
@@ -401,7 +426,7 @@ public class PlayerController : MonoBehaviour
 
                 }//裤袜固定部件
 
-               
+
 
 
                 break;
@@ -473,7 +498,7 @@ public class PlayerController : MonoBehaviour
                 }
                 Slot = 1;//为远程
 
- 
+
                 break;
 
             case GameFlowData.EquipPart.Throw:
@@ -486,7 +511,7 @@ public class PlayerController : MonoBehaviour
                     attackType = 0;
 
                     Debug.Log("为徒手");
-                }       
+                }
                 break;
         }
 
@@ -534,7 +559,7 @@ public class PlayerController : MonoBehaviour
         SaveManager.SaveGame(data);
     }
 
-    public void ReadCurrentGame() 
+    public void ReadCurrentGame()
     {
         SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
 
@@ -624,7 +649,7 @@ public class PlayerController : MonoBehaviour
             ForceMode2D.Impulse
         );
 
-      
+
     }
 
     void PlayBloodEffect()
@@ -778,8 +803,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
-        
-      
+
+
 
         //if (attackType==-2 && currentAmmo >= 0 && physicsCheck.isGround)
         //{
@@ -794,7 +819,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
-       
+
 
         //if (attackType == -2 && currentAmmo >= 0 && physicsCheck.isGround)
         //{
@@ -811,20 +836,20 @@ public class PlayerController : MonoBehaviour
         if (holdTime >= chargeThreshold)
         {
             //蓄力攻击
-          
+
         }
         else
         {
             PlayerAttack(ctx);//单按一下
         }
     }
-  
+
     void PlayerAttack(InputAction.CallbackContext obj)
     {
 
         if (!physicsCheck.isGround) { return; }//空中无法攻击
 
-        
+
         isAttack = true;
 
 
@@ -833,15 +858,15 @@ public class PlayerController : MonoBehaviour
             frameEvent_Audio._Bullet_OutOfBullet();
             Reload();
         }
-        else 
+        else
         {
             playerAnimation.PlayAttack();
         }
-       
+
 
     }
 
-   
+
 
     #endregion
 
@@ -852,7 +877,7 @@ public class PlayerController : MonoBehaviour
     public float dashAttackSpeed = 16f;
     public float dashAttackDuration = 0.2f;
 
-    public void Dash() 
+    public void Dash()
     {
         StartCoroutine(DashAttack());
     }
@@ -899,7 +924,7 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
-      
+
         if (isSlide) return;
         if (!physicsCheck.isGround) return;
         if (character.currentPower < slidePowerCost) return;
@@ -961,7 +986,7 @@ public class PlayerController : MonoBehaviour
 
     private float throwPressTime;
 
-    public void OnThrowStart(InputAction.CallbackContext obj) 
+    public void OnThrowStart(InputAction.CallbackContext obj)
     {
         throwPressTime = Time.time;
     }
@@ -971,17 +996,17 @@ public class PlayerController : MonoBehaviour
 
         if (holdTime >= chargeThreshold)
         {
-            Throw();        
+            Throw();
         }
         else
         {
-            
+
             ChangeWeapon();
         }
     }
 
 
-    public void Throw() 
+    public void Throw()
     {
         if (!physicsCheck.isGround) { return; }//空中无法投掷
 
@@ -994,9 +1019,9 @@ public class PlayerController : MonoBehaviour
     public void ThrowWeapon()
     {
 
-        if (throwType == 0){ return; }
+        if (throwType == 0) { return; }
 
-        switch (throwType) 
+        switch (throwType)
         {
             case 1:
                 throwableWeaponPrefab = bombPrefab;
@@ -1032,7 +1057,7 @@ public class PlayerController : MonoBehaviour
 
             if (rb != null)
             {
-                Vector2 dir = new Vector2(transform.localScale.x * 0.6f,1f).normalized;
+                Vector2 dir = new Vector2(transform.localScale.x * 0.6f, 1f).normalized;
                 rb.velocity = dir * throwForce;
             }
 
@@ -1041,8 +1066,8 @@ public class PlayerController : MonoBehaviour
         }
 
 
-       //attackType = 0;
-       //RefreshPlayerSkin();
+        //attackType = 0;
+        //RefreshPlayerSkin();
     }
 
 
@@ -1055,7 +1080,7 @@ public class PlayerController : MonoBehaviour
 
     public Attack[] playerAttacks;//每当武器切换了之后，attack伤害效果也要更换
 
-    public void ChangeWeapon() 
+    public void ChangeWeapon()
     {
 
         Slot = Slot == 0 ? 1 : 0;
@@ -1104,7 +1129,7 @@ public class PlayerController : MonoBehaviour
 
         UIManager.instance.RefreshWeaponSlotUI(this);
 
-      
+
     }//更换玩家当前装备显示与UI层显示
 
 
@@ -1138,7 +1163,7 @@ public class PlayerController : MonoBehaviour
 
     private void SpawnMagazine()
     {
-        if (attackType == -1){ magazinePrefab = magazinePrefab_Pistol; }
+        if (attackType == -1) { magazinePrefab = magazinePrefab_Pistol; }
         if (attackType == -2) { magazinePrefab = magazinePrefab_Rifle; }
 
         if (magazinePrefab == null) return;
@@ -1180,12 +1205,12 @@ public class PlayerController : MonoBehaviour
 
         if (isCrouch)
         {
-            if (attackType == -1){ spawnPos = firePoint_Crouch_Pistol.position; }
+            if (attackType == -1) { spawnPos = firePoint_Crouch_Pistol.position; }
             if (attackType == -2) { spawnPos = firePoint_Crouch_Rifle.position; }
         }
         else
         {
-            spawnPos =  firePoint.position;
+            spawnPos = firePoint.position;
         }
 
         GameObject bullet = Instantiate(
@@ -1244,11 +1269,11 @@ public class PlayerController : MonoBehaviour
                 case 2:
                     frameEvent_Audio._Bullet_AK();
                     break;
-           
+
             }
         }
 
-       
+
 
 
 
@@ -1296,10 +1321,10 @@ public class PlayerController : MonoBehaviour
         isReloading = false;
         isAttack = false;
 
-        UIManager.instance.RefreshAmmoUI(currentAmmo,maxAmmo);
+        UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo);
     }//换单结束帧事件触发
 
-    
+
 
     #endregion
 
