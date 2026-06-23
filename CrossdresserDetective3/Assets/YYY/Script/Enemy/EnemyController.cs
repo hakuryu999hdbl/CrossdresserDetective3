@@ -161,6 +161,18 @@ public class EnemyController : MonoBehaviour
         );
 
 
+        //#region 敌人射击动画不能移动
+        //AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        //
+        //if (stateInfo.IsName("Girl_Shooting"))
+        //{
+        //    speed = 0;
+        //}
+        //else 
+        //{
+        //    speed = 3;
+        //}
+        //#endregion
     }
 
     public void TransitionToState(EnemyBaseState  state) 
@@ -189,7 +201,6 @@ public class EnemyController : MonoBehaviour
         // 停止攻击触发
         anim.ResetTrigger("attack");
         anim.ResetTrigger("skill");
-        anim.ResetTrigger("kick");
         anim.ResetTrigger("hit");
 
         // 强制回到待机动画
@@ -239,9 +250,6 @@ public class EnemyController : MonoBehaviour
     public Transform heldBomb;//扔炸弹方向
     public void MoveToTarget()
     {
-        //transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, speed * Time.deltaTime);
-        //FilpDirection();
-
 
         if (targetPoint == null) return;
 
@@ -290,56 +298,36 @@ public class EnemyController : MonoBehaviour
 
 
 
-
-    //bool inAttackRangeLastFrame = false;
+    public bool isRangedEnemy;
 
 
     public void AttackAction()
     {
+
+        if (isRangedEnemy)
+        {
+            animState = 3;
+            return;
+        }
+
+
 
         if (Vector2.Distance(transform.position, targetPoint.position) < attackRange)
         {
             if (Time.time > nextAttack)
             {
                 // 播放攻击动画
-                switch (attackType) 
-                {
-                    case 0:
-                        anim.SetTrigger("kick");
-                        break;
-                    case 1:
-                        anim.SetTrigger("attack");
-                        break;
 
-                }
-               
+
+                anim.SetInteger("attackType",Random.Range(1,3));
+                anim.SetTrigger("attack");
 
                 //Debug.Log("普通攻击");
                 nextAttack = Time.time + attackRate;
             }
         }
 
-       // float distance = Vector2.Distance(transform.position, targetPoint.position);
-       // bool inRange = distance < attackRange;
-       //
-       // // 👉 刚进入攻击范围
-       // if (inRange && !inAttackRangeLastFrame)
-       // {
-       //     nextAttack = Time.time + attackRate;
-       // }
-       //
-       // if (inRange)
-       // {
-       //     if (Time.time > nextAttack)
-       //     {
-       //         anim.SetTrigger("attack");
-       //         Debug.Log("普通攻击");
-       //
-       //         nextAttack = Time.time + attackRate;
-       //     }
-       // }
-       //
-       // inAttackRangeLastFrame = inRange;
+   
 
     }//攻击
 
@@ -374,6 +362,147 @@ public class EnemyController : MonoBehaviour
         }
 
     }//反转：追逐目标
+
+
+
+
+
+
+    #region  射击
+    [Header("射击")]
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    Vector3 spawnPos;
+
+    public float bulletSpeed = 20f;
+    public float bulletLifeTime = 2f;
+
+    [Header("枪械精度")]
+    public float spreadAngle = 3f; // 误差角度，0 = 完全精准
+
+    [Header("枪械弹药")]
+    public int maxAmmo = 10;
+    public int currentAmmo = 10;
+    public bool isReloading;
+
+    [Header("弹壳")]
+    GameObject magazinePrefab;
+    public GameObject magazinePrefab_Pistol;
+    public GameObject magazinePrefab_Rifle;
+    public float magazineForceX = 2f;
+    public float magazineForceY = 4f;
+
+    private void SpawnMagazine()
+    {
+        if (attackType == -1) { magazinePrefab = magazinePrefab_Pistol; }
+        if (attackType == -2) { magazinePrefab = magazinePrefab_Rifle; }
+
+        if (magazinePrefab == null) return;
+
+        spawnPos = firePoint.position;
+
+        GameObject mag = Instantiate(
+            magazinePrefab,
+            spawnPos,
+            Quaternion.identity
+        );
+
+        Rigidbody2D rb = mag.GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            float dirX = -Mathf.Sign(transform.localScale.x); // 往角色后方弹
+
+            Vector2 force = new Vector2(
+                dirX * UnityEngine.Random.Range(magazineForceX * 0.7f, magazineForceX * 1.3f),
+                UnityEngine.Random.Range(magazineForceY * 0.7f, magazineForceY * 1.3f)
+            );
+
+            rb.AddForce(force, ForceMode2D.Impulse);
+            rb.AddTorque(UnityEngine.Random.Range(-180f, 180f));
+        }
+    }//弹壳飞舞
+    public void Shoot()
+    {
+        if (bulletPrefab == null) return;
+
+        spawnPos = firePoint.position;
+
+        GameObject bullet = Instantiate(
+            bulletPrefab,
+            spawnPos,
+            Quaternion.identity
+        );
+
+        float dirX = transform.localScale.x >= 0 ? 1f : -1f;
+
+        Vector2 dir = new Vector2(dirX, 0f);
+
+        // 准头误差
+        float randomAngle = UnityEngine.Random.Range(-spreadAngle, spreadAngle);
+        dir = Quaternion.Euler(0f, 0f, randomAngle) * dir;
+
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.Init(dir, bulletSpeed, bulletLifeTime);
+        }
+
+        //把远程伤害来源告诉子弹
+        Attack attack = bullet.GetComponentInChildren<Attack>();
+
+        if (attack != null)
+        {
+            attack.owner = GetComponent<Character>();
+        }
+
+
+
+        if (attackType == -1)
+        {
+            switch (pistolType)
+            {
+                case 1:
+                    frameEvent_Audio._Bullet_Pistol_1();
+                    break;
+                case 2:
+                    frameEvent_Audio._Bullet_Pistol_2();
+                    break;
+                case 3:
+                    frameEvent_Audio._Bullet_Pistol_3();
+                    break;
+            }
+        }
+        else
+        {
+            switch (rifleType)
+            {
+                case 1:
+                    frameEvent_Audio._Bullet_M4a1();
+                    break;
+                case 2:
+                    frameEvent_Audio._Bullet_AK();
+                    break;
+
+            }
+        }
+
+
+
+        SpawnMagazine();//弹壳飞舞
+    }
+
+
+    #endregion
+
+
+
+
+
+
+
+
 
     #endregion
 

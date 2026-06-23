@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 2229290332801708197}
   damage: 10
+  hitEffectType: 0
   knockbackX: 5
   knockbackY: 0
   hurtTime: 0.2
@@ -252,7 +253,7 @@ Transform:
   m_GameObject: {fileID: 2061662517954545725}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.03, z: -0.2}
+  m_LocalPosition: {x: 0, y: -1.076, z: -0.2}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -291,13 +292,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 56856fc5aa1bfa442a4cb83f6a4a7160, type: 2}
-  - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
+  - {fileID: 2100000, guid: 8028f2a9df18eef4683df850c55e1da8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
-  - {fileID: 2100000, guid: 310294fc8013f4c4e99ad497b03f46c8, type: 2}
-  - {fileID: 2100000, guid: 56856fc5aa1bfa442a4cb83f6a4a7160, type: 2}
+  - {fileID: 2100000, guid: 8028f2a9df18eef4683df850c55e1da8, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
-  - {fileID: 2100000, guid: 56856fc5aa1bfa442a4cb83f6a4a7160, type: 2}
+  - {fileID: 2100000, guid: 8028f2a9df18eef4683df850c55e1da8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1051,6 +1050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 2229290332801708197}
   damage: 30
+  hitEffectType: 0
   knockbackX: 10
   knockbackY: 20
   hurtTime: 0.2
@@ -1149,6 +1149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 2229290332801708197}
   damage: 30
+  hitEffectType: 0
   knockbackX: 13
   knockbackY: 5
   hurtTime: 0.2
@@ -1169,7 +1170,7 @@ GameObject:
   - component: {fileID: 2125107654451597152}
   - component: {fileID: 2008110111692617927}
   m_Layer: 10
-  m_Name: Enemy_Cucumber
+  m_Name: Enemy_1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

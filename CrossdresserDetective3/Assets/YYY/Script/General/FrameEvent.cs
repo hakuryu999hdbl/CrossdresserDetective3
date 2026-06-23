@@ -513,7 +513,6 @@ public class FrameEvent : MonoBehaviour
     public void Attack_1()
     {
         StartCoroutine(AttackRoutine(AttackArea_1));
-        //Debug.Log("产生攻击碰撞体");
     }//普攻
     public void Attack_2()
     {
@@ -522,8 +521,7 @@ public class FrameEvent : MonoBehaviour
     public void Attack_3()
     {
         StartCoroutine(AttackRoutine(AttackArea_3));
-       
-
+      
     }//击飞
 
     public void Dash() 
@@ -566,8 +564,15 @@ public class FrameEvent : MonoBehaviour
 
     public void Shoot()
     {
-
-        playerController.Shoot();
+        if (enemyController != null)
+        {
+            enemyController.Shoot();
+        }
+        if (playerController!= null)
+        {
+            playerController.Shoot();
+        }
+        
     }
 
     public void Reload() 
