@@ -33,7 +33,8 @@ public class EnemyController : MonoBehaviour
     public float jumpCooldown = 0.8f;
     private float nextJumpTime;
 
-
+    [Header("敌人下蹲")]
+    public bool isCrouch;
 
 
     [Header("敌人攻击")]
@@ -87,7 +88,7 @@ public class EnemyController : MonoBehaviour
         RandomSkin();
         RefreshPlayerSkin();//初始更新皮肤
 
-        SetWeapon();//初始随机武器
+
     }
 
     public virtual void Update()
@@ -143,7 +144,7 @@ public class EnemyController : MonoBehaviour
         currentState.OnUpdate(this);//每帧执行状态
         anim.SetInteger("state", animState);
 
-
+        anim.SetBool("isCrouch", isCrouch);
 
         anim.SetBool("isGround", physicsCheck != null && physicsCheck.isGround);
         anim.SetFloat("yVelocity", rb != null ? rb.velocity.y : 0f);
@@ -161,18 +162,7 @@ public class EnemyController : MonoBehaviour
         );
 
 
-        //#region 敌人射击动画不能移动
-        //AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        //
-        //if (stateInfo.IsName("Girl_Shooting"))
-        //{
-        //    speed = 0;
-        //}
-        //else 
-        //{
-        //    speed = 3;
-        //}
-        //#endregion
+    
     }
 
     public void TransitionToState(EnemyBaseState  state) 
@@ -247,7 +237,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     #region
     [Header("攻击状态")]
-    public Transform heldBomb;//扔炸弹方向
+    public Transform heldBomb;//大块头的扔炸弹方向
     public void MoveToTarget()
     {
 
@@ -297,18 +287,54 @@ public class EnemyController : MonoBehaviour
 
 
 
-
+    [Header("远程类型敌人")]
     public bool isRangedEnemy;
-
+    float shootVerticalTolerance = 0.3f; // 玩家和敌人高度差小于这个才开枪
+    public float meleeRange = 1.2f;
 
     public void AttackAction()
     {
 
+        float distance = Vector2.Distance(transform.position, targetPoint.position);
+        float yDiff = Mathf.Abs(targetPoint.position.y - transform.position.y);
+
+   
+
         if (isRangedEnemy)
         {
+            // 高度差太大：不要开枪，继续追
+            if (yDiff > shootVerticalTolerance)
+            {
+                animState = 2;
+                MoveToTarget();
+                return;
+            }
+
+            // 太近：可以以后切近战
+            if (distance < meleeRange)
+            {
+   
+                anim.SetTrigger("attack");
+                return;
+            }
+
+
+            // 玩家比敌人低：下蹲射击
+            if (GameManager.instance.player.isCrouch)
+            {
+                isCrouch = true;
+
+            }
+            else
+            {
+                isCrouch = false;
+            }
+
+            // 正常远程射击
             animState = 3;
             return;
         }
+
 
 
 
@@ -316,13 +342,10 @@ public class EnemyController : MonoBehaviour
         {
             if (Time.time > nextAttack)
             {
-                // 播放攻击动画
-
 
                 anim.SetInteger("attackType",Random.Range(1,3));
                 anim.SetTrigger("attack");
 
-                //Debug.Log("普通攻击");
                 nextAttack = Time.time + attackRate;
             }
         }
@@ -372,6 +395,7 @@ public class EnemyController : MonoBehaviour
     [Header("射击")]
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public Transform firePoint_Crouch;
     Vector3 spawnPos;
 
     public float bulletSpeed = 20f;
@@ -399,7 +423,19 @@ public class EnemyController : MonoBehaviour
 
         if (magazinePrefab == null) return;
 
-        spawnPos = firePoint.position;
+
+        if (isCrouch)
+        {
+            spawnPos = firePoint_Crouch.position;
+        }
+        else 
+        {
+            spawnPos = firePoint.position;
+        }
+
+        spawnPos = firePoint_Crouch.position;
+
+
 
         GameObject mag = Instantiate(
             magazinePrefab,
@@ -426,7 +462,16 @@ public class EnemyController : MonoBehaviour
     {
         if (bulletPrefab == null) return;
 
-        spawnPos = firePoint.position;
+        if (isCrouch)
+        {
+            spawnPos = firePoint_Crouch.position;
+        }
+        else 
+        {
+            spawnPos = firePoint.position;
+        }
+
+
 
         GameObject bullet = Instantiate(
             bulletPrefab,
@@ -610,6 +655,8 @@ public class EnemyController : MonoBehaviour
     public GameObject bombPrefab;//手榴弹
     public GameObject smokePrefab;//烟雾弹
     public GameObject flashPrefab;//闪光弹
+    public GameObject incendiaryPrefab;//燃烧弹
+    public GameObject shockPrefab;//震撼弹
     public GameObject knifePrefab;//飞刀
 
     float throwForce = 16f;//投掷力度
@@ -631,6 +678,12 @@ public class EnemyController : MonoBehaviour
                 throwableWeaponPrefab = flashPrefab;
                 break;
             case 4:
+                throwableWeaponPrefab = incendiaryPrefab;
+                break;
+            case 5:
+                throwableWeaponPrefab = shockPrefab;
+                break;
+            case 6:
                 throwableWeaponPrefab = knifePrefab;
                 break;
         }
@@ -691,7 +744,7 @@ public class EnemyController : MonoBehaviour
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
     public int rifleType;//0空手 1步枪M4A1 2步枪AK47
-    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
+    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4燃烧弹  5震撼弹  6飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
 
@@ -721,6 +774,12 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
+        
+        meleeType = Random.Range(0, 4);
+
+
+        pistolType = Random.Range(1, 4);
+        rifleType = Random.Range(1, 3);
     }
 
 
@@ -752,15 +811,6 @@ public class EnemyController : MonoBehaviour
        );
 
     }//更新外观
-
-    public void SetWeapon()
-    {
-        meleeType = Random.Range(1, 4);
-        pistolType = Random.Range(1, 4);
-        //attackType = Random.Range(-1, 2);
-
-        RefreshPlayerSkin();
-    }//捡起的武器调用这里（暂时先不做捡起）
 
 
     #endregion

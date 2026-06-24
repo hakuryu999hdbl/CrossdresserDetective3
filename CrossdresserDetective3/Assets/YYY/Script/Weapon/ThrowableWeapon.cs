@@ -83,33 +83,33 @@ public class ThrowableWeapon : MonoBehaviour
     }//落地状态
 
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (state != ThrowableState.Dropped) return;
-
-        PlayerController player = collision.GetComponentInParent<PlayerController>();
-
-        if (player != null)
-        {
-
-            if (player.attackType == 0)
-            {
-                if (player.isCrouch || player.isSlide)
-                {
-                    player.SetWeapon(WeaponType);
-
-                    player.frameEvent_Audio._Attack_bomb_bounce();
-
-                    Destroy(gameObject);
-                    return;
-                }
-            }//玩家没有武器的情况下捡起武器
-
-        }
-
-
-
-    }//拾取范围
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (state != ThrowableState.Dropped) return;
+    //
+    //    PlayerController player = collision.GetComponentInParent<PlayerController>();
+    //
+    //    if (player != null)
+    //    {
+    //
+    //        if (player.attackType == 0)
+    //        {
+    //            if (player.isCrouch || player.isSlide)
+    //            {
+    //               
+    //
+    //                player.frameEvent_Audio._Attack_bomb_bounce();
+    //
+    //                Destroy(gameObject);
+    //                return;
+    //            }
+    //        }//玩家没有武器的情况下捡起武器
+    //
+    //    }
+    //
+    //
+    //
+    //}//拾取范围
 
     [Header("碰撞地板墙壁弹跳发出声音")]
     public FrameEvent_Audio frameEvent_Audio;

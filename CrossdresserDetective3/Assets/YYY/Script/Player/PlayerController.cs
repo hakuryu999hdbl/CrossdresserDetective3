@@ -292,7 +292,7 @@ public class PlayerController : MonoBehaviour
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
     public int rifleType;//0空手 1步枪M4A1 2步枪AK47
-    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4飞刀
+    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4燃烧弹  5震撼弹  6飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
 
@@ -346,20 +346,6 @@ public class PlayerController : MonoBehaviour
 
 
     }//更新外观
-
-    public void SetWeapon(int newWeaponType)
-    {
-        meleeType = newWeaponType;
-
-        if (meleeType == 0)
-            attackType = 0;//赤手空拳
-        else
-            attackType = 1;
-
-
-
-        RefreshPlayerSkin();//捡起的武器调用这里
-    }//捡起的武器调用这里
 
     public Animator UI_anim;//每次换装提醒一下
 
@@ -978,6 +964,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bombPrefab;//手榴弹
     public GameObject smokePrefab;//烟雾弹
     public GameObject flashPrefab;//闪光弹
+    public GameObject incendiaryPrefab;//燃烧弹
+    public GameObject shockPrefab;//震撼弹
     public GameObject knifePrefab;//飞刀
 
     float throwForce = 16f;//投掷炸弹力度
@@ -1033,6 +1021,12 @@ public class PlayerController : MonoBehaviour
                 throwableWeaponPrefab = flashPrefab;
                 break;
             case 4:
+                throwableWeaponPrefab = incendiaryPrefab;
+                break;
+            case 5:
+                throwableWeaponPrefab = shockPrefab;
+                break;
+            case 6:
                 throwableWeaponPrefab = knifePrefab;
                 break;
         }
