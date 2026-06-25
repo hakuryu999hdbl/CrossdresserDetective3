@@ -719,6 +719,8 @@ public class PlayerController : MonoBehaviour
 
         inputControl.Gameplay.ZoomCamera.started += OnZoomCamera;
 
+        inputControl.Gameplay.Reload.started += OnReload;
+
 
         //UI等所有多端输入由PlayerController管理
         inputControl.UI.Cancel.started += OnCancel;
@@ -842,7 +844,7 @@ public class PlayerController : MonoBehaviour
         if (attackType < 0 && currentAmmo <= 0)//如果是枪械类 ,子弹不够就会触发换单
         {
             frameEvent_Audio._Bullet_OutOfBullet();
-            Reload();
+            Reload();//子弹没了换
         }
         else
         {
@@ -988,7 +990,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-
             ChangeWeapon();
         }
     }
@@ -1122,7 +1123,7 @@ public class PlayerController : MonoBehaviour
 
 
         UIManager.instance.RefreshWeaponSlotUI(this);
-
+ 
 
     }//更换玩家当前装备显示与UI层显示
 
@@ -1146,7 +1147,7 @@ public class PlayerController : MonoBehaviour
     [Header("枪械弹药")]
     public int maxAmmo = 10;
     public int currentAmmo = 10;
-    public bool isReloading;
+    public int magazineCount;//弹夹数
 
     [Header("弹壳")]
     GameObject magazinePrefab;
@@ -1287,22 +1288,29 @@ public class PlayerController : MonoBehaviour
             maxAmmo
         );
 
-        UIManager.instance.RefreshAmmoUI(
-            currentAmmo,
-            maxAmmo
-        );
+        UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo, magazineCount);
+
     }//更改子弹数
     private void OnReload(InputAction.CallbackContext obj)
     {
+        Debug.Log("换单");
         Reload();
     }
     public void Reload()
     {
-        if (isReloading) return;
-        if (currentAmmo >= maxAmmo) return;
+
+        //if (currentAmmo >= maxAmmo) return;
         if (attackType >= 0) return; // 不是枪
 
-        isReloading = true;
+
+        if (magazineCount <= 0) 
+        {
+            AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_bomb_bounce_1);
+            isAttack = false;
+            return;
+        }//没有弹夹可以换了
+
+
         isAttack = true;
 
         playerAnimation.PlayReload();
@@ -1311,13 +1319,24 @@ public class PlayerController : MonoBehaviour
 
     public void OnReloadAnimationEnd()
     {
+        if (magazineCount > 0) { magazineCount--; }//开局也要触发
+      
+
+
         currentAmmo = maxAmmo;
-        isReloading = false;
+
         isAttack = false;
 
-        UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo);
+        UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo, magazineCount);
     }//换单结束帧事件触发
 
+    public void AddMagazine(int value)
+    {
+        magazineCount += value;
+        magazineCount = Mathf.Clamp(magazineCount, 0, 99);
+
+        UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo, magazineCount);
+    }//捡弹夹
 
 
     #endregion

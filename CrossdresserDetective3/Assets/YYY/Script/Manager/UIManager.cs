@@ -1048,9 +1048,12 @@ public class UIManager : MonoBehaviour
     public GameObject bulletPrefab_Pistol;
     public GameObject bulletPrefab_Rifle;
 
+    public GameObject magazineIcon;
+    public Text magazineText;
+
     public void RefreshAmmoUI(
      int currentAmmo,
-     int maxAmmo
+     int maxAmmo, int magazineCount
  )
     {
         if (playerController.attackType == -1){ bulletPrefab = bulletPrefab_Pistol; }
@@ -1068,7 +1071,13 @@ public class UIManager : MonoBehaviour
                 bulletRoot
             );
         }
+
+        magazineText.text = "X" + magazineCount.ToString();
+       
+     
     }
+
+
 
     [Header("近战UI")]
     public GameObject[] meleeIcons;
@@ -1142,7 +1151,9 @@ public class UIManager : MonoBehaviour
                     break;
             }
         }
-      
+
+        magazineIcon.SetActive(playerController.attackType < 0);//显示隐藏弹夹数量
+        bulletRoot.gameObject.SetActive(playerController.attackType < 0);//显示隐藏子弹数量
 
         //投掷
         switch (player.throwType)

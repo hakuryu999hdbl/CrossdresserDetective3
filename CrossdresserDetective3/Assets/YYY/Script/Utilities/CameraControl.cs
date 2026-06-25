@@ -13,7 +13,7 @@ public class CameraControl : MonoBehaviour
 
 
     [Header("Zoom")]
-    float normalSize = 6f;
+    float normalSize = 10f;
     float zoomSize = 2.5f;
     float zoomSpeed = 8f;
 
