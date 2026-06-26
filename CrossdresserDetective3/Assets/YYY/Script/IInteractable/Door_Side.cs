@@ -10,7 +10,7 @@ public class Door_Side : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")&& anim!=null)
         {

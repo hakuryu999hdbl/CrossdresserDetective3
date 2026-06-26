@@ -1005,6 +1005,9 @@ public class UIManager : MonoBehaviour
     public Image healthDelayImage;
     public Image powerImage;
 
+
+    public Image throwChargeBar;//投掷蓄力槽
+    public Animator throwUIAnim;
     public void OnHealthChange(float persentage) 
     {
         healthImage.fillAmount = persentage;
@@ -1038,7 +1041,15 @@ public class UIManager : MonoBehaviour
             }
         }
 
+
+        throwChargeBar.fillAmount = playerController.throwCharge;
+
+        throwUIAnim.SetBool("Show",playerController.isHoldingThrow);
     }
+
+
+
+
 
 
 

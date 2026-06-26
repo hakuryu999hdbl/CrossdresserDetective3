@@ -46,10 +46,17 @@ public class AreaEncounterController : MonoBehaviour
             Transform spawnPoint = spawnPoints[randomIndex];
 
             Vector2 offset = Random.insideUnitCircle.normalized * Random.Range(0.5f, 1.5f);
-            Vector3 spawnPosition = spawnPoint.position + new Vector3(offset.x, offset.y, 0);
+            Vector3 spawnPosition = spawnPoint.position + new Vector3(offset.x, -1.5f, -1);//目标是Z在0，但是门都是0.95不能更低，Y是门刚好让敌人不产生下落动画高度
 
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             aliveEnemies.Add(enemy);
+
+
+            if (spawnPoint.GetComponent<Animator>()!=null) 
+            {
+                spawnPoint.GetComponent<Animator>().SetTrigger("Open");//开门动画
+            }
+           
         }
 
         // 4. 监听敌人是否全部死亡
@@ -76,7 +83,7 @@ public class AreaEncounterController : MonoBehaviour
             {
                 GameManager.instance.EnemyCleanOver(this);
 
-                Destroy(gameObject);
+                //Destroy(gameObject);
                 yield break;
             }
         }

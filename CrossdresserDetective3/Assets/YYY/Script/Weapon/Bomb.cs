@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class Bomb : MonoBehaviour
+public class Bomb : MonoBehaviour, IDamageable
 {
 
     private Animator anim;
@@ -21,6 +21,9 @@ public class Bomb : MonoBehaviour
     public float radius;
     public LayerMask targetLayer;
 
+    [Header("初始是否为易燃易爆物品")]
+    public bool isTurnOff = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,11 @@ public class Bomb : MonoBehaviour
         coll = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         startTime = Time.time;
+
+        if (isTurnOff)
+        {
+            TurnOff();
+        }
     }
 
     // Update is called once per frame
@@ -70,9 +78,30 @@ public class Bomb : MonoBehaviour
 
         foreach (var item in aroundObjects)
         {
-            Vector3 pos = transform.position - item.transform.position;
 
-            item.GetComponent<Rigidbody2D>().AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);//炸飞
+
+           
+
+            EnemyController enemy = item.GetComponent<EnemyController>();
+
+            if (enemy != null)
+            {
+                enemy.OnBlastHit(transform.position, bombForce);
+            }
+            else
+            {
+                Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
+                if (itemRb != null)
+                {
+                    Vector3 pos = transform.position - item.transform.position;
+                    itemRb.AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);
+                }
+            }
+
+            //Vector3 pos = transform.position - item.transform.position;
+            //
+            //item.GetComponent<Rigidbody2D>().AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);//炸飞
+
 
             //触发可掉落物体
             FallOnExplosion fall = item.GetComponent<FallOnExplosion>();
@@ -130,4 +159,18 @@ public class Bomb : MonoBehaviour
         }
     }
 
+    public void TakeDamage(Attack attack)
+    {
+        if (attack == null) return;
+
+        // 只有允许点燃炸弹的攻击才能触发
+        if (!attack.TurnOnBomb) return;
+
+        // 已经点燃就不用重复点
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("bomb_off")) return;
+
+
+
+        TurnOn();
+    }//子弹引燃
 }

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
 
         //player = FindFirstObjectByType<PlayerController>();
-        //doorExit = FindFirstObjectByType<Door>();
+
     }
 
     public PlayerController player;
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
                 switch (GameFlowData.CurrentStage)
                 {
+                   
                     case 1:
                         SetArea(4); 
                         break;

@@ -39,6 +39,7 @@ public class AttackState : EnemyBaseState
 
 
 
+
         if (enemy.attackList.Count <= 0)
         {
             enemy.targetPoint = null;
@@ -69,9 +70,28 @@ public class AttackState : EnemyBaseState
         }
 
 
+
+        if (enemy.targetPoint != null && enemy.targetPoint.CompareTag("Player"))
+        {
+            float yDiff = Mathf.Abs(enemy.targetPoint.position.y - enemy.transform.position.y);
+
+            if (yDiff > enemy.shootVerticalTolerance)
+            {
+                enemy.lastKnownTargetPos = enemy.targetPoint.position;
+
+                enemy.attackList.Remove(enemy.targetPoint);
+                enemy.targetPoint = null;
+
+                enemy.TransitionToState(enemy.searchState);
+                return;
+            }
+        }
+
+
+
         //根据tag来判断不同动作
 
-        if(enemy.targetPoint != null)
+        if (enemy.targetPoint != null)
         {
             if (enemy.targetPoint.CompareTag("Player"))
                 enemy.AttackAction();
@@ -85,7 +105,9 @@ public class AttackState : EnemyBaseState
             if (distance > enemy.attackRange)
             {
                 enemy.MoveToTarget();
+     
             }
+
         }
         else
         {

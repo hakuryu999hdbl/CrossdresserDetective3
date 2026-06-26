@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
     public AttackState attackState = new AttackState();//攻击状态
     public SearchState searchState = new SearchState();//搜索状态
 
-    public virtual void Init() 
+    public virtual void Init()
     {
         //别找了我直接赋值，这样后面加东西一改排序就出问题
         //anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<CapsuleCollider2D>();
 
-        
+
 
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
 
@@ -79,7 +79,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
 
-        frameEvent.FadeIn(0.4f);//所有Spine都淡入
+        //frameEvent.FadeIn(0.4f);//所有Spine都淡入
 
         TransitionToState(patrolState);//一开始进入巡逻状态
 
@@ -109,8 +109,8 @@ public class EnemyController : MonoBehaviour
 
 
 
-         
-           
+
+
             return;
         }
 
@@ -162,10 +162,21 @@ public class EnemyController : MonoBehaviour
         );
 
 
-    
+       AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(attackLayer);
+       
+       if (stateInfo.IsName("Girl_Shooting") ||
+           stateInfo.IsName("Girl_Shooting_Crouch"))
+       {
+           speed = 0;
+            Debug.Log("执行射击");
+       }
+       else
+       {
+           speed = 3;
+       }
     }
 
-    public void TransitionToState(EnemyBaseState  state) 
+    public void TransitionToState(EnemyBaseState state)
     {
         currentState = state;
         currentState.EnterState(this);
@@ -289,7 +300,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("远程类型敌人")]
     public bool isRangedEnemy;
-    float shootVerticalTolerance = 0.3f; // 玩家和敌人高度差小于这个才开枪
+    public float shootVerticalTolerance = 0.3f; // 玩家和敌人高度差小于这个才开枪
     public float meleeRange = 1.2f;
 
     public void AttackAction()
@@ -298,7 +309,7 @@ public class EnemyController : MonoBehaviour
         float distance = Vector2.Distance(transform.position, targetPoint.position);
         float yDiff = Mathf.Abs(targetPoint.position.y - transform.position.y);
 
-   
+
 
         if (isRangedEnemy)
         {
@@ -313,7 +324,7 @@ public class EnemyController : MonoBehaviour
             // 太近：可以以后切近战
             if (distance < meleeRange)
             {
-   
+
                 anim.SetTrigger("attack");
                 return;
             }
@@ -343,14 +354,14 @@ public class EnemyController : MonoBehaviour
             if (Time.time > nextAttack)
             {
 
-                anim.SetInteger("attackType",Random.Range(1,3));
+                anim.SetInteger("attackType", Random.Range(1, 3));
                 anim.SetTrigger("attack");
 
                 nextAttack = Time.time + attackRate;
             }
         }
 
-   
+
 
     }//攻击
 
@@ -428,7 +439,7 @@ public class EnemyController : MonoBehaviour
         {
             spawnPos = firePoint_Crouch.position;
         }
-        else 
+        else
         {
             spawnPos = firePoint.position;
         }
@@ -466,7 +477,7 @@ public class EnemyController : MonoBehaviour
         {
             spawnPos = firePoint_Crouch.position;
         }
-        else 
+        else
         {
             spawnPos = firePoint.position;
         }
@@ -569,17 +580,17 @@ public class EnemyController : MonoBehaviour
     {
         transform.position += new Vector3(patrolDir * patrolSpeed * Time.deltaTime, 0f, 0f);
 
-        if (patrolDir > 0) 
+        if (patrolDir > 0)
         {
             //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             transform.localScale = new Vector3(1, 1, 1);
-        }       
+        }
         else
         {
             //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            transform.localScale = new Vector3(-1, 1, 1);        
+            transform.localScale = new Vector3(-1, 1, 1);
         }
-       
+
     }
 
     public bool IsWallAheadByDir()
@@ -625,7 +636,7 @@ public class EnemyController : MonoBehaviour
 
     public void OnCheckAreaStay(Collider2D collision)
     {
-        if (!attackList.Contains(collision.transform)&&!hasBomb&&!isDead && !GameManager.instance.gameOver) 
+        if (!attackList.Contains(collision.transform) && !hasBomb && !isDead && !GameManager.instance.gameOver)
         {
 
             attackList.Add(collision.transform);
@@ -712,7 +723,7 @@ public class EnemyController : MonoBehaviour
             rb.velocity = dir * throwForce;
         }
 
-   
+
     }
     #endregion
 
@@ -754,11 +765,11 @@ public class EnemyController : MonoBehaviour
     {
         Girl_clothesIndex = Random.Range(0, 3);
         Girl_glovesIndex = Random.Range(0, 2);
-       
-        Girl_shoesIndex = Random.Range(0, 3);
-      
 
-        switch(Random.Range(0, 3))
+        Girl_shoesIndex = Random.Range(0, 3);
+
+
+        switch (Random.Range(0, 3))
         {
             case 0:
                 Girl_underwearIndex = 0;
@@ -774,7 +785,7 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
-        
+
         meleeType = Random.Range(0, 4);
 
 
@@ -829,7 +840,7 @@ public class EnemyController : MonoBehaviour
     public GameObject Strike_Effect;//剑光特效
     public GameObject Hit_Effect;//打击特效
 
-    
+
 
     private bool IsHitFromBehind(Vector3 attackPos)
     {
@@ -937,7 +948,7 @@ public class EnemyController : MonoBehaviour
         );
 
 
-     
+
     }
 
 
@@ -960,7 +971,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-    public void OnDie() 
+    public void OnDie()
     {
 
 
@@ -973,9 +984,33 @@ public class EnemyController : MonoBehaviour
         //coll.enabled = false;
         //rb.bodyType = RigidbodyType2D.Static;
 
-     
-       
+
+
     }
+
+    public void OnBlastHit(Vector3 blastPos, float force)
+    {
+        if (rb == null) return;
+
+        // 炸飞方向
+        Vector2 dir = (transform.position - blastPos).normalized;
+        dir += Vector2.up;
+
+        rb.velocity = Vector2.zero;
+        rb.AddForce(dir * force, ForceMode2D.Impulse);
+
+        // 活着被炸：死亡
+        if (!isDead)
+        {
+            OnDie();
+            return;
+        }
+
+        // 已经是尸体：重新播一次死亡动画
+        anim.Play("Girl_Dead", deadLayer, 0f);
+    }
+
+
     #endregion
 
 

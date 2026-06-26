@@ -123,6 +123,7 @@ public class PlayerController : MonoBehaviour
         if (!isHurt && !isAttack && !isTeleporting) { Move(); }
 
         CheckState();//如果在地上就是有摩擦力，在空中就没有防止卡墙
+        CheckThrow();//蓄力投掷
 
     }//每帧执行动作用FixedUpdate（做）
 
@@ -970,19 +971,45 @@ public class PlayerController : MonoBehaviour
     public GameObject shockPrefab;//震撼弹
     public GameObject knifePrefab;//飞刀
 
-    float throwForce = 16f;//投掷炸弹力度
+    // float throwForce = 16f;//投掷炸弹力度
     float nextThrow = 0;//投掷冷却
     float ThrowRate = 0.5f;//投掷频率
 
     private float throwPressTime;
 
+    [Header("投掷蓄力")]
+    public bool isHoldingThrow;
+    public float throwCharge;              // UI读取 0~1
+    private float throwChargeOnRelease;    // 松手时保存
+    float maxThrowChargeTime = 1.2f;
+    float minThrowForce = 8f;
+    float maxThrowForce = 30f;
+
+
+
+    void CheckThrow() 
+    {
+        if (isHoldingThrow)
+        {
+            throwCharge = Mathf.Clamp01((Time.time - throwPressTime) / maxThrowChargeTime);
+        }
+        else
+        {
+            throwCharge = 0f;
+        }
+    }//蓄力UI
+
     public void OnThrowStart(InputAction.CallbackContext obj)
     {
         throwPressTime = Time.time;
+        isHoldingThrow = true;
     }
     private void OnThrowCanceled(InputAction.CallbackContext ctx)
     {
         float holdTime = Time.time - throwPressTime;
+
+        throwChargeOnRelease = throwCharge;
+        isHoldingThrow = false;
 
         if (holdTime >= chargeThreshold)
         {
@@ -1052,8 +1079,10 @@ public class PlayerController : MonoBehaviour
 
             if (rb != null)
             {
+                float finalForce = Mathf.Lerp(minThrowForce, maxThrowForce, throwChargeOnRelease);
+
                 Vector2 dir = new Vector2(transform.localScale.x * 0.6f, 1f).normalized;
-                rb.velocity = dir * throwForce;
+                rb.velocity = dir * finalForce;
             }
 
 
@@ -1061,8 +1090,6 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        //attackType = 0;
-        //RefreshPlayerSkin();
     }
 
 
