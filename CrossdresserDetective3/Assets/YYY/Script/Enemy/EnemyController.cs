@@ -137,13 +137,12 @@ public class EnemyController : MonoBehaviour
 
 
 
-        if (physicsCheck.isGround &&  !isDead)
+        if (physicsCheck.isGround && physicsCheck.isOnStair &&  !isDead)
         {
-            if (Mathf.Abs(rb.velocity.x) < 0.2f)
-            {
-                rb.velocity = new Vector2(0f, rb.velocity.y);
-            }
-        }//不会产生在地面较大滑动
+
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+        
+        }//位于楼梯不会产生在地面较大滑动
 
 
 
@@ -937,7 +936,7 @@ public class EnemyController : MonoBehaviour
         if (hitFromBehind)
         {
             frameEvent_Audio._Attack_largeSword();//暂时先把暗杀声音写在这
-            OnDie();
+            OnDie();//背后暗杀
             return;
         }
 
@@ -1053,7 +1052,7 @@ public class EnemyController : MonoBehaviour
         // 活着被炸：死亡
         if (!isDead)
         {
-            OnDie();
+            OnDie();//直接炸死
             return;
         }
 

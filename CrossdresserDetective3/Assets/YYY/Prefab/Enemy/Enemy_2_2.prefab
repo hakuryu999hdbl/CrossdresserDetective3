@@ -369,6 +369,7 @@ MonoBehaviour:
   owner: {fileID: 4136074921385752530}
   damage: 30
   hitEffectType: 0
+  TurnOnBomb: 0
   knockbackX: 13
   knockbackY: 5
   hurtTime: 0.2
@@ -1133,10 +1134,10 @@ MonoBehaviour:
   questionSign: {fileID: 4082170059705146312}
   heldBomb: {fileID: 0}
   isRangedEnemy: 1
+  shootVerticalTolerance: 0.3
   meleeRange: 1.2
-  escapeFromBomb: 1
-  bombEscapeTime: 1.5
-  bombEscapeSpeedMultiplier: 4
+  loseTargetYDiff: 1.2
+  regainTargetYDiff: 0.8
   bulletPrefab: {fileID: 3004764211289256876, guid: 4d0ee6c5966de4240bf6a10fee9e6e0f, type: 3}
   firePoint: {fileID: 9126160762552217604}
   firePoint_Crouch: {fileID: 2155155577109249405}
@@ -1195,6 +1196,10 @@ MonoBehaviour:
   touchLeftWall: 0
   touchRightWall: 0
   onWall: 0
+  isOnStair: 0
+  stairLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   checkRadius: 0.2
   groundLayer:
     serializedVersion: 2
@@ -1295,6 +1300,7 @@ MonoBehaviour:
   owner: {fileID: 4136074921385752530}
   damage: 10
   hitEffectType: 0
+  TurnOnBomb: 0
   knockbackX: 5
   knockbackY: 0
   hurtTime: 0.2
@@ -1683,6 +1689,7 @@ MonoBehaviour:
   owner: {fileID: 4136074921385752530}
   damage: 30
   hitEffectType: 0
+  TurnOnBomb: 0
   knockbackX: 10
   knockbackY: 20
   hurtTime: 0.2

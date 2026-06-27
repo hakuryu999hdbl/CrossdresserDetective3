@@ -8476,6 +8476,7 @@ MonoBehaviour:
   - {fileID: 5567066193725870966, guid: b830692b51fa5ee4b84fa52f99087355, type: 3}
   - {fileID: 3556914679955763084, guid: 0c60501e31645354685f17f34057fe82, type: 3}
   - {fileID: 5808826087912687100, guid: 2bb4603183a81fa47a0ff67486cd073b, type: 3}
+  - {fileID: 4652147228579990173, guid: 8c480e64edca0c64e83fe4ccff866fba, type: 3}
   gameOver: 0
   PlayerWin: 0
   EnemyCreators: []
@@ -17565,6 +17566,10 @@ MonoBehaviour:
   touchLeftWall: 0
   touchRightWall: 0
   onWall: 0
+  isOnStair: 0
+  stairLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   checkRadius: 0.2
   groundLayer:
     serializedVersion: 2
@@ -17757,7 +17762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5000
+  maxHealth: 50
   currentHealth: 0
   maxPower: 15
   currentPower: 0

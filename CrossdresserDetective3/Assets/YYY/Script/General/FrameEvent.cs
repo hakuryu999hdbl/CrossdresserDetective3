@@ -565,15 +565,45 @@ public class FrameEvent : MonoBehaviour
     public void Shoot()
     {
         if (enemyController != null)
-        {
+        {         
             enemyController.Shoot();
+
+            if (enemyController.attackType == -2)
+            {
+                Invoke(nameof(RifleBullet), 0.2f);
+            }
         }
         if (playerController!= null)
         {
             playerController.Shoot();
+
+            if (playerController.attackType == -2)
+            {
+                Invoke(nameof(RifleBullet), 0.2f);
+            }
         }
-        
+
     }
+
+    void RifleBullet() 
+    {
+        if (enemyController != null)
+        {
+            enemyController.Shoot();
+
+          
+        }
+        if (playerController != null)
+        {
+            playerController.Shoot();
+
+           
+        }
+    }
+
+
+
+
 
     public void Reload() 
     {

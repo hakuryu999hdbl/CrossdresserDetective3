@@ -271,6 +271,15 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        //if (physicsCheck.isGround && physicsCheck.isOnStair && !isDead)
+        //{
+        //
+        //    if (Mathf.Abs(rb.velocity.x) < 0.3f)
+        //    {
+        //        rb.velocity = new Vector2(0f, rb.velocity.y);
+        //    }
+        //
+        //}//玩家位于楼梯不会产生在地面较大滑动（但是开启会阻碍斜坡移动）
 
 
         //coll.sharedMaterial = physicsCheck.isGround ? normal : wall;//简写如果在地面就使用有摩擦力的这一版，没有就不是

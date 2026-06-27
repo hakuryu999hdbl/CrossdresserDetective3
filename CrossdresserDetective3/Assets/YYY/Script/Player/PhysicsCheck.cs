@@ -15,7 +15,9 @@ public class PhysicsCheck : MonoBehaviour
     public bool touchRightWall;//右侧是否为空
     public bool onWall;//是否贴在墙上
 
-
+    [Header("楼梯检测")]
+    public bool isOnStair;
+    public LayerMask stairLayer;
 
 
     public float checkRadius;//检测半径
@@ -55,6 +57,9 @@ public class PhysicsCheck : MonoBehaviour
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, checkRadius, groundLayer);
 
         //if (isGround) { isJump = false; }//跳跃结束
+
+        //楼梯斜坡检测
+        isOnStair = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, checkRadius,stairLayer);
 
         //墙体检测
         touchLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, checkRadius, groundLayer);
