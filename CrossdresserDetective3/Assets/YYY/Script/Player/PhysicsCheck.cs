@@ -63,11 +63,13 @@ public class PhysicsCheck : MonoBehaviour
         //在墙上(下落状态，但是碰到了左墙和右墙的同时方向键也按住)
         if (isPlayer)
         {
-            onWall = (touchLeftWall&&playerController.inputDirection.x<0f || touchRightWall && playerController.inputDirection.x > 0f) && rb.velocity.y<0;
+            //onWall = (touchLeftWall&&playerController.inputDirection.x<0f || touchRightWall && playerController.inputDirection.x > 0f) && rb.velocity.y<0;
+
+            onWall =((touchLeftWall && playerController.inputDirection.x < -wallInputThreshold) ||(touchRightWall && playerController.inputDirection.x > wallInputThreshold))&& rb.velocity.y < 0;
         }
         
     }
-
+    float wallInputThreshold = 0.6f;//手柄的斜方向输入强制方向键输入化，摇杆拉着不下滑
     public void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset, checkRadius);

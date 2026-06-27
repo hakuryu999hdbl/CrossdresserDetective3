@@ -11,9 +11,13 @@ public class PlayerController : MonoBehaviour
     public Character character;
     public Rigidbody2D rb;
     public float speed;
-    float walkSpeed => speed / 2.5f;//拉姆达表达式会导致每次调用都执行
-    float runSpeed;
 
+    //float walkSpeed => speed / 2.5f;//拉姆达表达式会导致每次调用都执行
+    //float runSpeed;
+    //据说手柄爬墙会产生半速这样问题
+    public float runSpeed = 5f;
+    public float walkSpeed = 2f;
+    private bool isWalking;
 
     [Header("碰撞体与下蹲")]
     public CapsuleCollider2D coll;
@@ -130,9 +134,15 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        float currentSpeed = isWalking ? walkSpeed : runSpeed;
+
+
         if (!isCrouch && !wallJump)
         {
-            rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
+            //rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
+
+            rb.velocity = new Vector2(inputDirection.x * currentSpeed, rb.velocity.y);
+
         }//下蹲和非蹬墙跳期间才可以获取左右
 
 
@@ -179,6 +189,24 @@ public class PlayerController : MonoBehaviour
 
     public void CheckState()
     {
+        //飞踢优先，避免进入爬墙
+        if (isAirKick)
+        {
+            isWallCling = false;
+            coll.sharedMaterial = wall;
+
+            if ((physicsCheck.touchLeftWall && transform.localScale.x < 0f) ||
+                (physicsCheck.touchRightWall && transform.localScale.x > 0f) ||
+                physicsCheck.isGround)
+            {
+                isAirKick = false;
+                isAttack = false;
+            }
+
+            return;
+        }
+
+
         // 默认材质
         if (physicsCheck.isGround)
         {
@@ -186,6 +214,19 @@ public class PlayerController : MonoBehaviour
             coll.sharedMaterial = normal;
 
             character.StopPowerRecover = false;//体力恢复   
+
+
+
+            wallJump = false;//好像手柄会产生导致无法移动状态所以增加
+
+
+            if (isAirKick)
+            {
+                isAirKick = false;
+                isAttack = false;
+            }//落地飞踢强制结束
+
+
         }
         else if (physicsCheck.onWall && character.currentPower > 0)
         {
@@ -228,9 +269,6 @@ public class PlayerController : MonoBehaviour
             coll.sharedMaterial = wall;
             wallPowerTimer = 0;
         }
-
-
-
 
 
 
@@ -693,14 +731,19 @@ public class PlayerController : MonoBehaviour
         {
             if (physicsCheck.isGround)
             {
-                speed = walkSpeed;
+                //speed = walkSpeed;
+                isWalking = true;
+
+
             }//在地面的时候才能切换走或跑
         };//检测按住
         inputControl.Gameplay.WalkButton.canceled += ctx =>
         {
             if (physicsCheck.isGround)
             {
-                speed = runSpeed;
+                //speed = runSpeed;
+                isWalking = false;
+
             }//在地面的时候才能切换走或跑
         };//检测松开
         #endregion
@@ -788,36 +831,19 @@ public class PlayerController : MonoBehaviour
     private float attackPressTime;
     private float chargeThreshold = 0.35f;
 
-    public bool isHoldingAttack;//是否持续按下攻击键
+
 
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
 
 
 
-        //if (attackType==-2 && currentAmmo >= 0 && physicsCheck.isGround)
-        //{
-        //    isHoldingAttack = true;
-        //    isAttack = true;
-        //
-        //    return;
-        //}//步枪可以连发
 
         attackPressTime = Time.time;
     }
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
-
-
-        //if (attackType == -2 && currentAmmo >= 0 && physicsCheck.isGround)
-        //{
-        //    isHoldingAttack = false;
-        //    isAttack = false;
-        //
-        //    return;
-        //}//步枪可以连发
-
 
 
         float holdTime = Time.time - attackPressTime;
@@ -836,7 +862,13 @@ public class PlayerController : MonoBehaviour
     void PlayerAttack(InputAction.CallbackContext obj)
     {
 
-        if (!physicsCheck.isGround) { return; }//空中无法攻击
+        //if (!physicsCheck.isGround) { return; }//空中无法攻击
+
+        if (!physicsCheck.isGround)
+        {
+            AirKick();
+            return;
+        }//空中触发飞踢
 
 
         isAttack = true;
@@ -855,10 +887,70 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    
+    #endregion
+
+
+    #region  飞踢
+    [Header("飞踢")]
+    public bool isAirKick;
+    public float airKickSpeedX = 8f;
+    public float airKickSpeedY = -6f;
+    public float airKickDuration = 0.18f;
+    private Coroutine airKickCoroutine;
+
+
+    void AirKick()
+    {
+        if (isAirKick) return;
+        if (isAttack || isHurt || isDead || isTeleporting ) return;
+
+        // 关键：贴墙、挂墙、墙跳期间不允许飞踢
+        if (physicsCheck.onWall || isWallCling || wallJump)
+            return;
+
+        airKickCoroutine = StartCoroutine(AirKickRoutine());
+    }
+
+    IEnumerator AirKickRoutine()
+    {
+        isAttack = true;
+        isAirKick = true;
+
+
+
+        playerAnimation.PlayAirKick();
+
+        float timer = 0f;
+        float dir = transform.localScale.x;
+
+        while (timer < airKickDuration)
+        {
+            yield return new WaitForFixedUpdate();
+
+            if (physicsCheck.isGround)
+                break;
+
+            if ((physicsCheck.touchLeftWall && dir < 0f) ||
+      (physicsCheck.touchRightWall && dir > 0f))
+                break;//飞踢期间碰墙，立刻结束飞踢
+
+            rb.velocity = new Vector2(dir * airKickSpeedX, airKickSpeedY);
+
+            timer += Time.fixedDeltaTime;
+        }
+
+        isAirKick = false;
+        isAttack = false;
+
+
+    }
+
+
+
 
 
     #endregion
-
 
     #region  冲刺
     [Header("冲刺")]
@@ -1128,12 +1220,7 @@ public class PlayerController : MonoBehaviour
                 attackType = 1; // 挥砍
             }
 
-            foreach (Attack attack in playerAttacks)
-            {
-                if (attack == null) continue;
-
-                attack.hitEffectType = attackType;//暂时这么写
-            }
+            SetHitEffectType(attackType);//暂时这么写
         }
         else
         {
@@ -1153,6 +1240,17 @@ public class PlayerController : MonoBehaviour
  
 
     }//更换玩家当前装备显示与UI层显示
+
+
+    public void SetHitEffectType(int Type) 
+    {
+        foreach (Attack attack in playerAttacks)
+        {
+            if (attack == null) continue;
+
+            attack.hitEffectType = Type;
+        }
+    }//集体更换攻击特效
 
 
     #endregion
@@ -1182,6 +1280,7 @@ public class PlayerController : MonoBehaviour
     public GameObject magazinePrefab_Rifle;
     public float magazineForceX = 2f;
     public float magazineForceY = 4f;
+
 
     private void SpawnMagazine()
     {
@@ -1301,6 +1400,11 @@ public class PlayerController : MonoBehaviour
 
         ChangeAmmo(-1);//削减子弹数
         SpawnMagazine();//弹壳飞舞
+
+
+
+
+       
     }
 
 
@@ -1321,12 +1425,12 @@ public class PlayerController : MonoBehaviour
     private void OnReload(InputAction.CallbackContext obj)
     {
         Debug.Log("换单");
-        Reload();
+        Reload();//主动换单
     }
     public void Reload()
     {
 
-        //if (currentAmmo >= maxAmmo) return;
+        if (!physicsCheck.isGround) return; // 空中禁止换弹
         if (attackType >= 0) return; // 不是枪
 
 
@@ -1334,9 +1438,9 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_bomb_bounce_1);
             isAttack = false;
+
             return;
         }//没有弹夹可以换了
-
 
         isAttack = true;
 
@@ -1346,6 +1450,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnReloadAnimationEnd()
     {
+
         if (magazineCount > 0) { magazineCount--; }//开局也要触发
       
 
@@ -1365,7 +1470,7 @@ public class PlayerController : MonoBehaviour
         UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo, magazineCount);
     }//捡弹夹
 
-
+   
     #endregion
 
     #region  UI层

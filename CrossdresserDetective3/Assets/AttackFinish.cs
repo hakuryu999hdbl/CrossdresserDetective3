@@ -21,6 +21,7 @@ public class AttackFinish : StateMachineBehaviour
     {
         animator.GetComponent<PlayerAnimation>().playerController.isAttack = false;
         animator.GetComponent<PlayerAnimation>().playerController.isDashAttack = false;
+        animator.GetComponent<PlayerAnimation>().playerController.isAirKick = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

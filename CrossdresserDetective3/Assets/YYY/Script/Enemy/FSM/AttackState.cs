@@ -30,12 +30,16 @@ public class AttackState : EnemyBaseState
         }
 
         // 清理已经不存在、被销毁、或不再是可检测层的目标
+        // enemy.attackList.RemoveAll(t =>
+        //     t == null ||
+        //     (!t.CompareTag("Player") && !t.CompareTag("Bomb")) ||
+        //     (t.CompareTag("Bomb") && t.gameObject.layer != LayerMask.NameToLayer("Bomb"))
+        // );
         enemy.attackList.RemoveAll(t =>
-            t == null ||
-            (!t.CompareTag("Player") && !t.CompareTag("Bomb")) ||
-            (t.CompareTag("Bomb") && t.gameObject.layer != LayerMask.NameToLayer("Bomb"))
-        );
-
+     t == null ||
+     (!t.CompareTag("Player") && !t.CompareTag("Bomb")) ||
+     (t.CompareTag("Bomb") && t.gameObject.layer != LayerMask.NameToLayer("Bomb"))
+ );
 
 
 
@@ -70,18 +74,15 @@ public class AttackState : EnemyBaseState
         }
 
 
-
         if (enemy.targetPoint != null && enemy.targetPoint.CompareTag("Player"))
         {
             float yDiff = Mathf.Abs(enemy.targetPoint.position.y - enemy.transform.position.y);
 
-            if (yDiff > enemy.shootVerticalTolerance)
+            if (yDiff > enemy.loseTargetYDiff)
             {
                 enemy.lastKnownTargetPos = enemy.targetPoint.position;
-
                 enemy.attackList.Remove(enemy.targetPoint);
                 enemy.targetPoint = null;
-
                 enemy.TransitionToState(enemy.searchState);
                 return;
             }

@@ -137,7 +137,13 @@ public class EnemyController : MonoBehaviour
 
 
 
-
+        if (physicsCheck.isGround &&  !isDead)
+        {
+            if (Mathf.Abs(rb.velocity.x) < 0.2f)
+            {
+                rb.velocity = new Vector2(0f, rb.velocity.y);
+            }
+        }//不会产生在地面较大滑动
 
 
 
@@ -302,6 +308,31 @@ public class EnemyController : MonoBehaviour
     public bool isRangedEnemy;
     public float shootVerticalTolerance = 0.3f; // 玩家和敌人高度差小于这个才开枪
     public float meleeRange = 1.2f;
+
+    [Header("楼层判断")]
+    public float loseTargetYDiff = 1.2f;    // 超过这个，丢失目标
+    public float regainTargetYDiff = 0.8f;  // 小于这个，重新发现目标
+    public bool IsValidAttackTarget(Transform t)
+    {
+        if (t == null) return false;
+
+        if (!t.CompareTag("Player") && !t.CompareTag("Bomb"))
+            return false;
+
+        if (t.CompareTag("Bomb") && t.gameObject.layer != LayerMask.NameToLayer("Bomb"))
+            return false;
+
+        // 重新发现目标时，用较小阈值，防止斜坡反复横跳
+        if (t.CompareTag("Player"))
+        {
+            float yDiff = Mathf.Abs(t.position.y - transform.position.y);
+
+            if (yDiff > regainTargetYDiff)
+                return false;
+        }
+
+        return true;
+    }
 
     public void AttackAction()
     {
@@ -636,18 +667,34 @@ public class EnemyController : MonoBehaviour
 
     public void OnCheckAreaStay(Collider2D collision)
     {
-        if (!attackList.Contains(collision.transform) && !hasBomb && !isDead && !GameManager.instance.gameOver)
+        //if (!attackList.Contains(collision.transform) && !hasBomb && !isDead && !GameManager.instance.gameOver)
+        //{
+        //
+        //    attackList.Add(collision.transform);
+        //
+        //}//只要不是新的，就装进去(如果持有炸弹/自己死亡/玩家死亡，不需要再添加新的进去)
+        //
+        //
+        //if (collision.CompareTag("Player") || collision.CompareTag("Bomb"))
+        //{
+        //    lastKnownTargetPos = collision.transform.position;
+        //}//记录最后看到的目标位置（搜索状态使用）
+
+
+        if (hasBomb || isDead || GameManager.instance.gameOver)
+            return;
+
+        Transform t = collision.transform;
+
+        if (!IsValidAttackTarget(t))
+            return;
+
+        if (!attackList.Contains(t))
         {
+            attackList.Add(t);
+        }
 
-            attackList.Add(collision.transform);
-
-        }//只要不是新的，就装进去(如果持有炸弹/自己死亡/玩家死亡，不需要再添加新的进去)
-
-
-        if (collision.CompareTag("Player") || collision.CompareTag("Bomb"))
-        {
-            lastKnownTargetPos = collision.transform.position;
-        }//记录最后看到的目标位置（搜索状态使用）
+        lastKnownTargetPos = t.position;
 
 
     }//只要持续处于范围之中
@@ -974,6 +1021,10 @@ public class EnemyController : MonoBehaviour
     public void OnDie()
     {
 
+        PlayBloodEffect();//不知道为啥死亡有些时候血特效出不来就先这样吧
+
+
+     
 
 
         isDead = true;

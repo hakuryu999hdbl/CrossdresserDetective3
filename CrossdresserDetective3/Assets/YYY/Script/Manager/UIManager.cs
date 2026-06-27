@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
 
     public void Start()
     {
+        Time.timeScale = 1f;//防止重刷场景前的暂停
+
         OpenSetUp();
     }
 
