@@ -779,21 +779,23 @@ public class EnemyController : MonoBehaviour
     #region
     [Header("Spine外观")]
     public FrameEvent frameEvent;
-    int beltIndex = 1;
-    int clothesIndex = 1;
-    int glovesIndex = 1;
-    int pantiesIndex = 1;
-    int shoesIndex = 1;
-    int skirtIndex = 1;
-    int stockingsIndex = 1;
+    public int beltIndex;
+    public int hairIndex;
+    public int clothesIndex;
+    public int glovesIndex;
+    public int pantiesIndex;
+    public int shoesIndex;
+    public int skirtIndex;
+    public int stockingsIndex;
 
-
-
-    int Girl_clothesIndex;
-    int Girl_glovesIndex;
-    int Girl_underwearIndex;
-    int Girl_shoesIndex;
-    int Girl_stockingsIndex;
+    public int Girl_hairIndex;
+    public int Girl_clothesIndex;
+    public int Girl_glovesIndex;
+    public int Girl_underwearIndex;
+    public int Girl_shoesIndex;
+    public int Girl_stockingsIndex;
+    public int Girl_hatIndex;
+    public int Girl_maskIndex;
 
 
 
@@ -809,6 +811,7 @@ public class EnemyController : MonoBehaviour
 
     public void RandomSkin()
     {
+        Girl_hairIndex = Random.Range(0, 3);
         Girl_clothesIndex = Random.Range(0, 3);
         Girl_glovesIndex = Random.Range(0, 2);
 
@@ -831,6 +834,11 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
+        Girl_hatIndex = Random.Range(0, 2);
+        Girl_maskIndex =1;
+
+
+
 
         meleeType = Random.Range(0, 4);
 
@@ -847,24 +855,28 @@ public class EnemyController : MonoBehaviour
         if (frameEvent == null) return;
 
         frameEvent.ShowCurrentAll(
-           beltIndex,
-           clothesIndex,
-           glovesIndex,
-           pantiesIndex,
-           shoesIndex,
-           skirtIndex,
-           stockingsIndex,
+            beltIndex,
+            hairIndex,
+            clothesIndex,
+            glovesIndex,
+            pantiesIndex,
+            shoesIndex,
+            skirtIndex,
+            stockingsIndex,
 
-           Girl_clothesIndex,
-           Girl_glovesIndex,
-           Girl_underwearIndex,
-           Girl_shoesIndex,
-           Girl_stockingsIndex,
+            Girl_hairIndex,
+            Girl_clothesIndex,
+            Girl_glovesIndex,
+            Girl_underwearIndex,
+            Girl_shoesIndex,
+            Girl_stockingsIndex,
+            Girl_hatIndex,
+            Girl_maskIndex,
 
-           meleeType,
-           pistolType,
-           rifleType,
-           throwType
+            meleeType,
+            pistolType,
+            rifleType,
+            throwType
        );
 
     }//更新外观

@@ -321,6 +321,7 @@ public class PlayerController : MonoBehaviour
     public FrameEvent frameEvent;
     public FrameEvent frameEvent_UI;//大的放大层也需要
     public int beltIndex;
+    public int hairIndex;
     public int clothesIndex;
     public int glovesIndex;
     public int pantiesIndex;
@@ -328,12 +329,14 @@ public class PlayerController : MonoBehaviour
     public int skirtIndex;
     public int stockingsIndex;
 
-
+    public int Girl_hairIndex;
     public int Girl_clothesIndex;
     public int Girl_glovesIndex;
     public int Girl_underwearIndex;
     public int Girl_shoesIndex;
     public int Girl_stockingsIndex;
+    public int Girl_hatIndex;
+    public int Girl_maskIndex;
 
 
     [Header("武器与攻击方式")]
@@ -349,6 +352,7 @@ public class PlayerController : MonoBehaviour
 
         frameEvent.ShowCurrentAll(
             beltIndex,
+            hairIndex,
             clothesIndex,
             glovesIndex,
             pantiesIndex,
@@ -356,11 +360,14 @@ public class PlayerController : MonoBehaviour
             skirtIndex,
             stockingsIndex,
 
+            Girl_hairIndex,
             Girl_clothesIndex,
             Girl_glovesIndex,
             Girl_underwearIndex,
             Girl_shoesIndex,
             Girl_stockingsIndex,
+            Girl_hatIndex,
+            Girl_maskIndex,
 
             meleeType,
             pistolType,
@@ -369,27 +376,28 @@ public class PlayerController : MonoBehaviour
         );
 
         frameEvent_UI.ShowCurrentAll(
-           beltIndex,
-           clothesIndex,
-           glovesIndex,
-           pantiesIndex,
-           shoesIndex,
-           skirtIndex,
-           stockingsIndex,
+            beltIndex,
+            hairIndex,
+            clothesIndex,
+            glovesIndex,
+            pantiesIndex,
+            shoesIndex,
+            skirtIndex,
+            stockingsIndex,
 
-           Girl_clothesIndex,
-           Girl_glovesIndex,
-           Girl_underwearIndex,
-           Girl_shoesIndex,
-           Girl_stockingsIndex,
+            Girl_hairIndex,
+            Girl_clothesIndex,
+            Girl_glovesIndex,
+            Girl_underwearIndex,
+            Girl_shoesIndex,
+            Girl_stockingsIndex,
+            Girl_hatIndex,
+            Girl_maskIndex,
 
-
-
-
-           meleeType,
-           pistolType,
-           rifleType,
-           throwType
+            meleeType,
+            pistolType,
+            rifleType,
+            throwType
       );
 
 
