@@ -814,21 +814,22 @@ public class UIManager : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 屏幕常驻显示
+    /// </summary>
+    #region
+
+    public GameObject RedScreen;
+    public GameObject WhiteScreen;
 
 
 
-    [Header("Boss生命值")]
-    public Slider bossHealthBar;
- 
-    public void SetBossHealth(float health)
-    {
-        bossHealthBar.maxValue = health;
-    }
-    
-    public void UpdateBossHealth(float health)
-    {
-        bossHealthBar.value = health;
-    }
+
+
+
+    #endregion
+
+  
 
 
 

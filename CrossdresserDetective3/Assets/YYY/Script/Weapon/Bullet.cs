@@ -19,6 +19,12 @@ public class Bullet : MonoBehaviour
 
     public GameObject SparkEffect;
 
+   
+    [Header("烟雾/障碍削弱")]
+    public bool disableAttackOnObstacle = false; // 敌人子弹 true，玩家子弹 false
+    public GameObject Attack; // 子物体 AttackArea
+    public LayerMask obstacleLayer;
+
     private void Awake()
     {
         if (rb == null)
@@ -60,6 +66,17 @@ public class Bullet : MonoBehaviour
 
         int hitObjLayer = collision.gameObject.layer;
 
+
+        if (disableAttackOnObstacle &&
+        ((1 << collision.gameObject.layer) & obstacleLayer) != 0)
+        {
+            if (Attack != null)
+            {
+                Destroy(Attack);
+            }
+        } //用于子弹穿过烟雾弹/视野障碍时变成无效子弹
+
+
         if (((1 << hitObjLayer) & wallLayer) != 0)
         {
             if (destroyOnWallHit)
@@ -71,7 +88,7 @@ public class Bullet : MonoBehaviour
             }
 
             return;
-        }
+        }//打到墙上
 
         if (((1 << hitObjLayer) & hitLayer) != 0)
         {

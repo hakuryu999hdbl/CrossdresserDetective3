@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class Bomb : MonoBehaviour, IDamageable
+public class Bomb :  ThrowableEffectBase, IDamageable
 {
 
     private Animator anim;
@@ -147,17 +147,7 @@ public class Bomb : MonoBehaviour, IDamageable
         startTime = Time.time;
     }
 
-    [Header("碰撞地板墙壁弹跳发出声音")]
-    public LayerMask groundLayer;
-    public FrameEvent_Audio frameEvent_Audio;
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (((1 << collision.gameObject.layer) & groundLayer) != 0)
-        {
-            frameEvent_Audio._Attack_bomb_bounce();
-        }
-    }
+  
 
     public void TakeDamage(Attack attack)
     {

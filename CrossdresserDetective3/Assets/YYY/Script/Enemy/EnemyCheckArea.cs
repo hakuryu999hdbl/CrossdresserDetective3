@@ -11,6 +11,7 @@ public class EnemyCheckArea : MonoBehaviour
     public Color patrolColor = Color.green;
     public Color searchColor = Color.yellow;
     public Color attackColor = Color.red;
+    public Color hitColor = Color.white;
     public float colorChangeSpeed = 6f;
 
     private MeshRenderer meshRenderer;
@@ -121,5 +122,8 @@ public class EnemyCheckArea : MonoBehaviour
     {
         targetColor = attackColor;
     }
-
+    public void SetHitColor()
+    {
+        targetColor = hitColor;
+    }
 }

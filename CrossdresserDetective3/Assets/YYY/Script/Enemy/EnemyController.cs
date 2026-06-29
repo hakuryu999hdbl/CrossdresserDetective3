@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("基础属性")]
     public bool isDead = false;
+    public bool isDizzy = false;
     public bool hasBomb;//是否持有炸弹
     public GameObject CheckArea;//死后隐藏视野范围（要是敌人直接消失就不用了）
 
@@ -47,6 +48,7 @@ public class EnemyController : MonoBehaviour
     public PatrolState patrolState = new PatrolState();//巡逻状态
     public AttackState attackState = new AttackState();//攻击状态
     public SearchState searchState = new SearchState();//搜索状态
+    public HitState hitState = new HitState();//受击/眩晕状态
 
     public virtual void Init()
     {
@@ -95,6 +97,7 @@ public class EnemyController : MonoBehaviour
     {
 
         anim.SetBool("dead", isDead);
+        anim.SetBool("isDizzy", isDizzy);
         if (isDead)
         {
             // 关闭其他动作层权重
@@ -230,9 +233,29 @@ public class EnemyController : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 受击/眩晕状态
+    /// </summary>
+    #region
+    [Header("受击/眩晕")]
+    public float stunTime = 2f;
+    [HideInInspector] public float hitTimer;
+    [HideInInspector] public EnemyBaseState stateBeforeHit;
+    public void Stun(float duration)
+    {
+        if (isDead) return;
+
+        if (duration > 0.2f)
+        {
+            isDizzy = true;
+        }
 
 
+        stunTime = duration;
 
+        TransitionToState(hitState);
+    }
+    #endregion
 
     /// <summary>
     /// 搜索状态
@@ -811,7 +834,8 @@ public class EnemyController : MonoBehaviour
 
     public void RandomSkin()
     {
-        Girl_hairIndex = Random.Range(0, 3);
+        Girl_hairIndex = 2;
+
         Girl_clothesIndex = Random.Range(0, 3);
         Girl_glovesIndex = Random.Range(0, 2);
 
@@ -944,8 +968,8 @@ public class EnemyController : MonoBehaviour
 
         bool hitFromBehind = IsHitFromBehind(attack.transform.position);
 
-        // 👉 攻击从背后打来 = 直接死
-        if (hitFromBehind)
+        // 👉 攻击从背后打来 = 直接死  // 👉 眩晕 = 直接死
+        if (hitFromBehind||isDizzy)
         {
             frameEvent_Audio._Attack_largeSword();//暂时先把暗杀声音写在这
             OnDie();//背后暗杀
@@ -986,7 +1010,7 @@ public class EnemyController : MonoBehaviour
 
         //isHurt = true;
 
-
+        Stun(0.2f);//为了让敌人的视野有同等反应
 
 
         anim.SetInteger("hitType", Random.Range(1, 3));

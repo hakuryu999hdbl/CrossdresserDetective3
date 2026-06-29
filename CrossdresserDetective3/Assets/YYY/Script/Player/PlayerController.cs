@@ -568,6 +568,8 @@ public class PlayerController : MonoBehaviour
         } //吊带袜裤袜固定有内裤的情况下吊带出现
 
 
+        hairIndex = 1;
+
         RefreshPlayerSkin();//换装界面调用
 
         RefreshCurrentWeapon();//换装界面调用
@@ -637,7 +639,7 @@ public class PlayerController : MonoBehaviour
     #region
     [Header("受伤死亡")]
     public float hurtForce;
-    public GameObject RedScreen;
+   
     public FrameEvent_Audio frameEvent_Audio;
     public GameObject Effect_Blood;//受伤特效
     public GameObject Strike_Effect;//剑光特效
@@ -704,7 +706,7 @@ public class PlayerController : MonoBehaviour
 
         frameEvent_Audio._Attack_blood();
 
-        RedScreen.SetActive(true);
+        UIManager.instance.RedScreen.SetActive(true);
 
         Destroy(blood, 1f); // 1秒后销毁
     }

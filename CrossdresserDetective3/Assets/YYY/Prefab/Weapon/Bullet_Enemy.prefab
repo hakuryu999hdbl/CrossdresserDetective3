@@ -100,10 +100,15 @@ MonoBehaviour:
     m_Bits: 8
   wallLayer:
     serializedVersion: 2
-    m_Bits: 4480
+    m_Bits: 384
   destroyOnEnemyHit: 1
   destroyOnWallHit: 1
   SparkEffect: {fileID: 7728504138125796143, guid: a4cecd0c4e33bcd4292a4e653121b828, type: 3}
+  disableAttackOnObstacle: 1
+  Attack: {fileID: 3894967604716840505}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   destroyDelay: 0.03
 --- !u!50 &1413810239688296891
 Rigidbody2D:
@@ -315,5 +320,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.8410901, y: 0.22012964}
+  m_Size: {x: 1.148273, y: 0.34860954}
   m_EdgeRadius: 0

@@ -925,6 +925,7 @@ MonoBehaviour:
   patrolColor: {r: 0, g: 1, b: 0, a: 0.39215687}
   searchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.39215687}
   attackColor: {r: 1, g: 0, b: 0, a: 0.39215687}
+  hitColor: {r: 1, g: 0, b: 0, a: 0}
   colorChangeSpeed: 6
 --- !u!1 &6645914149324714493
 GameObject:
@@ -1128,6 +1129,8 @@ MonoBehaviour:
   attackRange: 5
   skillRange: 5
   attackList: []
+  stunTime: 2
+  hitTimer: 0
   searchTime: 3
   lookTime: 1.2
   lastKnownTargetPos: {x: 0, y: 0, z: 0}
@@ -1166,6 +1169,22 @@ MonoBehaviour:
   shockPrefab: {fileID: 0}
   knifePrefab: {fileID: 0}
   frameEvent: {fileID: 1042995881232221439}
+  beltIndex: 0
+  hairIndex: 0
+  clothesIndex: 0
+  glovesIndex: 0
+  pantiesIndex: 0
+  shoesIndex: 0
+  skirtIndex: 0
+  stockingsIndex: 0
+  Girl_hairIndex: 0
+  Girl_clothesIndex: 0
+  Girl_glovesIndex: 0
+  Girl_underwearIndex: 0
+  Girl_shoesIndex: 0
+  Girl_stockingsIndex: 0
+  Girl_hatIndex: 0
+  Girl_maskIndex: 0
   meleeType: 0
   pistolType: 0
   rifleType: 0
