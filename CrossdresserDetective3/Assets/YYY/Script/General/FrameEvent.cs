@@ -47,6 +47,8 @@ public class FrameEvent : MonoBehaviour
             1, // 伪娘鞋子
             0, // 伪娘裙子
             1, // 伪娘丝袜：0 = 不显示
+            1, // 伪娘帽子：0 = 不显示
+            1, // 伪娘面具：0 = 不显示
 
             0, // 御姐头发
             2, // 御姐衣服
@@ -78,6 +80,8 @@ public class FrameEvent : MonoBehaviour
             Random.Range(0, 2), // 伪娘鞋子
             Random.Range(0, 2), // 伪娘裙子
             Random.Range(0, 3), // 伪娘丝袜
+            Random.Range(0, 2), // 伪娘帽子
+            Random.Range(0, 2), // 伪娘面具
 
 
             Random.Range(0, 3), // 御姐头发
@@ -99,7 +103,7 @@ public class FrameEvent : MonoBehaviour
 
     public void ShowCurrentAll
         (
-           int _YYY_beltIndex, int _YYY_hairIndex, int _YYY_clothesIndex, int _YYY_glovesIndex, int _YYY_pantiesIndex, int _YYY_shoesIndex, int _YYY_skirtIndex, int _YYY_stockingsIndex,
+           int _YYY_beltIndex, int _YYY_hairIndex, int _YYY_clothesIndex, int _YYY_glovesIndex, int _YYY_pantiesIndex, int _YYY_shoesIndex, int _YYY_skirtIndex, int _YYY_stockingsIndex, int _YYY_hatIndex, int _YYY_maskIndex,
            int _Girl_hairIndex, int _Girl_clothesIndex, int _Girl_glovesIndex, int _Girl_underwearIndex, int _Girl_shoesIndex, int _Girl_stockingsIndex, int _Girl_hatIndex, int _Girl_maskIndex,
            int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex, int _Weapon_ThrowableIndex
         )
@@ -159,6 +163,12 @@ public class FrameEvent : MonoBehaviour
             AddSkinSafe(newSkin, $"YYY/Skirt/YYY_Skirt_color{_YYY_skirtIndex}");
 
         AddSkinSafe(newSkin, $"YYY/Stockings/YYY_Stockings_color{_YYY_stockingsIndex}");
+
+        if (_YYY_hatIndex != 0)
+            AddSkinSafe(newSkin, $"YYY/Hat/YYY_Hat_color{_YYY_hatIndex}");
+
+        if (_YYY_maskIndex != 0)
+            AddSkinSafe(newSkin, $"YYY/Mask/YYY_Mask_color{_YYY_maskIndex}");
 
 
         AddSkinSafe(newSkin, $"Girl/Hair/Girl_Hair_color{_Girl_hairIndex}");

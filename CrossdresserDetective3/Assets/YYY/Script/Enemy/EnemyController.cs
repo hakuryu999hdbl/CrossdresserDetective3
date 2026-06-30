@@ -810,6 +810,9 @@ public class EnemyController : MonoBehaviour
     public int shoesIndex;
     public int skirtIndex;
     public int stockingsIndex;
+    public int hatIndex;
+    public int maskIndex;
+
 
     public int Girl_hairIndex;
     public int Girl_clothesIndex;
@@ -887,6 +890,8 @@ public class EnemyController : MonoBehaviour
             shoesIndex,
             skirtIndex,
             stockingsIndex,
+            hatIndex,
+            maskIndex,
 
             Girl_hairIndex,
             Girl_clothesIndex,

@@ -328,6 +328,8 @@ public class PlayerController : MonoBehaviour
     public int shoesIndex;
     public int skirtIndex;
     public int stockingsIndex;
+    public int hatIndex;
+    public int maskIndex;
 
     public int Girl_hairIndex;
     public int Girl_clothesIndex;
@@ -359,6 +361,8 @@ public class PlayerController : MonoBehaviour
             shoesIndex,
             skirtIndex,
             stockingsIndex,
+            hatIndex,
+            maskIndex,
 
             Girl_hairIndex,
             Girl_clothesIndex,
@@ -384,6 +388,9 @@ public class PlayerController : MonoBehaviour
             shoesIndex,
             skirtIndex,
             stockingsIndex,
+            hatIndex,
+            maskIndex,
+
 
             Girl_hairIndex,
             Girl_clothesIndex,
@@ -568,7 +575,10 @@ public class PlayerController : MonoBehaviour
         } //吊带袜裤袜固定有内裤的情况下吊带出现
 
 
-        hairIndex = 1;
+        //hairIndex = 1;
+        hatIndex = 1;
+        maskIndex = 1;
+
 
         RefreshPlayerSkin();//换装界面调用
 
