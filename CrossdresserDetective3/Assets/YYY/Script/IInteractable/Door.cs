@@ -85,18 +85,17 @@ public class Door : MonoBehaviour, IInteractable
 
 
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.GetComponent<PlayerController>() != null)
         {
             Effect.SetActive(true);
         }
     }
 
-
-    public void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.GetComponent<PlayerController>() != null)
         {
             Effect.SetActive(false);
         }
