@@ -3,35 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-public class FlashBomb : ThrowableEffectBase
+public class ShockBomb : ThrowableEffectBase
 {
     [Header("范围")]
     float radius = 20f;
-    float stunTime = 3f;//眩晕时长
-    public LayerMask targetLayer;//眩晕敌人层
-    public GameObject flashFX;//产生火花
+    float stunTime = 2f;
+    float bombForce = 2f;
+    public LayerMask targetLayer;
+    public GameObject shockFX;
 
-    public UnityEvent<Transform> OnBlast;//爆炸抖动相机
-
+    public UnityEvent<Transform> OnBlast;
 
     Animator anim;
-    Collider2D coll;
-    Rigidbody2D rb;
-
-    [Header("计时")]
     public float startTime;
-    public float waitTime = 1.5f;
+    float waitTime = 1.5f;
     private bool hasExploded;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-        coll = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
         startTime = Time.time;
-
-
     }
 
     void Update()
@@ -47,8 +38,9 @@ public class FlashBomb : ThrowableEffectBase
 
     public void Explotion()
     {
-        Instantiate(flashFX, transform.position, Quaternion.identity);
-        UIManager.instance.WhiteScreen.SetActive(true);
+       
+        Instantiate(shockFX, transform.position, Quaternion.identity);
+        UIManager.instance.ShockScreen.SetActive(true);
 
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
 
@@ -57,12 +49,26 @@ public class FlashBomb : ThrowableEffectBase
             EnemyController enemy = item.GetComponent<EnemyController>();
             if (enemy != null)
             {
-                enemy.Stun(stunTime);
+
+                enemy.Shock(stunTime);
+            }
+
+            int layer = item.gameObject.layer;
+
+            if (layer == LayerMask.NameToLayer("Bomb") ||
+                layer == LayerMask.NameToLayer("Environment"))
+            {
+                Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
+
+                if (itemRb != null)
+                {
+                    Vector3 pos = transform.position - item.transform.position;
+                    itemRb.AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);
+                }
             }
         }
 
-        OnBlast?.Invoke(transform);//相机震动
-
+        OnBlast?.Invoke(transform);
     }
 
     public void DestoryThis()

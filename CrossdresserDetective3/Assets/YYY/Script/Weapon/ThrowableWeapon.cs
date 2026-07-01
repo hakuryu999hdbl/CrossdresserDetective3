@@ -16,7 +16,7 @@ public class ThrowableWeapon : MonoBehaviour
     [Header("组件")]
     public Rigidbody2D rb;
     public GameObject AttackArea;
-    public int WeaponType;//1匕首 2武士刀 3尼泊尔军刀
+    public Attack attack;//把Owner传递进去
 
     [Header("落地设置")]
     public LayerMask groundLayer;
@@ -24,11 +24,17 @@ public class ThrowableWeapon : MonoBehaviour
 
     private bool hasLanded;
 
+
+
+
     private void Awake()
     {
         if (rb == null)
             rb = GetComponent<Rigidbody2D>();
+
        
+
+
     }
 
     private void Update()

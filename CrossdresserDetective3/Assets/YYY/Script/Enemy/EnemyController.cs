@@ -255,6 +255,17 @@ public class EnemyController : MonoBehaviour
 
         TransitionToState(hitState);
     }
+
+
+    public void Shock(float duration)
+    {
+        if (isDead) return;
+
+        Character character = GetComponent<Character>();
+
+        character.currentHealth = 1; // 按你的血量变量名改
+        Stun(duration);
+    }
     #endregion
 
     /// <summary>
@@ -971,7 +982,12 @@ public class EnemyController : MonoBehaviour
 
         Character attackerCharacter = attack.owner;//一旦受伤，立刻读取Attack的主人
 
-        bool hitFromBehind = IsHitFromBehind(attack.transform.position);
+        Vector3 attackSourcePos =
+        attackerCharacter != null
+        ? attackerCharacter.transform.position
+        : attack.transform.position;//如果attack有owner，用owner位置，没有用attack位置
+
+        bool hitFromBehind = IsHitFromBehind(attackSourcePos);//判断伤害来源是不是伤害的主人
 
         // 👉 攻击从背后打来 = 直接死  // 👉 眩晕 = 直接死
         if (hitFromBehind||isDizzy)

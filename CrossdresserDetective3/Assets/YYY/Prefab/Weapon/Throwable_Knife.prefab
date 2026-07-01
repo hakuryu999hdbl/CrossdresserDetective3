@@ -45,14 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd723ba45a584e49b26315afa440f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
   damage: 10
-  attackRange: 0
-  attackRate: 0
+  hitEffectType: 0
+  TurnOnBomb: 0
   knockbackX: 5
   knockbackY: 0
   hurtTime: 0.2
   clearVelocity: 1
-  bombAvailable: 0
 --- !u!61 &8367388589437741566
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -87,7 +87,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -4.7395453, y: -0.02538985}
+  m_Offset: {x: 0.014331579, y: -0.02538985}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -97,7 +97,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 9.714438, y: 1.7328879}
+  m_Size: {x: 5.656612, y: 1.7328879}
   m_EdgeRadius: 0
 --- !u!1 &7993647595746193275
 GameObject:
@@ -180,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 90dd8ff8bdd3267418ad42bb5aa0ecda, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5e26721a41761744a1a7fc50438b182, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -225,17 +225,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -4.6942496, y: 0.01484254}
+  m_Offset: {x: -0.014421225, y: 0.01484251}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 26.065454, y: 4.34}
+    oldSize: {x: 5, y: 5}
     newSize: {x: 26.065454, y: 4.34}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 9.307637, y: 1.0499902}
+  m_Size: {x: 5.1017137, y: 1.0499902}
   m_EdgeRadius: 0
 --- !u!114 &4935781752400011575
 MonoBehaviour:
@@ -252,7 +252,7 @@ MonoBehaviour:
   state: 0
   rb: {fileID: 4955850313695950278}
   AttackArea: {fileID: 6647426698188555322}
-  WeaponType: 1
+  attack: {fileID: 6707086317271408436}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

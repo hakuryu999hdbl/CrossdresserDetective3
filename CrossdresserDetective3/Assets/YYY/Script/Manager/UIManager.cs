@@ -821,7 +821,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject RedScreen;
     public GameObject WhiteScreen;
-
+    public GameObject ShockScreen;
 
 
 
@@ -829,7 +829,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-  
+
 
 
 
@@ -1065,6 +1065,8 @@ public class UIManager : MonoBehaviour
     public GameObject magazineIcon;
     public Text magazineText;
 
+ 
+
     public void RefreshAmmoUI(
      int currentAmmo,
      int maxAmmo, int magazineCount
@@ -1181,9 +1183,27 @@ public class UIManager : MonoBehaviour
             case 3:
                 throwableIcons[2].SetActive(true);
                 break;
+            case 4:
+                throwableIcons[3].SetActive(true);
+                break;
+            case 5:
+                throwableIcons[4].SetActive(true);
+                break;
+            case 6:
+                throwableIcons[5].SetActive(true);
+                break;
         }
+
+        RefreshThrowUI(playerController.throwCount);//投掷品数量
 
     }
 
+    [Header("投掷品数量UI")]
+    public Text throwCountText;
+
+    public void RefreshThrowUI(int currentThrowCount)
+    {
+        throwCountText.text = "X" + currentThrowCount;
+    }
     #endregion
 }

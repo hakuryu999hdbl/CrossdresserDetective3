@@ -1092,7 +1092,7 @@ public class PlayerController : MonoBehaviour
     public GameObject shockPrefab;//震撼弹
     public GameObject knifePrefab;//飞刀
 
-    // float throwForce = 16f;//投掷炸弹力度
+
     float nextThrow = 0;//投掷冷却
     float ThrowRate = 0.5f;//投掷频率
 
@@ -1106,7 +1106,9 @@ public class PlayerController : MonoBehaviour
     float minThrowForce = 8f;
     float maxThrowForce = 30f;
 
-
+    [Header("投掷物数量")]
+    public int throwCount = 3;
+    public int maxThrowCount = 3;
 
     void CheckThrow() 
     {
@@ -1146,6 +1148,15 @@ public class PlayerController : MonoBehaviour
     public void Throw()
     {
         if (!physicsCheck.isGround) { return; }//空中无法投掷
+
+
+        //投掷品数量消耗
+        if (throwType == 0) return;
+        if (throwCount <= 0)
+        {
+            AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_bomb_bounce_1);
+            return;
+        }
 
         playerAnimation.PlayThrow();
         isAttack = true;
@@ -1202,18 +1213,45 @@ public class PlayerController : MonoBehaviour
             {
                 float finalForce = Mathf.Lerp(minThrowForce, maxThrowForce, throwChargeOnRelease);
 
-                Vector2 dir = new Vector2(transform.localScale.x * 0.6f, 1f).normalized;
-                rb.velocity = dir * finalForce;
+
+                if (throwType == 6) // 飞刀单独用一个向前
+                {
+                    Vector2 dir = new Vector2(transform.localScale.x, 0.2f);
+                    rb.velocity = dir * finalForce;
+
+                    obj.GetComponent<ThrowableWeapon>().attack.owner = character;//飞刀想要暗杀，必须把主人传入
+                }
+                else
+                {
+                    Vector2 dir = new Vector2(transform.localScale.x * 0.6f, 1f).normalized;
+                    rb.velocity = dir * finalForce;
+                }
+
+
+               
             }
 
 
             nextThrow = Time.time + ThrowRate;
+
+
+            //消耗数量
+            throwCount--;
+            throwCount = Mathf.Clamp(throwCount, 0, maxThrowCount);
+
+            UIManager.instance.RefreshThrowUI(throwCount);
         }
 
 
     }
 
+    public void AddThrowCount(int value)
+    {
+        throwCount += value;
+        throwCount = Mathf.Clamp(throwCount, 0, maxThrowCount);
 
+        UIManager.instance.RefreshThrowUI(throwCount);
+    }//未来补充投掷品口子
 
 
     [Header("武器槽")]
@@ -1266,7 +1304,6 @@ public class PlayerController : MonoBehaviour
 
 
         UIManager.instance.RefreshWeaponSlotUI(this);
- 
 
     }//更换玩家当前装备显示与UI层显示
 

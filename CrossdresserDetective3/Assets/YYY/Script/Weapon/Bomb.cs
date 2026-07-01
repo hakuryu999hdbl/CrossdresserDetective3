@@ -19,7 +19,7 @@ public class Bomb :  ThrowableEffectBase, IDamageable
 
     [Header("Check")]
     public float radius;
-    public LayerMask targetLayer;
+    public LayerMask targetLayer;//炸死推飞敌人层
 
     [Header("初始是否为易燃易爆物品")]
     public bool isTurnOff = false;
