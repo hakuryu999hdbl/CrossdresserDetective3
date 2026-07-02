@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
                     default:
                     case 6:
-                        SetArea(11);
+                        SetArea(16);
                         break;
                 }
                 break;

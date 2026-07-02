@@ -24,7 +24,7 @@ public class PlayerAnimation : MonoBehaviour
 
         anim.SetFloat("velocityX", Mathf.Abs(playerController.rb.velocity.x));//每帧检测横向速度绝对值
         anim.SetFloat("velocityY", playerController.rb.velocity.y);//每帧检测是否位于空中下落
-        anim.SetBool("isGround", physicsCheck.isGround);//每帧检测是位于地面
+        anim.SetBool("isGround", physicsCheck.isGround || playerController.isOnElevator);//每帧检测是位于地面
         anim.SetBool("isCrouch", playerController.isCrouch);//每帧检测是否下蹲
         anim.SetBool("isDead", playerController.isDead);//每帧检测是活着
         anim.SetBool("isAttack", playerController.isAttack);//每帧检测玩家是否处于攻击

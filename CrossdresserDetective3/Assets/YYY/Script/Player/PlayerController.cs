@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public bool isTeleporting = false;//是否传送
     public bool isWallCling;   // 是否抓/蹬在墙上停住
 
-
+    public bool isOnElevator;
 
     // Start is called before the first frame update
     void Start()

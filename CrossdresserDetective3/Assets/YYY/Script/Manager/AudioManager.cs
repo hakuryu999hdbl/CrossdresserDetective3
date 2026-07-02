@@ -101,7 +101,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip SE_WalkClip_1, SE_WalkClip_2, SE_RunClip_1, SE_RunClip_2;
     public AudioClip SE_falldown;
     public AudioClip SE_Door_Open, SE_Door_Close;
-
+    public AudioClip SE_Button, SE_Elevator_1, SE_Elevator_2;
 
     public AudioClip UI_Click, UI_Select;
     #endregion
