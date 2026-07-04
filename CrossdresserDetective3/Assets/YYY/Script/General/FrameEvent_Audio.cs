@@ -142,8 +142,34 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _SE_falldown() { audioS.PlayOneShot(AudioManager.SE_falldown); }
 
-    public void _SE_Door_Open() { audioS.PlayOneShot(AudioManager.SE_Door_Open); }
-    public void _SE_Door_Close() { audioS.PlayOneShot(AudioManager.SE_Door_Close); }
+
+
+    public bool isCage = false;
+
+    public void _SE_Door_Open()
+    {
+        if (isCage) 
+        {
+            audioS.PlayOneShot(AudioManager.SE_Cage);
+        }
+        else
+        {
+            audioS.PlayOneShot(AudioManager.SE_Door_Open);
+        }
+      
+    }
+    public void _SE_Door_Close()
+    {
+        if (isCage)
+        {
+            audioS.PlayOneShot(AudioManager.SE_Cage);
+        }
+        else
+        {
+            audioS.PlayOneShot(AudioManager.SE_Door_Close);
+        }
+       
+    }
 
     public void _YYY_attack() 
     {

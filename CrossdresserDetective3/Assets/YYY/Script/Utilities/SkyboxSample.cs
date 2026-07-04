@@ -59,7 +59,7 @@ public class SkyboxSample : MonoBehaviour
                 break;
         }
 
-        dayLight.intensity = 1f;
+        dayLight.intensity = 0.8f;
     }
 
     public void Night()
@@ -67,7 +67,7 @@ public class SkyboxSample : MonoBehaviour
         mainCamera.clearFlags = CameraClearFlags.Skybox; // 确保切换回来
         RenderSettings.skybox = mats[1];
 
-        dayLight.intensity = 0.2f;
+        dayLight.intensity = 0.4f;
     }
 
     public void RedSky()
