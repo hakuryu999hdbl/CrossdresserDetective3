@@ -576,8 +576,8 @@ public class PlayerController : MonoBehaviour
 
 
         //hairIndex = 1;
-        hatIndex = 1;
-        maskIndex = 1;
+        //hatIndex = 1;
+        //maskIndex = 1;
 
 
         RefreshPlayerSkin();//换装界面调用

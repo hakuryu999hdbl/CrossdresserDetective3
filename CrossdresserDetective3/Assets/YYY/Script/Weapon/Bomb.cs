@@ -78,10 +78,14 @@ public class Bomb :  ThrowableEffectBase, IDamageable
 
         foreach (var item in aroundObjects)
         {
+            //摇晃垂下物体
+            SwingOnBlast swing = item.GetComponentInParent<SwingOnBlast>();
+            if (swing != null)
+            {
+                swing.OnBlastHit(transform.position);
+            }
 
-
-           
-
+            //炸死与推远物体
             EnemyController enemy = item.GetComponent<EnemyController>();
 
             if (enemy != null)
@@ -97,11 +101,6 @@ public class Bomb :  ThrowableEffectBase, IDamageable
                     itemRb.AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);
                 }
             }
-
-            //Vector3 pos = transform.position - item.transform.position;
-            //
-            //item.GetComponent<Rigidbody2D>().AddForce((-pos + Vector3.up) * bombForce, ForceMode2D.Impulse);//炸飞
-
 
             //触发可掉落物体
             FallOnExplosion fall = item.GetComponent<FallOnExplosion>();

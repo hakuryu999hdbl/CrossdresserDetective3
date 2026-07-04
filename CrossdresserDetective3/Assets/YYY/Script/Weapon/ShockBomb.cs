@@ -46,6 +46,15 @@ public class ShockBomb : ThrowableEffectBase
 
         foreach (var item in targets)
         {
+
+            //摇晃垂下物体
+            SwingOnBlast swing = item.GetComponentInParent<SwingOnBlast>();
+            if (swing != null)
+            {
+                swing.OnBlastHit(transform.position);
+            }
+
+            //推远敌人
             EnemyController enemy = item.GetComponent<EnemyController>();
             if (enemy != null)
             {

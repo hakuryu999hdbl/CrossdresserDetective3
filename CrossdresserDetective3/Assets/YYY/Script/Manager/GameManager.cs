@@ -54,19 +54,19 @@ public class GameManager : MonoBehaviour
                     case 3:
                         SetArea(6);
                         break;
-                    default:
+                   
                     case 4:
                         SetArea(9);
                         break;
 
-                   
+                    default:
                     case 5:
-                        SetArea(8);
+                        SetArea(9);
                         break;
 
                 
                     case 6:
-                        SetArea(10);
+                        SetArea(8);
                         break;
                 }
                 break;

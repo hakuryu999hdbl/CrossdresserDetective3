@@ -95,6 +95,16 @@ public class FireBomb : ThrowableEffectBase
 
         foreach (var item in aroundObjects)
         {
+
+            //摇晃垂下物体
+            SwingOnBlast swing = item.GetComponentInParent<SwingOnBlast>();
+            if (swing != null)
+            {
+                swing.OnBlastHit(transform.position);
+            }
+
+
+            //推远物体
             Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
             if (itemRb == null) continue;
 
