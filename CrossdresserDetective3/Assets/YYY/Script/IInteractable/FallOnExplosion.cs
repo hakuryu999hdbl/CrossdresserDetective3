@@ -7,50 +7,66 @@ public class FallOnExplosion : MonoBehaviour
     public Rigidbody2D rb;
     public Collider2D col;
 
+    [Header("ù{óéï®óù")]
     public float fallMass = 0.4f;
-    public float upwardForce = 1.5f;
-    public float sideForce = 2f;
+    public float gravityScale = 1f;
+    public float drag = 1.5f;
+    public float angularDrag = 2f;
+
+    [Header("îÌ‡yóéèâë¨ìx")]
+    public float sideVelocity = 1.5f;
+    public float downVelocity = 2.5f;
     public float torqueForce = 8f;
 
     private bool hasFallen;
 
+
+    private void Start()
+    {
+        //rb.gravityScale =0;
+        //rb = GetComponent<Rigidbody2D>();
+    }
+
     public void OnBlastHit(Vector2 blastCenter)
+    {
+        //rb.gravityScale = 1;
+        Fall(blastCenter);
+    }
+
+    private void Fall(Vector2 blastCenter)
     {
         if (hasFallen) return;
         hasFallen = true;
 
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.gravityScale = 1f;
+        rb.gravityScale = gravityScale;
         rb.mass = fallMass;
-        rb.drag = 1.5f;
-        rb.angularDrag = 2f;
+        rb.drag = drag;
+        rb.angularDrag = angularDrag;
 
-        Vector2 dir = ((Vector2)transform.position - blastCenter).normalized;
-        dir.y += upwardForce;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
 
-        rb.AddForce(dir * sideForce, ForceMode2D.Impulse);
-        rb.AddTorque(Random.Range(-torqueForce, torqueForce), ForceMode2D.Impulse);
+        float dirX = transform.position.x >= blastCenter.x ? 1f : -1f;
 
+        rb.velocity = new Vector2(
+            dirX * sideVelocity,
+            -downVelocity
+        );
+
+        rb.AddTorque(
+            Random.Range(-torqueForce, torqueForce),
+            ForceMode2D.Impulse
+        );
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
-        if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
-        {
-            hasFallen = true;
-
-            rb.bodyType = RigidbodyType2D.Dynamic;
-            rb.gravityScale = 1f;
-            rb.mass = fallMass;
-            rb.drag = 1.5f;
-            rb.angularDrag = 2f;
-
-            Destroy(this);
-        }
-
-       
-
-        
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (hasFallen) return;
+    //
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
+    //    {
+    //        Fall(other.transform.position);
+    //    }
+    //}
 }

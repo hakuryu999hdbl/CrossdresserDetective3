@@ -114,7 +114,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &7775992037948987022
 BoxCollider2D:
@@ -177,6 +177,9 @@ MonoBehaviour:
   rb: {fileID: 8304987882218894861}
   col: {fileID: 7775992037948987022}
   fallMass: 0.4
-  upwardForce: 1.5
-  sideForce: 2
+  gravityScale: 1
+  drag: 1.5
+  angularDrag: 2
+  sideVelocity: 1.5
+  downVelocity: 2.5
   torqueForce: 8

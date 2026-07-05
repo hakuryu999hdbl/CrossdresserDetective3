@@ -54,6 +54,13 @@ public class ShockBomb : ThrowableEffectBase
                 swing.OnBlastHit(transform.position);
             }
 
+            //触发可掉落物体
+            FallOnExplosion fall = item.GetComponent<FallOnExplosion>();
+            if (fall != null)
+            {
+                fall.OnBlastHit(transform.position);
+            }
+
             //推远敌人
             EnemyController enemy = item.GetComponent<EnemyController>();
             if (enemy != null)

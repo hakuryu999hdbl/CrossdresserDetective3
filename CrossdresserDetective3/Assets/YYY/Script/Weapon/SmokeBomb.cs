@@ -78,6 +78,13 @@ public class SmokeBomb : ThrowableEffectBase
                 swing.OnBlastHit(transform.position);
             }
 
+            //触发可掉落物体
+            FallOnExplosion fall = item.GetComponent<FallOnExplosion>();
+            if (fall != null)
+            {
+                fall.OnBlastHit(transform.position);
+            }
+
             //推远物体
             Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
             if (itemRb == null) continue;

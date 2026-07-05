@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SkyboxSample : MonoBehaviour
 {
@@ -19,6 +20,17 @@ public class SkyboxSample : MonoBehaviour
         //Night();
         Day();
     }
+
+    void Update()
+    {
+        // 按 T 随机换装测试
+        if (Keyboard.current.yKey.wasPressedThisFrame)
+        {
+            DayOrNight();
+        }
+    }
+
+
     public void DayOrNight()
     {
 
