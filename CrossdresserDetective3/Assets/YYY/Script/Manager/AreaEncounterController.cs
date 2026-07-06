@@ -52,6 +52,15 @@ public class AreaEncounterController : MonoBehaviour
             aliveEnemies.Add(enemy);
 
 
+            //记录为非场景单个敌人，区域生成敌人
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                enemyController.isAreaSpawnedEnemy = true;
+            }
+
+
+
             if (spawnPoint.GetComponent<Animator>()!=null) 
             {
                 spawnPoint.GetComponent<Animator>().SetTrigger("Open");//开门动画

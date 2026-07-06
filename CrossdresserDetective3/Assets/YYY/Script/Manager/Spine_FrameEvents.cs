@@ -5,8 +5,9 @@ using UnityEngine;
 public class Spine_FrameEvents : MonoBehaviour
 {
 
-
+    public Animator CG_Photo;
     public Animator CG_Clock;
+
 
     //当前播放的动画器
     private Animator currentAnimator;
@@ -19,7 +20,9 @@ public class Spine_FrameEvents : MonoBehaviour
 
         switch (GameFlowData.nextAreaId)
         {
-
+            case "CG_Photo":
+                currentAnimator = CG_Photo;
+                break;
             case "CG_Clock":
                 currentAnimator = CG_Clock;
                 break;

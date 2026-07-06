@@ -70,9 +70,14 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<CapsuleCollider2D>();
 
-
+        if (!isAreaSpawnedEnemy)
+        {
+            GameManager.instance.RegisterSceneEnemy(this);
+        }//场景内的单个敌人登记进入GameManager
 
     }//敌人子类会各自在开始的时候收进父级不需要的东西（虚类）
+
+    public bool isAreaSpawnedEnemy = false;//只登记一次
 
     private void Awake()
     {
@@ -83,6 +88,11 @@ public class EnemyController : MonoBehaviour
 
         //frameEvent.FadeIn(0.4f);//所有Spine都淡入
 
+
+       
+        SetFirstDirection(); //初始朝向
+
+
         TransitionToState(patrolState);//一开始进入巡逻状态
 
         RandomizeZ();
@@ -91,7 +101,12 @@ public class EnemyController : MonoBehaviour
         RefreshPlayerSkin();//初始更新皮肤
 
 
+
     }
+
+
+
+
 
     public virtual void Update()
     {
@@ -186,6 +201,13 @@ public class EnemyController : MonoBehaviour
 
     public void TransitionToState(EnemyBaseState state)
     {
+        // 只要从巡逻状态离开，之后就变成普通走走停停
+        if (currentState == patrolState && state != patrolState)
+        {
+            patrolMode = EnemyPatrolMode.RandomPatrol;
+        }
+
+
         currentState = state;
         currentState.EnterState(this);
     }//切换状态
@@ -683,8 +705,35 @@ public class EnemyController : MonoBehaviour
     }
 
 
+ 
+
+    [Header("巡逻模式")]
+    public EnemyPatrolMode patrolMode = EnemyPatrolMode.RandomPatrol;
+
+    [Header("固定站岗")]
+    public int startFaceDir = 1; // 1 向右，-1 向左
 
 
+    public void SetFirstDirection() 
+    {
+
+        startFaceDir = startFaceDir >= 0 ? 1 : -1;
+        patrolDir = startFaceDir;
+
+        FaceStartDirection();
+
+        patrolDir = startFaceDir;
+
+    }
+
+    public void FaceStartDirection()
+    {
+        patrolDir = startFaceDir;
+
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * startFaceDir;
+        transform.localScale = scale;
+    }
 
     #endregion
 
@@ -1080,7 +1129,7 @@ public class EnemyController : MonoBehaviour
         PlayBloodEffect();//不知道为啥死亡有些时候血特效出不来就先这样吧
 
 
-     
+        GameManager.instance.SceneEnemyDead(this);//从GameManager那里划走
 
 
         isDead = true;
@@ -1129,4 +1178,12 @@ public class EnemyController : MonoBehaviour
         Random.Range(-0.2f, -0.3f)
     );
     }
+}
+
+
+public enum EnemyPatrolMode
+{
+    Guard,          // 固定站岗，不移动
+    RandomPatrol,   // 走走停停
+    ContinuousPatrol // 不停巡逻
 }

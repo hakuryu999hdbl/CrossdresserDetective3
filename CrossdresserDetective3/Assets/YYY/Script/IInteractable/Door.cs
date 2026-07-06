@@ -107,21 +107,6 @@ public class Door : MonoBehaviour, IInteractable
 
 
 
-
-
-
-
-
-
-
-
-    public void OpenDoor()
-    {
-        //anim.Play("Exit_Open");
-        //coll.enabled = true;
-    }//GameManager 调用
-
-
    
 
 }

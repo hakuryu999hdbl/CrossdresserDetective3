@@ -16,7 +16,25 @@ public class PatrolState : EnemyBaseState
             enemy.patrolDir = Random.value < 0.5f ? -1 : 1;
         }
 
-        StartIdle(enemy);
+        //StartIdle(enemy);
+
+        switch (enemy.patrolMode)
+        {
+            case EnemyPatrolMode.Guard:
+                enemy.FaceStartDirection();
+                isWalking = false;
+                timer = 999999f;
+                break;
+
+            case EnemyPatrolMode.ContinuousPatrol:
+                isWalking = true;
+                timer = 999999f;
+                break;
+
+            case EnemyPatrolMode.RandomPatrol:
+                StartIdle(enemy);
+                break;
+        }
     }
 
     public override void OnUpdate(EnemyController enemy)
@@ -27,6 +45,43 @@ public class PatrolState : EnemyBaseState
             return;
         }
 
+        switch (enemy.patrolMode)
+        {
+            case EnemyPatrolMode.Guard:
+                UpdateGuard(enemy);
+                break;
+
+            case EnemyPatrolMode.ContinuousPatrol:
+                UpdateContinuousPatrol(enemy);
+                break;
+
+            case EnemyPatrolMode.RandomPatrol:
+                UpdateRandomPatrol(enemy);
+                break;
+        }
+    }
+
+    private void UpdateGuard(EnemyController enemy)
+    {
+        enemy.animState = 0;
+        enemy.rb.velocity = new Vector2(0f, enemy.rb.velocity.y);
+    }
+
+    private void UpdateContinuousPatrol(EnemyController enemy)
+    {
+        enemy.animState = 1;
+
+        if (enemy.IsWallAheadByDir())
+        {
+            enemy.TurnAround();
+            return;
+        }
+
+        enemy.MovePatrol();
+    }
+
+    private void UpdateRandomPatrol(EnemyController enemy)
+    {
         timer -= Time.deltaTime;
 
         if (isWalking)
@@ -72,11 +127,10 @@ public class PatrolState : EnemyBaseState
         isWalking = true;
         enemy.animState = 1;
 
-        // 每次开始走，有一定概率换方向
         if (Random.value < 0.35f)
         {
             enemy.TurnAround();
-        }
+        }//一定几率回头
 
         timer = Random.Range(enemy.minWalkTime, enemy.maxWalkTime);
     }

@@ -23,12 +23,7 @@ public class GameManager : MonoBehaviour
 
     }//玩家自己传过来
 
-    Door doorExit;
-    public void IsExit(Door door)
-    {
-        doorExit = door;
-    }//这个用于逃出模式
-  
+
 
 
 
@@ -59,7 +54,7 @@ public class GameManager : MonoBehaviour
                         SetArea(9);
                         break;
 
-                  
+                   
                     case 5:
                         SetArea(7);
                         break;
@@ -127,35 +122,72 @@ public class GameManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 出口大门/逃脱模式获胜
+    /// </summary>
+    #region
+    ExitDoor exitDoor;
+    public void IsExit(ExitDoor door)
+    {
+        exitDoor = door;
+    }
+    public void PlayerEscapeWin()
+    {
+        if (PlayerWin) return;
+
+        UIManager.instance.WinUI();
+        PlayerWin = true;
+    }//这个用于逃出模式
+
+    #endregion
 
 
 
 
     /// <summary>
-    /// 检测敌人
+    /// 检测敌人/歼灭模式获胜
     /// </summary>
     #region
     [Header("检测敌人生成器")]
-    public List<AreaEncounterController> EnemyCreators = new List<AreaEncounterController>();//游戏开始的时候所有敌人生成器登记进入这个列表，当这个列表空了后打开大门
+    public List<AreaEncounterController> enemyCreators = new List<AreaEncounterController>();
+    [Header("场景固定敌人")]
+    public List<EnemyController> sceneEnemies = new List<EnemyController>();
 
-    public void IsEnemyCreator(AreaEncounterController areaEncounterController) 
+    public void IsEnemyCreator(AreaEncounterController areaEncounterController)
     {
-        EnemyCreators.Add(areaEncounterController);
+        if (!enemyCreators.Contains(areaEncounterController))
+            enemyCreators.Add(areaEncounterController);
     }
 
-    public void EnemyCleanOver(AreaEncounterController areaEncounterController) 
+    public void EnemyCleanOver(AreaEncounterController areaEncounterController)
     {
-        EnemyCreators.Remove(areaEncounterController);
+        enemyCreators.Remove(areaEncounterController);
+        CheckWinCondition();
+    }
 
-        if (EnemyCreators.Count<=0&& !PlayerWin) 
+    public void RegisterSceneEnemy(EnemyController enemy)
+    {
+        if (!sceneEnemies.Contains(enemy))
+            sceneEnemies.Add(enemy);
+    }
+
+    public void SceneEnemyDead(EnemyController enemy)
+    {
+        sceneEnemies.Remove(enemy);
+        CheckWinCondition();
+    }
+
+    private void CheckWinCondition()
+    {
+        if (PlayerWin) return;
+
+        sceneEnemies.RemoveAll(e => e == null || e.isDead);
+
+        if (enemyCreators.Count <= 0 && sceneEnemies.Count <= 0)
         {
-            //doorExit.OpenDoor();
-
             UIManager.instance.WinUI();
-
             PlayerWin = true;
         }
-
     }
     #endregion
 
