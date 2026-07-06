@@ -10,15 +10,15 @@ public class EnemyController : MonoBehaviour
     public int animState;
 
     int attackLayer;
+    int skillLayer;
     int jumpLayer;
     int deadLayer;
 
 
 
 
-    public GameObject alarmSign;
-
     [Header("基础属性")]
+    public Character character;//用于开启技能使用期间的无敌
     public bool isDead = false;
     public bool isDizzy = false;
     public bool hasBomb;//是否持有炸弹
@@ -50,6 +50,8 @@ public class EnemyController : MonoBehaviour
     public SearchState searchState = new SearchState();//搜索状态
     public HitState hitState = new HitState();//受击/眩晕状态
 
+    public ChargeSkillState chargeSkillState = new ChargeSkillState();//冲撞状态
+
     public virtual void Init()
     {
         //别找了我直接赋值，这样后面加东西一改排序就出问题
@@ -60,6 +62,7 @@ public class EnemyController : MonoBehaviour
         //抓层，让死亡的时候把别的层权重关掉
         attackLayer = anim.GetLayerIndex("Attack Layer");
         jumpLayer = anim.GetLayerIndex("Jump Layer");
+        skillLayer = anim.GetLayerIndex("Skill Layer");
         deadLayer = anim.GetLayerIndex("Dead Layer");
 
 
@@ -117,8 +120,9 @@ public class EnemyController : MonoBehaviour
         {
             // 关闭其他动作层权重
             anim.SetLayerWeight(attackLayer, 0f);
+            anim.SetLayerWeight(skillLayer, 0f);
             anim.SetLayerWeight(jumpLayer, 0f);
-
+         
             // 打开死亡层
             anim.SetLayerWeight(deadLayer, 1f);
 
@@ -207,12 +211,25 @@ public class EnemyController : MonoBehaviour
             patrolMode = EnemyPatrolMode.RandomPatrol;
         }
 
+        //只有攻击和技能产生警告
+        if (state == attackState|| state == chargeSkillState) 
+        {
+            checkArea.ShowAlarm();
+        }
+
+
+
+        currentState?.ExitState(this);
+
 
         currentState = state;
         currentState.EnterState(this);
     }//切换状态
 
-
+    public virtual void EnterBattleState()
+    {
+        TransitionToState(attackState);
+    }//敌人子类进入战斗状态
 
 
     private bool gameOverStopped = false;
@@ -301,6 +318,8 @@ public class EnemyController : MonoBehaviour
     public Vector3 lastKnownTargetPos;   // 最后看到目标的位置
 
     public GameObject questionSign;      // 问号标记，可选
+    public GameObject alarmSign;    //警戒标记
+    public GameObject InvulnerableSign;    //无敌标记
     #endregion
 
 
@@ -648,6 +667,28 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// 冲撞状态
+    /// </summary>
+    #region
+    [Header("冲撞技能")]
+    public bool useChargeSkill = false;
+
+    public float chargeReadyTime = 0.5f;      // 瞄准时间
+    public float chargeSpeed = 10f;         // 冲锋速度
+    public float chargeMaxTime = 1.5f;      // 最长冲锋时间
+    public float chargeRecoveryTime = 0.6f; // 后摇时间
+    public float chargeCooldown = 5f;       // CD
+    public float chargeMinDistance = 2.5f;  // 太近不用冲锋
+    public float chargeStopDistance = 0.4f; // 碰到玩家附近停止
+
+    [HideInInspector] public float lastChargeTime = -999f;
+    [HideInInspector] public Vector2 chargeDir;
+ 
+
+    [HideInInspector] public float chargeTargetX;//记录冲刺攻击的玩家
+    #endregion
 
     /// <summary>
     /// 巡逻状态
@@ -1001,6 +1042,7 @@ public class EnemyController : MonoBehaviour
 
     public void OnTakeDamage(Attack attack)
     {
+
 
         if (attack == null)
             return;

@@ -41,7 +41,7 @@ public class PatrolState : EnemyBaseState
     {
         if (enemy.attackList.Count > 0)
         {
-            enemy.TransitionToState(enemy.attackState);
+            enemy.EnterBattleState();//虚类进入战斗
             return;
         }
 

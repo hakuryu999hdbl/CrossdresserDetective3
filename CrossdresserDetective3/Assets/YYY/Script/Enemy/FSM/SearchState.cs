@@ -28,7 +28,7 @@ public class SearchState : EnemyBaseState
             if (enemy.questionSign != null)
                 enemy.questionSign.SetActive(false);
 
-            enemy.TransitionToState(enemy.attackState);
+            enemy.EnterBattleState();//虚类进入战斗
             return;
         }
 

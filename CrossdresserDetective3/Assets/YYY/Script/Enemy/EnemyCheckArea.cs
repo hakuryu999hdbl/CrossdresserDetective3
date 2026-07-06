@@ -12,6 +12,7 @@ public class EnemyCheckArea : MonoBehaviour
     public Color searchColor = Color.yellow;
     public Color attackColor = Color.red;
     public Color hitColor = Color.white;
+    public Color chargeSkillColor = Color.red;
     public float colorChangeSpeed = 6f;
 
     private MeshRenderer meshRenderer;
@@ -68,11 +69,7 @@ public class EnemyCheckArea : MonoBehaviour
     {
         //if (!IsValidTarget(other)) return;
 
-        if (!enemy.isDead && !GameManager.instance.gameOver)
-        {
-            //targetColor = alertColor;
-            StartCoroutine(OnAlarm());
-        }
+        
     }
 
     private bool IsValidTarget(Collider2D other)
@@ -82,6 +79,14 @@ public class EnemyCheckArea : MonoBehaviour
         if (GameManager.instance != null && GameManager.instance.gameOver) return false;
 
         return other.CompareTag("Player") || other.CompareTag("Bomb");
+    }
+
+    public void ShowAlarm() 
+    {
+        if (!enemy.isDead && !GameManager.instance.gameOver)
+        {
+            StartCoroutine(OnAlarm());
+        }
     }
 
     IEnumerator OnAlarm()
@@ -125,5 +130,9 @@ public class EnemyCheckArea : MonoBehaviour
     public void SetHitColor()
     {
         targetColor = hitColor;
+    }
+    public void SetChargeSkillColor()
+    {
+        targetColor = chargeSkillColor;
     }
 }

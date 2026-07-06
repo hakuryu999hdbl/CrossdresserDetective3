@@ -298,10 +298,10 @@ public class FrameEvent : MonoBehaviour
     {
         skeletonAnimation.Skeleton.A = 1f; // 完全不透明
     }
-    //public void HalfShowSkeleton()
-    //{
-    //    skeletonAnimation.Skeleton.A = 0.3f; // 半透明
-    //}
+    public void HalfShowSkeleton()
+    {
+        skeletonAnimation.Skeleton.A = 0.3f; // 半透明
+    }
 
     #endregion
 

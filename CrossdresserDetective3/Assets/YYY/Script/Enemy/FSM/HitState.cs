@@ -29,7 +29,7 @@ public class HitState : EnemyBaseState
         enemy.isDizzy = false;
 
         if (enemy.attackList.Count > 0)
-            enemy.TransitionToState(enemy.attackState);
+            enemy.EnterBattleState();//虚类进入战斗
         else
             enemy.TransitionToState(enemy.patrolState);
     }

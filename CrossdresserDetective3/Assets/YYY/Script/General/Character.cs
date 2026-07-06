@@ -18,6 +18,17 @@ public class Character : MonoBehaviour, IDamageable
     float invulnerableCounter;//计数器
     public bool invulnerable;//是否无敌
 
+
+    public bool skillInvulnerable; // 技能无敌
+    public bool IsInvulnerable
+    {
+        get
+        {
+            return invulnerable || skillInvulnerable;
+        }
+    }//只要当中有一个true就能算无敌
+    
+
     [Header("受伤击退死亡")]
     public UnityEvent<Character> OnHealthChange;//只要生命值有一点改变，就把Character广播出去到ScriptObject
     public UnityEvent<Transform> OnTakeDamge;
@@ -75,7 +86,7 @@ public class Character : MonoBehaviour, IDamageable
     public void TakeDamage(Attack attacker)
     {
         if (isDead) { return; }//不能鞭尸
-        if (invulnerable) { return; }//处于无敌
+        if (IsInvulnerable){ return; }//处于无敌
 
 
         if (currentHealth - attacker.damage > 0) 
