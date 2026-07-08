@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (isDead)
+        if (isDead || isCaptured)
         {
             if (physicsCheck.isGround)
             {
@@ -644,6 +644,50 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
+    /// 被抓住状态
+    /// </summary>
+    #region
+
+    [Header("被敌人抓取")]
+    public bool isCaptured;
+    public Collider2D playerCollider;
+
+    public void EnterCapturedState()
+    {
+
+        isCaptured = true;
+
+        inputDirection = Vector2.zero;
+        rb.velocity = Vector2.zero;
+
+
+        //玩家透明
+        frameEvent.HideSkeleton();
+
+        // 如果还有攻击/投掷状态，全部清掉
+        isAttack = false;
+        isDashAttack = false;
+
+    }
+
+    public void ExitCapturedState(Vector2 throwForce)
+    {
+        isCaptured = false;
+
+        //玩家变回不透明
+        frameEvent.ShowSkeleton();
+
+
+        //rb.simulated = true;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(throwForce, ForceMode2D.Impulse);
+    }
+
+
+
+    #endregion
+
+    /// <summary>
     /// 受伤死亡
     /// </summary>
     #region
@@ -890,7 +934,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerAttack(InputAction.CallbackContext obj)
     {
-
+        if (isCaptured) { return; }//被抓住无法攻击
         //if (!physicsCheck.isGround) { return; }//空中无法攻击
 
         if (!physicsCheck.isGround)
@@ -931,6 +975,7 @@ public class PlayerController : MonoBehaviour
 
     void AirKick()
     {
+        if (isCaptured) { return; }//被抓住无法攻击
         if (isAirKick) return;
         if (isAttack || isHurt || isDead || isTeleporting ) return;
 
@@ -1034,7 +1079,7 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
-
+        if (isCaptured) { return; }//被抓住无法翻滚
         if (isSlide) return;
         if (!physicsCheck.isGround) return;
         if (character.currentPower < slidePowerCost) return;
@@ -1107,8 +1152,8 @@ public class PlayerController : MonoBehaviour
     float maxThrowForce = 30f;
 
     [Header("投掷物数量")]
-    public int throwCount = 3;
-    public int maxThrowCount = 3;
+    public int throwCount = 5;
+    public int maxThrowCount = 5;
 
     void CheckThrow() 
     {
@@ -1147,7 +1192,8 @@ public class PlayerController : MonoBehaviour
 
     public void Throw()
     {
-        if (!physicsCheck.isGround) { return; }//空中无法投掷
+        if (isCaptured) { return; }//被抓住无法投掷
+        //if (!physicsCheck.isGround) { return; }//空中无法投掷
 
 
         //投掷品数量消耗

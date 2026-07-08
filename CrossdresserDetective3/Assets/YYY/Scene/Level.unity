@@ -534,7 +534,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.83597976, y: 0.26370347}
+  m_Offset: {x: 0.5, y: 0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -544,7 +544,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4641308, y: 2.8250177}
+  m_Size: {x: 2, y: 2.8}
   m_EdgeRadius: 0
 --- !u!1 &46893221
 GameObject:
@@ -2765,7 +2765,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.83597976, y: 0.26370347}
+  m_Offset: {x: 0.5, y: 0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2775,7 +2775,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4641308, y: 2.8250177}
+  m_Size: {x: 2, y: 2.8}
   m_EdgeRadius: 0
 --- !u!1 &233112429
 GameObject:
@@ -9268,7 +9268,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.83597976, y: 0.26370347}
+  m_Offset: {x: 0.5, y: 0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -9278,7 +9278,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4641308, y: 2.8250177}
+  m_Size: {x: 2, y: 2.8}
   m_EdgeRadius: 0
 --- !u!1 &743990319
 GameObject:
@@ -18262,6 +18262,8 @@ MonoBehaviour:
   throwType: 1
   attackType: -2
   UI_anim: {fileID: 16702419}
+  isCaptured: 0
+  playerCollider: {fileID: 0}
   hurtForce: 8
   frameEvent_Audio: {fileID: 500547792}
   Effect_Blood: {fileID: 1622069723160390679, guid: 3cbb102f876966040a9c79278e3e6a63, type: 3}
@@ -18286,8 +18288,8 @@ MonoBehaviour:
   knifePrefab: {fileID: 7993647595746193275, guid: f0d8ee50e4efce6419d59cd658272ce8, type: 3}
   isHoldingThrow: 0
   throwCharge: 0
-  throwCount: 3
-  maxThrowCount: 3
+  throwCount: 5
+  maxThrowCount: 5
   meleeSlot: 0
   rangedSlot: 0
   Slot: 0

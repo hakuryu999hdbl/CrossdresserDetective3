@@ -136,7 +136,12 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-
+        if (isCatching)
+        {
+            rb.velocity = Vector2.zero;
+            anim.SetInteger("state", 0);
+            return;
+        }//抓取期间的锁住
 
 
         if (GameManager.instance != null && GameManager.instance.gameOver)
@@ -192,7 +197,9 @@ public class EnemyController : MonoBehaviour
        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(attackLayer);
        
        if (stateInfo.IsName("Girl_Shooting") ||
-           stateInfo.IsName("Girl_Shooting_Crouch"))
+           stateInfo.IsName("Girl_Shooting_Crouch") ||
+            stateInfo.IsName("Girl_Catch")
+           )
        {
            speed = 0;
             Debug.Log("执行射击");
@@ -410,6 +417,12 @@ public class EnemyController : MonoBehaviour
 
     public void AttackAction()
     {
+        //抓取期间锁住再度攻击
+        if (isCatching) return;
+        if (capturedPlayer != null) return;
+        if (Time.time < nextCatchTime) return; // 抓取后1秒内禁止再次 attack
+        if (targetPoint == null) return;
+
 
         float distance = Vector2.Distance(transform.position, targetPoint.position);
         float yDiff = Mathf.Abs(targetPoint.position.y - transform.position.y);
@@ -691,6 +704,93 @@ public class EnemyController : MonoBehaviour
     #endregion
 
     /// <summary>
+    /// 抓取技能
+    /// </summary>
+    #region
+    [Header("抓取技能")]
+    public bool isCatching;//在整个抓取过程中挡住FSM
+    public PlayerController capturedPlayer;
+    public Catch catchCollider;
+
+    [Header("抓取冷却")]
+    public float catchCooldown = 1.0f;
+    public float nextCatchTime;
+
+    public GameObject Catch_Collider;//让动画产生，防止bug
+
+    public void StartCatchPlayer(PlayerController player)
+    {
+
+        if (isDead) return;
+        if (isCatching) return;
+        if (capturedPlayer != null) return;
+        if (Time.time < nextCatchTime) return;
+        if (player == null || player.isDead) return;
+
+        if (player == null) return;
+        if (capturedPlayer != null) return;
+
+        isCatching = true;
+        capturedPlayer = player;
+
+
+
+        //开始抓取的清理
+        anim.ResetTrigger("attack");
+        anim.ResetTrigger("skill");
+
+        attackList.Clear();
+        targetPoint = null;
+
+        rb.velocity = Vector2.zero;
+
+
+
+
+        ReadCurrentGame(player);//敌人读取玩家皮肤
+
+
+        player.EnterCapturedState();//玩家进入透明
+
+        character.skillInvulnerable = true;//技能无敌
+
+        Debug.Log("抓住玩家：" + capturedPlayer.name);
+    }
+
+    public void ThrowCapturedPlayer()
+    {
+
+        Debug.Log("投出");
+
+        if (capturedPlayer != null)
+        {
+            float dir = transform.localScale.x > 0 ? 1f : -1f;
+            capturedPlayer.ExitCapturedState(new Vector2(6f * dir, 4f));//玩家恢复
+            capturedPlayer = null;
+        }
+
+        isCatching = false;
+        nextCatchTime = Time.time + catchCooldown;
+
+
+        //丢出后的清理
+        attackList.Clear();
+        targetPoint = null;
+        anim.ResetTrigger("attack");
+
+        catchCollider.ResetCatch();
+
+        character.skillInvulnerable = false;//技能无敌关闭
+
+        TransitionToState(patrolState);
+    }
+
+
+
+    #endregion
+
+
+    /// <summary>
     /// 巡逻状态
     /// </summary>
     #region
@@ -968,7 +1068,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-        meleeType = Random.Range(0, 4);
+        meleeType = Random.Range(1, 4);
 
 
         pistolType = Random.Range(1, 4);
@@ -1011,6 +1111,20 @@ public class EnemyController : MonoBehaviour
 
     }//更新外观
 
+    public void ReadCurrentGame(PlayerController player)
+    {
+       
+
+        clothesIndex = player.clothesIndex;
+        glovesIndex = player.glovesIndex;
+        pantiesIndex = player.pantiesIndex;
+        shoesIndex = player.shoesIndex;
+        skirtIndex = player.skirtIndex;
+        stockingsIndex = player.stockingsIndex;
+
+        RefreshPlayerSkin();
+
+    }//敌人在抓取玩家前读取玩家皮肤
 
     #endregion
 
