@@ -51,6 +51,8 @@ public class EnemyController : MonoBehaviour
     public HitState hitState = new HitState();//受击/眩晕状态
 
     public ChargeSkillState chargeSkillState = new ChargeSkillState();//冲撞状态
+    public AimThrowSkillState aimThrowSkillState = new AimThrowSkillState();//瞄准投掷状态
+
 
     public virtual void Init()
     {
@@ -198,7 +200,8 @@ public class EnemyController : MonoBehaviour
        
        if (stateInfo.IsName("Girl_Shooting") ||
            stateInfo.IsName("Girl_Shooting_Crouch") ||
-            stateInfo.IsName("Girl_Catch")
+            stateInfo.IsName("Girl_Catch") ||
+             stateInfo.IsName("Girl_Throw")
            )
        {
            speed = 0;
@@ -702,6 +705,74 @@ public class EnemyController : MonoBehaviour
 
     [HideInInspector] public float chargeTargetX;//记录冲刺攻击的玩家
     #endregion
+
+
+    /// <summary>
+    /// 投掷技能
+    /// </summary>
+    #region
+    [Header("瞄准投掷技能")]
+    public bool useAimThrowSkill = false;
+
+    public Transform throwAimTarget;// 瞄准物体
+    public GameObject throwExplosionPrefab;//爆炸
+
+    public float throwAimTime = 1f;
+    public Vector2 throwTargetPos;
+
+    public EnemyThrowObject throwObject;//投掷物
+
+   
+
+    public void AimThrowSpawnExplosion()
+    {
+        if (throwExplosionPrefab != null)
+        {
+            //GameObject effect = Instantiate(
+            //    throwExplosionPrefab,
+            //    throwTargetPos,
+            //    Quaternion.identity
+            //);
+            //
+            //Destroy(effect, 1.2f);
+
+
+            throwObject.Launch(transform.position, throwTargetPos);
+        }
+    }
+
+    public void AimThrowStartLaugh()
+    {
+        anim.SetInteger("skillState", 3);
+    }
+
+    public void AimThrowOver()
+    {
+        //StopMove();
+
+        anim.SetInteger("skillState", 0);
+
+        if (throwAimTarget != null)
+            throwAimTarget.gameObject.SetActive(false);//瞄准消失
+
+        targetPoint = null;
+
+        TransitionToState(patrolState);
+    }
+
+
+    public void FaceToPosition(Vector3 targetPos)
+    {
+        float dir = targetPos.x - transform.position.x;
+
+        if (dir > 0)
+            transform.localScale = Vector3.one;
+        else if (dir < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+    }//因该是有一样方法的，可以把写重复的地方引导到这里
+
+    #endregion
+
 
     /// <summary>
     /// 抓取技能
@@ -1296,7 +1367,10 @@ public class EnemyController : MonoBehaviour
         //coll.enabled = false;
         //rb.bodyType = RigidbodyType2D.Static;
 
-
+        if (throwAimTarget != null) 
+        {
+            throwAimTarget.gameObject.SetActive(false);
+        }
 
     }
 

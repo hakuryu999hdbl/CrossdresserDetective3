@@ -4,5 +4,18 @@ using UnityEngine;
 
 public class Enemy_2 : EnemyController
 {
+    public override void EnterBattleState()
+    {   
 
+        if (useAimThrowSkill)
+        {
+            TransitionToState(aimThrowSkillState);
+        }
+        else
+        {
+            TransitionToState(attackState);
+        }
+
+
+    }
 }

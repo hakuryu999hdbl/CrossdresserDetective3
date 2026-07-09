@@ -24,11 +24,11 @@ public class FrameEvent : MonoBehaviour
         //换皮肤
         skeletonAnimation = GetComponent<SkeletonMecanim>();
 
-       
+
 
 
     }
-  
+
 
     void Update()
     {
@@ -38,33 +38,33 @@ public class FrameEvent : MonoBehaviour
             //RandomTestSkin();
 
 
-              ShowCurrentAll(
-            0, // 伪娘头发
-            0, // 伪娘吊袜带
-            2, // 伪娘衣服：0 = 不显示
-            1, // 伪娘手套：0 = 不显示
-            0, // 伪娘内裤：0 = 不显示
-            1, // 伪娘鞋子
-            0, // 伪娘裙子
-            1, // 伪娘丝袜：0 = 不显示
-            1, // 伪娘帽子：0 = 不显示
-            1, // 伪娘面具：0 = 不显示
+            ShowCurrentAll(
+          0, // 伪娘头发
+          0, // 伪娘吊袜带
+          2, // 伪娘衣服：0 = 不显示
+          1, // 伪娘手套：0 = 不显示
+          0, // 伪娘内裤：0 = 不显示
+          1, // 伪娘鞋子
+          0, // 伪娘裙子
+          1, // 伪娘丝袜：0 = 不显示
+          1, // 伪娘帽子：0 = 不显示
+          1, // 伪娘面具：0 = 不显示
 
-            0, // 御姐头发
-            2, // 御姐衣服
-            1, // 御姐手套：0 = 不显示
-            0, // 御姐内衣：0 = 不显示
-            1, // 御姐鞋子
-            1, // 御姐丝袜：0 = 不显示
-            0, // 御姐帽子
-            0, // 御姐面具
+          0, // 御姐头发
+          2, // 御姐衣服
+          1, // 御姐手套：0 = 不显示
+          0, // 御姐内衣：0 = 不显示
+          1, // 御姐鞋子
+          1, // 御姐丝袜：0 = 不显示
+          0, // 御姐帽子
+          0, // 御姐面具
 
 
-            1,  //刀剑
-            1,  // 手枪
-            1, // 步枪
-            0 //投掷品
-            );
+          1,  //刀剑
+          1,  // 手枪
+          1, // 步枪
+          0 //投掷品
+          );
 
         }
     }
@@ -305,7 +305,7 @@ public class FrameEvent : MonoBehaviour
 
     #endregion
 
- 
+
     public void SetBlack()
     {
         skeletonAnimation.Skeleton.SetColor(new Color(0f, 0f, 0f, 1f));
@@ -314,7 +314,7 @@ public class FrameEvent : MonoBehaviour
 
     public void SetRed()
     {
-       
+
         skeletonAnimation.Skeleton.SetColor(new Color(0.3f, 0f, 0f, 1f));
 
     }//变红
@@ -339,10 +339,11 @@ public class FrameEvent : MonoBehaviour
 
 
 
-
+    [Header("帧事件触发")]
 
     public EnemyController enemyController;
 
+    public PlayerController playerController;
 
     #region 吹灭炸弹
     public void SetOff()
@@ -407,27 +408,27 @@ public class FrameEvent : MonoBehaviour
 
 
         // 🔴 第一层挡板：targetPoint 已经被销毁
-       //if (enemyController.targetPoint == null) return;
-       //
-       //// 🔴 第二层挡板：已经拿了炸弹
-       //if (enemyController.hasBomb) return;
-       //
-       //if (enemyController.targetPoint.CompareTag("Bomb")&&!enemyController.hasBomb)
-       //{
-       //    //Debug.Log("捡起炸弹");
-       //
-       //
-       //    enemyController.targetPoint.gameObject.transform.position = pickupPoint.position;
-       //    enemyController.targetPoint.SetParent(pickupPoint);
-       //    enemyController.targetPoint.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-       //    enemyController.hasBomb = true;
-       //
-       //
-       //}//如果是炸弹，就捡起来移到对应位置（成为子集）,同时刚体为（移动平台）
+        //if (enemyController.targetPoint == null) return;
+        //
+        //// 🔴 第二层挡板：已经拿了炸弹
+        //if (enemyController.hasBomb) return;
+        //
+        //if (enemyController.targetPoint.CompareTag("Bomb")&&!enemyController.hasBomb)
+        //{
+        //    //Debug.Log("捡起炸弹");
+        //
+        //
+        //    enemyController.targetPoint.gameObject.transform.position = pickupPoint.position;
+        //    enemyController.targetPoint.SetParent(pickupPoint);
+        //    enemyController.targetPoint.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        //    enemyController.hasBomb = true;
+        //
+        //
+        //}//如果是炸弹，就捡起来移到对应位置（成为子集）,同时刚体为（移动平台）
     }
 
     public float power;
-    public void ThrowAway() 
+    public void ThrowAway()
     {
 
         if (enemyController == null) return;
@@ -491,7 +492,7 @@ public class FrameEvent : MonoBehaviour
     #region 吞下炸弹
     [Header("吞下炸弹")]
     public float scale;
-    public void Swalow() 
+    public void Swalow()
     {
 
         /////////挡板
@@ -536,6 +537,44 @@ public class FrameEvent : MonoBehaviour
     #endregion
 
 
+
+    #region  敌人瞄准投掷
+    public void AimThrowHeldObject()
+    {
+
+
+        if (enemyController != null)
+        {
+            enemyController.AimThrowSpawnExplosion();
+
+        }
+
+
+    }
+
+    //敌人瞄准投掷技能结束
+    public void OnThrowOver()
+    {
+        if (enemyController != null)
+        {
+            enemyController.AimThrowStartLaugh();
+
+        }
+    }
+
+    //敌人嘲笑结束
+    public void OnLaughOver()
+    {
+        if (enemyController != null)
+        {
+            enemyController.AimThrowOver();
+
+        }
+    }
+    #endregion
+
+
+
     #region  敌人将玩家投出去
     public void OnCatchPlayer()
     {
@@ -564,7 +603,7 @@ public class FrameEvent : MonoBehaviour
     #endregion
 
 
-    #region 攻击动画触发
+    #region 双方攻击动画触发
     [Header("攻击动画触发")]
     public GameObject AttackArea_1;
     public GameObject AttackArea_2;
@@ -580,10 +619,10 @@ public class FrameEvent : MonoBehaviour
     public void Attack_3()
     {
         StartCoroutine(AttackRoutine(AttackArea_3));
-      
+
     }//击飞
 
-    public void Dash() 
+    public void Dash()
     {
         playerController.Dash();//这个是冲刺一段
     }
@@ -605,9 +644,9 @@ public class FrameEvent : MonoBehaviour
 
     #endregion
 
-    #region 玩家特殊帧事件触发
-    [Header("玩家特殊帧事件触发")]
-    public PlayerController playerController;
+    #region 双方射击投掷帧事件触发
+  
+  
 
     public void LandFX()
     {
@@ -618,13 +657,22 @@ public class FrameEvent : MonoBehaviour
     public void Throw()
     {
 
-        playerController.ThrowWeapon();
+        if (playerController != null)
+        {
+            playerController.ThrowWeapon();
+        }
+
+   
+
+        AimThrowHeldObject();//和玩家共用Throw
+
+
     }
 
     public void Shoot()
     {
         if (enemyController != null)
-        {         
+        {
             enemyController.Shoot();
 
             if (enemyController.attackType == -2)
@@ -632,7 +680,7 @@ public class FrameEvent : MonoBehaviour
                 Invoke(nameof(RifleBullet), 0.2f);
             }
         }
-        if (playerController!= null)
+        if (playerController != null)
         {
             playerController.Shoot();
 
@@ -644,19 +692,19 @@ public class FrameEvent : MonoBehaviour
 
     }
 
-    void RifleBullet() 
+    void RifleBullet()
     {
         if (enemyController != null)
         {
             enemyController.Shoot();
 
-          
+
         }
         if (playerController != null)
         {
             playerController.Shoot();
 
-           
+
         }
     }
 
@@ -664,7 +712,7 @@ public class FrameEvent : MonoBehaviour
 
 
 
-    public void Reload() 
+    public void Reload()
     {
         playerController.OnReloadAnimationEnd();
     }
