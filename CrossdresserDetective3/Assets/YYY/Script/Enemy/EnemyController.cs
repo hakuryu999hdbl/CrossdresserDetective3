@@ -205,7 +205,7 @@ public class EnemyController : MonoBehaviour
            )
        {
            speed = 0;
-            Debug.Log("执行射击");
+            //Debug.Log("执行射击");
        }
        else
        {
@@ -791,6 +791,9 @@ public class EnemyController : MonoBehaviour
 
     public void StartCatchPlayer(PlayerController player)
     {
+        //Invoke(nameof(CheckMissCatch), 0.5f);//确认有没有抓到进行一个检测
+
+        CheckMissCatch();
 
         if (isDead) return;
         if (isCatching) return;
@@ -825,13 +828,35 @@ public class EnemyController : MonoBehaviour
 
         character.skillInvulnerable = true;//技能无敌
 
-        Debug.Log("抓住玩家：" + capturedPlayer.name);
+        //Debug.Log("抓住玩家：" + capturedPlayer.name);
     }
+
+
+    void CheckMissCatch() 
+    {
+        if (GameManager.instance.player.isSlide || !GameManager.instance.player.physicsCheck.isGround) 
+        {
+            Debug.Log("抓住的玩家处于无法抓住状态！回撤动画！");
+
+            ThrowCapturedPlayer();
+            anim.ResetTrigger("attack");
+            anim.Play("Girl_Run", attackLayer, 0f);
+        }
+
+        
+    }
+
+    public void OnCatchMissCheck()
+    {
+        anim.ResetTrigger("attack");
+        anim.Play("Girl_Run", attackLayer, 0f);
+    }//万一没抓到，打断当前动画W
+
 
     public void ThrowCapturedPlayer()
     {
 
-        Debug.Log("投出");
+        //Debug.Log("投出");
 
         if (capturedPlayer != null)
         {
