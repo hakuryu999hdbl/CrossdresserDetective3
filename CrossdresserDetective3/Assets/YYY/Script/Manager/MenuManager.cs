@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单
+    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单  5确认删除存档菜单
 
   
 
@@ -98,7 +98,10 @@ public class MenuManager : MonoBehaviour
                 CloseGalleryMenu();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
-
+            case 5:
+                CancelDeleteSave();
+                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+                break;
 
 
 
@@ -120,10 +123,14 @@ public class MenuManager : MonoBehaviour
 
         if (CurrentSaveSlotUI == null) return;
 
+        if (!SaveManager.Exists(CurrentSaveSlotUI.slotName))return;
+
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
 
 
-        CurrentSaveSlotUI.OnDeleteClicked();
+        //CurrentSaveSlotUI.OnDeleteClicked();
+
+        OpenDeleteConfirm(CurrentSaveSlotUI);
     }//删除当前存档
 
     #endregion
@@ -186,6 +193,7 @@ public class MenuManager : MonoBehaviour
     public GameObject SaveMenu;
     public GameObject SaveFirstSelected;//打开存菜单档默认选中（可变换）
     public GameObject SaveButton;//退出存档菜单默认选中
+    public GameObject Prompt;//展示隐藏按键提示
 
     public void OpenSaveMenu()
     {
@@ -198,6 +206,8 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(SaveFirstSelected);
 
         CurrentOpen = 3;
+
+        Prompt.SetActive(true);
     }
 
     public void CloseSaveMenu()
@@ -212,11 +222,101 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(SaveButton);
 
         CurrentOpen = 0;
+
+        Prompt.SetActive(false);
     }
 
 
     #endregion
 
+    /// <summary>
+    /// 确认删除存档菜单
+    /// </summary>
+    #region
+
+    [Header("删除存档确认")]
+    public GameObject DeleteConfirmMenu;
+    public GameObject DeleteConfirmFirstSelected;
+    public GameObject DeleteConfirmReturnSelected;
+
+    private SaveSlotUI pendingDeleteSlot;
+
+    public void OpenDeleteConfirm(SaveSlotUI slot)
+    {
+        if (slot == null)
+            return;
+
+        if (!SaveManager.Exists(slot.slotName))
+            return;
+
+        pendingDeleteSlot = slot;
+
+        // 记录确认窗口关闭后，要重新选中的存档槽位
+        DeleteConfirmReturnSelected =
+            EventSystem.current.currentSelectedGameObject;
+
+        DeleteConfirmMenu.SetActive(true);
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(
+            DeleteConfirmFirstSelected
+        );
+
+        CurrentOpen = 5;
+    }//打开确认删除菜单
+    public void CloseDeleteConfirm()
+    {
+        DeleteConfirmMenu.SetActive(false);
+
+        pendingDeleteSlot = null;
+
+        GameFlowData.suppressNextSelectSound = true;
+
+        EventSystem.current.SetSelectedGameObject(null);
+
+        if (DeleteConfirmReturnSelected != null)
+        {
+            EventSystem.current.SetSelectedGameObject(
+                DeleteConfirmReturnSelected
+            );
+        }
+        else if (SaveFirstSelected != null)
+        {
+            EventSystem.current.SetSelectedGameObject(
+                SaveFirstSelected
+            );
+        }
+
+        CurrentOpen = 3;
+    }//关闭确认删除菜单
+
+
+    public void ConfirmDeleteSave()
+    {
+        if (pendingDeleteSlot != null)
+        {
+            pendingDeleteSlot.DeleteSaveImmediately();
+        }
+
+        AudioManager.Instance.PlayFX(
+            AudioManager.Instance.UI_Click
+        );
+
+        CloseDeleteConfirm();
+    }//确认删除
+
+    public void CancelDeleteSave()
+    {
+        AudioManager.Instance.PlayFX(
+            AudioManager.Instance.UI_Select
+        );
+
+        CloseDeleteConfirm();
+    }//不删除
+
+    #endregion
 
 
     /// <summary>
@@ -235,29 +335,76 @@ public class MenuManager : MonoBehaviour
 
     public void OpenSetting()
     {
+        // SettingMenu.SetActive(true);
+        // MainMenu.SetActive(false);
+        //
+        // GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+        //
+        // EventSystem.current.SetSelectedGameObject(null);
+        // EventSystem.current.SetSelectedGameObject(settingFirstSelected);
+        //
+        // CurrentOpen = 1;
+
         SettingMenu.SetActive(true);
         MainMenu.SetActive(false);
 
-        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+        GameFlowData.suppressNextSelectSound = true;
 
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(settingFirstSelected);
+
+        if (settingFirstSelected != null &&
+            settingFirstSelected.activeInHierarchy)
+        {
+            EventSystem.current.SetSelectedGameObject(
+                settingFirstSelected
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                "settingFirstSelected为空或未激活"
+            );
+        }
 
         CurrentOpen = 1;
     }
 
     public void CloseSetting()
     {
+        // SettingMenu.SetActive(false);
+        // MainMenu.SetActive(true);
+        //
+        // GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+        //
+        // settingFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        // EventSystem.current.SetSelectedGameObject(null);
+        // EventSystem.current.SetSelectedGameObject(settingButton);
+        //
+        //
+        //
+        // CurrentOpen = 0;
+
+
+        GameObject currentSelected =
+        EventSystem.current.currentSelectedGameObject;
+
+        // 只有确实选中了设置菜单中的有效按钮，才记录
+        if (currentSelected != null &&
+            currentSelected.activeInHierarchy &&
+            currentSelected.transform.IsChildOf(
+                SettingMenu.transform
+            ))
+        {
+            settingFirstSelected = currentSelected;
+        }
+
         SettingMenu.SetActive(false);
         MainMenu.SetActive(true);
 
-        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+        GameFlowData.suppressNextSelectSound = true;
 
-        settingFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(settingButton);
-
-
 
         CurrentOpen = 0;
     }
