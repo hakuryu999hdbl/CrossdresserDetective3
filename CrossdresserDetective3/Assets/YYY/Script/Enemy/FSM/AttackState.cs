@@ -76,13 +76,24 @@ public class AttackState : EnemyBaseState
 
         if (enemy.targetPoint != null && enemy.targetPoint.CompareTag("Player"))
         {
-            float yDiff = Mathf.Abs(enemy.targetPoint.position.y - enemy.transform.position.y);
+            //float yDiff = Mathf.Abs(enemy.targetPoint.position.y - enemy.transform.position.y);
+            //
+            //if (yDiff > enemy.loseTargetYDiff)
+            //{
+            //    enemy.lastKnownTargetPos = enemy.targetPoint.position;
+            //    enemy.attackList.Remove(enemy.targetPoint);
+            //    enemy.targetPoint = null;
+            //    enemy.TransitionToState(enemy.searchState);
+            //    return;
+            //}
 
-            if (yDiff > enemy.loseTargetYDiff)
+            if (enemy.ShouldLoseTargetByHeight(enemy.targetPoint))
             {
                 enemy.lastKnownTargetPos = enemy.targetPoint.position;
+
                 enemy.attackList.Remove(enemy.targetPoint);
                 enemy.targetPoint = null;
+
                 enemy.TransitionToState(enemy.searchState);
                 return;
             }

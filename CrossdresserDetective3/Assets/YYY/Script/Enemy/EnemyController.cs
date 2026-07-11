@@ -142,6 +142,8 @@ public class EnemyController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             anim.SetInteger("state", 0);
+
+          
             return;
         }//抓取期间的锁住
 
@@ -211,6 +213,15 @@ public class EnemyController : MonoBehaviour
        {
            speed = 3;
        }
+
+        //if (stateInfo.IsName("Girl_Catch")
+        //   )
+        //{
+        //    CheckMissCatch();//在敌人抓取的每一帧期间不停的检测玩家，只要玩家没有处于抓住就立刻停下
+        //    Debug.Log("检测抓住");
+        //}
+
+
     }
 
     public void TransitionToState(EnemyBaseState state)
@@ -357,6 +368,20 @@ public class EnemyController : MonoBehaviour
 
     }//前往目标
 
+    public void FilpDirection()
+    {
+        if (transform.position.x < targetPoint.position.x)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+
+    }//反转：追逐目标
 
     private void TryJumpObstacle()
     {
@@ -409,9 +434,12 @@ public class EnemyController : MonoBehaviour
         // 重新发现目标时，用较小阈值，防止斜坡反复横跳
         if (t.CompareTag("Player"))
         {
-            float yDiff = Mathf.Abs(t.position.y - transform.position.y);
+            //float yDiff = Mathf.Abs(t.position.y - transform.position.y);
+            //
+            //if (yDiff > regainTargetYDiff)
+            //    return false;
 
-            if (yDiff > regainTargetYDiff)
+            if (!CanAcquireTargetByHeight(t))
                 return false;
         }
 
@@ -486,6 +514,54 @@ public class EnemyController : MonoBehaviour
 
     }//攻击
 
+
+    [Header("目标Y轴判断")]
+    public TargetYMode targetYMode = TargetYMode.SameFloor;
+
+    public bool ShouldCheckTargetY()
+    {
+        return targetYMode == TargetYMode.SameFloor;
+    }
+
+    public bool CanAcquireTargetByHeight(Transform target)
+    {
+        if (target == null)
+            return false;
+
+        // 冲锋、瞄准投掷等敌人完全忽略高度差
+        if (!ShouldCheckTargetY())
+            return true;
+
+        float yDiff = Mathf.Abs(
+            target.position.y - transform.position.y
+        );
+
+        return yDiff <= regainTargetYDiff;
+    }
+
+    public bool ShouldLoseTargetByHeight(Transform target)
+    {
+        if (target == null)
+            return true;
+
+        // 无视高度差的敌人永远不会因为Y轴丢失玩家
+        if (!ShouldCheckTargetY())
+            return false;
+
+        float yDiff = Mathf.Abs(
+            target.position.y - transform.position.y
+        );
+
+        return yDiff > loseTargetYDiff;
+    }
+
+
+
+
+
+
+
+
     public virtual void SkillAction()
     {
 
@@ -503,20 +579,7 @@ public class EnemyController : MonoBehaviour
 
     }// 对炸弹使用技能
 
-    public void FilpDirection()
-    {
-        if (transform.position.x < targetPoint.position.x)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-        }
-
-    }//反转：追逐目标
+  
 
 
 
@@ -793,7 +856,7 @@ public class EnemyController : MonoBehaviour
     {
         //Invoke(nameof(CheckMissCatch), 0.5f);//确认有没有抓到进行一个检测
 
-        CheckMissCatch();
+        //CheckMissCatch();
 
         if (isDead) return;
         if (isCatching) return;
@@ -834,7 +897,8 @@ public class EnemyController : MonoBehaviour
 
     void CheckMissCatch() 
     {
-        if (GameManager.instance.player.isSlide || !GameManager.instance.player.physicsCheck.isGround) 
+        //if (GameManager.instance.player.isSlide || !GameManager.instance.player.physicsCheck.isGround)
+        if (!GameManager.instance.player.isCaptured) 
         {
             Debug.Log("抓住的玩家处于无法抓住状态！回撤动画！");
 
@@ -1441,4 +1505,10 @@ public enum EnemyPatrolMode
     Guard,          // 固定站岗，不移动
     RandomPatrol,   // 走走停停
     ContinuousPatrol // 不停巡逻
+}
+
+public enum TargetYMode
+{
+    SameFloor,  // 攻击状态下一定要同楼层Y接近才能攻击，否则一直移动
+    IgnoreHeight  // 只要进入视野范围就攻击
 }
