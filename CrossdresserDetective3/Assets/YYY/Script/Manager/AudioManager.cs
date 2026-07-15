@@ -95,10 +95,20 @@ public class AudioManager : MonoBehaviour
     public AudioClip Bullet_SD_Load;
 
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
+    public AudioClip YYY_die1, YYY_die2, YYY_die3, YYY_die4;
+
+    public AudioClip Man_die1, Man_die2, Man_die3, Man_die4;
+    public AudioClip Man_attack1;
+
+
+
+    public AudioClip Girl_attack1, Girl_attack2, Girl_attack3;
+    public AudioClip Girl_die1, Girl_die2, Girl_die3;
 
 
     public AudioClip SE_Clothes;
     public AudioClip SE_WalkClip_1, SE_WalkClip_2, SE_RunClip_1, SE_RunClip_2;
+    public AudioClip SE_Man_WalkClip_1, SE_Man_WalkClip_2, SE_Man_RunClip_1, SE_Man_RunClip_2;
     public AudioClip SE_falldown;
     public AudioClip SE_Door_Open, SE_Door_Close, SE_Cage;
     public AudioClip SE_Button, SE_Elevator_1, SE_Elevator_2;

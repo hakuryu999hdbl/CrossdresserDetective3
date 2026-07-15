@@ -140,6 +140,29 @@ public class FrameEvent_Audio : MonoBehaviour
 
     }
 
+    public void _SE_Shose_Walk() 
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            audioS.PlayOneShot(AudioManager.SE_Man_WalkClip_1);
+        }
+        else
+        {
+            audioS.PlayOneShot(AudioManager.SE_Man_WalkClip_2);
+        }
+    }
+    public void _SE_Shose_Run()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            audioS.PlayOneShot(AudioManager.SE_Man_RunClip_1);
+        }
+        else
+        {
+            audioS.PlayOneShot(AudioManager.SE_Man_RunClip_2);
+        }
+    }
+
     public void _SE_falldown() { audioS.PlayOneShot(AudioManager.SE_falldown); }
 
 
@@ -189,11 +212,77 @@ public class FrameEvent_Audio : MonoBehaviour
                 break;
         }
     }
+    public void _YYY_die()
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.YYY_die1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.YYY_die2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.YYY_die3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.YYY_die4);
+                break;
+        }
+    }
 
-
-
-
-
+    public void _Man_attack()
+    {
+        audioS.PlayOneShot(AudioManager.Man_attack1);
+    }
+    public void _Man_die()
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Man_die1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Man_die2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Man_die3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.Man_die4);
+                break;
+        }
+    }
+    public void _Girl_attack()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Girl_attack1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Girl_attack2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Girl_attack3);
+                break;
+        }
+    }
+    public void _Girl_die()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Girl_die1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Girl_die2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Girl_die3);
+                break;
+        }
+    }
 
     public void _Attack_blood() 
     {

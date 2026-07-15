@@ -200,10 +200,10 @@ public class EnemyController : MonoBehaviour
 
        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(attackLayer);
        
-       if (stateInfo.IsName("Girl_Shooting") ||
-           stateInfo.IsName("Girl_Shooting_Crouch") ||
-            stateInfo.IsName("Girl_Catch") ||
-             stateInfo.IsName("Girl_Throw")
+       if (stateInfo.IsName("Shooting") ||
+           stateInfo.IsName("Shooting_Crouch") ||
+            stateInfo.IsName("Catch") ||
+             stateInfo.IsName("Throw")
            )
        {
            speed = 0;
@@ -572,7 +572,7 @@ public class EnemyController : MonoBehaviour
             {
                 // 播放攻击动画
                 anim.SetTrigger("skill");
-                Debug.Log("普通攻击");
+                Debug.Log("针对炸弹技能攻击");
                 nextAttack = Time.time + attackRate;
             }
         }
@@ -1482,7 +1482,7 @@ public class EnemyController : MonoBehaviour
         }
 
         // 已经是尸体：重新播一次死亡动画
-        anim.Play("Girl_Dead", deadLayer, 0f);
+        anim.Play("Dead", deadLayer, 0f);
     }
 
 

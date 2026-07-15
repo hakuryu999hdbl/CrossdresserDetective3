@@ -39,10 +39,11 @@ public class GameManager : MonoBehaviour
 
                 switch (GameFlowData.CurrentStage)
                 {
-                    default:
+                   
                     case 1:
                         SetArea(0); 
                         break;
+                    default:
                     case 2:
                         SetArea(1);  
                         break;
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
                         break;
                     case 8:
                         SetArea(7);
-                        break;
+                        break;                
                     case 9:
                         SetArea(8);
                         break;

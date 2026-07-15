@@ -392,6 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 2125107654451597152}
+  playerController: {fileID: 0}
   pickupPoint: {fileID: 0}
   power: 0
   scale: 0
@@ -399,7 +400,6 @@ MonoBehaviour:
   AttackArea_1: {fileID: 298707573850640421}
   AttackArea_2: {fileID: 3956535515228196046}
   AttackArea_3: {fileID: 3843014421971354880}
-  playerController: {fileID: 0}
 --- !u!114 &4493422545939720696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,6 +832,7 @@ MonoBehaviour:
   attackColor: {r: 1, g: 0, b: 0, a: 0.39215687}
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   chargeSkillColor: {r: 1, g: 0, b: 0, a: 0.39215687}
+  aimThrowSkillColor: {r: 1, g: 0, b: 0, a: 1}
   colorChangeSpeed: 6
 --- !u!1 &3676632440342874427
 GameObject:
@@ -1169,7 +1170,7 @@ GameObject:
   - component: {fileID: 2125107654451597152}
   - component: {fileID: 2008110111692617927}
   m_Layer: 10
-  m_Name: Enemy_1_1
+  m_Name: Enemy_1_1_Girl
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1372,6 +1373,7 @@ MonoBehaviour:
   meleeRange: 1.2
   loseTargetYDiff: 1.2
   regainTargetYDiff: 0.8
+  targetYMode: 1
   bulletPrefab: {fileID: 0}
   firePoint: {fileID: 0}
   firePoint_Crouch: {fileID: 0}
@@ -1396,6 +1398,18 @@ MonoBehaviour:
   lastChargeTime: -999
   chargeDir: {x: 0, y: 0}
   chargeTargetX: 0
+  useAimThrowSkill: 0
+  throwAimTarget: {fileID: 0}
+  throwExplosionPrefab: {fileID: 0}
+  throwAimTime: 1
+  throwTargetPos: {x: 0, y: 0}
+  throwObject: {fileID: 0}
+  isCatching: 0
+  capturedPlayer: {fileID: 0}
+  catchCollider: {fileID: 0}
+  catchCooldown: 1
+  nextCatchTime: 0
+  Catch_Collider: {fileID: 0}
   patrolSpeed: 2
   minWalkTime: 1.5
   maxWalkTime: 4
