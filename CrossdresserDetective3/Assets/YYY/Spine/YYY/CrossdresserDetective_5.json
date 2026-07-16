@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "2fU2eKupNLY", "spine": "4.2.42", "images": "./images/", "audio": "F:/Work_GitHub/CrossdresserDetective3/CrossdresserDetective3/Assets/YYY/Audio/SE/" },
+"skeleton": { "hash": "QtiPpyUoMLk", "spine": "4.2.40", "images": "./images/", "audio": "F:/Work_GitHub/CrossdresserDetective3/CrossdresserDetective3/Assets/YYY/Audio/SE/" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "YYY_All", "parent": "root" },
@@ -1402,6 +1402,24 @@
 		"x": -0.01,
 		"y": -63.15,
 		"color": "ffde00ff"
+	},
+	{
+		"name": "YYY_ARM_r21",
+		"parent": "MAN_ARM_r6",
+		"length": 283.8,
+		"rotation": -89.45,
+		"x": 100.86,
+		"y": 79.94,
+		"color": "ff00f2ff"
+	},
+	{
+		"name": "YYY_ARM_r22",
+		"parent": "MAN_ARM_r6",
+		"length": 175.47,
+		"rotation": -18.08,
+		"x": -137.05,
+		"y": 164.44,
+		"color": "ff00f2ff"
 	}
 ],
 "slots": [
@@ -1459,6 +1477,7 @@
 	{ "name": "YYY_Head_Hair_Backburns", "bone": "YYY_HAIR" },
 	{ "name": "YYY_Head_Hat", "bone": "YYY_HEAD" },
 	{ "name": "YYY________Hand_Pistol_Effect", "bone": "YYY_ARM_r11" },
+	{ "name": "Man________Hand_Pistol_Effect2", "bone": "MAN_ARM_r6" },
 	{ "name": "Throwable", "bone": "Item_Throwable" },
 	{ "name": "Girl_Head_Hair_Back", "bone": "Girl_HAIR" },
 	{ "name": "Girl________Hand_2_Left", "bone": "Girl_ARM_l3" },
@@ -1522,6 +1541,9 @@
 	{ "name": "Man________Hand_UpperArm_Right", "bone": "MAN_ARM_r" },
 	{ "name": "Man________Hand_2_Right", "bone": "MAN_ARM_r3" },
 	{ "name": "Man________Hand_Weapon_Right", "bone": "MAN_ARM_r6" },
+	{ "name": "Man________Hand_Pistol_3", "bone": "YYY_ARM_r22" },
+	{ "name": "Man________Hand_Pistol_1", "bone": "MAN_ARM_r6" },
+	{ "name": "Man________Hand_Pistol_2", "bone": "YYY_ARM_r21" },
 	{ "name": "Man________Hand_1_Right", "bone": "MAN_ARM_r3" },
 	{ "name": "Man________Hand_Forearm_Right", "bone": "MAN_ARM_r2" }
 ],
@@ -2850,11 +2872,11 @@
 				"Hand_Fist_1": {
 					"type": "mesh",
 					"path": "Man/Hand_Fist_1",
-					"uvs": [ 1, 0.73406, 1, 1, 0, 1, 0, 0.74815, 0, 0, 1, 0 ],
-					"triangles": [ 4, 5, 0, 3, 4, 0, 1, 2, 3, 1, 3, 0 ],
-					"vertices": [ 301.26, 115.78, 427.41, 93.06, 385.58, -139.2, 266.11, -117.69, -88.78, -53.77, -46.96, 178.49 ],
-					"hull": 6,
-					"edges": [ 2, 4, 8, 10, 4, 6, 6, 8, 2, 0, 0, 10, 6, 0 ],
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 427.41, 93.06, 385.58, -139.2, -88.78, -53.77, -46.96, 178.49 ],
+					"hull": 4,
+					"edges": [ 0, 2, 4, 6, 6, 0, 2, 4 ],
 					"width": 236,
 					"height": 482
 				},
@@ -3164,6 +3186,18 @@
 					"edges": [ 12, 14, 26, 28, 34, 36, 42, 44, 44, 46, 10, 12, 8, 10, 40, 42, 36, 38, 38, 40, 14, 16, 16, 18, 18, 20, 30, 32, 32, 34, 20, 22, 46, 0, 0, 2, 2, 4, 4, 6, 6, 8, 22, 24, 24, 26, 28, 30 ],
 					"width": 403,
 					"height": 1268
+				}
+			},
+			"Man________Hand_Pistol_Effect2": {
+				"Weapon/Pistol_Effect": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 7.72, -860.17, 16.25, -412.25, 276.2, -417.2, 267.67, -865.12 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 224,
+					"height": 130
 				}
 			},
 			"Man________Hand_UpperArm_Left": {
@@ -4795,6 +4829,42 @@
 			"Girl________Hand_Pistol_3": {
 				"Pistol_3": { "name": "Weapon/Pistol/color_01/Pistol_3", "x": 179.78, "y": -114.4, "rotation": -71.72, "width": 500, "height": 300 }
 			},
+			"Man________Hand_Pistol_1": {
+				"Pistol_1": {
+					"name": "Weapon/Pistol/color_01/Pistol_1",
+					"x": -1.64,
+					"y": -181.38,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -89.79,
+					"width": 500,
+					"height": 300
+				}
+			},
+			"Man________Hand_Pistol_2": {
+				"Pistol_2": {
+					"name": "Weapon/Pistol/color_01/Pistol_2",
+					"x": 263,
+					"y": -103.26,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -0.35,
+					"width": 500,
+					"height": 300
+				}
+			},
+			"Man________Hand_Pistol_3": {
+				"Pistol_3": {
+					"name": "Weapon/Pistol/color_01/Pistol_3",
+					"x": 238.43,
+					"y": -288.77,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -71.72,
+					"width": 500,
+					"height": 300
+				}
+			},
 			"YYY________Hand_Pistol_1": {
 				"Pistol_1": { "name": "Weapon/Pistol/color_01/Pistol_1", "rotation": -89.73, "width": 500, "height": 300 }
 			},
@@ -4817,6 +4887,42 @@
 			},
 			"Girl________Hand_Pistol_3": {
 				"Pistol_3": { "name": "Weapon/Pistol/color_02/Pistol_3", "x": 179.78, "y": -114.4, "rotation": -71.72, "width": 500, "height": 300 }
+			},
+			"Man________Hand_Pistol_1": {
+				"Pistol_1": {
+					"name": "Weapon/Pistol/color_02/Pistol_1",
+					"x": -1.64,
+					"y": -181.38,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -89.79,
+					"width": 500,
+					"height": 300
+				}
+			},
+			"Man________Hand_Pistol_2": {
+				"Pistol_2": {
+					"name": "Weapon/Pistol/color_02/Pistol_2",
+					"x": 263,
+					"y": -103.26,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -0.35,
+					"width": 500,
+					"height": 300
+				}
+			},
+			"Man________Hand_Pistol_3": {
+				"Pistol_3": {
+					"name": "Weapon/Pistol/color_02/Pistol_3",
+					"x": 238.43,
+					"y": -288.77,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -71.72,
+					"width": 500,
+					"height": 300
+				}
 			},
 			"YYY________Hand_Pistol_1": {
 				"Pistol_1": { "name": "Weapon/Pistol/color_02/Pistol_1", "rotation": -89.73, "width": 500, "height": 300 }
@@ -4841,6 +4947,42 @@
 			"Girl________Hand_Pistol_3": {
 				"Pistol_3": { "name": "Weapon/Pistol/color_03/Pistol_3", "x": 175.69, "y": -115.75, "rotation": -71.72, "width": 500, "height": 300 }
 			},
+			"Man________Hand_Pistol_1": {
+				"Pistol_1": {
+					"name": "Weapon/Pistol/color_03/Pistol_1",
+					"x": -1.64,
+					"y": -181.38,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -89.79,
+					"width": 500,
+					"height": 300
+				}
+			},
+			"Man________Hand_Pistol_2": {
+				"Pistol_2": {
+					"name": "Weapon/Pistol/color_03/Pistol_2",
+					"x": 263,
+					"y": -103.26,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -0.35,
+					"width": 500,
+					"height": 300
+				}
+			},
+			"Man________Hand_Pistol_3": {
+				"Pistol_3": {
+					"name": "Weapon/Pistol/color_03/Pistol_3",
+					"x": 238.43,
+					"y": -288.77,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -71.72,
+					"width": 500,
+					"height": 300
+				}
+			},
 			"YYY________Hand_Pistol_1": {
 				"Pistol_1": { "name": "Weapon/Pistol/color_03/Pistol_1", "rotation": -89.73, "width": 500, "height": 300 }
 			},
@@ -4864,6 +5006,42 @@
 			"Girl________Hand_Pistol_3": {
 				"Rifle_3": { "name": "Weapon/Rifle/color_01/Rifle_3", "x": 270.89, "y": -304.96, "rotation": -72.81, "width": 1700, "height": 500 }
 			},
+			"Man________Hand_Pistol_1": {
+				"Rifle_1": {
+					"name": "Weapon/Rifle/color_01/Rifle_1",
+					"x": 24.37,
+					"y": -457.25,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -90.89,
+					"width": 1700,
+					"height": 500
+				}
+			},
+			"Man________Hand_Pistol_2": {
+				"Rifle_2": {
+					"name": "Weapon/Rifle/color_01/Rifle_2",
+					"x": 535.53,
+					"y": -81.78,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -1.44,
+					"width": 1700,
+					"height": 500
+				}
+			},
+			"Man________Hand_Pistol_3": {
+				"Rifle_3": {
+					"name": "Weapon/Rifle/color_01/Rifle_3",
+					"x": 339.72,
+					"y": -534.39,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -72.81,
+					"width": 1700,
+					"height": 500
+				}
+			},
 			"YYY________Hand_Pistol_1": {
 				"Rifle_1": { "name": "Weapon/Rifle/color_01/Rifle_1", "x": 26.32, "y": -303.9, "rotation": -90.83, "width": 1700, "height": 500 }
 			},
@@ -4886,6 +5064,42 @@
 			},
 			"Girl________Hand_Pistol_3": {
 				"Rifle_3": { "name": "Weapon/Rifle/color_02/Rifle_3", "x": 270.89, "y": -304.96, "rotation": -72.81, "width": 1700, "height": 500 }
+			},
+			"Man________Hand_Pistol_1": {
+				"Rifle_1": {
+					"name": "Weapon/Rifle/color_02/Rifle_1",
+					"x": 24.37,
+					"y": -457.25,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -90.89,
+					"width": 1700,
+					"height": 500
+				}
+			},
+			"Man________Hand_Pistol_2": {
+				"Rifle_2": {
+					"name": "Weapon/Rifle/color_02/Rifle_2",
+					"x": 535.53,
+					"y": -81.78,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -1.44,
+					"width": 1700,
+					"height": 500
+				}
+			},
+			"Man________Hand_Pistol_3": {
+				"Rifle_3": {
+					"name": "Weapon/Rifle/color_02/Rifle_3",
+					"x": 339.72,
+					"y": -534.39,
+					"scaleX": 1.3,
+					"scaleY": 1.3,
+					"rotation": -72.81,
+					"width": 1700,
+					"height": 500
+				}
 			},
 			"YYY________Hand_Pistol_1": {
 				"Rifle_1": { "name": "Weapon/Rifle/color_02/Rifle_1", "x": 26.32, "y": -303.9, "rotation": -90.83, "width": 1700, "height": 500 }
@@ -14678,49 +14892,49 @@
 				"offsets": [
 					{ "slot": "YYY_Head_Hair_Backburns", "offset": 31 },
 					{ "slot": "YYY_Head_Hat", "offset": 31 },
-					{ "slot": "Throwable", "offset": -53 },
-					{ "slot": "Girl_Head_Hair_Back", "offset": -53 },
-					{ "slot": "Girl________Hand_2_Left", "offset": -53 },
-					{ "slot": "Girl________Hand_Weapon_Left", "offset": -53 },
-					{ "slot": "Girl________Hand_1_Left", "offset": -53 },
-					{ "slot": "Girl________Hand_UpperArm_Left", "offset": -53 },
-					{ "slot": "Girl________Hand_UpperArm_2_Left", "offset": -53 },
-					{ "slot": "Girl________Hand_Forearm_Left", "offset": -53 },
-					{ "slot": "Girl________Hand_Forearm_2_Left", "offset": -53 },
-					{ "slot": "Girl_Head_Hair_Sideburns", "offset": -53 },
-					{ "slot": "Girl_Body_Dress_2", "offset": -53 },
-					{ "slot": "Girl____Leg_Foot_Left", "offset": -53 },
-					{ "slot": "Girl____Leg_Foot_2_Left", "offset": -53 },
-					{ "slot": "Girl____Leg_Calf_Left", "offset": -53 },
-					{ "slot": "Girl____Leg_Calf_2_Left", "offset": -53 },
-					{ "slot": "Girl____Leg_Thigh_Left", "offset": -53 },
-					{ "slot": "Girl____Leg_Thigh_2_Left", "offset": -53 },
-					{ "slot": "Girl_Body", "offset": -53 },
-					{ "slot": "Girl____Leg_Foot_Right", "offset": -53 },
-					{ "slot": "Girl____Leg_Foot_2_Right", "offset": -53 },
-					{ "slot": "Girl____Leg_Calf_Right", "offset": -53 },
-					{ "slot": "Girl____Leg_Calf_2_Right", "offset": -53 },
-					{ "slot": "Girl____Leg_Thigh_Right", "offset": -53 },
-					{ "slot": "Girl____Leg_Thigh_2_Right", "offset": -53 },
-					{ "slot": "Girl_Body_Dress_1", "offset": -53 },
-					{ "slot": "Girl_Head", "offset": -53 },
-					{ "slot": "Girl_Head_Shame", "offset": -53 },
-					{ "slot": "Girl_Head_Mouth", "offset": -53 },
-					{ "slot": "Girl_Head_Eyes", "offset": -53 },
-					{ "slot": "Girl_Head_Mask", "offset": -53 },
-					{ "slot": "Girl________Hand_2_Right", "offset": -18 },
-					{ "slot": "Girl________Hand_Pistol_3", "offset": -18 },
-					{ "slot": "Girl________Hand_Pistol_1", "offset": -18 },
-					{ "slot": "Girl________Hand_Pistol_2", "offset": -18 },
-					{ "slot": "Girl________Hand_Weapon_Right", "offset": -18 },
-					{ "slot": "Girl________Hand_1_Right", "offset": -18 },
-					{ "slot": "Girl________Hand_UpperArm_Right", "offset": -18 },
-					{ "slot": "Girl________Hand_UpperArm_2_Right", "offset": -18 },
-					{ "slot": "Girl________Hand_Forearm_Right", "offset": -18 },
-					{ "slot": "Girl________Hand_Forearm_2_Right", "offset": -18 },
-					{ "slot": "Girl_Head_Hair_Backburns", "offset": -63 },
-					{ "slot": "Girl_Head_Hair_Bangs", "offset": -63 },
-					{ "slot": "Girl_Head_Hat", "offset": -63 }
+					{ "slot": "Throwable", "offset": -54 },
+					{ "slot": "Girl_Head_Hair_Back", "offset": -54 },
+					{ "slot": "Girl________Hand_2_Left", "offset": -54 },
+					{ "slot": "Girl________Hand_Weapon_Left", "offset": -54 },
+					{ "slot": "Girl________Hand_1_Left", "offset": -54 },
+					{ "slot": "Girl________Hand_UpperArm_Left", "offset": -54 },
+					{ "slot": "Girl________Hand_UpperArm_2_Left", "offset": -54 },
+					{ "slot": "Girl________Hand_Forearm_Left", "offset": -54 },
+					{ "slot": "Girl________Hand_Forearm_2_Left", "offset": -54 },
+					{ "slot": "Girl_Head_Hair_Sideburns", "offset": -54 },
+					{ "slot": "Girl_Body_Dress_2", "offset": -54 },
+					{ "slot": "Girl____Leg_Foot_Left", "offset": -54 },
+					{ "slot": "Girl____Leg_Foot_2_Left", "offset": -54 },
+					{ "slot": "Girl____Leg_Calf_Left", "offset": -54 },
+					{ "slot": "Girl____Leg_Calf_2_Left", "offset": -54 },
+					{ "slot": "Girl____Leg_Thigh_Left", "offset": -54 },
+					{ "slot": "Girl____Leg_Thigh_2_Left", "offset": -54 },
+					{ "slot": "Girl_Body", "offset": -54 },
+					{ "slot": "Girl____Leg_Foot_Right", "offset": -54 },
+					{ "slot": "Girl____Leg_Foot_2_Right", "offset": -54 },
+					{ "slot": "Girl____Leg_Calf_Right", "offset": -54 },
+					{ "slot": "Girl____Leg_Calf_2_Right", "offset": -54 },
+					{ "slot": "Girl____Leg_Thigh_Right", "offset": -54 },
+					{ "slot": "Girl____Leg_Thigh_2_Right", "offset": -54 },
+					{ "slot": "Girl_Body_Dress_1", "offset": -54 },
+					{ "slot": "Girl_Head", "offset": -54 },
+					{ "slot": "Girl_Head_Shame", "offset": -54 },
+					{ "slot": "Girl_Head_Mouth", "offset": -54 },
+					{ "slot": "Girl_Head_Eyes", "offset": -54 },
+					{ "slot": "Girl_Head_Mask", "offset": -54 },
+					{ "slot": "Girl________Hand_2_Right", "offset": -19 },
+					{ "slot": "Girl________Hand_Pistol_3", "offset": -19 },
+					{ "slot": "Girl________Hand_Pistol_1", "offset": -19 },
+					{ "slot": "Girl________Hand_Pistol_2", "offset": -19 },
+					{ "slot": "Girl________Hand_Weapon_Right", "offset": -19 },
+					{ "slot": "Girl________Hand_1_Right", "offset": -19 },
+					{ "slot": "Girl________Hand_UpperArm_Right", "offset": -19 },
+					{ "slot": "Girl________Hand_UpperArm_2_Right", "offset": -19 },
+					{ "slot": "Girl________Hand_Forearm_Right", "offset": -19 },
+					{ "slot": "Girl________Hand_Forearm_2_Right", "offset": -19 },
+					{ "slot": "Girl_Head_Hair_Backburns", "offset": -64 },
+					{ "slot": "Girl_Head_Hair_Bangs", "offset": -64 },
+					{ "slot": "Girl_Head_Hat", "offset": -64 }
 				]
 			}
 		],
@@ -33148,7 +33362,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "Weapon_Effect", "offset": 20 }
+					{ "slot": "Weapon_Effect", "offset": 23 }
 				]
 			}
 		],
@@ -34165,17 +34379,17 @@
 			{
 				"time": 0.6667,
 				"offsets": [
-					{ "slot": "Weapon_Effect", "offset": 20 },
+					{ "slot": "Weapon_Effect", "offset": 23 },
 					{ "slot": "Man________Hand_UpperArm_Left", "offset": 12 },
-					{ "slot": "Man________Hand_Forearm_Left", "offset": 14 },
+					{ "slot": "Man________Hand_Forearm_Left", "offset": 17 },
 					{ "slot": "Man____Leg_Thigh_Left", "offset": 6 },
 					{ "slot": "Man____Leg_Foot_Right", "offset": -4 },
 					{ "slot": "Man____Leg_Calf_Right", "offset": -4 },
 					{ "slot": "Man____Leg_Thigh_Right", "offset": -4 },
 					{ "slot": "Man________Hand_UpperArm_Right", "offset": -8 },
 					{ "slot": "Man________Hand_2_Right", "offset": -11 },
-					{ "slot": "Man________Hand_1_Right", "offset": -12 },
-					{ "slot": "Man________Hand_Forearm_Right", "offset": -15 }
+					{ "slot": "Man________Hand_1_Right", "offset": -15 },
+					{ "slot": "Man________Hand_Forearm_Right", "offset": -18 }
 				]
 			},
 			{ "time": 1 },
@@ -37530,11 +37744,11 @@
 			{
 				"time": 0.3667,
 				"offsets": [
-					{ "slot": "Man________Hand_UpperArm_Left", "offset": 19 },
-					{ "slot": "Man________Hand_2_Left", "offset": 14 },
-					{ "slot": "Man________Hand_Weapon_Left", "offset": 14 },
-					{ "slot": "Man________Hand_1_Left", "offset": 14 },
-					{ "slot": "Man________Hand_Forearm_Left", "offset": 14 },
+					{ "slot": "Man________Hand_UpperArm_Left", "offset": 22 },
+					{ "slot": "Man________Hand_2_Left", "offset": 17 },
+					{ "slot": "Man________Hand_Weapon_Left", "offset": 17 },
+					{ "slot": "Man________Hand_1_Left", "offset": 17 },
+					{ "slot": "Man________Hand_Forearm_Left", "offset": 17 },
 					{ "slot": "Man_Body", "offset": 0 },
 					{ "slot": "Man____Leg_Foot_Right", "offset": -7 },
 					{ "slot": "Man____Leg_Calf_Right", "offset": -7 },
@@ -37542,8 +37756,8 @@
 					{ "slot": "Man________Hand_UpperArm_Right", "offset": -12 },
 					{ "slot": "Man________Hand_2_Right", "offset": -16 },
 					{ "slot": "Man________Hand_Weapon_Right", "offset": -16 },
-					{ "slot": "Man________Hand_1_Right", "offset": -16 },
-					{ "slot": "Man________Hand_Forearm_Right", "offset": -15 }
+					{ "slot": "Man________Hand_1_Right", "offset": -19 },
+					{ "slot": "Man________Hand_Forearm_Right", "offset": -18 }
 				]
 			}
 		]
@@ -37964,11 +38178,11 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "Man________Hand_UpperArm_Left", "offset": 19 },
-					{ "slot": "Man________Hand_2_Left", "offset": 14 },
-					{ "slot": "Man________Hand_Weapon_Left", "offset": 14 },
-					{ "slot": "Man________Hand_1_Left", "offset": 14 },
-					{ "slot": "Man________Hand_Forearm_Left", "offset": 14 },
+					{ "slot": "Man________Hand_UpperArm_Left", "offset": 22 },
+					{ "slot": "Man________Hand_2_Left", "offset": 17 },
+					{ "slot": "Man________Hand_Weapon_Left", "offset": 17 },
+					{ "slot": "Man________Hand_1_Left", "offset": 17 },
+					{ "slot": "Man________Hand_Forearm_Left", "offset": 17 },
 					{ "slot": "Man_Body", "offset": 0 },
 					{ "slot": "Man____Leg_Foot_Right", "offset": -7 },
 					{ "slot": "Man____Leg_Calf_Right", "offset": -7 },
@@ -37976,18 +38190,18 @@
 					{ "slot": "Man________Hand_UpperArm_Right", "offset": -12 },
 					{ "slot": "Man________Hand_2_Right", "offset": -16 },
 					{ "slot": "Man________Hand_Weapon_Right", "offset": -16 },
-					{ "slot": "Man________Hand_1_Right", "offset": -16 },
-					{ "slot": "Man________Hand_Forearm_Right", "offset": -15 }
+					{ "slot": "Man________Hand_1_Right", "offset": -19 },
+					{ "slot": "Man________Hand_Forearm_Right", "offset": -18 }
 				]
 			},
 			{
 				"time": 0.3,
 				"offsets": [
-					{ "slot": "Man________Hand_UpperArm_Left", "offset": 19 },
-					{ "slot": "Man________Hand_2_Left", "offset": 14 },
-					{ "slot": "Man________Hand_Weapon_Left", "offset": 14 },
-					{ "slot": "Man________Hand_1_Left", "offset": 14 },
-					{ "slot": "Man________Hand_Forearm_Left", "offset": 14 },
+					{ "slot": "Man________Hand_UpperArm_Left", "offset": 22 },
+					{ "slot": "Man________Hand_2_Left", "offset": 17 },
+					{ "slot": "Man________Hand_Weapon_Left", "offset": 17 },
+					{ "slot": "Man________Hand_1_Left", "offset": 17 },
+					{ "slot": "Man________Hand_Forearm_Left", "offset": 17 },
 					{ "slot": "Man_Body", "offset": 0 },
 					{ "slot": "Man____Leg_Foot_Right", "offset": -7 },
 					{ "slot": "Man____Leg_Calf_Right", "offset": -7 },
@@ -37995,14 +38209,14 @@
 					{ "slot": "Man________Hand_UpperArm_Right", "offset": -12 },
 					{ "slot": "Man________Hand_2_Right", "offset": -16 },
 					{ "slot": "Man________Hand_Weapon_Right", "offset": -16 },
-					{ "slot": "Man________Hand_1_Right", "offset": -16 },
-					{ "slot": "Man________Hand_Forearm_Right", "offset": -15 }
+					{ "slot": "Man________Hand_1_Right", "offset": -19 },
+					{ "slot": "Man________Hand_Forearm_Right", "offset": -18 }
 				]
 			},
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "Weapon_Effect", "offset": 20 }
+					{ "slot": "Weapon_Effect", "offset": 23 }
 				]
 			}
 		]
@@ -38601,6 +38815,5297 @@
 				]
 			}
 		},
+		"events": [
+			{ "name": "_SE_Shose_Walk" },
+			{ "time": 0.5333, "name": "_SE_Shose_Walk" }
+		]
+	},
+	"Man_Pistol_Attack": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 0.3333, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 0.0667, "name": "Front_Head_2" },
+					{ "time": 0.1667, "name": "Front_Head_1" },
+					{ "time": 0.3333, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 0.3333, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 0.3333, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 0.3333, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 0.3333, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Pistol_1" },
+					{ "time": 0.3333, "name": "Pistol_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Pistol_2" },
+					{ "time": 0.3333, "name": "Pistol_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Pistol_3" },
+					{ "time": 0.3333, "name": "Pistol_3" }
+				]
+			},
+			"Man________Hand_Pistol_Effect2": {
+				"attachment": [
+					{ "time": 0.0667, "name": "Weapon/Pistol_Effect" },
+					{ "time": 0.1333 }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"curve": [ 0.056, 0, 0.111, 0, 0.056, 0, 0.111, -341.32 ]
+					},
+					{
+						"time": 0.1667,
+						"y": -341.32,
+						"curve": [ 0.222, 0, 0.278, 0, 0.222, -341.32, 0.278, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -14.39,
+						"y": 75.26,
+						"curve": [ 0.056, -14.39, 0.111, -14.39, 0.056, 75.26, 0.111, -533.01 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -14.39,
+						"y": -533.01,
+						"curve": [ 0.222, -14.39, 0.278, -14.39, 0.222, -533.01, 0.278, 75.26 ]
+					},
+					{ "time": 0.3333, "x": -14.39, "y": 75.26 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"curve": [ 0.022, 0, 0.044, 0, 0.022, 0, 0.044, -537.69 ]
+					},
+					{
+						"time": 0.0667,
+						"y": -537.69,
+						"curve": [ 0.156, 0, 0.244, 0, 0.156, -537.69, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, 5.69 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 5.69,
+						"curve": [ 0.156, 5.69, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				],
+				"translate": [
+					{
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.022, -10.08, 0.044, -160.41, 0.022, -15.12, 0.044, -15.12 ]
+					},
+					{
+						"time": 0.0667,
+						"x": -160.41,
+						"y": -15.12,
+						"curve": [ 0.1, -160.41, 0.133, -75.42, 0.1, -15.12, 0.133, -71.31 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -56.63,
+						"y": -71.31,
+						"curve": [ 0.222, -25.31, 0.278, -10.08, 0.222, -71.31, 0.278, -15.12 ]
+					},
+					{ "time": 0.3333, "x": -10.08, "y": -15.12 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -82.2,
+						"curve": [ 0.022, -82.2, 0.044, -52.47 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -50.22,
+						"curve": [ 0.089, -47.97, 0.111, -47.97 ]
+					},
+					{
+						"time": 0.1333,
+						"value": -47.97,
+						"curve": [ 0.2, -47.97, 0.267, -82.2 ]
+					},
+					{ "time": 0.3333, "value": -82.2 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{
+						"value": 180.68,
+						"curve": [ 0.022, 180.68, 0.044, 171.12 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 167.08,
+						"curve": [ 0.089, 163.04, 0.111, 156.43 ]
+					},
+					{
+						"time": 0.1333,
+						"value": 156.43,
+						"curve": [ 0.2, 156.43, 0.267, 180.68 ]
+					},
+					{ "time": 0.3333, "value": 180.68 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": 3.45, "curve": "stepped" },
+					{ "time": 0.3333, "value": 3.45 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.022, -10.66, 0.044, -19.96 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -19.96,
+						"curve": [ 0.156, -19.96, 0.244, -10.66 ]
+					},
+					{ "time": 0.3333, "value": -10.66 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{
+						"value": -24.4,
+						"curve": [ 0.022, -24.4, 0.044, -35.92 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -35.92,
+						"curve": [ 0.156, -35.92, 0.244, -24.4 ]
+					},
+					{ "time": 0.3333, "value": -24.4 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{ "x": -156.2, "y": 20.15, "curve": "stepped" },
+					{ "time": 0.3333, "x": -156.2, "y": 20.15 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{ "x": 211.62, "y": 15.12, "curve": "stepped" },
+					{ "time": 0.3333, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{
+						"value": 0.35,
+						"curve": [ 0.022, 0.35, 0.044, 7.37 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 15.78,
+						"curve": [ 0.089, 24.2, 0.111, 50.86 ]
+					},
+					{
+						"time": 0.1333,
+						"value": 50.86,
+						"curve": [ 0.2, 50.86, 0.267, 0.35 ]
+					},
+					{ "time": 0.3333, "value": 0.35 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 122.9,
+						"curve": [ 0.022, 122.9, 0.044, 99.95 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 99.95,
+						"curve": [ 0.089, 99.95, 0.111, 118.39 ]
+					},
+					{
+						"time": 0.1333,
+						"value": 119.52,
+						"curve": [ 0.2, 122.9, 0.267, 122.9 ]
+					},
+					{ "time": 0.3333, "value": 122.9 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -11.81 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -11.81,
+						"curve": [ 0.156, -11.81, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -18.76 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -18.76,
+						"curve": [ 0.156, -18.76, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"YYY_ARM_r22": {
+				"rotate": [
+					{ "value": 0.16, "curve": "stepped" },
+					{ "time": 0.3333, "value": 0.16 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -74.64, "curve": "stepped" },
+					{ "time": 0.3333, "x": -74.64 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 0.3333,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.0667, "name": "Shoot" }
+		]
+	},
+	"Man_Pistol_Crouch_Attack": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 0.3333, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 0.0667, "name": "Front_Head_2" },
+					{ "time": 0.1667, "name": "Front_Head_1" },
+					{ "time": 0.3333, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Left2" },
+					{ "time": 0.3333, "name": "Front_Leg_Left2" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 0.3333, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 0.3333, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 0.3333, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 0.3333, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Pistol_1" },
+					{ "time": 0.3333, "name": "Pistol_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Pistol_2" },
+					{ "time": 0.3333, "name": "Pistol_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Pistol_3" },
+					{ "time": 0.3333, "name": "Pistol_3" }
+				]
+			},
+			"Man________Hand_Pistol_Effect2": {
+				"attachment": [
+					{ "time": 0.0667, "name": "Weapon/Pistol_Effect" },
+					{ "time": 0.1333 }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"curve": [ 0.056, 0, 0.111, 0, 0.056, 0, 0.111, -341.32 ]
+					},
+					{
+						"time": 0.1667,
+						"y": -341.32,
+						"curve": [ 0.222, 0, 0.278, 0, 0.222, -341.32, 0.278, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -14.39,
+						"y": 75.26,
+						"curve": [ 0.056, -14.39, 0.111, -14.39, 0.056, 75.26, 0.111, -533.01 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -14.39,
+						"y": -533.01,
+						"curve": [ 0.222, -14.39, 0.278, -14.39, 0.222, -533.01, 0.278, 75.26 ]
+					},
+					{ "time": 0.3333, "x": -14.39, "y": 75.26 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"curve": [ 0.022, 0, 0.044, 0, 0.022, 0, 0.044, -537.69 ]
+					},
+					{
+						"time": 0.0667,
+						"y": -537.69,
+						"curve": [ 0.156, 0, 0.244, 0, 0.156, -537.69, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, 5.69 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 5.69,
+						"curve": [ 0.156, 5.69, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				],
+				"translate": [
+					{
+						"x": 8.83,
+						"y": -1028.03,
+						"curve": [ 0.022, 8.83, 0.044, -128.64, 0.022, -1028.03, 0.044, -1067.49 ]
+					},
+					{
+						"time": 0.0667,
+						"x": -128.64,
+						"y": -1067.49,
+						"curve": [ 0.1, -128.64, 0.133, -75.42, 0.1, -1067.49, 0.133, -941.01 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -56.63,
+						"y": -941.01,
+						"curve": [ 0.222, -25.31, 0.278, 8.83, 0.222, -941.01, 0.278, -1028.03 ]
+					},
+					{ "time": 0.3333, "x": 8.83, "y": -1028.03 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -82.2,
+						"curve": [ 0.022, -82.2, 0.044, -52.47 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -50.22,
+						"curve": [ 0.089, -47.97, 0.111, -47.97 ]
+					},
+					{
+						"time": 0.1333,
+						"value": -47.97,
+						"curve": [ 0.2, -47.97, 0.267, -82.2 ]
+					},
+					{ "time": 0.3333, "value": -82.2 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{
+						"value": 180.68,
+						"curve": [ 0.022, 180.68, 0.044, 171.12 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 167.08,
+						"curve": [ 0.089, 163.04, 0.111, 156.43 ]
+					},
+					{
+						"time": 0.1333,
+						"value": 156.43,
+						"curve": [ 0.2, 156.43, 0.267, 180.68 ]
+					},
+					{ "time": 0.3333, "value": 180.68 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": 3.45, "curve": "stepped" },
+					{ "time": 0.3333, "value": 3.45 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.022, -10.66, 0.044, -19.96 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -19.96,
+						"curve": [ 0.156, -19.96, 0.244, -10.66 ]
+					},
+					{ "time": 0.3333, "value": -10.66 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{
+						"value": -24.4,
+						"curve": [ 0.022, -24.4, 0.044, -35.92 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -35.92,
+						"curve": [ 0.156, -35.92, 0.244, -24.4 ]
+					},
+					{ "time": 0.3333, "value": -24.4 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{ "x": -303.93, "y": -177.19 },
+					{ "time": 0.0667, "x": -313.86, "y": -155.35 },
+					{ "time": 0.3333, "x": -303.93, "y": -177.19 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{ "x": 211.62, "y": 15.12, "curve": "stepped" },
+					{ "time": 0.3333, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{
+						"value": 0.35,
+						"curve": [ 0.022, 0.35, 0.044, 7.37 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 15.78,
+						"curve": [ 0.089, 24.2, 0.111, 50.86 ]
+					},
+					{
+						"time": 0.1333,
+						"value": 50.86,
+						"curve": [ 0.2, 50.86, 0.267, 0.35 ]
+					},
+					{ "time": 0.3333, "value": 0.35 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 122.9,
+						"curve": [ 0.022, 122.9, 0.044, 99.95 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 99.95,
+						"curve": [ 0.089, 99.95, 0.111, 118.39 ]
+					},
+					{
+						"time": 0.1333,
+						"value": 119.52,
+						"curve": [ 0.2, 122.9, 0.267, 122.9 ]
+					},
+					{ "time": 0.3333, "value": 122.9 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -11.81 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -11.81,
+						"curve": [ 0.156, -11.81, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -18.76 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -18.76,
+						"curve": [ 0.156, -18.76, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r3": {
+				"rotate": [
+					{ "value": -141.06 }
+				]
+			},
+			"YYY_ARM_r22": {
+				"rotate": [
+					{ "value": 0.16, "curve": "stepped" },
+					{ "time": 0.3333, "value": 0.16 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -74.64, "curve": "stepped" },
+					{ "time": 0.3333, "x": -74.64 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 0.3333,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.0667, "name": "Shoot" }
+		]
+	},
+	"Man_Pistol_Idle": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 2.6667, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 2.6667, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 2.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 2.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 2.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 2.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 2.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 2.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 2.6667, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 2.6667, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 2.6667, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 2.6667, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 2.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 2.6667, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Pistol_1" },
+					{ "time": 2.6667, "name": "Pistol_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Pistol_2" },
+					{ "time": 2.6667, "name": "Pistol_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Pistol_3" },
+					{ "time": 2.6667, "name": "Pistol_3" }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 2.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 2.6667, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -14.39,
+						"y": 75.26,
+						"curve": [ 0.222, -14.39, 0.444, -36.62, 0.222, 75.26, 0.444, 53.78 ]
+					},
+					{
+						"time": 0.6667,
+						"curve": [ 0.889, 36.62, 1.111, 35.08, 0.889, -53.78, 1.111, -27.3 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 35.08,
+						"y": -27.3,
+						"curve": [ 1.556, 35.08, 1.778, 41.81, 1.556, -27.3, 1.778, -53.78 ]
+					},
+					{
+						"time": 2,
+						"x": 5.19,
+						"y": -1.73,
+						"curve": [ 2.222, -31.43, 2.444, -14.39, 2.222, 50.33, 2.444, 75.26 ]
+					},
+					{ "time": 2.6667, "x": -14.39, "y": 75.26 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"curve": [ 0.222, 30.54, 0.444, 113.59, 0.222, -29.63, 0.444, -29.63 ]
+					},
+					{
+						"time": 0.6667,
+						"x": 113.59,
+						"y": -29.63,
+						"curve": [ 0.889, 113.59, 1.111, 30.54, 0.889, -29.63, 1.111, -29.63 ]
+					},
+					{
+						"time": 1.3333,
+						"curve": [ 1.556, -30.54, 1.778, -69.66, 1.556, 29.63, 1.778, 155.88 ]
+					},
+					{
+						"time": 2,
+						"x": -69.66,
+						"y": 155.88,
+						"curve": [ 2.222, -69.66, 2.444, -30.54, 2.222, 155.88, 2.444, 29.63 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, -4.97 ]
+					},
+					{
+						"time": 1.3333,
+						"value": -4.97,
+						"curve": [ 1.778, -4.97, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				],
+				"translate": [
+					{
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.224, -10.08, 1.113, -10.08, 0.224, -15.12, 1.113, -33.43 ]
+					},
+					{
+						"time": 1.3333,
+						"x": -10.08,
+						"y": -33.43,
+						"curve": [ 1.556, -10.08, 2.222, -10.08, 1.556, -33.43, 2.222, -15.12 ]
+					},
+					{ "time": 2.6667, "x": -10.08, "y": -15.12 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -82.2,
+						"curve": [ 0.073, -82.2, 0.335, -82.37 ]
+					},
+					{
+						"time": 0.6667,
+						"value": -83.75,
+						"curve": [ 0.873, -84.59, 1.103, -86.92 ]
+					},
+					{
+						"time": 1.3333,
+						"value": -86.92,
+						"curve": [ 1.565, -86.92, 1.795, -89.74 ]
+					},
+					{
+						"time": 2,
+						"value": -88.65,
+						"curve": [ 2.297, -87.08, 2.543, -82.2 ]
+					},
+					{ "time": 2.6667, "value": -82.2 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{
+						"value": 180.68,
+						"curve": [ 0.222, 180.68, 0.778, 178.21 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 178.21,
+						"curve": [ 1.889, 178.21, 2.444, 180.68 ]
+					},
+					{ "time": 2.6667, "value": 180.68 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": 3.45, "curve": "stepped" },
+					{ "time": 2.6667, "value": 3.45 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.444, -10.66, 0.889, -9.1 ]
+					},
+					{
+						"time": 1.3333,
+						"value": -9.1,
+						"curve": [ 1.778, -9.1, 2.222, -10.66 ]
+					},
+					{ "time": 2.6667, "value": -10.66 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -24.4, "curve": "stepped" },
+					{ "time": 2.6667, "value": -24.4 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{ "x": -156.2, "y": 20.15, "curve": "stepped" },
+					{ "time": 2.6667, "x": -156.2, "y": 20.15 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{ "x": 211.62, "y": 15.12, "curve": "stepped" },
+					{ "time": 2.6667, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{
+						"value": 0.35,
+						"curve": [ 0.222, 0.35, 0.778, 2.67 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 2.67,
+						"curve": [ 1.889, 2.67, 2.444, 0.35 ]
+					},
+					{ "time": 2.6667, "value": 0.35 }
+				],
+				"scale": [
+					{
+						"curve": [ 0.222, 1, 0.778, 0.953, 0.222, 1, 0.778, 1 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 0.953,
+						"curve": [ 1.889, 0.953, 2.444, 1, 1.889, 1, 2.444, 1 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 122.9,
+						"curve": [ 0.07, 122.9, 0.333, 125.53 ]
+					},
+					{
+						"time": 0.6667,
+						"value": 126.77,
+						"curve": [ 0.873, 127.52, 1.103, 127.15 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 127.15,
+						"curve": [ 1.945, 127.15, 1.667, 126.97 ]
+					},
+					{
+						"time": 2,
+						"value": 128.21,
+						"curve": [ 2.207, 128.96, 2.556, 122.9 ]
+					},
+					{ "time": 2.6667, "value": 122.9 }
+				],
+				"scale": [
+					{ "x": 0.923 },
+					{ "time": 1.3333, "x": 0.911 },
+					{ "time": 2.6667, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 1.56 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 1.56,
+						"curve": [ 1.778, 1.56, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 1.56 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 1.56,
+						"curve": [ 1.778, 1.56, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 1.56 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 1.56,
+						"curve": [ 1.778, 1.56, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{
+						"curve": [ 0.222, 0, 0.778, 53.91, 0.222, 0, 0.778, 0 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 53.91,
+						"curve": [ 1.889, 53.91, 2.444, 0, 1.889, 0, 2.444, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, -117.05, 0.444, 0, 0.889, 1.67 ]
+					},
+					{
+						"time": 1.3333,
+						"x": -117.05,
+						"y": 1.67,
+						"curve": [ 1.778, -117.05, 2.222, 0, 1.778, 1.67, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, -116.95, 0.444, 0, 0.889, -5.06 ]
+					},
+					{
+						"time": 1.3333,
+						"x": -116.95,
+						"y": -5.06,
+						"curve": [ 1.778, -116.95, 2.222, 0, 1.778, -5.06, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 95.9, 0.444, 0, 0.889, -3.93 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 95.9,
+						"y": -3.93,
+						"curve": [ 1.778, 95.9, 2.222, 0, 1.778, -3.93, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 95.94, 0.444, 0, 0.889, -2.5 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 95.94,
+						"y": -2.5,
+						"curve": [ 1.778, 95.94, 2.222, 0, 1.778, -2.5, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"YYY_ARM_r22": {
+				"rotate": [
+					{ "value": 0.16, "curve": "stepped" },
+					{ "time": 2.6667, "value": 0.16 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -74.64, "curve": "stepped" },
+					{ "time": 2.6667, "x": -74.64 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 2.6667,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			}
+		]
+	},
+	"Man_Pistol_Run": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 0.6667, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Side_Head_1" },
+					{ "time": 0.6667, "name": "Side_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Left2" },
+					{ "time": 0.6667, "name": "Front_Leg_Left2" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 0.6667, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 0.6667, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 0.6667, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 0.6667, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.6667, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Pistol_1" },
+					{ "time": 0.6667, "name": "Pistol_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Pistol_2" },
+					{ "time": 0.6667, "name": "Pistol_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Pistol_3" },
+					{ "time": 0.6667, "name": "Pistol_3" }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.6667, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"x": 125.12,
+						"y": -1435.4,
+						"curve": [ 0.111, 125.12, 0.222, -30.3, 0.111, -1435.4, 0.222, 347.67 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -30.3,
+						"y": 347.67,
+						"curve": [ 0.444, -30.3, 0.556, 125.12, 0.444, 347.67, 0.556, -1435.4 ]
+					},
+					{ "time": 0.6667, "x": 125.12, "y": -1435.4 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -47.15,
+						"y": -954.28,
+						"curve": [ 0.111, -47.15, 0.222, -17.13, 0.111, -954.28, 0.222, -365.89 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -17.13,
+						"y": -365.89,
+						"curve": [ 0.444, -17.13, 0.556, -47.15, 0.444, -365.89, 0.556, -954.28 ]
+					},
+					{ "time": 0.6667, "x": -47.15, "y": -954.28 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"x": -607.05,
+						"curve": [ 0.111, -607.05, 0.222, -444.95, 0.111, 0, 0.222, -1722.75 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -444.95,
+						"y": -1722.75,
+						"curve": [ 0.444, -444.95, 0.556, -607.05, 0.444, -1722.75, 0.556, 0 ]
+					},
+					{ "time": 0.6667, "x": -607.05 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"value": -16.86,
+						"curve": [ 0.111, -16.86, 0.222, -14.94 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -14.94,
+						"curve": [ 0.444, -14.94, 0.556, -16.86 ]
+					},
+					{ "time": 0.6667, "value": -16.86 }
+				],
+				"translate": [
+					{
+						"x": -60.46,
+						"y": -186.43,
+						"curve": [ 0.056, -60.46, 0.111, -65.33, 0.056, -186.43, 0.111, -334.95 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -65.33,
+						"y": -334.95,
+						"curve": [ 0.222, -65.33, 0.278, 99.36, 0.222, -334.95, 0.278, -229.08 ]
+					},
+					{
+						"time": 0.3333,
+						"x": 99.36,
+						"y": -229.08,
+						"curve": [ 0.389, 99.36, 0.444, -65.33, 0.389, -229.08, 0.444, -334.95 ]
+					},
+					{
+						"time": 0.5,
+						"x": -65.33,
+						"y": -334.95,
+						"curve": [ 0.556, -65.33, 0.611, -60.46, 0.556, -334.95, 0.611, -186.43 ]
+					},
+					{ "time": 0.6667, "x": -60.46, "y": -186.43 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -43.19,
+						"curve": [ 0.022, -43.19, 0.087, -41.42 ]
+					},
+					{
+						"time": 0.1667,
+						"value": -34.79,
+						"curve": [ 0.219, -30.62, 0.276, -20.41 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -20.41,
+						"curve": [ 0.392, -20.41, 0.45, -29.01 ]
+					},
+					{
+						"time": 0.5,
+						"value": -33.09,
+						"curve": [ 0.584, -39.74, 0.649, -43.19 ]
+					},
+					{ "time": 0.6667, "value": -43.19 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{ "value": 173.89, "curve": "stepped" },
+					{ "time": 0.6667, "value": 173.89 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": 3.45, "curve": "stepped" },
+					{ "time": 0.6667, "value": 3.45 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -18.32,
+						"curve": [ 0.111, -18.32, 0.222, -23.77 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -23.77,
+						"curve": [ 0.444, -23.77, 0.556, -18.32 ]
+					},
+					{ "time": 0.6667, "value": -18.32 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -29.57 },
+					{ "time": 0.3333, "value": -17.74 },
+					{ "time": 0.6667, "value": -29.57 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{
+						"x": 1189.79,
+						"y": 339.7,
+						"curve": [ 0.022, 1189.79, 0.044, 1189.79, 0.022, 313.84, 0.044, 9.7 ]
+					},
+					{
+						"time": 0.0667,
+						"x": 1147.2,
+						"y": 4.73,
+						"curve": [ 0.1, 1083.31, 0.133, 673.23, 0.1, -2.74, 0.133, -2.74 ]
+					},
+					{
+						"time": 0.1667,
+						"x": 291.69,
+						"y": -2.74,
+						"curve": [ 0.189, 37.32, 0.211, -484.14, 0.189, -2.74, 0.211, -2.74 ]
+					},
+					{
+						"time": 0.2333,
+						"x": -760.54,
+						"y": 30.9,
+						"curve": [ 0.244, -898.74, 0.256, -924.55, 0.244, 47.72, 0.256, 150.62 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -952.11,
+						"y": 210.48,
+						"curve": [ 0.289, -1007.23, 0.311, -993.32, 0.289, 330.2, 0.311, 569.64 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -1008.57,
+						"y": 569.64,
+						"curve": [ 0.356, -1023.83, 0.378, -1043.62, 0.356, 569.64, 0.378, 516.49 ]
+					},
+					{
+						"time": 0.4,
+						"x": -1043.62,
+						"y": 494.45,
+						"curve": [ 0.433, -1043.62, 0.467, 53.82, 0.433, 461.4, 0.467, 423.71 ]
+					},
+					{
+						"time": 0.5,
+						"x": 333,
+						"y": 404.36,
+						"curve": [ 0.556, 798.29, 0.611, 1189.79, 0.556, 372.12, 0.611, 404.36 ]
+					},
+					{ "time": 0.6667, "x": 1189.79, "y": 339.7 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{
+						"x": -1168.94,
+						"y": 660.05,
+						"curve": [ 0.022, -1192.44, 0.044, -1268.28, 0.022, 745.34, 0.044, 770.71 ]
+					},
+					{
+						"time": 0.0667,
+						"x": -1268.28,
+						"y": 770.71,
+						"curve": [ 0.1, -1268.28, 0.133, -310.82, 0.1, 770.71, 0.133, 396.69 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -202.28,
+						"y": 396.69,
+						"curve": [ 0.189, -129.91, 0.211, -202.28, 0.189, 396.69, 0.211, 656.09 ]
+					},
+					{
+						"time": 0.2333,
+						"x": -129.91,
+						"y": 656.09,
+						"curve": [ 0.267, -21.37, 0.3, 999.48, 0.267, 656.09, 0.3, 258.2 ]
+					},
+					{
+						"time": 0.3333,
+						"x": 999.48,
+						"y": 126.42,
+						"curve": [ 0.356, 999.48, 0.378, 999.48, 0.356, 38.57, 0.378, -2.79 ]
+					},
+					{
+						"time": 0.4,
+						"x": 980.29,
+						"y": -2.79,
+						"curve": [ 0.433, 951.51, 0.467, 311.11, 0.433, -2.79, 0.467, -2.79 ]
+					},
+					{
+						"time": 0.5,
+						"x": -103.36,
+						"y": 8.1,
+						"curve": [ 0.522, -379.68, 0.544, -1040.79, 0.522, 15.36, 0.544, 44.1 ]
+					},
+					{
+						"time": 0.5667,
+						"x": -1092.05,
+						"y": 131.02,
+						"curve": [ 0.6, -1168.94, 0.633, -1133.7, 0.6, 261.41, 0.633, 532.11 ]
+					},
+					{ "time": 0.6667, "x": -1168.94, "y": 660.05 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{ "value": 0.35, "curve": "stepped" },
+					{ "time": 0.6667, "value": 0.35 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 98.96,
+						"curve": [ 0.021, 98.96, 0.086, 91.06 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 73.82,
+						"curve": [ 0.219, 62.95, 0.276, 39.68 ]
+					},
+					{
+						"time": 0.3333,
+						"value": 39.68,
+						"curve": [ 0.392, 39.68, 0.45, 60.41 ]
+					},
+					{
+						"time": 0.5,
+						"value": 71.02,
+						"curve": [ 0.585, 88.34, 0.649, 98.96 ]
+					},
+					{ "time": 0.6667, "value": 98.96 }
+				],
+				"scale": [
+					{ "x": 0.719, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0.719 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"value": -9.97,
+						"curve": [ 0.111, -9.97, 0.222, -15.41 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -15.41,
+						"curve": [ 0.444, -15.41, 0.556, -9.97 ]
+					},
+					{ "time": 0.6667, "value": -9.97 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"value": -9.97,
+						"curve": [ 0.111, -9.97, 0.222, -15.41 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -15.41,
+						"curve": [ 0.444, -15.41, 0.556, -9.97 ]
+					},
+					{ "time": 0.6667, "value": -9.97 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{
+						"curve": [ 0.111, 0, 0.222, 12.33 ]
+					},
+					{
+						"time": 0.3333,
+						"value": 12.33,
+						"curve": [ 0.444, 12.33, 0.556, 0 ]
+					},
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_l3": {
+				"rotate": [
+					{
+						"value": -107.03,
+						"curve": [ 0.022, -120.89, 0.044, -142.81 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -142.81,
+						"curve": [ 0.1, -142.81, 0.133, -119.22 ]
+					},
+					{
+						"time": 0.1667,
+						"value": -119.22,
+						"curve": [ 0.189, -119.22, 0.211, -120.97 ]
+					},
+					{
+						"time": 0.2333,
+						"value": -120.97,
+						"curve": [ 0.267, -120.97, 0.3, 16.29 ]
+					},
+					{
+						"time": 0.3333,
+						"value": 16.29,
+						"curve": [ 0.356, 16.29, 0.378, 2.27 ]
+					},
+					{
+						"time": 0.4,
+						"value": 1.09,
+						"curve": [ 0.433, -0.68, 0.467, 1.09 ]
+					},
+					{
+						"time": 0.5,
+						"value": -0.68,
+						"curve": [ 0.522, -1.86, 0.544, -24.69 ]
+					},
+					{
+						"time": 0.5667,
+						"value": -38.87,
+						"curve": [ 0.6, -60.14, 0.633, -86.24 ]
+					},
+					{ "time": 0.6667, "value": -107.03 }
+				]
+			},
+			"MAN_LEG_r3": {
+				"rotate": [
+					{
+						"value": 29.99,
+						"curve": [ 0.022, 29.99, 0.044, 1.94 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 1.62,
+						"curve": [ 0.1, 1.14, 0.133, 1.62 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 1.14,
+						"curve": [ 0.189, 0.83, 0.211, -1.49 ]
+					},
+					{
+						"time": 0.2333,
+						"value": -8.55,
+						"curve": [ 0.244, -12.08, 0.256, -20.15 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -30.62,
+						"curve": [ 0.289, -51.57, 0.311, -89.88 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -102.81,
+						"curve": [ 0.356, -115.75, 0.378, -115.75 ]
+					},
+					{
+						"time": 0.4,
+						"value": -115.75,
+						"curve": [ 0.433, -115.75, 0.467, -106.99 ]
+					},
+					{
+						"time": 0.5,
+						"value": -88.77,
+						"curve": [ 0.556, -58.41, 0.611, 29.99 ]
+					},
+					{ "time": 0.6667, "value": 29.99 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -44.97, "y": -1.92, "curve": "stepped" },
+					{ "time": 0.6667, "x": -44.97, "y": -1.92 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 0.6667,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			},
+			{
+				"time": 0.6667,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.0667, "name": "_SE_Shose_Run" },
+			{ "time": 0.4, "name": "_SE_Shose_Run" }
+		]
+	},
+	"Man_Pistol_Walk": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 1.0667, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 1.0667, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 1.0667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 1.0667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 1.0667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 1.0667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 1.0667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 1.0667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 1.0667, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 1.0667, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 1.0667, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 1.0667, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 1.0667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 1.0667, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Pistol_1" },
+					{ "time": 1.0667, "name": "Pistol_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Pistol_2" },
+					{ "time": 1.0667, "name": "Pistol_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Pistol_3" },
+					{ "time": 1.0667, "name": "Pistol_3" }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 1.0667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 1.0667, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"curve": [ 0.167, 0, 0.368, 133.43, 0.167, 0, 0.368, -1530.8 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 143.8,
+						"y": -1649.7,
+						"curve": [ 0.545, 144.46, 0.889, 0, 0.545, -1657.29, 0.889, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -31.59,
+						"y": -261.91,
+						"curve": [ 0.167, -31.59, 0.368, -67.81, 0.167, -261.91, 0.368, -971.85 ]
+					},
+					{
+						"time": 0.5333,
+						"x": -70.71,
+						"y": -1028.58,
+						"curve": [ 0.545, -70.89, 0.889, -31.59, 0.545, -1032.2, 0.889, -261.91 ]
+					},
+					{ "time": 1.0667, "x": -31.59, "y": -261.91 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{ "x": 14.92, "y": -4.05 },
+					{ "time": 0.5333, "x": 95, "y": -135.38 },
+					{ "time": 1.0667, "x": 14.92, "y": -4.05 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"value": -5.11,
+						"curve": [ 0.179, -5.11, 0.358, -5.08 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -5.08,
+						"curve": [ 0.713, -5.08, 0.889, -5.11 ]
+					},
+					{ "time": 1.0667, "value": -5.11 }
+				],
+				"translate": [
+					{
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.089, -10.08, 0.178, -10.08, 0.089, -15.12, 0.178, 8.47 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -10.08,
+						"y": 8.47,
+						"curve": [ 0.356, -10.08, 0.444, -10.08, 0.356, 8.47, 0.444, -15.12 ]
+					},
+					{
+						"time": 0.5333,
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.622, -10.08, 0.711, -10.08, 0.622, -15.12, 0.711, 8.47 ]
+					},
+					{
+						"time": 0.8,
+						"x": -10.08,
+						"y": 8.47,
+						"curve": [ 0.889, -10.08, 0.978, -10.08, 0.889, 8.47, 0.978, -15.12 ]
+					},
+					{ "time": 1.0667, "x": -10.08, "y": -15.12 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{ "value": -82.2, "curve": "stepped" },
+					{ "time": 1.0667, "value": -82.2 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{ "value": 180.68, "curve": "stepped" },
+					{ "time": 1.0667, "value": 180.68 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": 3.45, "curve": "stepped" },
+					{ "time": 1.0667, "value": 3.45 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.089, -10.66, 0.178, -11.38 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -11.38,
+						"curve": [ 0.356, -11.38, 0.445, -7.99 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -7.99,
+						"curve": [ 0.702, -7.99, 0.721, -11.38 ]
+					},
+					{
+						"time": 0.8,
+						"value": -11.38,
+						"curve": [ 0.878, -11.38, 0.878, -10.66 ]
+					},
+					{ "time": 1.0667, "value": -10.66 }
+				]
+			},
+			"MAN_LEG_l": {
+				"scale": [
+					{
+						"x": 0.987,
+						"curve": [ 0.178, 0.987, 0.356, 1.006, 0.178, 1, 0.356, 1 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 1.034,
+						"curve": [ 0.622, 1.047, 0.711, 1.11, 0.622, 1, 0.711, 1 ]
+					},
+					{
+						"time": 0.8,
+						"x": 1.11,
+						"curve": [ 0.889, 1.11, 0.978, 0.987, 0.889, 1, 0.978, 1 ]
+					},
+					{ "time": 1.0667, "x": 0.987 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{
+						"curve": [ 0.179, 0, 0.358, 43.52, 0.179, 0, 0.358, -624.19 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 43.52,
+						"y": -624.19,
+						"curve": [ 0.713, 43.52, 0.89, 0, 0.713, -624.19, 0.89, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -24.4, "curve": "stepped" },
+					{ "time": 1.0667, "value": -24.4 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{
+						"x": -156.2,
+						"y": 20.15,
+						"curve": [ 0.089, -271.76, 0.178, -312.97, 0.089, 36.7, 0.178, 90.95 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -312.97,
+						"y": 90.95,
+						"curve": [ 0.311, -312.97, 0.489, 784.79, 0.311, 90.95, 0.489, 20.8 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 784.79,
+						"y": 13.41,
+						"curve": [ 0.622, 784.79, 0.711, 351.23, 0.622, -1.36, 0.711, -8.31 ]
+					},
+					{
+						"time": 0.8,
+						"x": 194.4,
+						"y": -8.31,
+						"curve": [ 0.889, 37.57, 0.978, -40.63, 0.889, -8.31, 0.978, 3.61 ]
+					},
+					{ "time": 1.0667, "x": -156.2, "y": 20.15 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{
+						"x": 211.62,
+						"y": 15.12,
+						"curve": [ 0.089, 211.62, 0.178, -69.57, 0.089, 15.12, 0.178, 26.45 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -214.73,
+						"y": 32.11,
+						"curve": [ 0.356, -359.9, 0.444, -537.04, 0.356, 37.77, 0.444, 32.11 ]
+					},
+					{
+						"time": 0.5333,
+						"x": -659.38,
+						"y": 49.1,
+						"curve": [ 0.622, -781.72, 0.711, -948.79, 0.622, 66.1, 0.711, 213.33 ]
+					},
+					{
+						"time": 0.8,
+						"x": -948.79,
+						"y": 213.33,
+						"curve": [ 0.889, -948.79, 0.978, 211.62, 0.889, 213.33, 0.978, 15.12 ]
+					},
+					{ "time": 1.0667, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{ "value": 0.35, "curve": "stepped" },
+					{ "time": 1.0667, "value": 0.35 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{ "value": 122.9, "curve": "stepped" },
+					{ "time": 1.0667, "value": 122.9 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 1.0667, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{ "value": 5.7, "curve": "stepped" },
+					{ "time": 1.0667, "value": 5.7 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.089, 0, 0.178, -0.72 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -0.72,
+						"curve": [ 0.356, -0.72, 0.445, 0 ]
+					},
+					{
+						"time": 0.5333,
+						"curve": [ 0.702, 0, 0.721, -0.72 ]
+					},
+					{
+						"time": 0.8,
+						"value": -0.72,
+						"curve": [ 0.878, -0.72, 0.878, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{
+						"curve": [ 0.089, 0, 0.178, -0.72 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -0.72,
+						"curve": [ 0.356, -0.72, 0.445, 0 ]
+					},
+					{
+						"time": 0.5333,
+						"curve": [ 0.702, 0, 0.721, -0.72 ]
+					},
+					{
+						"time": 0.8,
+						"value": -0.72,
+						"curve": [ 0.878, -0.72, 0.878, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r2": {
+				"scale": [
+					{
+						"curve": [ 0.089, 1, 0.178, 1.109, 0.089, 1, 0.178, 1 ]
+					},
+					{
+						"time": 0.2667,
+						"x": 1.109,
+						"curve": [ 0.356, 1.109, 0.444, 1, 0.356, 1, 0.444, 1 ]
+					},
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r3": {
+				"rotate": [
+					{
+						"value": -17.88,
+						"curve": [ 0.089, -22.62, 0.178, -31.86 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -31.86,
+						"curve": [ 0.356, -31.86, 0.444, -13.87 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -9.12,
+						"curve": [ 0.622, -4.38, 0.711, -3.41 ]
+					},
+					{
+						"time": 0.8,
+						"value": -3.41,
+						"curve": [ 0.889, -3.41, 0.978, -13.14 ]
+					},
+					{ "time": 1.0667, "value": -17.88 }
+				]
+			},
+			"MAN_LEG_r": {
+				"scale": [
+					{
+						"curve": [ 0.089, 1, 0.178, 1.063, 0.089, 1, 0.178, 1 ]
+					},
+					{
+						"time": 0.2667,
+						"x": 1.063,
+						"curve": [ 0.356, 1.063, 0.444, 1, 0.356, 1, 0.444, 1 ]
+					},
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_l3": {
+				"rotate": [
+					{
+						"curve": [ 0.178, 0, 0.356, -0.4 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -17.59,
+						"curve": [ 0.622, -26.19, 0.711, -77.37 ]
+					},
+					{
+						"time": 0.8,
+						"value": -77.37,
+						"curve": [ 0.889, -77.37, 0.978, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r4": {
+				"rotate": [
+					{
+						"value": 17.67,
+						"curve": [ 0.178, 17.67, 0.356, 12.68 ]
+					},
+					{
+						"time": 0.5333,
+						"value": 9.62,
+						"curve": [ 0.622, 8.09, 0.711, 3.9 ]
+					},
+					{
+						"time": 0.8,
+						"value": 3.9,
+						"curve": [ 0.889, 3.9, 0.978, 17.67 ]
+					},
+					{ "time": 1.0667, "value": 17.67 }
+				]
+			},
+			"MAN_LEG_l4": {
+				"rotate": [
+					{
+						"curve": [ 0.089, 0, 0.178, 13.7 ]
+					},
+					{
+						"time": 0.2667,
+						"value": 13.7,
+						"curve": [ 0.356, 13.7, 0.444, 12.9 ]
+					},
+					{
+						"time": 0.5333,
+						"value": 12.9,
+						"curve": [ 0.622, 12.9, 0.711, 25.17 ]
+					},
+					{
+						"time": 0.8,
+						"value": 25.17,
+						"curve": [ 0.889, 25.17, 0.978, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 1.0667,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			},
+			{
+				"time": 1.0667,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			}
+		],
+		"events": [
+			{ "name": "_SE_Shose_Walk" },
+			{ "time": 0.5333, "name": "_SE_Shose_Walk" }
+		]
+	},
+	"Man_Rifle_Attack": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 0.3333, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 0.0667, "name": "Front_Head_2" },
+					{ "time": 0.1667, "name": "Front_Head_1" },
+					{ "time": 0.3333, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 0.3333, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 0.3333, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 0.3333, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 0.3333, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Rifle_1" },
+					{ "time": 0.3333, "name": "Rifle_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Rifle_2" },
+					{ "time": 0.3333, "name": "Rifle_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Rifle_3" },
+					{ "time": 0.3333, "name": "Rifle_3" }
+				]
+			},
+			"Man________Hand_Pistol_Effect2": {
+				"attachment": [
+					{ "time": 0.0667, "name": "Weapon/Pistol_Effect" },
+					{ "time": 0.1667 }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"curve": [ 0.056, 0, 0.111, 0, 0.056, 0, 0.111, -341.32 ]
+					},
+					{
+						"time": 0.1667,
+						"y": -341.32,
+						"curve": [ 0.222, 0, 0.278, 0, 0.222, -341.32, 0.278, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -14.39,
+						"y": 75.26,
+						"curve": [ 0.056, -14.39, 0.111, -14.39, 0.056, 75.26, 0.111, -533.01 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -14.39,
+						"y": -533.01,
+						"curve": [ 0.222, -14.39, 0.278, -14.39, 0.222, -533.01, 0.278, 75.26 ]
+					},
+					{ "time": 0.3333, "x": -14.39, "y": 75.26 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"x": 195.48,
+						"y": -398.22,
+						"curve": [ 0.022, 195.48, 0.044, 0, 0.022, -398.22, 0.044, -537.69 ]
+					},
+					{
+						"time": 0.0667,
+						"y": -537.69,
+						"curve": [ 0.156, 0, 0.244, 195.48, 0.156, -537.69, 0.244, -398.22 ]
+					},
+					{ "time": 0.3333, "x": 195.48, "y": -398.22 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, 5.69 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 5.69,
+						"curve": [ 0.156, 5.69, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				],
+				"translate": [
+					{
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.022, -10.08, 0.044, -160.41, 0.022, -15.12, 0.044, -15.12 ]
+					},
+					{
+						"time": 0.0667,
+						"x": -160.41,
+						"y": -15.12,
+						"curve": [ 0.1, -160.41, 0.133, -75.42, 0.1, -15.12, 0.133, -71.31 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -56.63,
+						"y": -71.31,
+						"curve": [ 0.222, -25.31, 0.278, -10.08, 0.222, -71.31, 0.278, -15.12 ]
+					},
+					{ "time": 0.3333, "x": -10.08, "y": -15.12 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -53.55,
+						"curve": [ 0.022, -53.55, 0.044, -26.55 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -26.55,
+						"curve": [ 0.176, -26.55, 0.133, -15.67 ]
+					},
+					{
+						"time": 0.1667,
+						"value": -15.67,
+						"curve": [ 0.222, -15.67, 0.278, -53.55 ]
+					},
+					{ "time": 0.3333, "value": -53.55 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{
+						"value": 107,
+						"curve": [ 0.022, 107, 0.044, 112.36 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 112.36,
+						"curve": [ 0.4, 112.36, 0.133, 121.93 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 121.93,
+						"curve": [ 0.222, 121.93, 0.278, 107 ]
+					},
+					{ "time": 0.3333, "value": 107 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": -18.61, "curve": "stepped" },
+					{ "time": 0.0667, "value": -18.61, "curve": "stepped" },
+					{ "time": 0.3333, "value": -18.61 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.022, -10.66, 0.044, -19.96 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -19.96,
+						"curve": [ 0.156, -19.96, 0.244, -10.66 ]
+					},
+					{ "time": 0.3333, "value": -10.66 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -41.29, "curve": "stepped" },
+					{ "time": 0.0667, "value": -41.29, "curve": "stepped" },
+					{ "time": 0.3333, "value": -41.29 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{ "x": -156.2, "y": 20.15, "curve": "stepped" },
+					{ "time": 0.3333, "x": -156.2, "y": 20.15 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{ "x": 211.62, "y": 15.12, "curve": "stepped" },
+					{ "time": 0.3333, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{ "value": 92.7, "curve": "stepped" },
+					{
+						"time": 0.0667,
+						"value": 92.7,
+						"curve": [ 0.4, 92.7, 0.133, 85.47 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 85.47,
+						"curve": [ 0.222, 85.47, 0.278, 92.7 ]
+					},
+					{ "time": 0.3333, "value": 92.7 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 84.87,
+						"curve": [ 0.022, 84.87, 0.044, 73.16 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 73.16,
+						"curve": [ 0.171, 73.16, 0.133, 55.42 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 57.11,
+						"curve": [ 0.222, 59.93, 0.278, 84.87 ]
+					},
+					{ "time": 0.3333, "value": 84.87 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -11.81 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -11.81,
+						"curve": [ 0.156, -11.81, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -18.76 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -18.76,
+						"curve": [ 0.156, -18.76, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"YYY_ARM_r22": {
+				"rotate": [
+					{ "value": 0.16, "curve": "stepped" },
+					{ "time": 0.3333, "value": 0.16 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -74.64, "curve": "stepped" },
+					{ "time": 0.3333, "x": -74.64 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 0.3333,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				},
+				"Man________Hand_Pistol_Effect2": {
+					"Weapon/Pistol_Effect": {
+						"deform": [
+							{
+								"time": 0.0667,
+								"vertices": [ 29.40552, -888.7618, 29.40552, -888.7618, 29.40552, -888.7618, 29.40552, -888.7618 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			},
+			{
+				"time": 0.3333,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.0667, "name": "Shoot" }
+		]
+	},
+	"Man_Rifle_Crouch_Attack": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 0.3333, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 0.0667, "name": "Front_Head_2" },
+					{ "time": 0.1667, "name": "Front_Head_1" },
+					{ "time": 0.3333, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Left2" },
+					{ "time": 0.3333, "name": "Front_Leg_Left2" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.3333, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.3333, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 0.3333, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 0.3333, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 0.3333, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 0.3333, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Rifle_1" },
+					{ "time": 0.3333, "name": "Rifle_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Rifle_2" },
+					{ "time": 0.3333, "name": "Rifle_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Rifle_3" },
+					{ "time": 0.3333, "name": "Rifle_3" }
+				]
+			},
+			"Man________Hand_Pistol_Effect2": {
+				"attachment": [
+					{ "time": 0.0667, "name": "Weapon/Pistol_Effect" },
+					{ "time": 0.1667 }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.3333, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.3333, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"curve": [ 0.056, 0, 0.111, 0, 0.056, 0, 0.111, -341.32 ]
+					},
+					{
+						"time": 0.1667,
+						"y": -341.32,
+						"curve": [ 0.222, 0, 0.278, 0, 0.222, -341.32, 0.278, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -14.39,
+						"y": 75.26,
+						"curve": [ 0.056, -14.39, 0.111, -14.39, 0.056, 75.26, 0.111, -533.01 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -14.39,
+						"y": -533.01,
+						"curve": [ 0.222, -14.39, 0.278, -14.39, 0.222, -533.01, 0.278, 75.26 ]
+					},
+					{ "time": 0.3333, "x": -14.39, "y": 75.26 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"x": 195.48,
+						"y": -398.22,
+						"curve": [ 0.022, 195.48, 0.044, 0, 0.022, -398.22, 0.044, -537.69 ]
+					},
+					{
+						"time": 0.0667,
+						"y": -537.69,
+						"curve": [ 0.156, 0, 0.244, 195.48, 0.156, -537.69, 0.244, -398.22 ]
+					},
+					{ "time": 0.3333, "x": 195.48, "y": -398.22 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, 5.69 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 5.69,
+						"curve": [ 0.156, 5.69, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				],
+				"translate": [
+					{
+						"x": 8.83,
+						"y": -1028.03,
+						"curve": [ 0.022, 8.83, 0.044, -128.64, 0.022, -1028.03, 0.044, -1067.49 ]
+					},
+					{
+						"time": 0.0667,
+						"x": -128.64,
+						"y": -1067.49,
+						"curve": [ 0.1, -128.64, 0.133, -75.42, 0.1, -1067.49, 0.133, -941.01 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -56.63,
+						"y": -941.01,
+						"curve": [ 0.222, -25.31, 0.278, 8.83, 0.222, -941.01, 0.278, -1028.03 ]
+					},
+					{ "time": 0.3333, "x": 8.83, "y": -1028.03 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -53.55,
+						"curve": [ 0.022, -53.55, 0.044, -22.12 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -22.12,
+						"curve": [ 0.176, -22.12, 0.133, -15.67 ]
+					},
+					{
+						"time": 0.1667,
+						"value": -15.67,
+						"curve": [ 0.222, -15.67, 0.278, -53.55 ]
+					},
+					{ "time": 0.3333, "value": -53.55 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{
+						"value": 107,
+						"curve": [ 0.022, 107, 0.044, 112.36 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 112.36,
+						"curve": [ 0.4, 112.36, 0.133, 121.93 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 121.93,
+						"curve": [ 0.222, 121.93, 0.278, 107 ]
+					},
+					{ "time": 0.3333, "value": 107 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": -18.61, "curve": "stepped" },
+					{ "time": 0.0667, "value": -18.61, "curve": "stepped" },
+					{ "time": 0.3333, "value": -18.61 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.022, -10.66, 0.044, -19.96 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -19.96,
+						"curve": [ 0.156, -19.96, 0.244, -10.66 ]
+					},
+					{ "time": 0.3333, "value": -10.66 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -41.29, "curve": "stepped" },
+					{ "time": 0.0667, "value": -41.29, "curve": "stepped" },
+					{ "time": 0.3333, "value": -41.29 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{ "x": -303.93, "y": -177.19 },
+					{ "time": 0.0667, "x": -313.86, "y": -155.35 },
+					{ "time": 0.3333, "x": -303.93, "y": -177.19 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{ "x": 211.62, "y": 15.12, "curve": "stepped" },
+					{ "time": 0.3333, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{ "value": 92.7, "curve": "stepped" },
+					{
+						"time": 0.0667,
+						"value": 92.7,
+						"curve": [ 0.4, 92.7, 0.133, 85.47 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 85.47,
+						"curve": [ 0.222, 85.47, 0.278, 92.7 ]
+					},
+					{ "time": 0.3333, "value": 92.7 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 84.87,
+						"curve": [ 0.022, 84.87, 0.044, 66.14 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 66.14,
+						"curve": [ 0.171, 66.14, 0.133, 55.42 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 57.11,
+						"curve": [ 0.222, 59.93, 0.278, 84.87 ]
+					},
+					{ "time": 0.3333, "value": 84.87 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -11.81 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -11.81,
+						"curve": [ 0.156, -11.81, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.022, 0, 0.044, -18.76 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -18.76,
+						"curve": [ 0.156, -18.76, 0.244, 0 ]
+					},
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333 }
+				]
+			},
+			"MAN_LEG_r3": {
+				"rotate": [
+					{ "value": -141.06 }
+				]
+			},
+			"YYY_ARM_r22": {
+				"rotate": [
+					{ "value": 0.16, "curve": "stepped" },
+					{ "time": 0.3333, "value": 0.16 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -74.64, "curve": "stepped" },
+					{ "time": 0.3333, "x": -74.64 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 0.3333,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				},
+				"Man________Hand_Pistol_Effect2": {
+					"Weapon/Pistol_Effect": {
+						"deform": [
+							{
+								"time": 0.0667,
+								"vertices": [ 29.40735, -1060.2407, 29.40735, -1060.2407, 29.40735, -1060.2407, 29.40735, -1060.2407 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 }
+				]
+			},
+			{
+				"time": 0.3333,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.0667, "name": "Shoot" }
+		]
+	},
+	"Man_Rifle_Idle": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 2.6667, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 2.6667, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 2.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 2.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 2.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 2.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 2.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 2.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 2.6667, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 2.6667, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 2.6667, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 2.6667, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 2.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 2.6667, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Rifle_1" },
+					{ "time": 2.6667, "name": "Rifle_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Rifle_2" },
+					{ "time": 2.6667, "name": "Rifle_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Rifle_3" },
+					{ "time": 2.6667, "name": "Rifle_3" }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 2.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 2.6667, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -14.39,
+						"y": 75.26,
+						"curve": [ 0.222, -14.39, 0.444, -36.62, 0.222, 75.26, 0.444, 53.78 ]
+					},
+					{
+						"time": 0.6667,
+						"curve": [ 0.889, 36.62, 1.111, 35.08, 0.889, -53.78, 1.111, -27.3 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 35.08,
+						"y": -27.3,
+						"curve": [ 1.556, 35.08, 1.778, 41.81, 1.556, -27.3, 1.778, -53.78 ]
+					},
+					{
+						"time": 2,
+						"x": 5.19,
+						"y": -1.73,
+						"curve": [ 2.222, -31.43, 2.444, -14.39, 2.222, 50.33, 2.444, 75.26 ]
+					},
+					{ "time": 2.6667, "x": -14.39, "y": 75.26 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{ "y": -1076.72, "curve": "stepped" },
+					{ "time": 2.6667, "y": -1076.72 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, -4.97 ]
+					},
+					{
+						"time": 1.3333,
+						"value": -4.97,
+						"curve": [ 1.778, -4.97, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				],
+				"translate": [
+					{
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.224, -10.08, 1.113, -10.08, 0.224, -15.12, 1.113, -33.43 ]
+					},
+					{
+						"time": 1.3333,
+						"x": -10.08,
+						"y": -33.43,
+						"curve": [ 1.556, -10.08, 2.222, -10.08, 1.556, -33.43, 2.222, -15.12 ]
+					},
+					{ "time": 2.6667, "x": -10.08, "y": -15.12 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -53.55,
+						"curve": [ 0.073, -53.55, 1.103, -42.61 ]
+					},
+					{
+						"time": 1.3333,
+						"value": -42.61,
+						"curve": [ 1.565, -42.61, 2.444, -53.55 ]
+					},
+					{ "time": 2.6667, "value": -53.55 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{
+						"value": 107,
+						"curve": [ 0.222, 107, 0.778, 113.3 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 113.3,
+						"curve": [ 1.889, 113.3, 2.222, 107 ]
+					},
+					{ "time": 2.6667, "value": 107 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": -18.61, "curve": "stepped" },
+					{ "time": 2.6667, "value": -18.61 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.444, -10.66, 0.889, -9.1 ]
+					},
+					{
+						"time": 1.3333,
+						"value": -9.1,
+						"curve": [ 1.778, -9.1, 2.222, -10.66 ]
+					},
+					{ "time": 2.6667, "value": -10.66 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -41.29 },
+					{ "time": 1.3333, "value": -51.95 },
+					{ "time": 2.6667, "value": -41.29 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{ "x": -156.2, "y": 20.15, "curve": "stepped" },
+					{ "time": 2.6667, "x": -156.2, "y": 20.15 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{ "x": 211.62, "y": 15.12, "curve": "stepped" },
+					{ "time": 2.6667, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{
+						"value": 92.7,
+						"curve": [ 0.222, 92.7, 0.778, 90.16 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 90.16,
+						"curve": [ 1.889, 90.16, 2.222, 92.7 ]
+					},
+					{ "time": 2.6667, "value": 92.7 }
+				],
+				"scale": [
+					{
+						"curve": [ 0.222, 1, 0.778, 0.953, 0.222, 1, 0.778, 1 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 0.953,
+						"curve": [ 1.889, 0.953, 2.222, 1, 1.889, 1, 2.222, 1 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 84.87,
+						"curve": [ 0.07, 84.87, 1.103, 82.91 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 82.91,
+						"curve": [ 1.945, 82.91, 2.444, 84.87 ]
+					},
+					{ "time": 2.6667, "value": 84.87 }
+				],
+				"scale": [
+					{ "x": 0.923 },
+					{ "time": 1.3333, "x": 0.911 },
+					{ "time": 2.6667, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 1.56 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 1.56,
+						"curve": [ 1.778, 1.56, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 1.56 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 1.56,
+						"curve": [ 1.778, 1.56, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 1.56 ]
+					},
+					{
+						"time": 1.3333,
+						"value": 1.56,
+						"curve": [ 1.778, 1.56, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{
+						"curve": [ 0.222, 0, 0.778, 53.91, 0.222, 0, 0.778, 0 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 53.91,
+						"curve": [ 1.889, 53.91, 2.222, 0, 1.889, 0, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, -117.05, 0.444, 0, 0.889, 1.67 ]
+					},
+					{
+						"time": 1.3333,
+						"x": -117.05,
+						"y": 1.67,
+						"curve": [ 1.778, -117.05, 2.222, 0, 1.778, 1.67, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, -116.95, 0.444, 0, 0.889, -5.06 ]
+					},
+					{
+						"time": 1.3333,
+						"x": -116.95,
+						"y": -5.06,
+						"curve": [ 1.778, -116.95, 2.222, 0, 1.778, -5.06, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 95.9, 0.444, 0, 0.889, -3.93 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 95.9,
+						"y": -3.93,
+						"curve": [ 1.778, 95.9, 2.222, 0, 1.778, -3.93, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{
+						"curve": [ 0.444, 0, 0.889, 95.94, 0.444, 0, 0.889, -2.5 ]
+					},
+					{
+						"time": 1.3333,
+						"x": 95.94,
+						"y": -2.5,
+						"curve": [ 1.778, 95.94, 2.222, 0, 1.778, -2.5, 2.222, 0 ]
+					},
+					{ "time": 2.6667 }
+				]
+			},
+			"YYY_ARM_r22": {
+				"rotate": [
+					{ "value": 0.16, "curve": "stepped" },
+					{ "time": 2.6667, "value": 0.16 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -74.64, "curve": "stepped" },
+					{ "time": 2.6667, "x": -74.64 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 2.6667,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			},
+			{
+				"time": 2.6667,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			}
+		]
+	},
+	"Man_Rifle_Run": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 0.6667, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Side_Head_1" },
+					{ "time": 0.6667, "name": "Side_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Left2" },
+					{ "time": 0.6667, "name": "Front_Leg_Left2" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 0.6667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 0.6667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 0.6667, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 0.6667, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 0.6667, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 0.6667, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.6667, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Rifle_1" },
+					{ "time": 0.6667, "name": "Rifle_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Rifle_2" },
+					{ "time": 0.6667, "name": "Rifle_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Rifle_3" },
+					{ "time": 0.6667, "name": "Rifle_3" }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 0.6667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 0.6667, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"x": 125.12,
+						"y": -1435.4,
+						"curve": [ 0.111, 125.12, 0.222, -30.3, 0.111, -1435.4, 0.222, 347.67 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -30.3,
+						"y": 347.67,
+						"curve": [ 0.444, -30.3, 0.556, 125.12, 0.444, 347.67, 0.556, -1435.4 ]
+					},
+					{ "time": 0.6667, "x": 125.12, "y": -1435.4 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -47.15,
+						"y": -954.28,
+						"curve": [ 0.111, -47.15, 0.222, -17.13, 0.111, -954.28, 0.222, -365.89 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -17.13,
+						"y": -365.89,
+						"curve": [ 0.444, -17.13, 0.556, -47.15, 0.444, -365.89, 0.556, -954.28 ]
+					},
+					{ "time": 0.6667, "x": -47.15, "y": -954.28 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{
+						"x": -607.05,
+						"curve": [ 0.111, -607.05, 0.222, -444.95, 0.111, 0, 0.222, -1722.75 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -444.95,
+						"y": -1722.75,
+						"curve": [ 0.444, -444.95, 0.556, -607.05, 0.444, -1722.75, 0.556, 0 ]
+					},
+					{ "time": 0.6667, "x": -607.05 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"value": -16.86,
+						"curve": [ 0.111, -16.86, 0.222, -14.94 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -14.94,
+						"curve": [ 0.444, -14.94, 0.556, -16.86 ]
+					},
+					{ "time": 0.6667, "value": -16.86 }
+				],
+				"translate": [
+					{
+						"x": -60.46,
+						"y": -186.43,
+						"curve": [ 0.056, -60.46, 0.111, -65.33, 0.056, -186.43, 0.111, -334.95 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -65.33,
+						"y": -334.95,
+						"curve": [ 0.222, -65.33, 0.278, 99.36, 0.222, -334.95, 0.278, -229.08 ]
+					},
+					{
+						"time": 0.3333,
+						"x": 99.36,
+						"y": -229.08,
+						"curve": [ 0.389, 99.36, 0.444, -65.33, 0.389, -229.08, 0.444, -334.95 ]
+					},
+					{
+						"time": 0.5,
+						"x": -65.33,
+						"y": -334.95,
+						"curve": [ 0.556, -65.33, 0.611, -60.46, 0.556, -334.95, 0.611, -186.43 ]
+					},
+					{ "time": 0.6667, "x": -60.46, "y": -186.43 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{
+						"value": -39.8,
+						"curve": [ 0.073, -39.8, 0.087, -39.46 ]
+					},
+					{
+						"time": 0.1667,
+						"value": -32.83,
+						"curve": [ 0.219, -28.66, 0.276, -17.57 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -17.57,
+						"curve": [ 0.372, -17.57, 0.398, -19.13 ]
+					},
+					{
+						"time": 0.4333,
+						"value": -23.68,
+						"curve": [ 0.452, -25.99, 0.473, -35.06 ]
+					},
+					{
+						"time": 0.5,
+						"value": -32.83,
+						"curve": [ 0.552, -28.66, 0.611, -39.8 ]
+					},
+					{ "time": 0.6667, "value": -39.8 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{ "value": 107, "curve": "stepped" },
+					{ "time": 0.6667, "value": 107 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": -18.61, "curve": "stepped" },
+					{ "time": 0.6667, "value": -18.61 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -18.32,
+						"curve": [ 0.111, -18.32, 0.222, -23.77 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -23.77,
+						"curve": [ 0.444, -23.77, 0.556, -18.32 ]
+					},
+					{ "time": 0.6667, "value": -18.32 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -41.29 },
+					{ "time": 0.3333, "value": -17.74 },
+					{ "time": 0.6667, "value": -41.29 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{
+						"x": 1189.79,
+						"y": 339.7,
+						"curve": [ 0.022, 1189.79, 0.044, 1189.79, 0.022, 313.84, 0.044, 9.7 ]
+					},
+					{
+						"time": 0.0667,
+						"x": 1147.2,
+						"y": 4.73,
+						"curve": [ 0.1, 1083.31, 0.133, 673.23, 0.1, -2.74, 0.133, -2.74 ]
+					},
+					{
+						"time": 0.1667,
+						"x": 291.69,
+						"y": -2.74,
+						"curve": [ 0.189, 37.32, 0.211, -484.14, 0.189, -2.74, 0.211, -2.74 ]
+					},
+					{
+						"time": 0.2333,
+						"x": -760.54,
+						"y": 30.9,
+						"curve": [ 0.244, -898.74, 0.256, -924.55, 0.244, 47.72, 0.256, 150.62 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -952.11,
+						"y": 210.48,
+						"curve": [ 0.289, -1007.23, 0.311, -993.32, 0.289, 330.2, 0.311, 569.64 ]
+					},
+					{
+						"time": 0.3333,
+						"x": -1008.57,
+						"y": 569.64,
+						"curve": [ 0.356, -1023.83, 0.378, -1043.62, 0.356, 569.64, 0.378, 516.49 ]
+					},
+					{
+						"time": 0.4,
+						"x": -1043.62,
+						"y": 494.45,
+						"curve": [ 0.433, -1043.62, 0.467, 53.82, 0.433, 461.4, 0.467, 423.71 ]
+					},
+					{
+						"time": 0.5,
+						"x": 333,
+						"y": 404.36,
+						"curve": [ 0.556, 798.29, 0.611, 1189.79, 0.556, 372.12, 0.611, 404.36 ]
+					},
+					{ "time": 0.6667, "x": 1189.79, "y": 339.7 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{
+						"x": -1168.94,
+						"y": 660.05,
+						"curve": [ 0.022, -1192.44, 0.044, -1268.28, 0.022, 745.34, 0.044, 770.71 ]
+					},
+					{
+						"time": 0.0667,
+						"x": -1268.28,
+						"y": 770.71,
+						"curve": [ 0.1, -1268.28, 0.133, -310.82, 0.1, 770.71, 0.133, 396.69 ]
+					},
+					{
+						"time": 0.1667,
+						"x": -202.28,
+						"y": 396.69,
+						"curve": [ 0.189, -129.91, 0.211, -202.28, 0.189, 396.69, 0.211, 656.09 ]
+					},
+					{
+						"time": 0.2333,
+						"x": -129.91,
+						"y": 656.09,
+						"curve": [ 0.267, -21.37, 0.3, 999.48, 0.267, 656.09, 0.3, 258.2 ]
+					},
+					{
+						"time": 0.3333,
+						"x": 999.48,
+						"y": 126.42,
+						"curve": [ 0.356, 999.48, 0.378, 999.48, 0.356, 38.57, 0.378, -2.79 ]
+					},
+					{
+						"time": 0.4,
+						"x": 980.29,
+						"y": -2.79,
+						"curve": [ 0.433, 951.51, 0.467, 311.11, 0.433, -2.79, 0.467, -2.79 ]
+					},
+					{
+						"time": 0.5,
+						"x": -103.36,
+						"y": 8.1,
+						"curve": [ 0.522, -379.68, 0.544, -1040.79, 0.522, 15.36, 0.544, 44.1 ]
+					},
+					{
+						"time": 0.5667,
+						"x": -1092.05,
+						"y": 131.02,
+						"curve": [ 0.6, -1168.94, 0.633, -1133.7, 0.6, 261.41, 0.633, 532.11 ]
+					},
+					{ "time": 0.6667, "x": -1168.94, "y": 660.05 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{ "value": 92.7, "curve": "stepped" },
+					{ "time": 0.6667, "value": 92.7 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{
+						"value": 84.87,
+						"curve": [ 0.07, 84.87, 0.086, 82.96 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 65.71,
+						"curve": [ 0.219, 54.84, 0.276, 31.22 ]
+					},
+					{
+						"time": 0.3333,
+						"value": 31.22,
+						"curve": [ 0.372, 31.22, 0.397, 35.83 ]
+					},
+					{
+						"time": 0.4333,
+						"value": 46.13,
+						"curve": [ 0.452, 51.35, 0.473, 71.52 ]
+					},
+					{
+						"time": 0.5,
+						"value": 65.71,
+						"curve": [ 0.552, 54.84, 0.611, 84.87 ]
+					},
+					{ "time": 0.6667, "value": 84.87 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 0.6667, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{
+						"value": -9.97,
+						"curve": [ 0.111, -9.97, 0.222, -15.41 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -15.41,
+						"curve": [ 0.444, -15.41, 0.556, -9.97 ]
+					},
+					{ "time": 0.6667, "value": -9.97 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"value": -9.97,
+						"curve": [ 0.111, -9.97, 0.222, -15.41 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -15.41,
+						"curve": [ 0.444, -15.41, 0.556, -9.97 ]
+					},
+					{ "time": 0.6667, "value": -9.97 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{
+						"curve": [ 0.111, 0, 0.222, 12.33 ]
+					},
+					{
+						"time": 0.3333,
+						"value": 12.33,
+						"curve": [ 0.444, 12.33, 0.556, 0 ]
+					},
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"MAN_LEG_l3": {
+				"rotate": [
+					{
+						"value": -107.03,
+						"curve": [ 0.022, -120.89, 0.044, -142.81 ]
+					},
+					{
+						"time": 0.0667,
+						"value": -142.81,
+						"curve": [ 0.1, -142.81, 0.133, -119.22 ]
+					},
+					{
+						"time": 0.1667,
+						"value": -119.22,
+						"curve": [ 0.189, -119.22, 0.211, -120.97 ]
+					},
+					{
+						"time": 0.2333,
+						"value": -120.97,
+						"curve": [ 0.267, -120.97, 0.3, 16.29 ]
+					},
+					{
+						"time": 0.3333,
+						"value": 16.29,
+						"curve": [ 0.356, 16.29, 0.378, 2.27 ]
+					},
+					{
+						"time": 0.4,
+						"value": 1.09,
+						"curve": [ 0.433, -0.68, 0.467, 1.09 ]
+					},
+					{
+						"time": 0.5,
+						"value": -0.68,
+						"curve": [ 0.522, -1.86, 0.544, -24.69 ]
+					},
+					{
+						"time": 0.5667,
+						"value": -38.87,
+						"curve": [ 0.6, -60.14, 0.633, -86.24 ]
+					},
+					{ "time": 0.6667, "value": -107.03 }
+				]
+			},
+			"MAN_LEG_r3": {
+				"rotate": [
+					{
+						"value": 29.99,
+						"curve": [ 0.022, 29.99, 0.044, 1.94 ]
+					},
+					{
+						"time": 0.0667,
+						"value": 1.62,
+						"curve": [ 0.1, 1.14, 0.133, 1.62 ]
+					},
+					{
+						"time": 0.1667,
+						"value": 1.14,
+						"curve": [ 0.189, 0.83, 0.211, -1.49 ]
+					},
+					{
+						"time": 0.2333,
+						"value": -8.55,
+						"curve": [ 0.244, -12.08, 0.256, -20.15 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -30.62,
+						"curve": [ 0.289, -51.57, 0.311, -89.88 ]
+					},
+					{
+						"time": 0.3333,
+						"value": -102.81,
+						"curve": [ 0.356, -115.75, 0.378, -115.75 ]
+					},
+					{
+						"time": 0.4,
+						"value": -115.75,
+						"curve": [ 0.433, -115.75, 0.467, -106.99 ]
+					},
+					{
+						"time": 0.5,
+						"value": -88.77,
+						"curve": [ 0.556, -58.41, 0.611, 29.99 ]
+					},
+					{ "time": 0.6667, "value": 29.99 }
+				]
+			},
+			"MAN_ARM_l5": {
+				"translate": [
+					{ "x": -44.97, "y": -1.92, "curve": "stepped" },
+					{ "time": 0.6667, "x": -44.97, "y": -1.92 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 0.6667,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			},
+			{
+				"time": 0.6667,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.0667, "name": "_SE_Shose_Run" },
+			{ "time": 0.4, "name": "_SE_Shose_Run" }
+		]
+	},
+	"Man_Rifle_Walk": {
+		"slots": {
+			"Man_Body": {
+				"attachment": [
+					{ "name": "Front_Body" },
+					{ "time": 1.0667, "name": "Front_Body" }
+				]
+			},
+			"Man_Head": {
+				"attachment": [
+					{ "name": "Front_Head_1" },
+					{ "time": 1.0667, "name": "Front_Head_1" }
+				]
+			},
+			"Man____Leg_Calf_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 1.0667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Calf_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 1.0667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Foot_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 1.0667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Foot_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 1.0667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man____Leg_Thigh_Left": {
+				"attachment": [
+					{ "name": "Front_Leg_Left" },
+					{ "time": 1.0667, "name": "Front_Leg_Left" }
+				]
+			},
+			"Man____Leg_Thigh_Right": {
+				"attachment": [
+					{ "name": "Front_Leg_Right" },
+					{ "time": 1.0667, "name": "Front_Leg_Right" }
+				]
+			},
+			"Man________Hand_1_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_1" },
+					{ "time": 1.0667, "name": "Hand_Pistol_1" }
+				]
+			},
+			"Man________Hand_1_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_1" },
+					{ "time": 1.0667, "name": "Hand_Gun_1" }
+				]
+			},
+			"Man________Hand_2_Left": {
+				"attachment": [
+					{ "name": "Hand_Pistol_2" },
+					{ "time": 1.0667, "name": "Hand_Pistol_2" }
+				]
+			},
+			"Man________Hand_2_Right": {
+				"attachment": [
+					{ "name": "Hand_Gun_2" },
+					{ "time": 1.0667, "name": "Hand_Gun_2" }
+				]
+			},
+			"Man________Hand_Forearm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 1.0667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_Forearm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 1.0667, "name": "Front_Hand_Right" }
+				]
+			},
+			"Man________Hand_Pistol_1": {
+				"attachment": [
+					{ "name": "Rifle_1" },
+					{ "time": 1.0667, "name": "Rifle_1" }
+				]
+			},
+			"Man________Hand_Pistol_2": {
+				"attachment": [
+					{ "name": "Rifle_2" },
+					{ "time": 1.0667, "name": "Rifle_2" }
+				]
+			},
+			"Man________Hand_Pistol_3": {
+				"attachment": [
+					{ "name": "Rifle_3" },
+					{ "time": 1.0667, "name": "Rifle_3" }
+				]
+			},
+			"Man________Hand_UpperArm_Left": {
+				"attachment": [
+					{ "name": "Front_Hand_Left" },
+					{ "time": 1.0667, "name": "Front_Hand_Left" }
+				]
+			},
+			"Man________Hand_UpperArm_Right": {
+				"attachment": [
+					{ "name": "Front_Hand_Right" },
+					{ "time": 1.0667, "name": "Front_Hand_Right" }
+				]
+			}
+		},
+		"bones": {
+			"MAN_SPINE5": {
+				"translate": [
+					{
+						"curve": [ 0.167, 0, 0.368, 133.43, 0.167, 0, 0.368, -1530.8 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 143.8,
+						"y": -1649.7,
+						"curve": [ 0.545, 144.46, 0.889, 0, 0.545, -1657.29, 0.889, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_SPINE7": {
+				"translate": [
+					{
+						"x": -31.59,
+						"y": -261.91,
+						"curve": [ 0.167, -31.59, 0.368, -67.81, 0.167, -261.91, 0.368, -971.85 ]
+					},
+					{
+						"time": 0.5333,
+						"x": -70.71,
+						"y": -1028.58,
+						"curve": [ 0.545, -70.89, 0.889, -31.59, 0.545, -1032.2, 0.889, -261.91 ]
+					},
+					{ "time": 1.0667, "x": -31.59, "y": -261.91 }
+				]
+			},
+			"MAN_SPINE9": {
+				"translate": [
+					{ "y": -1076.72, "curve": "stepped" },
+					{ "time": 1.0667, "y": -1076.72 }
+				]
+			},
+			"MAN_PELVIS": {
+				"rotate": [
+					{
+						"value": -5.11,
+						"curve": [ 0.179, -5.11, 0.358, -5.08 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -5.08,
+						"curve": [ 0.713, -5.08, 0.889, -5.11 ]
+					},
+					{ "time": 1.0667, "value": -5.11 }
+				],
+				"translate": [
+					{
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.089, -10.08, 0.178, -10.08, 0.089, -15.12, 0.178, 8.47 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -10.08,
+						"y": 8.47,
+						"curve": [ 0.356, -10.08, 0.444, -10.08, 0.356, 8.47, 0.444, -15.12 ]
+					},
+					{
+						"time": 0.5333,
+						"x": -10.08,
+						"y": -15.12,
+						"curve": [ 0.622, -10.08, 0.711, -10.08, 0.622, -15.12, 0.711, 8.47 ]
+					},
+					{
+						"time": 0.8,
+						"x": -10.08,
+						"y": 8.47,
+						"curve": [ 0.889, -10.08, 0.978, -10.08, 0.889, 8.47, 0.978, -15.12 ]
+					},
+					{ "time": 1.0667, "x": -10.08, "y": -15.12 }
+				]
+			},
+			"MAN_ARM_l": {
+				"rotate": [
+					{ "value": -53.55, "curve": "stepped" },
+					{ "time": 1.0667, "value": -53.55 }
+				]
+			},
+			"MAN_ARM_r": {
+				"rotate": [
+					{ "value": 107, "curve": "stepped" },
+					{ "time": 1.0667, "value": 107 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_r3": {
+				"rotate": [
+					{ "value": -18.61, "curve": "stepped" },
+					{ "time": 1.0667, "value": -18.61 }
+				]
+			},
+			"MAN_HEAD": {
+				"rotate": [
+					{
+						"value": -10.66,
+						"curve": [ 0.089, -10.66, 0.178, -11.38 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -11.38,
+						"curve": [ 0.356, -11.38, 0.445, -7.99 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -7.99,
+						"curve": [ 0.702, -7.99, 0.721, -11.38 ]
+					},
+					{
+						"time": 0.8,
+						"value": -11.38,
+						"curve": [ 0.878, -11.38, 0.878, -10.66 ]
+					},
+					{ "time": 1.0667, "value": -10.66 }
+				]
+			},
+			"MAN_LEG_l": {
+				"scale": [
+					{
+						"x": 0.987,
+						"curve": [ 0.178, 0.987, 0.356, 1.006, 0.178, 1, 0.356, 1 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 1.034,
+						"curve": [ 0.622, 1.047, 0.711, 1.11, 0.622, 1, 0.711, 1 ]
+					},
+					{
+						"time": 0.8,
+						"x": 1.11,
+						"curve": [ 0.889, 1.11, 0.978, 0.987, 0.889, 1, 0.978, 1 ]
+					},
+					{ "time": 1.0667, "x": 0.987 }
+				]
+			},
+			"MAN_HEAD2": {
+				"translate": [
+					{
+						"curve": [ 0.179, 0, 0.358, 43.52, 0.179, 0, 0.358, -624.19 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 43.52,
+						"y": -624.19,
+						"curve": [ 0.713, 43.52, 0.89, 0, 0.713, -624.19, 0.89, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_l3": {
+				"rotate": [
+					{ "value": -41.29, "curve": "stepped" },
+					{ "time": 1.0667, "value": -41.29 }
+				]
+			},
+			"MAN_IK_R_FOOT": {
+				"translate": [
+					{
+						"x": -156.2,
+						"y": 20.15,
+						"curve": [ 0.089, -271.76, 0.178, -312.97, 0.089, 36.7, 0.178, 90.95 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -312.97,
+						"y": 90.95,
+						"curve": [ 0.311, -312.97, 0.489, 784.79, 0.311, 90.95, 0.489, 20.8 ]
+					},
+					{
+						"time": 0.5333,
+						"x": 784.79,
+						"y": 13.41,
+						"curve": [ 0.622, 784.79, 0.711, 351.23, 0.622, -1.36, 0.711, -8.31 ]
+					},
+					{
+						"time": 0.8,
+						"x": 194.4,
+						"y": -8.31,
+						"curve": [ 0.889, 37.57, 0.978, -40.63, 0.889, -8.31, 0.978, 3.61 ]
+					},
+					{ "time": 1.0667, "x": -156.2, "y": 20.15 }
+				]
+			},
+			"MAN_IK_L_FOOT": {
+				"translate": [
+					{
+						"x": 211.62,
+						"y": 15.12,
+						"curve": [ 0.089, 211.62, 0.178, -69.57, 0.089, 15.12, 0.178, 26.45 ]
+					},
+					{
+						"time": 0.2667,
+						"x": -214.73,
+						"y": 32.11,
+						"curve": [ 0.356, -359.9, 0.444, -537.04, 0.356, 37.77, 0.444, 32.11 ]
+					},
+					{
+						"time": 0.5333,
+						"x": -659.38,
+						"y": 49.1,
+						"curve": [ 0.622, -781.72, 0.711, -948.79, 0.622, 66.1, 0.711, 213.33 ]
+					},
+					{
+						"time": 0.8,
+						"x": -948.79,
+						"y": 213.33,
+						"curve": [ 0.889, -948.79, 0.978, 211.62, 0.889, 213.33, 0.978, 15.12 ]
+					},
+					{ "time": 1.0667, "x": 211.62, "y": 15.12 }
+				]
+			},
+			"MAN_ARM_r2": {
+				"rotate": [
+					{ "value": 92.7, "curve": "stepped" },
+					{ "time": 1.0667, "value": 92.7 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_l2": {
+				"rotate": [
+					{ "value": 84.87, "curve": "stepped" },
+					{ "time": 1.0667, "value": 84.87 }
+				],
+				"scale": [
+					{ "x": 0.923, "curve": "stepped" },
+					{ "time": 1.0667, "x": 0.923 }
+				]
+			},
+			"MAN_SPINE2": {
+				"rotate": [
+					{ "value": 5.7, "curve": "stepped" },
+					{ "time": 1.0667, "value": 5.7 }
+				]
+			},
+			"MAN_SPINE3": {
+				"rotate": [
+					{
+						"curve": [ 0.089, 0, 0.178, -0.72 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -0.72,
+						"curve": [ 0.356, -0.72, 0.445, 0 ]
+					},
+					{
+						"time": 0.5333,
+						"curve": [ 0.702, 0, 0.721, -0.72 ]
+					},
+					{
+						"time": 0.8,
+						"value": -0.72,
+						"curve": [ 0.878, -0.72, 0.878, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_SPINE4": {
+				"rotate": [
+					{
+						"curve": [ 0.089, 0, 0.178, -0.72 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -0.72,
+						"curve": [ 0.356, -0.72, 0.445, 0 ]
+					},
+					{
+						"time": 0.5333,
+						"curve": [ 0.702, 0, 0.721, -0.72 ]
+					},
+					{
+						"time": 0.8,
+						"value": -0.72,
+						"curve": [ 0.878, -0.72, 0.878, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_ARM_r4": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r5": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_l6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r6": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_l7": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r2": {
+				"scale": [
+					{
+						"curve": [ 0.089, 1, 0.178, 1.109, 0.089, 1, 0.178, 1 ]
+					},
+					{
+						"time": 0.2667,
+						"x": 1.109,
+						"curve": [ 0.356, 1.109, 0.444, 1, 0.356, 1, 0.444, 1 ]
+					},
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r3": {
+				"rotate": [
+					{
+						"value": -17.88,
+						"curve": [ 0.089, -22.62, 0.178, -31.86 ]
+					},
+					{
+						"time": 0.2667,
+						"value": -31.86,
+						"curve": [ 0.356, -31.86, 0.444, -13.87 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -9.12,
+						"curve": [ 0.622, -4.38, 0.711, -3.41 ]
+					},
+					{
+						"time": 0.8,
+						"value": -3.41,
+						"curve": [ 0.889, -3.41, 0.978, -13.14 ]
+					},
+					{ "time": 1.0667, "value": -17.88 }
+				]
+			},
+			"MAN_LEG_r": {
+				"scale": [
+					{
+						"curve": [ 0.089, 1, 0.178, 1.063, 0.089, 1, 0.178, 1 ]
+					},
+					{
+						"time": 0.2667,
+						"x": 1.063,
+						"curve": [ 0.356, 1.063, 0.444, 1, 0.356, 1, 0.444, 1 ]
+					},
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_l3": {
+				"rotate": [
+					{
+						"curve": [ 0.178, 0, 0.356, -0.4 ]
+					},
+					{
+						"time": 0.5333,
+						"value": -17.59,
+						"curve": [ 0.622, -26.19, 0.711, -77.37 ]
+					},
+					{
+						"time": 0.8,
+						"value": -77.37,
+						"curve": [ 0.889, -77.37, 0.978, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			},
+			"MAN_LEG_r4": {
+				"rotate": [
+					{
+						"value": 17.67,
+						"curve": [ 0.178, 17.67, 0.356, 12.68 ]
+					},
+					{
+						"time": 0.5333,
+						"value": 9.62,
+						"curve": [ 0.622, 8.09, 0.711, 3.9 ]
+					},
+					{
+						"time": 0.8,
+						"value": 3.9,
+						"curve": [ 0.889, 3.9, 0.978, 17.67 ]
+					},
+					{ "time": 1.0667, "value": 17.67 }
+				]
+			},
+			"MAN_LEG_l4": {
+				"rotate": [
+					{
+						"curve": [ 0.089, 0, 0.178, 13.7 ]
+					},
+					{
+						"time": 0.2667,
+						"value": 13.7,
+						"curve": [ 0.356, 13.7, 0.444, 12.9 ]
+					},
+					{
+						"time": 0.5333,
+						"value": 12.9,
+						"curve": [ 0.622, 12.9, 0.711, 25.17 ]
+					},
+					{
+						"time": 0.8,
+						"value": 25.17,
+						"curve": [ 0.889, 25.17, 0.978, 0 ]
+					},
+					{ "time": 1.0667 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"Man________Hand_1_Right": {
+					"Hand_Gun_1": {
+						"deform": [
+							{
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ],
+								"curve": "stepped"
+							},
+							{
+								"time": 1.0667,
+								"offset": 2,
+								"vertices": [ -69.58215, 16.11597, -69.58215, 16.11597 ]
+							}
+						]
+					}
+				}
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			},
+			{
+				"time": 1.0667,
+				"offsets": [
+					{ "slot": "Man________Hand_1_Left", "offset": 19 },
+					{ "slot": "Man________Hand_2_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Weapon_Right", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_3", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_1", "offset": -8 },
+					{ "slot": "Man________Hand_Pistol_2", "offset": -8 }
+				]
+			}
+		],
 		"events": [
 			{ "name": "_SE_Shose_Walk" },
 			{ "time": 0.5333, "name": "_SE_Shose_Walk" }
@@ -40027,14 +45532,14 @@
 			{
 				"offsets": [
 					{ "slot": "YYY________Hand_1_Left", "offset": 1 },
-					{ "slot": "Weapon_Effect", "offset": -50 }
+					{ "slot": "Weapon_Effect", "offset": -51 }
 				]
 			},
 			{
 				"time": 1.3333,
 				"offsets": [
 					{ "slot": "YYY________Hand_1_Left", "offset": 1 },
-					{ "slot": "Weapon_Effect", "offset": -50 }
+					{ "slot": "Weapon_Effect", "offset": -51 }
 				]
 			}
 		]
@@ -42104,7 +47609,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -42118,7 +47623,7 @@
 					{ "slot": "YYY________Hand_Forearm_Left", "offset": 29 },
 					{ "slot": "YYY________Hand_2_Left", "offset": 29 },
 					{ "slot": "YYY________Hand_Weapon_Left", "offset": 29 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 28 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
@@ -42132,21 +47637,21 @@
 					{ "slot": "Effect_Melee", "offset": 38 },
 					{ "slot": "YYY________Hand_1_Left", "offset": 0 },
 					{ "slot": "YYY________Hand_Weapon_Right", "offset": -4 },
-					{ "slot": "Weapon_Effect", "offset": -49 }
+					{ "slot": "Weapon_Effect", "offset": -50 }
 				]
 			},
 			{
 				"time": 0.7,
 				"offsets": [
 					{ "slot": "YYY________Hand_1_Left", "offset": 1 },
-					{ "slot": "Weapon_Effect", "offset": -50 }
+					{ "slot": "Weapon_Effect", "offset": -51 }
 				]
 			},
 			{
 				"time": 1.3333,
 				"offsets": [
 					{ "slot": "YYY________Hand_1_Left", "offset": 1 },
-					{ "slot": "Weapon_Effect", "offset": -50 }
+					{ "slot": "Weapon_Effect", "offset": -51 }
 				]
 			}
 		],
@@ -42794,7 +48299,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -42804,7 +48309,7 @@
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -45668,13 +51173,13 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		]
@@ -46648,7 +52153,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -46662,7 +52167,7 @@
 					{ "slot": "YYY________Hand_Forearm_Left", "offset": 29 },
 					{ "slot": "YYY________Hand_2_Left", "offset": 29 },
 					{ "slot": "YYY________Hand_Weapon_Left", "offset": 29 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 28 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
@@ -46673,13 +52178,13 @@
 			{
 				"time": 0.6667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		]
@@ -47300,7 +52805,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -47310,7 +52815,7 @@
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -47969,7 +53474,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -47979,7 +53484,7 @@
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -48812,7 +54317,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -48826,7 +54331,7 @@
 					{ "slot": "YYY________Hand_Forearm_Left", "offset": 29 },
 					{ "slot": "YYY________Hand_2_Left", "offset": 29 },
 					{ "slot": "YYY________Hand_Weapon_Left", "offset": 29 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 28 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
@@ -48837,7 +54342,7 @@
 			{
 				"time": 0.6667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -48847,7 +54352,7 @@
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -49499,7 +55004,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -49509,7 +55014,7 @@
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -51437,7 +56942,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 47 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -51452,14 +56957,14 @@
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -4 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -4 },
 					{ "slot": "YYY________Hand_Pistol_2", "offset": -4 },
-					{ "slot": "Throwable", "offset": -45 }
+					{ "slot": "Throwable", "offset": -46 }
 				]
 			},
 			{
 				"time": 1.3333,
 				"offsets": [
 					{ "slot": "YYY________Hand_1_Left", "offset": 1 },
-					{ "slot": "Weapon_Effect", "offset": -50 }
+					{ "slot": "Weapon_Effect", "offset": -51 }
 				]
 			}
 		]
@@ -52668,7 +58173,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 47 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -52678,12 +58183,12 @@
 			{
 				"time": 0.4,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 43 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -11 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -11 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -11 },
@@ -52693,7 +58198,7 @@
 			{
 				"time": 0.6667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 47 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -52703,7 +58208,7 @@
 			{
 				"time": 4,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 47 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -52713,7 +58218,7 @@
 			{
 				"time": 4.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 47 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -55643,12 +61148,12 @@
 			{
 				"time": 0.0333,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 }
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 }
 				]
 			}
 		],
@@ -58235,12 +63740,12 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 }
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 }
 				]
 			},
 			{
@@ -58284,12 +63789,12 @@
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
 					{ "slot": "YYY________Hand_Forearm_2_Right", "offset": -8 }
 				]
 			},
@@ -62463,8 +67968,8 @@
 			{
 				"time": 0.8,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 44 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 42 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 9 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 9 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 9 },
@@ -64138,12 +69643,12 @@
 			{
 				"time": 0.0667,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
 					{ "slot": "YYY_Body_Clothes", "offset": -14 }
 				]
 			},
@@ -64156,12 +69661,12 @@
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
 					{ "slot": "YYY_Body_Clothes", "offset": -14 }
 				]
 			},
@@ -65087,7 +70592,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "Effect_Melee", "offset": 53 },
+					{ "slot": "Effect_Melee", "offset": 54 },
 					{ "slot": "YYY_Body_Clothes", "offset": -9 }
 				]
 			},
@@ -66252,7 +71757,7 @@
 			{
 				"time": 0.0667,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
 					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 30 },
 					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 28 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 15 },
@@ -66278,7 +71783,7 @@
 			{
 				"time": 0.1333,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
 					{ "slot": "YYY________Hand_UpperArm_Left", "offset": 11 },
 					{ "slot": "YYY________Hand_UpperArm_2_Left", "offset": 11 },
 					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 30 },
@@ -66317,12 +71822,12 @@
 			{
 				"time": 0.4,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
 					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 15 },
 					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 15 },
 					{ "slot": "YYY____Leg_Thigh_Right", "offset": -9 },
@@ -70562,9 +76067,9 @@
 			{
 				"time": 0.1,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 42 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 40 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 8 },
@@ -70581,9 +76086,9 @@
 			{
 				"time": 0.1667,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 42 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 40 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 9 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 9 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 9 },
@@ -70601,8 +76106,8 @@
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 44 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 42 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 17 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 17 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 17 },
@@ -70627,8 +76132,8 @@
 			{
 				"time": 0.4667,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 44 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 42 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 17 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 17 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 17 },
@@ -74757,12 +80262,12 @@
 			{
 				"time": 0.0667,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
 					{ "slot": "YYY_Body_Clothes", "offset": -14 }
 				]
 			}
@@ -76212,7 +81717,7 @@
 			{
 				"time": 0.0667,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
 					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 30 },
 					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 28 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 15 },
@@ -76238,7 +81743,7 @@
 			{
 				"time": 0.1333,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
 					{ "slot": "YYY________Hand_UpperArm_Left", "offset": 11 },
 					{ "slot": "YYY________Hand_UpperArm_2_Left", "offset": 11 },
 					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 30 },
@@ -76277,12 +81782,12 @@
 			{
 				"time": 0.4,
 				"offsets": [
-					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Forearm_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_2_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Weapon_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_1_Left", "offset": 44 },
-					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 44 },
+					{ "slot": "YYY________Hand_Foreearm_3_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Forearm_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_2_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Weapon_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_Foreearm_2_Left", "offset": 45 },
 					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 15 },
 					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 15 },
 					{ "slot": "YYY____Leg_Thigh_Right", "offset": -9 },
@@ -82908,9 +88413,9 @@
 			{
 				"time": 0.3667,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 42 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 40 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 8 },
@@ -83796,9 +89301,9 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 42 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 40 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 8 },
@@ -83815,9 +89320,9 @@
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY_Head_Hair_Back", "offset": 52 },
-					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 42 },
-					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 40 },
+					{ "slot": "YYY_Head_Hair_Back", "offset": 53 },
+					{ "slot": "YYY_Head_Hair_Ponytail", "offset": 43 },
+					{ "slot": "YYY_Head_Hair_Ribbon", "offset": 41 },
 					{ "slot": "YYY____Leg_Foot_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Foot_2_Left", "offset": 8 },
 					{ "slot": "YYY____Leg_Calf_Left", "offset": 8 },
@@ -86399,7 +91904,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		],
@@ -87255,13 +92760,13 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		],
@@ -87804,7 +93309,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		]
@@ -88969,7 +94474,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
@@ -88989,13 +94494,13 @@
 			{
 				"time": 0.9333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 1.1667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		],
@@ -89710,13 +95215,13 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		],
@@ -90372,13 +95877,13 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		]
@@ -91246,7 +96751,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
@@ -91266,13 +96771,13 @@
 			{
 				"time": 0.9333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			},
 			{
 				"time": 1.1667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		],
@@ -92384,7 +97889,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY_Body_Clothes", "offset": -9 }
 				]
 			}
@@ -93162,7 +98667,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 }
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 }
 				]
 			}
 		],
@@ -93902,7 +99407,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -93912,7 +99417,7 @@
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -94719,7 +100224,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -94729,7 +100234,7 @@
 			{
 				"time": 0.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -95332,7 +100837,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -96261,7 +101766,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -96291,7 +101796,7 @@
 			{
 				"time": 1.1667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -96998,7 +102503,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -97666,7 +103171,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -97676,7 +103181,7 @@
 			{
 				"time": 1.3333,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -98573,7 +104078,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -98603,7 +104108,7 @@
 			{
 				"time": 1.1667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -99742,7 +105247,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY_Body_Clothes", "offset": -9 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
@@ -99753,7 +105258,7 @@
 			{
 				"time": 0.6667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY_Body_Skirt", "offset": 0 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
@@ -100626,7 +106131,7 @@
 		"drawOrder": [
 			{
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
@@ -100636,7 +106141,7 @@
 			{
 				"time": 1.0667,
 				"offsets": [
-					{ "slot": "YYY________Hand_1_Left", "offset": 45 },
+					{ "slot": "YYY________Hand_1_Left", "offset": 46 },
 					{ "slot": "YYY________Hand_2_Right", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_3", "offset": -6 },
 					{ "slot": "YYY________Hand_Pistol_1", "offset": -6 },
