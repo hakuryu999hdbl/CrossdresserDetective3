@@ -59,6 +59,9 @@ public class FrameEvent : MonoBehaviour
           0, // 御姐帽子
           0, // 御姐面具
 
+          0, // 男人头发
+          1, // 男人衣服
+
 
           1,  //刀剑
           1,  // 手枪
@@ -93,6 +96,9 @@ public class FrameEvent : MonoBehaviour
             Random.Range(0, 2), // 御姐帽子
             Random.Range(0, 2), // 御姐面具
 
+            Random.Range(0, 3), // 男人头发
+            Random.Range(0, 3), // 男人衣服
+
 
             Random.Range(0, 2), // 刀剑
             Random.Range(0, 2), // 手枪
@@ -105,6 +111,7 @@ public class FrameEvent : MonoBehaviour
         (
            int _YYY_beltIndex, int _YYY_hairIndex, int _YYY_clothesIndex, int _YYY_glovesIndex, int _YYY_pantiesIndex, int _YYY_shoesIndex, int _YYY_skirtIndex, int _YYY_stockingsIndex, int _YYY_hatIndex, int _YYY_maskIndex,
            int _Girl_hairIndex, int _Girl_clothesIndex, int _Girl_glovesIndex, int _Girl_underwearIndex, int _Girl_shoesIndex, int _Girl_stockingsIndex, int _Girl_hatIndex, int _Girl_maskIndex,
+            int _Man_hairIndex, int _Man_clothesIndex,
            int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex, int _Weapon_ThrowableIndex
         )
     {
@@ -204,6 +211,10 @@ public class FrameEvent : MonoBehaviour
         if (_Weapon_ThrowableIndex != 0)
             AddSkinSafe(newSkin, $"Weapon/Throwable/Weapon_Throwable_color{_Weapon_ThrowableIndex}");
 
+
+        AddSkinSafe(newSkin, $"Man/Hair/Man_Hair_color{_Man_hairIndex}");
+
+        AddSkinSafe(newSkin, $"Man/Clothes/Man_Clothes_color{_Man_clothesIndex}");
 
 
 

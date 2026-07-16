@@ -1184,7 +1184,8 @@ public class EnemyController : MonoBehaviour
     public int Girl_hatIndex;
     public int Girl_maskIndex;
 
-
+    public int Man_hairIndex;
+    public int Man_clothesIndex;
 
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
@@ -1198,7 +1199,7 @@ public class EnemyController : MonoBehaviour
 
     public void RandomSkin()
     {
-        Girl_hairIndex = 2;
+        Girl_hairIndex = Random.Range(0, 3);
 
         Girl_clothesIndex = Random.Range(0, 3);
         Girl_glovesIndex = Random.Range(0, 2);
@@ -1226,6 +1227,8 @@ public class EnemyController : MonoBehaviour
         Girl_maskIndex =1;
 
 
+        Man_hairIndex = Random.Range(0, 3);
+        Man_clothesIndex = Random.Range(0, 3);
 
 
         meleeType = Random.Range(1, 4);
@@ -1233,6 +1236,8 @@ public class EnemyController : MonoBehaviour
 
         pistolType = Random.Range(1, 4);
         rifleType = Random.Range(1, 3);
+
+        
     }
 
 
@@ -1262,6 +1267,9 @@ public class EnemyController : MonoBehaviour
             Girl_stockingsIndex,
             Girl_hatIndex,
             Girl_maskIndex,
+
+            Man_hairIndex,
+            Man_clothesIndex,
 
             meleeType,
             pistolType,
