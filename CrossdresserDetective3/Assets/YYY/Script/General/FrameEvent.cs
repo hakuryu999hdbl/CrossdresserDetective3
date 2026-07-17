@@ -732,7 +732,30 @@ public class FrameEvent : MonoBehaviour
 
 
 
+    #region 剧情CG相关帧事件
+    public void Undressing_Up()
+    {
 
+        playerController.clothesIndex = 0;
+        playerController.glovesIndex = 0;
+        playerController.hatIndex = 0;
+        playerController.maskIndex = 0;
+
+        playerController.RefreshPlayerSkin();
+    }
+    public void Undressing_Down() 
+    {
+        playerController.beltIndex = 0;
+        playerController.stockingsIndex = 0;
+        playerController.pantiesIndex = 0;
+        playerController.shoesIndex = 0;
+        playerController.skirtIndex = 0;
+
+        playerController.RefreshPlayerSkin();
+
+       
+    }
+    #endregion
 
 
 }

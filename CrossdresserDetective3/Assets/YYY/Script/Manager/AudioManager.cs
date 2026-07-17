@@ -106,7 +106,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Girl_die1, Girl_die2, Girl_die3;
 
 
-    public AudioClip SE_Clothes;
+    public AudioClip SE_Clothes, SE_Tuo, SE_Tear;
     public AudioClip SE_WalkClip_1, SE_WalkClip_2, SE_RunClip_1, SE_RunClip_2;
     public AudioClip SE_Man_WalkClip_1, SE_Man_WalkClip_2, SE_Man_RunClip_1, SE_Man_RunClip_2;
     public AudioClip SE_falldown;

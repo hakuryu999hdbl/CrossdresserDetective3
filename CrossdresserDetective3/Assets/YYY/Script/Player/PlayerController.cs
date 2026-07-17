@@ -66,8 +66,8 @@ public class PlayerController : MonoBehaviour
     public bool isSlide;
     public bool isTeleporting = false;//是否传送
     public bool isWallCling;   // 是否抓/蹬在墙上停住
-
-    public bool isOnElevator;
+    public bool isOnElevator;//是否在电梯里
+    public bool isInCutscene;//是否位于过场动画
 
     // Start is called before the first frame update
     void Start()
@@ -103,6 +103,12 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
+        if (isInCutscene)
+        {
+            inputDirection = Vector2.zero;
+            return;
+        }
+
 
         inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
 
@@ -111,6 +117,14 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
+
+        if (isInCutscene)
+        {
+            inputDirection = Vector2.zero;
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         if (isDead || isCaptured)
         {
             if (physicsCheck.isGround)
@@ -790,6 +804,94 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
+    /// <summary>
+    /// 过场动画切断输入
+    /// </summary>
+    #region
+    [Header("过场动画切断输入")]
+    public GameObject Camera;//玩家下方挂的真实相机
+
+    public void EnterCutscene()
+    {
+        if (isDead)
+            return;
+
+        //封锁玩家输入
+        isInCutscene = true;
+
+        //基本上都需要用过场动画相机
+        Camera.SetActive(false);
+
+        //UI层面的隐藏
+        UIManager.instance.OnCutsceneStart();
+
+        // 停止所有游戏操作
+        inputControl.Gameplay.Disable();
+
+        inputDirection = Vector2.zero;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        // 清理可能正在进行的动作
+        isAttack = false;
+        isHoldingThrow = false;
+        throwCharge = 0f;
+
+        // 停止滑铲
+        if (slideCoroutine != null)
+        {
+            StopCoroutine(slideCoroutine);
+            EndSlide();
+        }
+
+        // 停止飞踢
+        if (airKickCoroutine != null)
+        {
+            StopCoroutine(airKickCoroutine);
+            airKickCoroutine = null;
+        }
+
+        isAirKick = false;
+        isDashAttack = false;
+        isSlide = false;
+
+        // 隐藏交互提示
+        Sign.SetActive(false);
+
+
+        // 防止普通动画脚本持续覆盖Timeline动画
+        playerAnimation.EnterCutsceneIdle();
+        playerAnimation.enabled = false;
+    }
+
+    public void ExitCutscene()
+    {
+        //恢复操作
+        isInCutscene = false;
+
+        //恢复相机
+        Camera.SetActive(true);
+
+
+        //UI层面的隐藏
+        UIManager.instance.OnCutsceneOver();
+
+        //动作重启
+        inputDirection = Vector2.zero;
+        rb.velocity = Vector2.zero;
+
+        //恢复输入
+        inputControl.Gameplay.Enable();
+
+        //恢复交互提示
+        Sign.SetActive(true);
+
+        //恢复动画
+        playerAnimation.enabled = true;
+
+    }
+
+    #endregion
 
 
     /// <summary>

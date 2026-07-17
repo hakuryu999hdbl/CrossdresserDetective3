@@ -66,4 +66,22 @@ public class PlayerAnimation : MonoBehaviour
     {
         anim.SetTrigger("airKick");
     }
+
+    public void EnterCutsceneIdle()
+    {
+        // 清理移动参数
+        anim.SetFloat("velocityX", 0f);
+        anim.SetFloat("velocityY", 0f);
+
+        // 清理状态参数
+        anim.SetBool("isCrouch", false);
+        anim.SetBool("isGround", true);
+
+        // 根据你动画器里的实际参数补充
+        anim.SetBool("isAttack", false);
+
+        // 强制进入Idle
+        anim.Play("YYY_Idle", 0, 0f);
+        anim.Update(0f);
+    }
 }

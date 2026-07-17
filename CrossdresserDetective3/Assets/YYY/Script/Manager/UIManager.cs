@@ -40,8 +40,20 @@ public class UIManager : MonoBehaviour
     public void Start()
     {
         Time.timeScale = 1f;//防止重刷场景前的暂停
+        switch (GameFlowData.CurrentStage)
+        {
+            default:
+                OpenSetUp();
+                break;
+            case 1:
+                //第一关不弹出背包界面（好像这个UI层退出一下需要）
+                CloseSetUp();
+                break;       
 
-        OpenSetUp();
+
+
+        }
+       
     }
 
 
@@ -818,15 +830,28 @@ public class UIManager : MonoBehaviour
     /// 屏幕常驻显示
     /// </summary>
     #region
-
+    [Header("屏幕常驻显示")]
     public GameObject RedScreen;
     public GameObject WhiteScreen;
     public GameObject ShockScreen;
 
 
 
+    public GameObject UI_All;//包含血条体力值子弹数当前武器等全体UI，在过场动画弹出的时候隐藏
+    public GameObject UI_Cutscene;//过场动画的上下黑幕和台词显示
 
 
+
+    public void OnCutsceneStart() 
+    {
+        UI_All.SetActive(false);
+        UI_Cutscene.SetActive(true);
+    }
+    public void OnCutsceneOver()
+    {
+        UI_All.SetActive(true);
+        UI_Cutscene.SetActive(false);
+    }
     #endregion
 
 

@@ -113,8 +113,18 @@ public class FrameEvent_Audio : MonoBehaviour
     public void _SE_Clothes()
     {
         audioS.PlayOneShot(AudioManager.SE_Clothes);
-
     }
+
+    public void _SE_Tuo()
+    {
+        audioS.PlayOneShot(AudioManager.SE_Tuo);
+    }
+
+    public void _SE_Tear() 
+    {
+        audioS.PlayOneShot(AudioManager.SE_Tear);
+    }
+
     public void _SE_HighHeels_Walk()
     {
         if (Random.Range(0, 2) == 0)
