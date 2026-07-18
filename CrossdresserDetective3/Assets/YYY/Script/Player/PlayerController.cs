@@ -715,7 +715,7 @@ public class PlayerController : MonoBehaviour
     #region
     [Header("受伤死亡")]
     public float hurtForce;
-   
+
     public FrameEvent_Audio frameEvent_Audio;
     public GameObject Effect_Blood;//受伤特效
     public GameObject Strike_Effect;//剑光特效
@@ -816,7 +816,7 @@ public class PlayerController : MonoBehaviour
         if (isDead)
             return;
 
-        //封锁玩家输入
+        //正式进入
         isInCutscene = true;
 
         //基本上都需要用过场动画相机
@@ -825,14 +825,16 @@ public class PlayerController : MonoBehaviour
         //UI层面的隐藏
         UIManager.instance.OnCutsceneStart();
 
-        // 停止所有游戏操作
+        // 停止所有输入
         inputControl.Gameplay.Disable();
+        //DisableGameplayInput();//背包层面的玩家锁
+
+        #region 清理可能正在进行的动作
 
         inputDirection = Vector2.zero;
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
 
-        // 清理可能正在进行的动作
         isAttack = false;
         isHoldingThrow = false;
         throwCharge = 0f;
@@ -855,33 +857,37 @@ public class PlayerController : MonoBehaviour
         isDashAttack = false;
         isSlide = false;
 
+        #endregion
+
         // 隐藏交互提示
         Sign.SetActive(false);
 
 
         // 防止普通动画脚本持续覆盖Timeline动画
         playerAnimation.EnterCutsceneIdle();
-        playerAnimation.enabled = false;
+        //playerAnimation.enabled = false;
     }
 
     public void ExitCutscene()
     {
-        //恢复操作
+        //正式离开
         isInCutscene = false;
 
         //恢复相机
         Camera.SetActive(true);
 
-
         //UI层面的隐藏
         UIManager.instance.OnCutsceneOver();
 
-        //动作重启
-        inputDirection = Vector2.zero;
-        rb.velocity = Vector2.zero;
-
         //恢复输入
         inputControl.Gameplay.Enable();
+        //EnableGameplayInput();
+
+        # region 动作重启
+        inputDirection = Vector2.zero;
+        rb.velocity = Vector2.zero;
+        #endregion
+
 
         //恢复交互提示
         Sign.SetActive(true);
@@ -1019,6 +1025,7 @@ public class PlayerController : MonoBehaviour
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
 
+        if (isInCutscene) { return; }//过场动画锁
 
 
 
@@ -1070,7 +1077,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+
     #endregion
 
 
@@ -1087,7 +1094,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isCaptured) { return; }//被抓住无法攻击
         if (isAirKick) return;
-        if (isAttack || isHurt || isDead || isTeleporting ) return;
+        if (isAttack || isHurt || isDead || isTeleporting) return;
 
         // 关键：贴墙、挂墙、墙跳期间不允许飞踢
         if (physicsCheck.onWall || isWallCling || wallJump)
@@ -1189,6 +1196,9 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
+        if (isInCutscene) { return; }//过场动画锁
+
+
         if (isCaptured) { return; }//被抓住无法翻滚
         if (isSlide) return;
         if (!physicsCheck.isGround) return;
@@ -1265,7 +1275,7 @@ public class PlayerController : MonoBehaviour
     public int throwCount = 5;
     public int maxThrowCount = 5;
 
-    void CheckThrow() 
+    void CheckThrow()
     {
         if (isHoldingThrow)
         {
@@ -1279,6 +1289,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnThrowStart(InputAction.CallbackContext obj)
     {
+
+        if (isInCutscene) { return; }//过场动画锁
+
+
         throwPressTime = Time.time;
         isHoldingThrow = true;
     }
@@ -1384,7 +1398,7 @@ public class PlayerController : MonoBehaviour
                 }
 
 
-               
+
             }
 
 
@@ -1464,7 +1478,7 @@ public class PlayerController : MonoBehaviour
     }//更换玩家当前装备显示与UI层显示
 
 
-    public void SetHitEffectType(int Type) 
+    public void SetHitEffectType(int Type)
     {
         foreach (Attack attack in playerAttacks)
         {
@@ -1626,7 +1640,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-       
+
     }
 
 
@@ -1656,7 +1670,7 @@ public class PlayerController : MonoBehaviour
         if (attackType >= 0) return; // 不是枪
 
 
-        if (magazineCount <= 0) 
+        if (magazineCount <= 0)
         {
             AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_bomb_bounce_1);
             isAttack = false;
@@ -1674,7 +1688,7 @@ public class PlayerController : MonoBehaviour
     {
 
         if (magazineCount > 0) { magazineCount--; }//开局也要触发
-      
+
 
 
         currentAmmo = maxAmmo;
@@ -1692,7 +1706,7 @@ public class PlayerController : MonoBehaviour
         UIManager.instance.RefreshAmmoUI(currentAmmo, maxAmmo, magazineCount);
     }//捡弹夹
 
-   
+
     #endregion
 
     #region  UI层
@@ -1700,6 +1714,9 @@ public class PlayerController : MonoBehaviour
     public GameObject Sign;
     private void OnPause(InputAction.CallbackContext ctx)
     {
+        if (isInCutscene) { return; }//过场动画锁
+
+
         UIManager.instance.TogglePause();
     }
     public void OnCancel(InputAction.CallbackContext ctx)
@@ -1719,6 +1736,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnZoomCamera(InputAction.CallbackContext ctx)
     {
+        if (isInCutscene) { return; }//过场动画锁
+
+
         frameEvent_Audio._UI_Click();//切换相机发出按钮声
 
         cameraControl.ToggleZoom();

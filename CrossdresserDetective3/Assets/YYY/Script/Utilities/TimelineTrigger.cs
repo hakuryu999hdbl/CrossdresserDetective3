@@ -116,4 +116,61 @@ public class TimelineTrigger : MonoBehaviour
         if (triggerCollider != null)
             triggerCollider.enabled = true;
     }
+
+
+
+
+    /// <summary>
+    /// TimeLine中端帧事件触发
+    /// </summary>
+    public void SetBlackScreen() 
+    {
+        UIManager.instance.BlackScreen.SetActive(true);
+    }
+
+
+
+
+    #region 玩家控制
+    public void SetPlayerAnim_Washing() 
+    {
+        GameManager.instance.player.playerAnimation.PlayWashing();
+    }
+
+    public void SetPlayerAnim_Undressing()
+    {
+        GameManager.instance.player.playerAnimation.PlayUndressing();
+    }
+
+    public void SetPlayerAnim_Walking()
+    {
+        GameManager.instance.player.playerAnimation.PlayWalking();
+    }
+
+    public GameObject PlayerSlot;
+    public void SetPlayerToSlot() 
+    {
+        // 1. 将玩家的父级设置为 PlayerSlot 的 transform
+        GameManager.instance.player.transform.SetParent(PlayerSlot.transform);
+
+        // 2. （可选）将玩家的本地坐标和旋转归零，使其完美对齐到插槽中心
+        //GameManager.instance.player.transform.localPosition = Vector3.zero;
+
+        // 2. 记住当前的本地坐标
+        Vector3 currentLocalPos = GameManager.instance.player.transform.localPosition;
+
+        // 3. 重新赋值：X 强制归零，Y 和 Z 保持它此时的相对位置
+        GameManager.instance.player.transform.localPosition = new Vector3(0f, currentLocalPos.y, currentLocalPos.z);
+
+        GameManager.instance.player.transform.localRotation = Quaternion.identity;
+    }
+
+    public void SetPlayerOutSlot()
+    {
+
+        // 将父级设置为 null，玩家就会移出插槽，回到场景的根目录
+        GameManager.instance.player.transform.SetParent(null);
+    }
+
+    #endregion
 }

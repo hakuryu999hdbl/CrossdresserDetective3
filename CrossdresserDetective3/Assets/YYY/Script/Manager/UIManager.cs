@@ -834,7 +834,7 @@ public class UIManager : MonoBehaviour
     public GameObject RedScreen;
     public GameObject WhiteScreen;
     public GameObject ShockScreen;
-
+    public GameObject BlackScreen;
 
 
     public GameObject UI_All;//包含血条体力值子弹数当前武器等全体UI，在过场动画弹出的时候隐藏

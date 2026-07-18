@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
                 {
                     default:
                     case 1:
+                        Invoke(nameof(SetPlayerClothes_01), 0.2f);
                         SetArea(0); 
                         break;
                   
@@ -84,6 +85,10 @@ public class GameManager : MonoBehaviour
        
     }
 
+    public void SetPlayerClothes_01() 
+    {
+        player.frameEvent.Story_ChangeClothes_01();//第一章事务所衣物
+    }
 
     /// <summary>
     /// 关卡

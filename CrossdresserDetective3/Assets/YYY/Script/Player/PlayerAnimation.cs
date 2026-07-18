@@ -81,7 +81,30 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("isAttack", false);
 
         // 强制进入Idle
-        anim.Play("YYY_Idle", 0, 0f);
+        anim.Play("Idle", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void PlayWashing() 
+    {
+        Debug.Log("立刻播放洗澡动画");
+
+        anim.Play("Story_Washing", 0, 0f);
+        anim.Update(0f);
+    }
+    public void PlayUndressing()
+    {
+        Debug.Log("立刻播放脱衣动画");
+
+        anim.Play("Story_Undressing", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void PlayWalking()
+    {
+        Debug.Log("立刻播放走路动画");
+
+        anim.Play("Story_Walk", 0, 0f);
         anim.Update(0f);
     }
 }

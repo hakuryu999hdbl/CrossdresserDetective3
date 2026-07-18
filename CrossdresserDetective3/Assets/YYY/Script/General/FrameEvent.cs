@@ -735,6 +735,7 @@ public class FrameEvent : MonoBehaviour
     #region 剧情CG相关帧事件
     public void Undressing_Up()
     {
+        Debug.Log("脱掉上半身");
 
         playerController.clothesIndex = 0;
         playerController.glovesIndex = 0;
@@ -755,6 +756,25 @@ public class FrameEvent : MonoBehaviour
 
        
     }
+
+    public void Story_ChangeClothes_01() 
+    {
+        //Debug.Log("第一章衣物");
+
+        playerController.beltIndex = 1;
+        playerController.stockingsIndex = 1;
+        playerController.pantiesIndex = 4;
+        playerController.shoesIndex = 1;
+        playerController.skirtIndex = 0;
+
+        playerController.clothesIndex = 1;
+        playerController.glovesIndex = 1;
+        playerController.hatIndex = 0;
+        playerController.maskIndex = 0;
+
+        playerController.RefreshPlayerSkin();
+    }//第一章事务所剧情
+
     #endregion
 
 
