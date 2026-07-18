@@ -123,13 +123,18 @@ public class TimelineTrigger : MonoBehaviour
     /// <summary>
     /// TimeLine中端帧事件触发
     /// </summary>
-    public void SetBlackScreen() 
+    public void SetBlackScreen_FadeIn() 
     {
-        UIManager.instance.BlackScreen.SetActive(true);
+        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
     }
-
-
-
+    public void SetBlackScreen_FadeOut()
+    {
+        UIManager.instance.BlackScreen_FadeOut.SetActive(true);
+    }
+    public void ShowText() 
+    {
+        UIManager.instance.ShowNext();
+    }
 
     #region 玩家控制
     public void SetPlayerAnim_Washing() 
@@ -170,6 +175,59 @@ public class TimelineTrigger : MonoBehaviour
 
         // 将父级设置为 null，玩家就会移出插槽，回到场景的根目录
         GameManager.instance.player.transform.SetParent(null);
+    }
+
+    #endregion
+
+
+    #region 敌人_1_控制
+
+    public Animator Enemy_1;
+    public FrameEvent Enemy_1_FrameEvent;
+
+    public void SetEnemy_1_Clothes_01() 
+    {
+        Enemy_1_FrameEvent.Story_Clothes_Man_01();
+    }
+
+    public void SetEnemy_1_Anim_Idle()
+    {
+        Enemy_1.Play("Story_Idle", 0, 0f);
+        Enemy_1.Update(0f);
+    }
+
+    public void SetEnemy_1_Anim_Walking()
+    {
+        Enemy_1.Play("Story_Walk", 0, 0f);
+        Enemy_1.Update(0f);
+    }
+
+    public void SetEnemy_1_Anim_TurnCrouch()
+    {
+        Enemy_1.Play("Story_TurnCrouch", 0, 0f);
+        Enemy_1.Update(0f);
+    }
+
+    #endregion
+
+    #region 敌人_2_控制
+    public Animator Enemy_2;
+    public FrameEvent Enemy_2_FrameEvent;
+
+    public void SetEnemy_2_Clothes_01()
+    {
+        Enemy_2_FrameEvent.Story_Clothes_Man_01();
+    }
+
+    public void SetEnemy_2_Anim_Idle()
+    {
+        Enemy_2.Play("Story_Idle", 0, 0f);
+        Enemy_2.Update(0f);
+    }
+    public void SetEnemy_2_Anim_Walking()
+    {
+        Enemy_2.Play("Story_Walk", 0, 0f);
+        Enemy_2.Update(0f);
     }
 
     #endregion

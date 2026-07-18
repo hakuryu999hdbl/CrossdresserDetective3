@@ -757,7 +757,7 @@ public class FrameEvent : MonoBehaviour
        
     }
 
-    public void Story_ChangeClothes_01() 
+    public void Story_Clothes_YYY_01() 
     {
         //Debug.Log("第一章衣物");
 
@@ -774,6 +774,14 @@ public class FrameEvent : MonoBehaviour
 
         playerController.RefreshPlayerSkin();
     }//第一章事务所剧情
+
+
+    public void Story_Clothes_Man_01()
+    {
+        enemyController.Man_clothesIndex = 1;
+        enemyController.Man_hairIndex = 2;
+        enemyController.RefreshPlayerSkin();
+    }//男性小偷
 
     #endregion
 

@@ -53,7 +53,9 @@ public class UIManager : MonoBehaviour
 
 
         }
-       
+
+
+        Init();//填充章节台词
     }
 
 
@@ -834,8 +836,8 @@ public class UIManager : MonoBehaviour
     public GameObject RedScreen;
     public GameObject WhiteScreen;
     public GameObject ShockScreen;
-    public GameObject BlackScreen;
-
+    public GameObject BlackScreen_FadeIn;
+    public GameObject BlackScreen_FadeOut;
 
     public GameObject UI_All;//包含血条体力值子弹数当前武器等全体UI，在过场动画弹出的时候隐藏
     public GameObject UI_Cutscene;//过场动画的上下黑幕和台词显示
@@ -846,11 +848,60 @@ public class UIManager : MonoBehaviour
     {
         UI_All.SetActive(false);
         UI_Cutscene.SetActive(true);
-    }
+    }//过场动画开启
     public void OnCutsceneOver()
     {
         UI_All.SetActive(true);
         UI_Cutscene.SetActive(false);
+    }//过场动画结束
+
+
+
+
+    [Header("章节台词")]
+    public List<GameObject> Chapter_01 = new List<GameObject>();
+
+    List<GameObject> currentList;
+
+    int currentIndex = 0;
+
+    public void Init()
+    {
+        currentIndex = 0;
+
+        switch (GameFlowData.CurrentChapter)
+        {
+
+            case 1:
+
+                switch (GameFlowData.CurrentStage)
+                {
+                    case 1:
+                        currentList = Chapter_01;
+                        break;
+                }
+
+                break;
+        }
+    }//填充章节台词
+
+    public void ShowNext()
+    {
+        if (currentList == null) return;
+        if (currentIndex >= currentList.Count) return;
+
+        currentList[currentIndex].SetActive(true);
+
+        StartCoroutine(Hide(currentList[currentIndex]));
+
+        currentIndex++;
+    }
+
+    IEnumerator Hide(GameObject obj)
+    {
+        yield return new WaitForSeconds(2f);
+
+        obj.SetActive(false);
     }
     #endregion
 
@@ -1231,4 +1282,26 @@ public class UIManager : MonoBehaviour
         throwCountText.text = "X" + currentThrowCount;
     }
     #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

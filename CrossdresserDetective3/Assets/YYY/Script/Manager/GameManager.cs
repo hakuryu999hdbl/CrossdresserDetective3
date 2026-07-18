@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerClothes_01() 
     {
-        player.frameEvent.Story_ChangeClothes_01();//第一章事务所衣物
+        player.frameEvent.Story_Clothes_YYY_01();//第一章事务所衣物
     }
 
     /// <summary>
