@@ -410,7 +410,7 @@ GameObject:
   m_Layer: 0
   m_Name: Director_Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -464,7 +464,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -614,11 +614,11 @@ Transform:
   m_GameObject: {fileID: 1128243020213380748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.166, y: 8.912, z: 0.09}
+  m_LocalPosition: {x: -6.6260004, y: 1.9719996, z: 0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2379362497212607779}
+  m_Father: {fileID: 7968407757979090491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &6729371144055957866
 AudioSource:
@@ -1826,7 +1826,6 @@ Transform:
   - {fileID: 2293919219939893852}
   - {fileID: 901566066378952486}
   - {fileID: 2737204124233397605}
-  - {fileID: 5408367526037402015}
   m_Father: {fileID: 5472063591181165855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2343096210295622536
@@ -2339,6 +2338,7 @@ MonoBehaviour:
   director: {fileID: 3606513498146898944}
   triggerOnlyOnce: 1
   disableColliderAfterTrigger: 1
+  Chapter: Chapter_01_1
   PlayerSlot: {fileID: 0}
   Enemy_1: {fileID: 0}
   Enemy_1_FrameEvent: {fileID: 0}
@@ -2362,6 +2362,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 2706c9afd3d96ea40b21a0805f426af8, type: 2}
     - {fileID: 11400000, guid: 43cb1fbc064ff0a41ab8680070f0c94c, type: 2}
     - {fileID: 11400000, guid: 895927119f91a6641be170cb161b6f2e, type: 2}
+    - {fileID: 11400000, guid: 0bc8c8968c53c6941b0565c2415eb14c, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -2410,6 +2411,20 @@ MonoBehaviour:
         - m_Target: {fileID: 3625520021469784912}
           m_TargetAssemblyTypeName: TimelineTrigger, Assembly-CSharp
           m_MethodName: ShowText
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3625520021469784912}
+          m_TargetAssemblyTypeName: TimelineTrigger, Assembly-CSharp
+          m_MethodName: SetPlayerAnim_Idle
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3940,6 +3955,7 @@ MonoBehaviour:
   director: {fileID: 6512613614716315388}
   triggerOnlyOnce: 1
   disableColliderAfterTrigger: 1
+  Chapter: Chapter_01_2
   PlayerSlot: {fileID: 2740715481300966187}
   Enemy_1: {fileID: 1019065824741485916}
   Enemy_1_FrameEvent: {fileID: 1546692939282406642}
@@ -3973,6 +3989,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 237da066fb770f74593b7c4e00ec93ab, type: 2}
     - {fileID: 11400000, guid: 43cb1fbc064ff0a41ab8680070f0c94c, type: 2}
     - {fileID: 11400000, guid: 2706c9afd3d96ea40b21a0805f426af8, type: 2}
+    - {fileID: 11400000, guid: 895927119f91a6641be170cb161b6f2e, type: 2}
+    - {fileID: 11400000, guid: ea1979418ddfd8e44a8adf8bca53326f, type: 2}
+    - {fileID: 11400000, guid: 9a932ffb5c66c1e4b88ed24aa3e2af13, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -4161,6 +4180,48 @@ MonoBehaviour:
         - m_Target: {fileID: 2411100968515468709}
           m_TargetAssemblyTypeName: TimelineTrigger, Assembly-CSharp
           m_MethodName: SetBlackScreen_FadeOut
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2411100968515468709}
+          m_TargetAssemblyTypeName: TimelineTrigger, Assembly-CSharp
+          m_MethodName: ShowText
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2411100968515468709}
+          m_TargetAssemblyTypeName: TimelineTrigger, Assembly-CSharp
+          m_MethodName: SetPlayer_Hide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2411100968515468709}
+          m_TargetAssemblyTypeName: TimelineTrigger, Assembly-CSharp
+          m_MethodName: SetEnemy_1_Anim_CatchYYY
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4380,7 +4441,7 @@ GameObject:
   m_Layer: 0
   m_Name: Director_Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4434,7 +4495,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -60953,6 +61014,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 637905063660221095}
+  - {fileID: 5408367526037402015}
   - {fileID: 6290514969377946811}
   m_Father: {fileID: 8752862416227651786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

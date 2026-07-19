@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour
                     case 1:
                         Invoke(nameof(SetPlayerClothes_01), 0.2f);
                         SetArea(0); 
+
+
+
+
                         break;
                   
                     case 2:

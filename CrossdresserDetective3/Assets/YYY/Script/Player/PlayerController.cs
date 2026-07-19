@@ -893,7 +893,8 @@ public class PlayerController : MonoBehaviour
         Sign.SetActive(true);
 
         //恢复动画
-        playerAnimation.enabled = true;
+        playerAnimation.ExitCutsceneIdle();
+        //playerAnimation.enabled = true;
 
     }
 

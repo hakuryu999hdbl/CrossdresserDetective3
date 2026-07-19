@@ -241,6 +241,27 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }
 
+
+    public void _YYY_duzui()
+    {
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.YYY_duzui1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.YYY_duzui2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.YYY_duzui3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.YYY_duzui4);
+                break;
+        }
+    }
+
+
     public void _Man_attack()
     {
         audioS.PlayOneShot(AudioManager.Man_attack1);

@@ -53,9 +53,6 @@ public class UIManager : MonoBehaviour
 
 
         }
-
-
-        Init();//填充章节台词
     }
 
 
@@ -859,31 +856,32 @@ public class UIManager : MonoBehaviour
 
 
     [Header("章节台词")]
-    public List<GameObject> Chapter_01 = new List<GameObject>();
+    public List<GameObject> Chapter_01_1 = new List<GameObject>();
+    public List<GameObject> Chapter_01_2 = new List<GameObject>();
+    public List<GameObject> Chapter_01_3 = new List<GameObject>();
 
     List<GameObject> currentList;
 
     int currentIndex = 0;
 
-    public void Init()
+    public void Init_Chapter_01_1()
     {
         currentIndex = 0;
-
-        switch (GameFlowData.CurrentChapter)
-        {
-
-            case 1:
-
-                switch (GameFlowData.CurrentStage)
-                {
-                    case 1:
-                        currentList = Chapter_01;
-                        break;
-                }
-
-                break;
-        }
+        currentList = Chapter_01_1;
     }//填充章节台词
+
+    public void Init_Chapter_01_2()
+    {
+        currentIndex = 0;
+        currentList = Chapter_01_2;
+    }//填充章节台词
+
+    public void Init_Chapter_01_3()
+    {
+        currentIndex = 0;
+        currentList = Chapter_01_3;
+    }//填充章节台词
+
 
     public void ShowNext()
     {
@@ -899,7 +897,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator Hide(GameObject obj)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         obj.SetActive(false);
     }

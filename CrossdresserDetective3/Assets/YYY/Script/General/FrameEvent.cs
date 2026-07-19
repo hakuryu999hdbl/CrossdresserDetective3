@@ -778,10 +778,27 @@ public class FrameEvent : MonoBehaviour
 
     public void Story_Clothes_Man_01()
     {
+        //赤裸的叶语嫣被捆绑
+        enemyController.clothesIndex = 10;
+        enemyController.glovesIndex = 0;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
+        enemyController.beltIndex = 0;
+        enemyController.stockingsIndex = 0;
+        enemyController.pantiesIndex = 0;
+        enemyController.shoesIndex = 10;
+        enemyController.skirtIndex = 0;
+
+
+        //男性小偷
         enemyController.Man_clothesIndex = 1;
         enemyController.Man_hairIndex = 2;
+
+
         enemyController.RefreshPlayerSkin();
-    }//男性小偷
+
+
+    }
 
     #endregion
 

@@ -77,6 +77,8 @@ public class TimelineTrigger : MonoBehaviour
 
         if (disableColliderAfterTrigger && triggerOnlyOnce)
             triggerCollider.enabled = false;
+
+        SetInit();//这段过场动画需要的填入
     }
 
     private void OnTimelineStopped(PlayableDirector stoppedDirector)
@@ -123,6 +125,28 @@ public class TimelineTrigger : MonoBehaviour
     /// <summary>
     /// TimeLine中端帧事件触发
     /// </summary>
+    [Header("TimeLine中端帧事件触发")]
+    public string Chapter;
+
+    public void SetInit() 
+    {
+        switch (Chapter) 
+        {
+
+            case "Chapter_01_1":
+                UIManager.instance.Init_Chapter_01_1();
+                break;
+            case "Chapter_01_2":
+                UIManager.instance.Init_Chapter_01_2();
+                break;
+            case "Chapter_01_3":
+                UIManager.instance.Init_Chapter_01_3();
+                break;
+        }
+    }
+
+
+
     public void SetBlackScreen_FadeIn() 
     {
         UIManager.instance.BlackScreen_FadeIn.SetActive(true);
@@ -137,6 +161,8 @@ public class TimelineTrigger : MonoBehaviour
     }
 
     #region 玩家控制
+
+  
     public void SetPlayerAnim_Washing() 
     {
         GameManager.instance.player.playerAnimation.PlayWashing();
@@ -150,6 +176,11 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayerAnim_Walking()
     {
         GameManager.instance.player.playerAnimation.PlayWalking();
+    }
+
+    public void SetPlayerAnim_Idle()
+    {
+        GameManager.instance.player.playerAnimation.PlayIdle();
     }
 
     public GameObject PlayerSlot;
@@ -177,6 +208,14 @@ public class TimelineTrigger : MonoBehaviour
         GameManager.instance.player.transform.SetParent(null);
     }
 
+    public void SetPlayer_Hide()
+    {
+        GameManager.instance.player.playerAnimation.gameObject.SetActive(false);
+    }
+    public void SetPlayer_Show()
+    {
+        GameManager.instance.player.playerAnimation.gameObject.SetActive(true);
+    }
     #endregion
 
 
@@ -206,6 +245,14 @@ public class TimelineTrigger : MonoBehaviour
     {
         Enemy_1.Play("Story_TurnCrouch", 0, 0f);
         Enemy_1.Update(0f);
+    }
+
+    public void SetEnemy_1_Anim_CatchYYY()
+    {
+        Enemy_1.Play("Story_CatchYYY", 0, 0f);
+        Enemy_1.Update(0f);
+
+        Enemy_1.gameObject.GetComponent<FrameEvent_Audio>()._YYY_duzui();//暂时先用这播放
     }
 
     #endregion
