@@ -22,6 +22,7 @@ public class Enemy_4 : EnemyController
     public bool isBlocking;
     public bool isCountering;
 
+    public GameObject SparkEffect;//格挡火花
 
     public override void Init()
     {
@@ -49,6 +50,16 @@ public class Enemy_4 : EnemyController
         if (isDead)
             return false;
 
+
+        // 眩晕期间不能防御、不能反击
+        if (isDizzy)
+            return false;
+
+        //防御火花
+        GameObject spark = Instantiate(SparkEffect, transform.position, Quaternion.identity);
+        Destroy(spark, 1f);
+
+
         // 新增：格挡之前先记录攻击者
         AcquireAttackerAsTarget(attack);
 
@@ -66,6 +77,8 @@ public class Enemy_4 : EnemyController
 
             return false;
         }
+
+       
 
         TransitionToState(blockState);
         return true;

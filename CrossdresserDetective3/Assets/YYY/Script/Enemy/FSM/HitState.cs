@@ -15,6 +15,19 @@ public class HitState : EnemyBaseState
         enemy.anim.ResetTrigger("skill");
         //enemy.anim.SetTrigger("hit");
 
+
+
+
+        // 清除技能层内部状态
+        enemy.anim.SetInteger("skillState", 0);
+        if (enemy is Enemy_4 blockEnemy)
+        {
+            blockEnemy.isBlocking = false;
+            blockEnemy.isCountering = false;
+        }
+
+
+
         if (enemy.rb != null)
             enemy.rb.velocity = Vector2.zero;
     }

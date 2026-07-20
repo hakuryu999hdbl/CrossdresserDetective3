@@ -24,6 +24,14 @@ public class BlockState : EnemyBaseState
 
     public override void OnUpdate(EnemyController enemy)
     {
+
+        if (enemy.isDizzy)
+        {
+            enemy.TransitionToState(enemy.hitState);
+            return;
+        }
+
+
         // 防御、反击期间固定技能状态，不允许移动
         enemy.rb.velocity = new Vector2(0f, enemy.rb.velocity.y);
 
