@@ -52,6 +52,7 @@ public class EnemyController : MonoBehaviour
 
     public ChargeSkillState chargeSkillState = new ChargeSkillState();//冲撞状态
     public AimThrowSkillState aimThrowSkillState = new AimThrowSkillState();//瞄准投掷状态
+    public BlockState blockState = new BlockState();//防御状态
 
 
     public virtual void Init()
@@ -945,6 +946,19 @@ public class EnemyController : MonoBehaviour
         TransitionToState(patrolState);
     }
 
+
+
+    #endregion
+
+
+    /// <summary>
+    /// 防御技能
+    /// </summary>
+    #region
+    public virtual bool TryHandleIncomingAttack(Attack attack)
+    {
+        return false;
+    }
 
 
     #endregion

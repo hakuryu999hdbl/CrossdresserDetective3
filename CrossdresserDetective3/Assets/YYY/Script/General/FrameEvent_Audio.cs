@@ -47,13 +47,13 @@ public class FrameEvent_Audio : MonoBehaviour
         switch (Random.Range(0, 3))
         {
             case 0:
-                audioS.PlayOneShot(AudioManager.Attack_sword_clash2);
+                audioS.PlayOneShot(AudioManager.Attack_sword_clash1);
                 break;
             case 1:
-                audioS.PlayOneShot(AudioManager.Attack_sword_clash3);
+                audioS.PlayOneShot(AudioManager.Attack_sword_clash2);
                 break;
             case 2:
-                audioS.PlayOneShot(AudioManager.Attack_sword_clash4);
+                audioS.PlayOneShot(AudioManager.Attack_sword_clash3);
                 break;
         }
     }//这个由ThrowableWeapon中代码调用

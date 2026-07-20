@@ -88,6 +88,22 @@ public class Character : MonoBehaviour, IDamageable
         if (isDead) { return; }//不能鞭尸
         if (IsInvulnerable){ return; }//处于无敌
 
+        //已经成功抓住玩家后，直到投出前暂时无敌
+        EnemyController enemy = GetComponent<EnemyController>();
+
+        if (enemy != null && enemy.isCatching)
+        {
+            return;
+        }
+
+        // 摩托哥防御反击
+        if (enemy != null && enemy.TryHandleIncomingAttack(attacker))
+        {
+            Debug.Log("攻击已被特殊状态处理");
+            return;
+        }
+
+
 
         if (currentHealth - attacker.damage > 0) 
         {

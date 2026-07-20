@@ -14,6 +14,7 @@ public class EnemyCheckArea : MonoBehaviour
     public Color hitColor = Color.white;
     public Color chargeSkillColor = Color.red;
     public Color aimThrowSkillColor = Color.red;
+    public Color blockColor = Color.red;
     public float colorChangeSpeed = 6f;
 
     private MeshRenderer meshRenderer;
@@ -139,5 +140,9 @@ public class EnemyCheckArea : MonoBehaviour
     public void SetAimThrowSkillColor()
     {
         targetColor = aimThrowSkillColor;
+    }
+    public void SetBlockColor()
+    {
+        targetColor = blockColor;
     }
 }

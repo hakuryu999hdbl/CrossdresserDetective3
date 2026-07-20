@@ -584,8 +584,6 @@ public class FrameEvent : MonoBehaviour
     }
     #endregion
 
-
-
     #region  敌人将玩家投出去
     public void OnCatchPlayer()
     {
@@ -613,6 +611,25 @@ public class FrameEvent : MonoBehaviour
     }
     #endregion
 
+    #region  敌人防御反击
+  
+    public void StartBlockCounter()
+    {
+        if (enemyController is Enemy_4 biker)
+        {
+            biker.StartCounterAttack();
+        }
+    }  //敌人防御反击
+
+    
+    public void EndBlockCounter()
+    {
+        if (enemyController is Enemy_4 biker)
+        {
+            biker.EndCounterAttack();
+        }
+    }//敌人防御反击后
+    #endregion
 
     #region 双方攻击动画触发
     [Header("攻击动画触发")]
