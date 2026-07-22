@@ -76,6 +76,23 @@ public class FrameEvent_Audio : MonoBehaviour
         audioS.PlayOneShot(AudioManager.Attack_hit3);
     }//这个因为非常像抓取的声音
 
+
+
+     //拍打声
+    public void _Attack_pai() 
+    {
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_pai1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_pai2);
+                break;
+        }
+      
+    }
+
     public void _Attack_largeSword() 
     {
         audioS.PlayOneShot(AudioManager.Attack_largeSword);
@@ -121,6 +138,218 @@ public class FrameEvent_Audio : MonoBehaviour
     {
         audioS.PlayOneShot(AudioManager.Bullet_SD_Load);
     }
+
+
+
+  
+
+
+    //鞭打声
+    public void _SE_Whip()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Whip_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Whip_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Whip_3);
+                break;
+        }
+
+    }
+
+    //吸舔
+    public void _SE_Xitian()
+    {
+        audioS.PlayOneShot(AudioManager.SE_Xitian);
+
+    }
+
+    //咽下
+    public void _SE_Yanxia() { audioS.PlayOneShot(AudioManager.SE_Yanxia); }
+
+    //抽插声
+    public void _SE_Semen_1()
+    {
+        switch (Random.Range(0, 5))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Semen_1_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Semen_1_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Semen_1_3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.SE_Semen_1_4);
+                break;
+            case 4:
+                audioS.PlayOneShot(AudioManager.SE_Semen_1_5);
+                break;
+        }
+    }
+
+    //手淫声
+    public void _SE_Semen_2()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Semen_2_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Semen_2_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Semen_2_3);
+                break;
+        }
+
+    }
+
+    //射精声
+    public void _SE_Semen_3()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Semen_3_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Semen_3_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Semen_3_3);
+                break;
+        }
+
+    }
+
+    //插入
+    public void _SE_Semen_fuck_in() { audioS.PlayOneShot(AudioManager.SE_Semen_fuck_in); }
+
+    //拔出
+    public void _SE_Semen_fuck_out() { audioS.PlayOneShot(AudioManager.SE_Semen_fuck_out); }
+
+    //潮吹喷水声
+    public void _SE_Squirting()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Squirting_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Squirting_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Squirting_3);
+                break;
+        }
+    }
+
+    //抚摸声
+    public void _SE_LotionGauze()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_LotionGauze_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_LotionGauze_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_LotionGauze_3);
+                break;
+        }
+
+    }
+
+
+
+    public void _SE_Tentacle_slow()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_slow_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_slow_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_slow_3);
+                break;
+        }
+
+    }
+
+    public void _SE_Tentacle_middle()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_middle_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_middle_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_middle_3);
+                break;
+        }
+
+    }
+
+    public void _SE_Tentacle_quick()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_quick_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_quick_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.SE_Tentacle_quick_3);
+                break;
+        }
+
+    }
+
+
+
+
+
+
+    //走路和拘束的绳索
+    public void _SE_Rope() 
+    {
+        audioS.PlayOneShot(AudioManager.SE_Rope_1);
+    }//代码调用
+
+    //走路和拘束的锁链
+    public void _SE_Chain() 
+    {
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Chain_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Chain_2);
+                break;
+        }
+    }//代码调用
+
 
 
 
@@ -187,7 +416,7 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }
 
-    public void _SE_falldown() { audioS.PlayOneShot(AudioManager.SE_falldown); }
+    public void _SE_Falldown() { audioS.PlayOneShot(AudioManager.SE_falldown); }
 
 
 

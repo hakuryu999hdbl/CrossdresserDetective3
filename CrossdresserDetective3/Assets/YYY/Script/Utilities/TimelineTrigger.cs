@@ -255,6 +255,12 @@ public class TimelineTrigger : MonoBehaviour
         Enemy_1.gameObject.GetComponent<FrameEvent_Audio>()._YYY_duzui();//暂时先用这播放
     }
 
+    public void SetEnemy_1_Anim_RapeYYY()
+    {
+        Enemy_1.Play("Story_RapeYYY_1", 0, 0f);
+        Enemy_1.Update(0f);
+    }
+
     #endregion
 
     #region 敌人_2_控制

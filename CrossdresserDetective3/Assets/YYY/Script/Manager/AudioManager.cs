@@ -86,6 +86,8 @@ public class AudioManager : MonoBehaviour
                      Attack_blood1, Attack_blood2, Attack_blood3,
                      Attack_bomb_bounce_1, Attack_bomb_bounce_2, Attack_bomb_bounce_3;
 
+    public AudioClip Attack_pai1,Attack_pai2;
+
     public AudioClip　Attack_largeSword;
 
     public AudioClip Bullet_OutOfBullet;
@@ -108,6 +110,33 @@ public class AudioManager : MonoBehaviour
     public AudioClip Girl_attack1, Girl_attack2, Girl_attack3;
     public AudioClip Girl_die1, Girl_die2, Girl_die3;
 
+
+
+
+
+
+    public AudioClip SE_Whip_1, SE_Whip_2, SE_Whip_3;
+
+    public AudioClip SE_Xitian;
+
+    public AudioClip SE_Yanxia;
+
+    public AudioClip SE_Semen_1_1, SE_Semen_1_2, SE_Semen_1_3, SE_Semen_1_4, SE_Semen_1_5,
+                     SE_Semen_2_1, SE_Semen_2_2, SE_Semen_2_3,
+                     SE_Semen_3_1, SE_Semen_3_2, SE_Semen_3_3,
+
+                     SE_Semen_fuck_in, SE_Semen_fuck_out;
+
+    public AudioClip SE_Squirting_1, SE_Squirting_2, SE_Squirting_3;
+    public AudioClip SE_LotionGauze_1, SE_LotionGauze_2, SE_LotionGauze_3;
+
+
+    public AudioClip SE_Tentacle_slow_1, SE_Tentacle_slow_2, SE_Tentacle_slow_3;
+    public AudioClip SE_Tentacle_middle_1, SE_Tentacle_middle_2, SE_Tentacle_middle_3;
+    public AudioClip SE_Tentacle_quick_1, SE_Tentacle_quick_2, SE_Tentacle_quick_3;
+
+    public AudioClip SE_Rope_1;
+    public AudioClip SE_Chain_1, SE_Chain_2;
 
     public AudioClip SE_Clothes, SE_Tuo, SE_Tear;
     public AudioClip SE_WalkClip_1, SE_WalkClip_2, SE_RunClip_1, SE_RunClip_2;

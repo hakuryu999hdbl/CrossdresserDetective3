@@ -365,6 +365,8 @@ public class PlayerController : MonoBehaviour
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4燃烧弹  5震撼弹  6飞刀
     public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
 
+    public int bondageType;//0绳子捆绑 1锁链捆绑
+
 
     public void RefreshPlayerSkin()
     {
@@ -396,7 +398,10 @@ public class PlayerController : MonoBehaviour
             meleeType,
             pistolType,
             rifleType,
-            throwType
+            throwType,
+
+            bondageType
+
         );
 
         frameEvent_UI.ShowCurrentAll(
@@ -426,7 +431,9 @@ public class PlayerController : MonoBehaviour
             meleeType,
             pistolType,
             rifleType,
-            throwType
+            throwType,
+
+            bondageType
       );
 
 
