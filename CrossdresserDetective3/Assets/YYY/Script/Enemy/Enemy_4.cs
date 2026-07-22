@@ -24,6 +24,16 @@ public class Enemy_4 : EnemyController
 
     public GameObject SparkEffect;//格挡火花
 
+    public void SetSpark()
+    {
+        //防御火花
+        GameObject spark = Instantiate(SparkEffect, transform.position, Quaternion.identity);
+        Destroy(spark, 1f);
+
+    }
+
+
+
     public override void Init()
     {
         base.Init();
@@ -55,10 +65,7 @@ public class Enemy_4 : EnemyController
         if (isDizzy)
             return false;
 
-        //防御火花
-        GameObject spark = Instantiate(SparkEffect, transform.position, Quaternion.identity);
-        Destroy(spark, 1f);
-
+   
 
         // 新增：格挡之前先记录攻击者
         AcquireAttackerAsTarget(attack);

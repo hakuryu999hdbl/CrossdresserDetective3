@@ -317,24 +317,35 @@ public class FrameEvent : MonoBehaviour
     #endregion
 
 
-    public void SetBlack()
-    {
-        skeletonAnimation.Skeleton.SetColor(new Color(0f, 0f, 0f, 1f));
+    #region  闪红
 
-    }//变黑
-
-    public void SetRed()
+    Coroutine flashCoroutine;
+    public void FlashRed(float time = 0.28f)
     {
 
-        skeletonAnimation.Skeleton.SetColor(new Color(0.3f, 0f, 0f, 1f));
+        //Debug.Log("受伤特效");
 
-    }//变红
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
 
-    public void ResetColor()
+        flashCoroutine = StartCoroutine(FlashColor(
+            new Color(1f, 0.25f, 0.25f, 1f),
+            time));
+    }
+
+    IEnumerator FlashColor(Color color, float time)
     {
+        skeletonAnimation.Skeleton.SetColor(color);
+
+        yield return new WaitForSeconds(time);
+
         skeletonAnimation.Skeleton.SetColor(Color.white);
 
-    }//恢复原来颜色
+        flashCoroutine = null;
+    }
+    #endregion
+
+ 
 
     #endregion
 

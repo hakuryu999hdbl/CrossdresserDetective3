@@ -58,9 +58,23 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }//这个由ThrowableWeapon中代码调用
 
-    //public void _Attack_blood1() { audioS.PlayOneShot(AudioManager.Attack_blood1); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
-    //public void _Attack_blood2() { audioS.PlayOneShot(AudioManager.Attack_blood2); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
-    //public void _Attack_blood3() { audioS.PlayOneShot(AudioManager.Attack_blood3); }//Spine帧事件没有，由敌人或玩家或者其他挂着FrameEvent脚本直接使用
+    public void _Attack_hit()
+    {
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_hit1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_hit2);
+                break;
+        }
+    }//这个由PlayerEnemy中代码调用
+
+    public void _Attack_pick()
+    {
+        audioS.PlayOneShot(AudioManager.Attack_hit3);
+    }//这个因为非常像抓取的声音
 
     public void _Attack_largeSword() 
     {

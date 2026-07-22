@@ -19,6 +19,8 @@ public class BlockState : EnemyBaseState
         {
             blockEnemy.isBlocking = true;
             blockEnemy.isCountering = false;
+
+            blockEnemy.SetSpark();
         }
     }
 

@@ -739,6 +739,7 @@ public class PlayerController : MonoBehaviour
             case 0:
                 // 打击特效
                 Hit_Effect.SetActive(true);
+                frameEvent_Audio._Attack_hit();
                 break;
 
             case 1:
@@ -747,7 +748,6 @@ public class PlayerController : MonoBehaviour
                 Strike_Effect.SetActive(true);
                 break;
         }
-
 
 
 
@@ -781,6 +781,10 @@ public class PlayerController : MonoBehaviour
         );
 
         frameEvent_Audio._Attack_blood();
+
+
+        frameEvent.FlashRed();//受伤闪红
+
 
         UIManager.instance.RedScreen.SetActive(true);
 

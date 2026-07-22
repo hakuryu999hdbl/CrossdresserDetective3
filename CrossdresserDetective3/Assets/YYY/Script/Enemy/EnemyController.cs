@@ -883,7 +883,7 @@ public class EnemyController : MonoBehaviour
         rb.velocity = Vector2.zero;
 
 
-
+        frameEvent_Audio._Attack_pick();//抓取声
 
         ReadCurrentGame(player);//敌人读取玩家皮肤
 
@@ -1352,6 +1352,7 @@ public class EnemyController : MonoBehaviour
             case 0:
                 // 打击特效
                 Hit_Effect.SetActive(true);
+                frameEvent_Audio._Attack_hit();
                 break;
 
             case 1:
@@ -1451,6 +1452,9 @@ public class EnemyController : MonoBehaviour
         );
 
         frameEvent_Audio._Attack_blood();
+
+
+        frameEvent.FlashRed();//受伤闪红
 
 
         Destroy(blood, 1f); // 1秒后销毁
