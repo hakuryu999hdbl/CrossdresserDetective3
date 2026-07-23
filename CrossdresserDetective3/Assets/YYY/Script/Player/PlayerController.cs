@@ -836,8 +836,9 @@ public class PlayerController : MonoBehaviour
         //UI层面的隐藏
         UIManager.instance.OnCutsceneStart();
 
-        // 停止所有输入
+        // 只关 Gameplay，同时打开 UI，让 Cancel 可以用来跳过
         inputControl.Gameplay.Disable();
+        inputControl.UI.Enable();
         //DisableGameplayInput();//背包层面的玩家锁
 
         #region 清理可能正在进行的动作
@@ -892,6 +893,7 @@ public class PlayerController : MonoBehaviour
 
         //恢复输入
         inputControl.Gameplay.Enable();
+        inputControl.UI.Disable();
         //EnableGameplayInput();
 
         # region 动作重启

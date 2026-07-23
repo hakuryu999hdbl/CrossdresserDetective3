@@ -735,6 +735,16 @@ public class UIManager : MonoBehaviour
 
     public void OnCancel() 
     {
+        Debug.Log("返回");
+
+        // 如果处于 Cutscene 中，返回/取消键直接跳过过场动画
+        if (currentTimeline != null)
+        {
+            SkipCurrentTimeline();
+            return;
+        }
+
+
 
         switch (CurrentOpen) 
         {
@@ -901,9 +911,38 @@ public class UIManager : MonoBehaviour
 
         obj.SetActive(false);
     }
+
+
+    [Header("目前的过场动画跳过")]
+    public TimelineTrigger currentTimeline;
+
+    public void RegisterTimeline(TimelineTrigger timeline)
+    {
+        currentTimeline = timeline;
+
+        Debug.Log("过场动画注册");
+    }//过场动画触发器告诉UIManager
+
+    public void UnregisterTimeline(TimelineTrigger timeline)
+    {
+        if (currentTimeline == timeline)
+        {
+            currentTimeline = null;
+        }
+    }
+
+    public void SkipCurrentTimeline()
+    {
+        if (currentTimeline != null)
+        {
+            currentTimeline.SkipTimeline();
+            currentTimeline = null;
+        }
+    }//跳过过场动画
+
+
+
     #endregion
-
-
 
 
 

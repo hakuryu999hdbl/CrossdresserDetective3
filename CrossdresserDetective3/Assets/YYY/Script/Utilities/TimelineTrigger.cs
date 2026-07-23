@@ -71,6 +71,11 @@ public class TimelineTrigger : MonoBehaviour
         player.EnterCutscene();
 
 
+        // ========== 新增：注册到 UIManager ==========
+        if (UIManager.instance != null)
+            UIManager.instance.RegisterTimeline(this);
+        // ==========================================
+
         director.gameObject.SetActive(true);
         director.time = 0;
         director.Play();
@@ -83,6 +88,11 @@ public class TimelineTrigger : MonoBehaviour
 
     private void OnTimelineStopped(PlayableDirector stoppedDirector)
     {
+        // ========== 新增：注销 ==========
+        if (UIManager.instance != null)
+            UIManager.instance.UnregisterTimeline(this);
+        // ==============================
+
         RestorePlayer();
     }
 
@@ -104,9 +114,24 @@ public class TimelineTrigger : MonoBehaviour
             return;
 
         director.time = director.duration;
-        director.Evaluate();
+        director.Evaluate();// ← 这里会强制把中间所有还没播到的 Signal / Marker 全部执行一遍
         director.Stop();
+
+
+        // 保险注销（Stop 会触发 stopped，但双重保险无害）
+        if (UIManager.instance != null)
+            UIManager.instance.UnregisterTimeline(this);
+
+        Invoke(nameof(SetFadeOutOver), 0.1f);
     }
+
+    void SetFadeOutOver() 
+    {
+        UIManager.instance.BlackScreen_FadeIn.SetActive(false);
+    }
+
+
+
 
     /// <summary>
     /// 允许重复触发时，手动重置。
@@ -281,6 +306,37 @@ public class TimelineTrigger : MonoBehaviour
     {
         Enemy_2.Play("Story_Walk", 0, 0f);
         Enemy_2.Update(0f);
+    }
+
+    public void SetEnemy_2_Anim_TurnCrouch()
+    {
+        Enemy_2.Play("Story_TurnCrouch", 0, 0f);
+        Enemy_2.Update(0f);
+    }
+
+
+    #endregion
+
+
+    #region 敌人_3_控制
+
+    public Animator Enemy_3;
+    public FrameEvent Enemy_3_FrameEvent;
+
+    public void SetEnemy_3_Clothes_01()
+    {
+        Enemy_3_FrameEvent.Story_Clothes_Man_01();
+    }
+    public void SetEnemy_3_Anim_RapeYYY()
+    {
+        Enemy_3.Play("Story_RapeYYY_1", 0, 0f);
+        Enemy_3.Update(0f);
+    }
+
+    public void SetEnemy_3_Anim_Next()
+    {
+        Enemy_3.SetTrigger("next");
+
     }
 
     #endregion
