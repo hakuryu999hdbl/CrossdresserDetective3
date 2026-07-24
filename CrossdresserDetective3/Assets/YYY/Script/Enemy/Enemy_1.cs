@@ -49,4 +49,58 @@ public class Enemy_1 : EnemyController
 
         
     }
+
+
+
+    public void SetEnemy_Clothes_01()
+    {
+        frameEvent.Story_Clothes_Man_01();
+    }//设置男性小偷服装
+
+    public void SetEnemy_Walk()
+    {
+        anim.Play("Story_Walk", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void SetEnemy_Idle()
+    {
+        anim.Play("Story_Idle", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void SetEnemy_Turn()
+    {
+        transform.localScale = new Vector3(
+             -transform.localScale.x,
+             transform.localScale.y,
+             transform.localScale.z
+         );
+    }
+
+    public void SetEnemy_TurnCrouch()
+    {
+        anim.Play("Story_TurnCrouch", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void SetEnemy_CatchYYY()
+    {
+        anim.Play("Story_CatchYYY", 0, 0f);
+        anim.Update(0f);
+
+        anim.gameObject.GetComponent<FrameEvent_Audio>()._YYY_duzui();//暂时先用这播放
+    }
+
+    public void SetEnemy_RapeYYY()
+    {
+        anim.Play("Story_RapeYYY_1", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void SetEnemy_Next()
+    {
+        anim.SetTrigger("next");
+
+    }
 }

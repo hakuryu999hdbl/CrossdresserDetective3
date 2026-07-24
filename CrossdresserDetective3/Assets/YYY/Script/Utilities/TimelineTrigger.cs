@@ -108,14 +108,23 @@ public class TimelineTrigger : MonoBehaviour
     /// <summary>
     /// 给跳过按钮或其他脚本调用。
     /// </summary>
+    /// 
+
+
+
     public void SkipTimeline()
     {
         if (director == null)
             return;
 
+
+
+
         director.time = director.duration;
         director.Evaluate();// ← 这里会强制把中间所有还没播到的 Signal / Marker 全部执行一遍
         director.Stop();
+
+
 
 
         // 保险注销（Stop 会触发 stopped，但双重保险无害）
@@ -240,104 +249,11 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayer_Show()
     {
         GameManager.instance.player.playerAnimation.gameObject.SetActive(true);
+
+        //这个一般来说在过场动画最后出现
+        GameManager.instance.player.transform.position = PlayerSlot.transform.position;
     }
     #endregion
 
 
-    #region 敌人_1_控制
-
-    public Animator Enemy_1;
-    public FrameEvent Enemy_1_FrameEvent;
-
-    public void SetEnemy_1_Clothes_01() 
-    {
-        Enemy_1_FrameEvent.Story_Clothes_Man_01();
-    }
-
-    public void SetEnemy_1_Anim_Idle()
-    {
-        Enemy_1.Play("Story_Idle", 0, 0f);
-        Enemy_1.Update(0f);
-    }
-
-    public void SetEnemy_1_Anim_Walking()
-    {
-        Enemy_1.Play("Story_Walk", 0, 0f);
-        Enemy_1.Update(0f);
-    }
-
-    public void SetEnemy_1_Anim_TurnCrouch()
-    {
-        Enemy_1.Play("Story_TurnCrouch", 0, 0f);
-        Enemy_1.Update(0f);
-    }
-
-    public void SetEnemy_1_Anim_CatchYYY()
-    {
-        Enemy_1.Play("Story_CatchYYY", 0, 0f);
-        Enemy_1.Update(0f);
-
-        Enemy_1.gameObject.GetComponent<FrameEvent_Audio>()._YYY_duzui();//暂时先用这播放
-    }
-
-    public void SetEnemy_1_Anim_RapeYYY()
-    {
-        Enemy_1.Play("Story_RapeYYY_1", 0, 0f);
-        Enemy_1.Update(0f);
-    }
-
-    #endregion
-
-    #region 敌人_2_控制
-    public Animator Enemy_2;
-    public FrameEvent Enemy_2_FrameEvent;
-
-    public void SetEnemy_2_Clothes_01()
-    {
-        Enemy_2_FrameEvent.Story_Clothes_Man_01();
-    }
-
-    public void SetEnemy_2_Anim_Idle()
-    {
-        Enemy_2.Play("Story_Idle", 0, 0f);
-        Enemy_2.Update(0f);
-    }
-    public void SetEnemy_2_Anim_Walking()
-    {
-        Enemy_2.Play("Story_Walk", 0, 0f);
-        Enemy_2.Update(0f);
-    }
-
-    public void SetEnemy_2_Anim_TurnCrouch()
-    {
-        Enemy_2.Play("Story_TurnCrouch", 0, 0f);
-        Enemy_2.Update(0f);
-    }
-
-
-    #endregion
-
-
-    #region 敌人_3_控制
-
-    public Animator Enemy_3;
-    public FrameEvent Enemy_3_FrameEvent;
-
-    public void SetEnemy_3_Clothes_01()
-    {
-        Enemy_3_FrameEvent.Story_Clothes_Man_01();
-    }
-    public void SetEnemy_3_Anim_RapeYYY()
-    {
-        Enemy_3.Play("Story_RapeYYY_1", 0, 0f);
-        Enemy_3.Update(0f);
-    }
-
-    public void SetEnemy_3_Anim_Next()
-    {
-        Enemy_3.SetTrigger("next");
-
-    }
-
-    #endregion
 }
