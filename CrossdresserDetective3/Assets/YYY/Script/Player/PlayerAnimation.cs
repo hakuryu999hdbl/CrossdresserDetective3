@@ -96,6 +96,36 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
+
+    public void EnterBondageIdle()
+    {
+        anim.ResetTrigger("attack");
+        anim.ResetTrigger("reload");
+        anim.ResetTrigger("throw");
+        anim.ResetTrigger("airKick");
+        anim.ResetTrigger("hurt");
+
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isCrouch", false);
+        anim.SetFloat("velocityX", 0f);
+        anim.SetFloat("velocityY", 0f);
+
+        anim.Play("Idle_Bondage", 0, 0f);
+        anim.Update(0f);
+    }
+
+    public void ExitBondageIdle()
+    {
+        anim.SetBool("isCrouch", false);
+        anim.SetFloat("velocityX", 0f);
+
+        anim.Play("Idle", 0, 0f);
+        anim.Update(0f);
+    }
+
+
+
+
     public void PlayWashing() 
     {
         anim.Play("Story_Washing", 0, 0f);

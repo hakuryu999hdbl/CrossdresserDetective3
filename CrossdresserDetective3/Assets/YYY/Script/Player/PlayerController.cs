@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     //据说手柄爬墙会产生半速这样问题
     public float runSpeed = 5f;
     public float walkSpeed = 2f;
+    public float walkSpeed_Bondage = 1.8f;
     private bool isWalking;
 
     [Header("碰撞体与下蹲")]
@@ -148,7 +149,20 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        float currentSpeed = isWalking ? walkSpeed : runSpeed;
+
+
+        //拘束状态下只能走
+        float currentSpeed;
+        if (isBondage)
+        {
+            currentSpeed = walkSpeed_Bondage;
+        }
+        else
+        {
+            currentSpeed = isWalking ? walkSpeed : runSpeed;
+        }
+
+
 
 
         if (!isCrouch && !wallJump)
@@ -203,6 +217,16 @@ public class PlayerController : MonoBehaviour
 
     public void CheckState()
     {
+        //拘束状态下不能爬墙
+        if (isBondage)
+        {
+            isWallCling = false;
+            wallJump = false;
+            coll.sharedMaterial = physicsCheck.isGround ? normal : wall;
+            return;
+        }
+
+
         //飞踢优先，避免进入爬墙
         if (isAirKick)
         {
@@ -716,6 +740,116 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// 拘束状态
+    /// </summary>
+    #region
+    [Header("拘束状态")]
+    public bool isBondage;
+
+    private int attackTypeBeforeBondage;   // 记录拘束之前的武器动作
+
+
+    public void SetPlayer_Clothes_01() 
+    {
+        beltIndex = 0;
+        clothesIndex = 10;
+        glovesIndex = 0;
+        pantiesIndex = 0;
+        shoesIndex = 10;
+        skirtIndex = 0;
+        stockingsIndex = 0;
+        bondageType = 0;
+        RefreshPlayerSkin();
+
+    }//赤裸绳子捆绑状态
+
+    public void EnterBondageState()
+    {
+        if (isDead || isCaptured)
+            return;
+
+        isBondage = true;
+
+        // 记录拘束之前的武器动作
+        attackTypeBeforeBondage = attackType;
+
+
+
+        // 10专门代表拘束动画
+        attackType = 10;
+
+        #region 清理所有正在执行的动作
+        inputDirection = Vector2.zero;
+        rb.velocity = Vector2.zero;
+
+        isAttack = false;
+        isHoldingThrow = false;
+        throwCharge = 0f;
+
+        isAirKick = false;
+        isDashAttack = false;
+        wallJump = false;
+        isWallCling = false;
+
+        if (airKickCoroutine != null)
+        {
+            StopCoroutine(airKickCoroutine);
+            airKickCoroutine = null;
+        }
+
+        if (slideCoroutine != null)
+        {
+            StopCoroutine(slideCoroutine);
+            EndSlide();
+        }
+        #endregion
+
+        // 拘束下固定只能慢走
+        isWalking = true;
+
+
+        //绳子拘束
+        //clothesIndex = 10;
+        //shoesIndex = 10;
+        //bondageType = 0;
+        //RefreshPlayerSkin();
+
+        
+        // 强制进入拘束待机，防止上一段攻击动画残留
+        playerAnimation.EnterBondageIdle();
+
+
+    }
+
+    public void ExitBondageState()
+    {
+        if (!isBondage)
+            return;
+
+        isBondage = false;
+
+        inputDirection = Vector2.zero;
+        rb.velocity = Vector2.zero;
+
+        isAttack = false;
+        isCrouch = false;
+
+        // 恢复原来的武器类型
+        attackType = attackTypeBeforeBondage;
+
+
+        RefreshPlayerSkin();
+        RefreshCurrentWeapon();
+
+        playerAnimation.ExitBondageIdle();
+    }
+
+    #endregion
+
+
+
     /// <summary>
     /// 受伤死亡
     /// </summary>
@@ -998,6 +1132,8 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
+        if (isBondage) { return; }
+
         if (isAttack) { return; }//如果攻击已经开始不能跳跃
 
 
@@ -1038,7 +1174,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
-
+        if (isBondage) { return; }
         if (isInCutscene) { return; }//过场动画锁
 
 
@@ -1048,7 +1184,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
-
+        if (isBondage) { return; }
+        if (isInCutscene) { return; }//过场动画锁
 
         float holdTime = Time.time - attackPressTime;
 
@@ -1065,6 +1202,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerAttack(InputAction.CallbackContext obj)
     {
+        if (isBondage) { return; }
         if (isCaptured) { return; }//被抓住无法攻击
         //if (!physicsCheck.isGround) { return; }//空中无法攻击
 
@@ -1210,6 +1348,7 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
+        if (isBondage) { return; }
         if (isInCutscene) { return; }//过场动画锁
 
 
@@ -1303,7 +1442,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnThrowStart(InputAction.CallbackContext obj)
     {
-
+        if (isBondage) { return; }
         if (isInCutscene) { return; }//过场动画锁
 
 
@@ -1312,6 +1451,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnThrowCanceled(InputAction.CallbackContext ctx)
     {
+        if (isBondage) { return; }
+
         float holdTime = Time.time - throwPressTime;
 
         throwChargeOnRelease = throwCharge;
@@ -1330,6 +1471,7 @@ public class PlayerController : MonoBehaviour
 
     public void Throw()
     {
+        if (isBondage) { return; }
         if (isCaptured) { return; }//被抓住无法投掷
         //if (!physicsCheck.isGround) { return; }//空中无法投掷
 
@@ -1447,6 +1589,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeWeapon()
     {
+        if (isBondage) { return; }
 
         Slot = Slot == 0 ? 1 : 0;
 
@@ -1674,12 +1817,14 @@ public class PlayerController : MonoBehaviour
     }//更改子弹数
     private void OnReload(InputAction.CallbackContext obj)
     {
+        if (isBondage) { return; }
+
         Debug.Log("换单");
         Reload();//主动换单
     }
     public void Reload()
     {
-
+        if (isBondage) { return; }
         if (!physicsCheck.isGround) return; // 空中禁止换弹
         if (attackType >= 0) return; // 不是枪
 

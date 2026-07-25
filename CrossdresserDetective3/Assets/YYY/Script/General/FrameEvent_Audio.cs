@@ -424,6 +424,7 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _SE_Door_Open()
     {
+
         if (isCage) 
         {
             audioS.PlayOneShot(AudioManager.SE_Cage);

@@ -113,9 +113,9 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
 
-        gameOver = player.isDead;//玩家死亡的时候所有敌人不能动
-       
-        
+        gameOver = player.isDead || PlayerWin;//玩家死亡的时候所有敌人不能动
+
+
     }
 
     public void RestartScene() 

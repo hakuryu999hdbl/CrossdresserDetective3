@@ -194,6 +194,9 @@ public class TimelineTrigger : MonoBehaviour
         UIManager.instance.ShowNext();
     }
 
+
+
+
     #region 玩家控制
 
   
@@ -216,6 +219,10 @@ public class TimelineTrigger : MonoBehaviour
     {
         GameManager.instance.player.playerAnimation.PlayIdle();
     }
+
+
+
+
 
     public GameObject PlayerSlot;
     public void SetPlayerToSlot() 
@@ -253,6 +260,22 @@ public class TimelineTrigger : MonoBehaviour
         //这个一般来说在过场动画最后出现
         GameManager.instance.player.transform.position = PlayerSlot.transform.position;
     }
+
+
+
+
+
+    public void SetPlayer_Clothes_01() 
+    {
+        GameManager.instance.player.SetPlayer_Clothes_01();
+    }//主角赤裸绳子捆绑状态
+
+    public void SetPlayer_EnterBondage()
+    {
+        GameManager.instance.player.EnterBondageState();
+    }//进入拘束状态
+
+
     #endregion
 
 
