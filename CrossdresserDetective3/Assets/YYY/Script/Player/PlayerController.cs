@@ -780,6 +780,9 @@ public class PlayerController : MonoBehaviour
         // 10专门代表拘束动画
         attackType = 10;
 
+        Invoke(nameof(UI_anim_Change), 0.2f);
+
+
         #region 清理所有正在执行的动作
         inputDirection = Vector2.zero;
         rb.velocity = Vector2.zero;
@@ -809,19 +812,18 @@ public class PlayerController : MonoBehaviour
         // 拘束下固定只能慢走
         isWalking = true;
 
-
-        //绳子拘束
-        //clothesIndex = 10;
-        //shoesIndex = 10;
-        //bondageType = 0;
-        //RefreshPlayerSkin();
-
         
         // 强制进入拘束待机，防止上一段攻击动画残留
         playerAnimation.EnterBondageIdle();
 
 
     }
+
+    void UI_anim_Change() 
+    {
+        UI_anim.SetTrigger("Change");//小图像显示也变
+    }
+
 
     public void ExitBondageState()
     {

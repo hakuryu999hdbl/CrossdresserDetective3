@@ -13,7 +13,7 @@ public class FrameEvent_Audio : MonoBehaviour
     AudioManager AudioManager;
     public AudioSource audioS;
 
-    void Start()
+    void Awake()
     {
         AudioManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<AudioManager>();
     }
@@ -424,6 +424,7 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _SE_Door_Open()
     {
+
 
         if (isCage) 
         {
