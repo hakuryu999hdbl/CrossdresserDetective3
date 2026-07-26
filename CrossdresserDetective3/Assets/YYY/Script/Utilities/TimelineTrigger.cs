@@ -273,6 +273,10 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayer_EnterBondage()
     {
         GameManager.instance.player.EnterBondageState();
+
+        UIManager.instance.InputPrompt_1.SetActive(false);
+        UIManager.instance.InputPrompt_2.SetActive(true);
+
     }//进入拘束状态
 
 

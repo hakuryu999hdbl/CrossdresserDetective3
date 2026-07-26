@@ -97,9 +97,19 @@ public class AudioManager : MonoBehaviour
     public AudioClip Bullet_AK, Bullet_M4a1, Bullet_SD;
     public AudioClip Bullet_SD_Load;
 
+
+
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
     public AudioClip YYY_die1, YYY_die2, YYY_die3, YYY_die4;
+
     public AudioClip YYY_duzui1, YYY_duzui2, YYY_duzui3, YYY_duzui4;
+    public AudioClip YYY_breath1, YYY_breath2, YYY_breath3, YYY_breath4;
+    public AudioClip YYY_gasping1, YYY_gasping2;
+    public AudioClip YYY_gasping_quick1, YYY_gasping_quick2, YYY_gasping_quick3;
+    public AudioClip YYY_gasping_weak1, YYY_gasping_weak2;
+
+    public AudioClip YYY_scream_strong1, YYY_scream_strong2, YYY_scream_strong3, YYY_scream_strong4, YYY_scream_strong5, YYY_scream_strong6, YYY_scream_strong7, YYY_scream_strong8;
+
 
 
     public AudioClip Man_die1, Man_die2, Man_die3, Man_die4;
@@ -144,6 +154,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip SE_falldown;
     public AudioClip SE_Door_Open, SE_Door_Close, SE_Cage;
     public AudioClip SE_Button, SE_Elevator_1, SE_Elevator_2;
+
+
 
     public AudioClip UI_Click, UI_Select;
     #endregion

@@ -94,11 +94,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     #region
     [Header("关卡")]
-    public List<GameObject> areaList; // 在Inspector中添加Area_1~3
+    public List<GameObject> AreaList; // 在Inspector中添加Area_1~3
 
     public void SetArea(int index)
     {
-        Instantiate(areaList[index], Vector3.zero, Quaternion.identity);
+        Instantiate(AreaList[index], Vector3.zero, Quaternion.identity);
     }
 
     #endregion

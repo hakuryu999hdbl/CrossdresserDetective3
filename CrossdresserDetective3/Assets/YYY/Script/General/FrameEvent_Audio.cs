@@ -16,9 +16,10 @@ public class FrameEvent_Audio : MonoBehaviour
     void Awake()
     {
         AudioManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<AudioManager>();
+
     }
 
-
+    #region Attack/Bullet 战斗系音效
 
     public void _Attack_sword_chop()
     {
@@ -99,7 +100,37 @@ public class FrameEvent_Audio : MonoBehaviour
     }//这个由敌人脚本调用
 
 
+    public void _Attack_blood()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_blood1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_blood2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Attack_blood3);
+                break;
+        }
+    }//这个由Player和Enemy中代码各自调用
 
+    public void _Attack_bomb_bounce()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_3);
+                break;
+        }
+    }//这个由Bomb中代码调用
 
     public void _Bullet_OutOfBullet() 
     {
@@ -140,9 +171,11 @@ public class FrameEvent_Audio : MonoBehaviour
     }
 
 
+    #endregion
 
-  
 
+
+    #region SE 泛用场景内音效
 
     //鞭打声
     public void _SE_Whip()
@@ -449,6 +482,15 @@ public class FrameEvent_Audio : MonoBehaviour
        
     }
 
+
+
+
+    #endregion
+
+
+
+    #region 人物音效
+
     public void _YYY_attack() 
     {
         switch (Random.Range(0, 4))
@@ -467,44 +509,222 @@ public class FrameEvent_Audio : MonoBehaviour
                 break;
         }
     }
+
+
+
+
     public void _YYY_die()
     {
-        switch (Random.Range(0, 4))
-        {
-            case 0:
-                audioS.PlayOneShot(AudioManager.YYY_die1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.YYY_die2);
-                break;
-            case 2:
-                audioS.PlayOneShot(AudioManager.YYY_die3);
-                break;
-            case 3:
-                audioS.PlayOneShot(AudioManager.YYY_die4);
-                break;
-        }
-    }
 
+
+        AudioClip[] clips =
+     {
+        AudioManager.YYY_die1,
+        AudioManager.YYY_die2,
+        AudioManager.YYY_die3,
+        AudioManager.YYY_die4
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+        // switch (Random.Range(0, 4))
+        // {
+        //     case 0:
+        //         audioS.PlayOneShot(AudioManager.YYY_die1);
+        //         break;
+        //     case 1:
+        //         audioS.PlayOneShot(AudioManager.YYY_die2);
+        //         break;
+        //     case 2:
+        //         audioS.PlayOneShot(AudioManager.YYY_die3);
+        //         break;
+        //     case 3:
+        //         audioS.PlayOneShot(AudioManager.YYY_die4);
+        //         break;
+        // }
+    }//单次触发
 
     public void _YYY_duzui()
     {
-        switch (Random.Range(0, 4))
+        //switch (Random.Range(0, 4))
+        //{
+        //    case 0:
+        //        audioS.PlayOneShot(AudioManager.YYY_duzui1);
+        //        break;
+        //    case 1:
+        //        audioS.PlayOneShot(AudioManager.YYY_duzui2);
+        //        break;
+        //    case 2:
+        //        audioS.PlayOneShot(AudioManager.YYY_duzui3);
+        //        break;
+        //    case 3:
+        //        audioS.PlayOneShot(AudioManager.YYY_duzui4);
+        //        break;
+        //}
+
+        PlayVoiceLoop(
+     VoiceLoopType.YYY_Duzui,
+     AudioManager.YYY_duzui1,
+     AudioManager.YYY_duzui2,
+     AudioManager.YYY_duzui3,
+     AudioManager.YYY_duzui4
+ );
+
+
+    }//循环触发
+
+    public void _YYY_breath()
+    {
+        //switch (Random.Range(0, 4))
+        //{
+        //    case 0:
+        //        audioS.PlayOneShot(AudioManager.YYY_breath1);
+        //        break;
+        //    case 1:
+        //        audioS.PlayOneShot(AudioManager.YYY_breath2);
+        //        break;
+        //    case 2:
+        //        audioS.PlayOneShot(AudioManager.YYY_breath3);
+        //        break;
+        //    case 3:
+        //        audioS.PlayOneShot(AudioManager.YYY_breath4);
+        //        break;
+        //}
+
+        PlayVoiceLoop(
+       VoiceLoopType.YYY_Breath,
+       AudioManager.YYY_breath1,
+       AudioManager.YYY_breath2,
+       AudioManager.YYY_breath3,
+       AudioManager.YYY_breath4
+   );
+
+
+
+    }//循环触发
+
+    public void _YYY_gasping()
+    {
+        // switch (Random.Range(0, 2))
+        // {
+        //     case 0:
+        //         audioS.PlayOneShot(AudioManager.YYY_gasping1);
+        //         break;
+        //     case 1:
+        //         audioS.PlayOneShot(AudioManager.YYY_gasping2);
+        //         break;
+        // }
+
+        PlayVoiceLoop(
+          VoiceLoopType.YYY_Gasping,
+          AudioManager.YYY_gasping1,
+          AudioManager.YYY_gasping2
+      );
+
+
+    }//循环触发
+
+    public void _YYY_gasping_quick()
+    {
+        //switch (Random.Range(0, 3))
+        //{
+        //    case 0:
+        //        audioS.PlayOneShot(AudioManager.YYY_gasping_quick1);
+        //        break;
+        //    case 1:
+        //        audioS.PlayOneShot(AudioManager.YYY_gasping_quick2);
+        //        break;
+        //    case 2:
+        //        audioS.PlayOneShot(AudioManager.YYY_gasping_quick3);
+        //        break;
+        //}
+
+
+        PlayVoiceLoop(
+        VoiceLoopType.YYY_GaspingQuick,
+        AudioManager.YYY_gasping_quick1,
+        AudioManager.YYY_gasping_quick2
+    );
+
+
+    }//循环触发
+
+    public void _YYY_gasping_weak()
+    {
+        //switch (Random.Range(0, 2))
+        //{
+        //    case 0:
+        //        audioS.PlayOneShot(AudioManager.YYY_gasping_weak1);
+        //        break;
+        //    case 1:
+        //        audioS.PlayOneShot(AudioManager.YYY_gasping_weak2);
+        //        break;
+        //}
+
+        PlayVoiceLoop(
+       VoiceLoopType.YYY_GaspingWeak,
+       AudioManager.YYY_gasping_weak1,
+       AudioManager.YYY_gasping_weak2
+   );
+
+
+
+    }//循环触发
+
+    public void _YYY_scream_strong()
+    {
+        // switch (Random.Range(0, 8))
+        // {
+        //     case 0:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong1);
+        //         break;
+        //     case 1:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong2);
+        //         break;
+        //     case 2:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong3);
+        //         break;
+        //     case 3:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong4);
+        //         break;
+        //     case 4:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong5);
+        //         break;
+        //     case 5:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong6);
+        //         break;
+        //     case 6:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong7);
+        //         break;
+        //     case 7:
+        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong8);
+        //         break;
+        // }
+
+
+
+        AudioClip[] clips =
         {
-            case 0:
-                audioS.PlayOneShot(AudioManager.YYY_duzui1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.YYY_duzui2);
-                break;
-            case 2:
-                audioS.PlayOneShot(AudioManager.YYY_duzui3);
-                break;
-            case 3:
-                audioS.PlayOneShot(AudioManager.YYY_duzui4);
-                break;
-        }
-    }
+        AudioManager.YYY_scream_strong1,
+        AudioManager.YYY_scream_strong2,
+        AudioManager.YYY_scream_strong3,
+        AudioManager.YYY_scream_strong4,
+        AudioManager.YYY_scream_strong5,
+        AudioManager.YYY_scream_strong6,
+        AudioManager.YYY_scream_strong7,
+        AudioManager.YYY_scream_strong8
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发
+
 
 
     public void _Man_attack()
@@ -560,45 +780,236 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }
 
-    public void _Attack_blood() 
-    {
-        switch (Random.Range(0, 3))
-        {
-            case 0:
-                audioS.PlayOneShot(AudioManager.Attack_blood1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.Attack_blood2);
-                break;
-            case 2:
-                audioS.PlayOneShot(AudioManager.Attack_blood3);
-                break;
-        }
-    }//这个由Player和Enemy中代码各自调用
 
-    public void _Attack_bomb_bounce()
-    {
-        switch (Random.Range(0, 3))
-        {
-            case 0:
-                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_2);
-                break;
-            case 2:
-                audioS.PlayOneShot(AudioManager.Attack_bomb_bounce_3);
-                break;
-        }
-    }//这个由Bomb中代码调用
+    #endregion
 
+    #region UI层音效
 
     public void _UI_Click()
     {
         audioS.PlayOneShot(AudioManager.UI_Click);
     }//这个由Player中代码调用
+    #endregion
 
 
+    #endregion
+
+
+    #region 人物循环音系统
+
+    public enum VoiceLoopType
+    {
+        None,
+
+        YYY_Duzui,
+        YYY_Breath,
+        YYY_Gasping,
+        YYY_GaspingQuick,
+        YYY_GaspingWeak,
+
+    }
+
+    [Header("人物音声系统")]
+    public AudioSource voiceAudioS;
+
+    [SerializeField]
+    private VoiceLoopType currentVoiceLoopType = VoiceLoopType.None;
+
+    private AudioClip[] currentVoiceLoopClips;
+
+    private Coroutine voiceLoopCoroutine;
+    private Coroutine singleVoiceCoroutine;
+
+    private bool loopPausedBySingle;
+    private int lastVoiceLoopIndex = -1;
+
+
+    private void PlayVoiceLoop(
+    VoiceLoopType loopType,
+    params AudioClip[] clips
+)
+    {
+        if (voiceAudioS == null)
+            return;
+
+        if (loopType == VoiceLoopType.None)
+            return;
+
+        if (clips == null || clips.Length == 0)
+            return;
+
+        // 相同的循环音已经在持续，不重新开始
+        if (currentVoiceLoopType == loopType &&
+            voiceLoopCoroutine != null)
+        {
+            return;
+        }
+
+        // 新循环音替换旧循环音
+        StopVoiceLoop();
+
+        currentVoiceLoopType = loopType;
+        currentVoiceLoopClips = clips;
+        lastVoiceLoopIndex = -1;
+
+        voiceLoopCoroutine = StartCoroutine(VoiceLoopRoutine());
+    }
+
+
+    //循环音方法
+    private IEnumerator VoiceLoopRoutine()
+    {
+        while (currentVoiceLoopType != VoiceLoopType.None)
+        {
+            AudioClip clip = GetRandomVoiceLoopClip();
+
+            if (clip == null)
+            {
+                yield return null;
+                continue;
+            }
+
+            voiceAudioS.clip = clip;
+            voiceAudioS.Play();
+
+            while (voiceAudioS.isPlaying)
+            {
+                yield return null;
+            }
+
+            if (currentVoiceLoopType == VoiceLoopType.None)
+                break;
+
+            yield return null;
+        }
+
+        voiceLoopCoroutine = null;
+    }
+
+    private AudioClip GetRandomVoiceLoopClip()
+    {
+        if (currentVoiceLoopClips == null ||
+            currentVoiceLoopClips.Length == 0)
+        {
+            return null;
+        }
+
+        if (currentVoiceLoopClips.Length == 1)
+            return currentVoiceLoopClips[0];
+
+        int index;
+
+        do
+        {
+            index = Random.Range(0, currentVoiceLoopClips.Length);
+        }
+        while (index == lastVoiceLoopIndex);
+
+        lastVoiceLoopIndex = index;
+
+        return currentVoiceLoopClips[index];
+    }
+
+
+    //停止循环音
+
+    public void _Voice_StopLoop()
+    {
+        StopVoiceLoop();
+    }
+
+    private void StopVoiceLoop()
+    {
+        currentVoiceLoopType = VoiceLoopType.None;
+        currentVoiceLoopClips = null;
+        lastVoiceLoopIndex = -1;
+        loopPausedBySingle = false;
+
+        if (voiceLoopCoroutine != null)
+        {
+            StopCoroutine(voiceLoopCoroutine);
+            voiceLoopCoroutine = null;
+        }
+
+        if (voiceAudioS != null)
+        {
+            voiceAudioS.Stop();
+            voiceAudioS.clip = null;
+        }
+    }
+
+
+    //单次人物音
+    private void PlaySingleVoice(AudioClip clip)
+    {
+        if (clip == null || voiceAudioS == null)
+            return;
+
+        if (singleVoiceCoroutine != null)
+        {
+            StopCoroutine(singleVoiceCoroutine);
+            singleVoiceCoroutine = null;
+        }
+
+        singleVoiceCoroutine =
+            StartCoroutine(SingleVoiceRoutine(clip));
+    }
+
+    private IEnumerator SingleVoiceRoutine(AudioClip clip)
+    {
+        bool hadLoop =
+            currentVoiceLoopType != VoiceLoopType.None &&
+            voiceAudioS.isPlaying;
+
+        if (hadLoop)
+        {
+            voiceAudioS.Pause();
+            loopPausedBySingle = true;
+        }
+
+        /*
+         * 这里同一个AudioSource无法在暂停循环的同时播放单次音。
+         * 所以必须临时保存循环进度。
+         */
+
+        AudioClip pausedLoopClip = null;
+        float pausedLoopTime = 0f;
+
+        if (loopPausedBySingle)
+        {
+            pausedLoopClip = voiceAudioS.clip;
+            pausedLoopTime = voiceAudioS.time;
+
+            voiceAudioS.Stop();
+        }
+
+        voiceAudioS.clip = clip;
+        voiceAudioS.time = 0f;
+        voiceAudioS.Play();
+
+        while (voiceAudioS.isPlaying)
+        {
+            yield return null;
+        }
+
+        singleVoiceCoroutine = null;
+
+        if (loopPausedBySingle &&
+            currentVoiceLoopType != VoiceLoopType.None &&
+            pausedLoopClip != null)
+        {
+            voiceAudioS.clip = pausedLoopClip;
+            voiceAudioS.time = Mathf.Clamp(
+                pausedLoopTime,
+                0f,
+                pausedLoopClip.length
+            );
+
+            voiceAudioS.Play();
+        }
+
+        loopPausedBySingle = false;
+    }
 
     #endregion
 }

@@ -849,7 +849,8 @@ public class UIManager : MonoBehaviour
     public GameObject UI_All;//包含血条体力值子弹数当前武器等全体UI，在过场动画弹出的时候隐藏
     public GameObject UI_Cutscene;//过场动画的上下黑幕和台词显示
 
-
+    public GameObject InputPrompt_1;//普通移动按键提示
+    public GameObject InputPrompt_2;//拘束移动按键提示
 
     public void OnCutsceneStart() 
     {
