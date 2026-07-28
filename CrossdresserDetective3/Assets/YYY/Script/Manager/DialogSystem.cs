@@ -71,24 +71,24 @@ public class DialogSystem : MonoBehaviour
         {
             case 0:
                 //剧情开头
-                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Japanese/J_StartWork_01"));
+                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Japanese/J_CG_01"));
 
                 break;
             case 1:
                 //剧情开头
-                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_StartWork_01"));
+                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_CG_01"));
 
 
                 break;
             case 2:
                 //剧情开头
-                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_StartWork_01"));
+                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_CG_01"));
 
 
                 break;
             case 3:
                 //剧情开头
-                textAssets.Add(1, Resources.Load<TextAsset>("TXT_English/E_StartWork_01"));
+                textAssets.Add(1, Resources.Load<TextAsset>("TXT_English/E_CG_01"));
 
 
 
@@ -96,7 +96,7 @@ public class DialogSystem : MonoBehaviour
                 break;
             case 4:
                 //剧情开头
-                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Korean/K_StartWork_01"));
+                textAssets.Add(1, Resources.Load<TextAsset>("TXT_Korean/K_CG_01"));
 
 
                 break;
@@ -186,8 +186,18 @@ public class DialogSystem : MonoBehaviour
                 index++;
                 break;
 
-            case "Me":
+            case "Man":
                 textLabel.color = Color.blue;
+                index++;
+                break;
+
+            case "YYY":
+                textLabel.color = new Color(1.0f, 0.2f, 0.5f, 1.0f); //浅红色
+                index++;
+                break;
+
+            case "Girl":
+                textLabel.color = new Color(0.8f, 0.2f, 0.2f, 1.0f); // 深红色
                 index++;
                 break;
 
@@ -217,16 +227,21 @@ public class DialogSystem : MonoBehaviour
         index++;
     }
 
-
+    public GameObject BlackScreen_FadeIn;
     //结束对话触发
     public void ChangeStory()
     {
-        SceneManager.LoadScene("Menu");
+        BlackScreen_FadeIn.SetActive(true);//黑幕淡出
 
+        Invoke(nameof(BackToMenu), 0.9f);
     }
 
 
+    private void BackToMenu()
+    {
 
+        SceneManager.LoadScene("Menu");
+    }
 
 
 }

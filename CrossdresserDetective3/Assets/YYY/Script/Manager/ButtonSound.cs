@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ButtonSound : MonoBehaviour,
     IPointerEnterHandler,
@@ -29,6 +30,12 @@ public class ButtonSound : MonoBehaviour,
     {
         if (!CanPlay()) return;
 
+
+        // AVG场景不播放UI按钮音
+        if (SceneManager.GetActiveScene().name == "Spine")
+            return;
+
+
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
     }
 
@@ -45,6 +52,13 @@ public class ButtonSound : MonoBehaviour,
         }
         //打开二级菜单的时候把当前选中音吞掉
 
+
+
+        // AVG场景不播放UI按钮音
+        if (SceneManager.GetActiveScene().name == "Spine")
+            return;
+
+
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
     }
 
@@ -60,6 +74,15 @@ public class ButtonSound : MonoBehaviour,
         }
         //商店购买按下音吞掉
 
+
+
+
+        // AVG场景不播放UI按钮音
+        if (SceneManager.GetActiveScene().name == "Spine")
+            return;
+
+
+
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
     }
 
@@ -74,6 +97,14 @@ public class ButtonSound : MonoBehaviour,
             return;
         }
         //商店购买按下音吞掉
+
+
+
+        // AVG场景不播放UI按钮音
+        if (SceneManager.GetActiveScene().name == "Spine")
+            return;
+
+
 
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
     }
