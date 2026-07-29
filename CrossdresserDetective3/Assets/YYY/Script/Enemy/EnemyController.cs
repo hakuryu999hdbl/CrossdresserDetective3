@@ -1491,6 +1491,14 @@ public class EnemyController : MonoBehaviour
 
     }
 
+
+    public virtual bool IgnoreIncomingDamage()
+    {
+        return false;
+    }//无敌状态
+
+
+
     public void OnBlastHit(Vector3 blastPos, float force)
     {
         if (rb == null) return;

@@ -649,6 +649,64 @@ public class FrameEvent : MonoBehaviour
     }//敌人防御反击后
     #endregion
 
+    #region 敌人下落攻击
+
+    //敌人跳起消失,产生瞄准
+    public void StartJumpStrikeAim()
+    {
+        if (enemyController is Enemy_5 enemy5)
+        {
+            enemy5.jumpStrikeState.StartAim(enemy5);
+        }
+
+    }
+
+    //敌人下落结束攻击
+    public void StartJumpStrikeAttack()
+    {
+        if (enemyController is Enemy_5 enemy5)
+        {
+            enemy5.jumpStrikeState.StartAttack(enemy5);
+        }
+    }
+
+    //特殊大范围攻击
+    public void JumpStrikeHit()
+    {
+        if (enemyController is Enemy_5 enemy5)
+        {
+            if (enemy5.jumpStrikeCollider != null)
+            {
+                enemy5.jumpStrikeCollider.SetActive(true);
+
+                CancelInvoke(nameof(HideJumpStrikeHit));
+                Invoke(nameof(HideJumpStrikeHit), 0.2f);
+            }
+        }
+    }
+
+    private void HideJumpStrikeHit()
+    {
+        if (enemyController is Enemy_5 enemy5 &&
+            enemy5.jumpStrikeCollider != null)
+        {
+            enemy5.jumpStrikeCollider.SetActive(false);
+        }
+    }
+
+
+    //攻击结束
+    public void EndJumpStrike()
+    {
+        if (enemyController is Enemy_5 enemy5)
+        {
+            enemy5.jumpStrikeState.EndSkill(enemy5);
+        }
+    }
+
+    #endregion
+
+
     #region 双方攻击动画触发
     [Header("攻击动画触发")]
     public GameObject AttackArea_1;

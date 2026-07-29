@@ -193,6 +193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioS: {fileID: 7730197500638005109}
   isCage: 0
+  voiceAudioS: {fileID: 0}
+  currentVoiceLoopType: 0
 --- !u!82 &7730197500638005109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1159,6 +1161,7 @@ MonoBehaviour:
   rifleType: 0
   throwType: 0
   attackType: -1
+  bondageType: 0
   rb: {fileID: 2386259355372197558}
   coll: {fileID: 263837382367913122}
   frameEvent_Audio: {fileID: 1396106338767138340}
@@ -1660,6 +1663,7 @@ MonoBehaviour:
   chargeSkillColor: {r: 1, g: 0, b: 0, a: 0.39215687}
   aimThrowSkillColor: {r: 1, g: 0, b: 0, a: 0.39215687}
   blockColor: {r: 1, g: 0, b: 0, a: 0.39215687}
+  jumpStrikeSkillColor: {r: 1, g: 0, b: 0, a: 0.39215687}
   colorChangeSpeed: 6
 --- !u!1 &8404225527450850448
 GameObject:
