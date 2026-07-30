@@ -751,19 +751,7 @@ public class PlayerController : MonoBehaviour
     private int attackTypeBeforeBondage;   // 记录拘束之前的武器动作
 
 
-    public void SetPlayer_Clothes_01() 
-    {
-        beltIndex = 0;
-        clothesIndex = 10;
-        glovesIndex = 0;
-        pantiesIndex = 0;
-        shoesIndex = 10;
-        skirtIndex = 0;
-        stockingsIndex = 0;
-        bondageType = 0;
-        RefreshPlayerSkin();
-
-    }//赤裸绳子捆绑状态
+  
 
     public void EnterBondageState()
     {

@@ -215,14 +215,26 @@ public class TimelineTrigger : MonoBehaviour
         GameManager.instance.player.playerAnimation.PlayWalking();
     }
 
+    public void SetPlayerAnim_Runing()
+    {
+        GameManager.instance.player.playerAnimation.PlayRuning();
+    }
+
+
     public void SetPlayerAnim_Idle()
     {
         GameManager.instance.player.playerAnimation.PlayIdle();
     }
+    public void SetPlayerAnim_Crouch()
+    {
+        GameManager.instance.player.playerAnimation.PlayCrouch();
+    }
 
 
-
-
+    public void SetPlayer_Turn() 
+    {
+        GameManager.instance.player.playerAnimation.SetPlayer_Turn();
+    }
 
     public GameObject PlayerSlot;
     public void SetPlayerToSlot() 
@@ -267,8 +279,18 @@ public class TimelineTrigger : MonoBehaviour
 
     public void SetPlayer_Clothes_01() 
     {
-        GameManager.instance.player.SetPlayer_Clothes_01();
+        GameManager.instance.player.frameEvent.SetPlayer_Clothes_01();
     }//主角赤裸绳子捆绑状态
+
+    public void SetPlayer_Clothes_02()
+    {
+        GameManager.instance.player.frameEvent.SetPlayer_Clothes_02();
+    }//主角赤裸状态
+
+    public void SetPlayer_Clothes_03()
+    {
+        GameManager.instance.player.frameEvent.SetPlayer_Clothes_03();
+    }//主角赤裸状态
 
     public void SetPlayer_EnterBondage()
     {

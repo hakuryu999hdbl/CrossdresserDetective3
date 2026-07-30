@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
                 OpenSetUp();
                 break;
             case 1:
+            case 2:
                 //第一关不弹出背包界面（好像这个UI层退出一下需要）
                 CloseSetUp();
                 break;       

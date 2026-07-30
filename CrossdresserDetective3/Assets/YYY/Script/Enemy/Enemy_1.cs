@@ -89,7 +89,7 @@ public class Enemy_1 : EnemyController
         anim.Play("Story_CatchYYY", 0, 0f);
         anim.Update(0f);
 
-        anim.gameObject.GetComponent<FrameEvent_Audio>()._YYY_duzui();//暂时先用这播放
+        
     }
 
     public void SetEnemy_RapeYYY()
@@ -103,4 +103,13 @@ public class Enemy_1 : EnemyController
         anim.SetTrigger("next");
 
     }
+
+
+    public void SetEnemy_Restore() 
+    {
+        checkArea.gameObject.SetActive(true);
+
+
+    }//从过场动画恢复正常状态
+
 }

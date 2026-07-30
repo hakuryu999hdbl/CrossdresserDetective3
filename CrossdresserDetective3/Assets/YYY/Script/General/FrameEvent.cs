@@ -850,7 +850,37 @@ public class FrameEvent : MonoBehaviour
        
     }
 
-    public void Story_Clothes_YYY_01() 
+  
+
+    public void SetPlayer_Clothes_01()
+    {
+        playerController.beltIndex = 0;
+        playerController.clothesIndex = 10;
+        playerController.glovesIndex = 0;
+        playerController.pantiesIndex = 0;
+        playerController.shoesIndex = 10;
+        playerController.skirtIndex = 0;
+        playerController.stockingsIndex = 0;
+        playerController.bondageType = 0;
+        playerController.RefreshPlayerSkin();
+
+    }//赤裸绳子捆绑状态
+
+    public void SetPlayer_Clothes_02()
+    {
+        playerController.beltIndex = 0;
+        playerController.clothesIndex = 0;
+        playerController.glovesIndex = 0;
+        playerController.pantiesIndex = 0;
+        playerController.shoesIndex = 0;
+        playerController.skirtIndex = 0;
+        playerController.stockingsIndex = 0;
+
+        playerController.RefreshPlayerSkin();
+
+    }//赤裸状态
+
+    public void SetPlayer_Clothes_03()
     {
         //Debug.Log("第一章衣物");
 
@@ -866,7 +896,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//第一章事务所剧情
+    }//第一章事务所剧情(白色内裤无裙子)
 
 
     public void Story_Clothes_Man_01()

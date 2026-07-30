@@ -89,12 +89,19 @@ public class PlayerAnimation : MonoBehaviour
     public void ExitCutsceneIdle() 
     {
 
+        Invoke(nameof(ForceIdle), 0.1f);
+    }
+
+    void ForceIdle() 
+    {
+        Debug.Log("强制进入Idle");
 
         // 强制进入Idle
         anim.Play("Idle", 0, 0f);
         anim.Update(0f);
-
     }
+
+
 
 
     public void EnterBondageIdle()
@@ -143,9 +150,32 @@ public class PlayerAnimation : MonoBehaviour
         anim.Update(0f);
     }
 
+    public void PlayRuning()
+    {
+        anim.Play("Story_Run", 0, 0f);
+        anim.Update(0f);
+    }
+
     public void PlayIdle()
     {
         anim.Play("Story_Idle", 0, 0f);
         anim.Update(0f);
     }
+
+    public void PlayCrouch()
+    {
+        anim.Play("Story_Crouch_Start", 0, 0f);
+        anim.Update(0f);
+    }
+
+
+    public void SetPlayer_Turn()
+    {
+        transform.localScale = new Vector3(
+             -transform.localScale.x,
+             transform.localScale.y,
+             transform.localScale.z
+         );
+    }
+
 }
