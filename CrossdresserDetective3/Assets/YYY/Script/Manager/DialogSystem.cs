@@ -233,7 +233,7 @@ public class DialogSystem : MonoBehaviour
     {
         BlackScreen_FadeIn.SetActive(true);//黑幕淡出
 
-        Invoke(nameof(BackToMenu), 0.9f);
+        Invoke(nameof(BackToMenu), 0.95f);
     }
 
 

@@ -38,15 +38,15 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
-    public void PlayHurt() 
+    public void PlayHurt()
     {
-        anim.SetInteger("hurtType", Random.Range(1,3));
+        anim.SetInteger("hurtType", Random.Range(1, 3));
         anim.SetTrigger("hurt");
     }
 
     public void PlayAttack()
     {
-   
+
         anim.SetTrigger("attack");
     }
     public void PlayReload()
@@ -86,13 +86,13 @@ public class PlayerAnimation : MonoBehaviour
     }
 
 
-    public void ExitCutsceneIdle() 
+    public void ExitCutsceneIdle()
     {
 
         Invoke(nameof(ForceIdle), 0.1f);
     }
 
-    void ForceIdle() 
+    void ForceIdle()
     {
         Debug.Log("强制进入Idle");
 
@@ -133,7 +133,7 @@ public class PlayerAnimation : MonoBehaviour
 
 
 
-    public void PlayWashing() 
+    public void PlayWashing()
     {
         anim.Play("Story_Washing", 0, 0f);
         anim.Update(0f);
@@ -178,4 +178,17 @@ public class PlayerAnimation : MonoBehaviour
          );
     }
 
+
+
+
+
+    public void PlayRapeYYY() 
+    {
+
+        playerController.frameEvent.SetPlayer_Clothes_01();
+
+        anim.Play("Story_RapeYYY", 0, 0f);
+        anim.Update(0f);
+    }//战败调用
 }
+

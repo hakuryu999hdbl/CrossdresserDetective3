@@ -925,5 +925,13 @@ public class FrameEvent : MonoBehaviour
 
     #endregion
 
+    public void SetPlayer_Bondage_1()
+    {
 
+        enemyController.clothesIndex = 10;
+        enemyController.shoesIndex = 10;
+
+        enemyController.RefreshPlayerSkin();
+
+    }//战败尸体调用
 }

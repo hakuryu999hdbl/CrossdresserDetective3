@@ -114,13 +114,26 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void RestartScene() 
+    public void RestartScene()
+    {
+        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+
+        Invoke(nameof(_RestartScene), 0.95f);
+    }
+
+    private void _RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-     
     }
 
     public void NextScene()
+    {
+        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+
+        Invoke(nameof(_NextScene), 0.95f);
+    }
+
+    private void _NextScene()
     {
         GameFlowData.CurrentStage++;
 
@@ -201,6 +214,36 @@ public class GameManager : MonoBehaviour
             UIManager.instance.WinUI();
             PlayerWin = true;
         }
+    }
+
+
+    //在玩家被击败后清理状态
+    public void ClearEnemiesForGameOver(EnemyController exceptEnemy = null)
+    {
+        // 先关闭敌人生成器，防止黑幕后继续刷怪
+        foreach (AreaEncounterController creator in enemyCreators)
+        {
+            if (creator == null)
+                continue;
+
+            creator.gameObject.SetActive(false);
+        }
+
+        enemyCreators.Clear();
+
+        // 隐藏所有现存敌人，但保留尸体替身
+        foreach (EnemyController enemy in sceneEnemies)
+        {
+            if (enemy == null)
+                continue;
+
+            if (enemy == exceptEnemy)
+                continue;
+
+            enemy.gameObject.SetActive(false);
+        }
+
+        sceneEnemies.Clear();
     }
     #endregion
 

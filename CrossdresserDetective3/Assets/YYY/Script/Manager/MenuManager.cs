@@ -490,11 +490,15 @@ public class MenuManager : MonoBehaviour
         GameFlowData.nextAreaId = Name;
         GameFlowData.returnPath = "cg";
 
-       SceneManager.LoadScene("Spine");
+        BlackScreen_FadeIn.SetActive(true); // 黑幕淡入
+        Invoke(nameof(StartCG), 0.95f);
 
     }//跳转CG场景
 
-
+    private void StartCG()
+    {
+        SceneManager.LoadScene("Spine");
+    }
 
     #endregion
 
@@ -658,15 +662,26 @@ public class MenuManager : MonoBehaviour
     #endregion
 
 
-
+    public GameObject BlackScreen_FadeIn;
     public void NewGame(int Chapter, int Stage)
-    { 
+    {
+        nextChapter = Chapter;
+        nextStage = Stage;
 
-        GameFlowData.CurrentChapter = Chapter; 
-        GameFlowData.CurrentStage = Stage;
-        SceneManager.LoadScene("Level");
+        BlackScreen_FadeIn.SetActive(true); // 黑幕淡入
+        Invoke(nameof(StartLevel), 0.95f);
 
     }//跳转编号场景
+    private int nextChapter;
+    private int nextStage;
+    private void StartLevel()
+    {
+        GameFlowData.CurrentChapter = nextChapter;
+        GameFlowData.CurrentStage = nextStage;
+
+        SceneManager.LoadScene("Level");
+    }
+
 
     public void QuitGame()
     {

@@ -1122,6 +1122,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
+
         if (isBondage) { return; }
 
         if (isAttack) { return; }//如果攻击已经开始不能跳跃

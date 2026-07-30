@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     {
 
 #if UNITY_STANDALONE
-    mobileTouch.SetActive(false);
+        mobileTouch.SetActive(false);
 #endif
 
 
@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
             case 2:
                 //第一关不弹出背包界面（好像这个UI层退出一下需要）
                 CloseSetUp();
-                break;       
+                break;
 
 
 
@@ -64,12 +64,12 @@ public class UIManager : MonoBehaviour
     #region
 
     [Header("暂停菜单")]
-    public GameObject PauseMenu,PauseButton;//隐藏暂停按钮
+    public GameObject PauseMenu, PauseButton;//隐藏暂停按钮
     public GameObject PauseSetUpFirstSelected; //进入设置页面最先选中 X 或 Master Slider
 
-    public bool isPaused=false;
+    public bool isPaused = false;
     public PlayerController playerController;//玩家脚本
-    public void TogglePause() 
+    public void TogglePause()
     {
 
         if (isSetUp) { return; }//设置界面内把暂停界面挡住
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
         {
             ClosePause();
         }
-        else 
+        else
         {
             OpenPause();
         }
@@ -115,15 +115,24 @@ public class UIManager : MonoBehaviour
             case 1:
                 GameFlowData.returnPath = "chapter_1";
                 break;
-          
+
         }
 
 
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu");
+
+        BlackScreen_FadeIn.SetActive(true);//黑幕淡出
+        Invoke(nameof(_BackToMenu), 0.95f);
 
     }//跳转编号场景
 
+
+
+    private void _BackToMenu()
+    {
+
+        SceneManager.LoadScene("Menu");
+    }
 
     #endregion
 
@@ -137,13 +146,13 @@ public class UIManager : MonoBehaviour
     [Header("整备菜单")]
     public GameObject SetUpMenu;
     public GameObject ContactMenu;
-    public GameObject EquipMenu,WeaponMenu;
+    public GameObject EquipMenu, WeaponMenu;
     public GameObject MeleeMenu, RangedMenu, ThrowableMenu;
     public GameObject ClothesMenu, GlovesMenu, SkirtMenu, PantiesMenu, StockingsMenu, ShoesMenu;
 
     //进入页面最先选中
-    public GameObject SetUpFirstSelected; 
-    public GameObject EquipFirstSelected; 
+    public GameObject SetUpFirstSelected;
+    public GameObject EquipFirstSelected;
     public GameObject WeaponFirstSelected;
 
     public GameObject MeleeFirstSelected;
@@ -390,7 +399,7 @@ public class UIManager : MonoBehaviour
     public void ChangeRanged(int index)
     {
 
-        switch (index) 
+        switch (index)
         {
             case 0:
                 //步枪手枪哪个变成0都不影响
@@ -462,7 +471,7 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
 
         UI_CameraChangeMiddle();
-      
+
         playerController.UI_anim.SetTrigger("Change");
     }
 
@@ -515,11 +524,11 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void ChangeClothes(int index) 
+    public void ChangeClothes(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Clothes, index);
 
-        
+
     }
 
 
@@ -685,7 +694,7 @@ public class UIManager : MonoBehaviour
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Stockings, index);
 
-      
+
     }
 
     #endregion
@@ -734,7 +743,7 @@ public class UIManager : MonoBehaviour
 
 
 
-    public void OnCancel() 
+    public void OnCancel()
     {
         Debug.Log("返回");
 
@@ -745,9 +754,15 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        if (waitGameOverInput)
+        {
+            ShowGameOverMenu();
+            return;
+        }//跳过战败
 
 
-        switch (CurrentOpen) 
+
+        switch (CurrentOpen)
         {
             case 4:
                 CloseThrowableMenu();
@@ -810,7 +825,7 @@ public class UIManager : MonoBehaviour
         anim.SetBool("isShow", false);
     }
 
-    public void UI_CameraChangeMiddle() 
+    public void UI_CameraChangeMiddle()
     {
         anim_Camera.SetInteger("CameraWork", 0);
     }
@@ -853,7 +868,7 @@ public class UIManager : MonoBehaviour
     public GameObject InputPrompt_1;//普通移动按键提示
     public GameObject InputPrompt_2;//拘束移动按键提示
 
-    public void OnCutsceneStart() 
+    public void OnCutsceneStart()
     {
         UI_All.SetActive(false);
         UI_Cutscene.SetActive(true);
@@ -963,6 +978,9 @@ public class UIManager : MonoBehaviour
     public GameObject GameOverfirstSelected; //进入设置页面最先选中 X 或 Master Slider
 
     public GameObject MissionFailure;
+
+    public bool waitGameOverInput = false;//等待玩家输入再跳出战败界面
+
     public void GameOverUI()
     {
         //一旦开始结算，另一种结果不能出现
@@ -980,15 +998,86 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
+        BlackScreen_FadeIn.SetActive(true);//先黑幕淡入
+
+
+        //放大                                 
+        if (!playerController.cameraControl.isZoomIn)
+        {
+            playerController.cameraControl.ToggleZoom();
+        }
+
+        yield return new WaitForSeconds(0.95f);
+
+        //把周边UI全部隐藏
+        UI_All.SetActive(false);
+
+        BlackScreen_FadeOut.SetActive(true);//再黑幕淡出
+
+        // 隐藏并清理场景内敌人
+        GameManager.instance.ClearEnemiesForGameOver(DeadBody);
+
+
+        //隐藏玩家
+        playerController.frameEvent.HideSkeleton();
+
+        //尸体移动到玩家位置显示
+        DeadBody.gameObject.transform.position = playerController.transform.position;
+        DeadBody.gameObject.SetActive(true);
+
+        //尸体读取玩家皮肤
+        DeadBody.ReadCurrentGame(playerController);
+
+        //尸体播放动画
+        DeadBody.frameEvent.SetPlayer_Bondage_1();//捆绑
+        DeadBody.SetEnemy_CatchYYY();
+
+        // 等待玩家确认
+        waitGameOverInput = true;
+
+        //跳出提示
+        Skip_GameOver.SetActive(true);
+
+
+    }
+
+    public Enemy_1 DeadBody;
+
+
+    public GameObject Skip_GameOver;//跳过提示
+
+    public void ShowGameOverMenu()
+    {
+        waitGameOverInput = false;
+
+        StartCoroutine(ShowGameOverMenuDelay());
+    }//跳出战败界面
+
+    IEnumerator ShowGameOverMenuDelay()
+    {
+        // 黑幕淡入
+        BlackScreen_FadeIn.SetActive(true);
+
+        yield return new WaitForSeconds(0.95f);
+
+        // 尸体隐藏
+        DeadBody.gameObject.SetActive(false);
+
+        BlackScreen_FadeOut.SetActive(true);//再黑幕淡出
+
+        // 打开结算菜单
         gameOverPanel.SetActive(true);
+
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(GameOverfirstSelected);
     }
 
 
+
+
     public GameObject WinPanel;
     public GameObject WinfirstSelected; //进入设置页面最先选中 X 或 Master Slider
-    
+
     public GameObject MissionComplete;
 
     public void WinUI()
@@ -1049,7 +1138,7 @@ public class UIManager : MonoBehaviour
             (chapter - 1) * data.stagePerChapter
             + (stage - 1);
 
-        int star = 3; // 以后换成实际计算
+        int star = CalculateStageStar(); //目前暂时只有生命值权重判断
 
         // 保留最高评价
         data.stageStars[index] =
@@ -1069,6 +1158,33 @@ public class UIManager : MonoBehaviour
         SaveManager.SaveGame(data);
     }
 
+
+    private int CalculateStageStar()
+    {
+        float currentHealth = playerController.character.currentHealth;
+        float maxHealth = playerController.character.maxHealth;
+
+        if (maxHealth <= 0f)
+        {
+            Debug.LogWarning("玩家最大生命值异常，默认给予1星。");
+            return 1;
+        }
+
+        // 满血：三星
+        if (currentHealth >= maxHealth)
+        {
+            return 3;
+        }
+
+        // 受过伤，但当前生命值高于一半：二星
+        if (currentHealth > maxHealth * 0.5f)
+        {
+            return 2;
+        }
+
+        // 当前生命值等于或低于一半：一星
+        return 1;
+    }
 
     #endregion
 
@@ -1107,7 +1223,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    void OnHealthEvent(Character character) 
+    void OnHealthEvent(Character character)
     {
         var persentage = character.currentHealth / character.maxHealth;//将百分比传输
         OnHealthChange(persentage);
@@ -1126,7 +1242,7 @@ public class UIManager : MonoBehaviour
 
     public Image throwChargeBar;//投掷蓄力槽
     public Animator throwUIAnim;
-    public void OnHealthChange(float persentage) 
+    public void OnHealthChange(float persentage)
     {
         healthImage.fillAmount = persentage;
     }
@@ -1141,9 +1257,9 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (healthDelayImage.fillAmount > healthImage.fillAmount) 
+        if (healthDelayImage.fillAmount > healthImage.fillAmount)
         {
-            healthDelayImage.fillAmount -= Time.deltaTime*1.2f;//可以调整速度
+            healthDelayImage.fillAmount -= Time.deltaTime * 1.2f;//可以调整速度
         }
 
 
@@ -1162,7 +1278,7 @@ public class UIManager : MonoBehaviour
 
         throwChargeBar.fillAmount = playerController.throwCharge;
 
-        throwUIAnim.SetBool("Show",playerController.isHoldingThrow);
+        throwUIAnim.SetBool("Show", playerController.isHoldingThrow);
     }
 
 
@@ -1180,14 +1296,14 @@ public class UIManager : MonoBehaviour
     public GameObject magazineIcon;
     public Text magazineText;
 
- 
+
 
     public void RefreshAmmoUI(
      int currentAmmo,
      int maxAmmo, int magazineCount
  )
     {
-        if (playerController.attackType == -1){ bulletPrefab = bulletPrefab_Pistol; }
+        if (playerController.attackType == -1) { bulletPrefab = bulletPrefab_Pistol; }
         if (playerController.attackType == -2) { bulletPrefab = bulletPrefab_Rifle; }
 
         foreach (Transform child in bulletRoot)
@@ -1204,8 +1320,8 @@ public class UIManager : MonoBehaviour
         }
 
         magazineText.text = "X" + magazineCount.ToString();
-       
-     
+
+
     }
 
 
@@ -1216,7 +1332,7 @@ public class UIManager : MonoBehaviour
     [Header("远程UI")]
     public GameObject[] pistolIcons;
     public GameObject[] rifleIcons;
-  
+
 
     [Header("投掷UI")]
     public GameObject[] throwableIcons;
@@ -1237,7 +1353,7 @@ public class UIManager : MonoBehaviour
 
 
         //近战(空手不显示)
-        switch (player.meleeType) 
+        switch (player.meleeType)
         {
             case 1:
                 meleeIcons[0].SetActive(true);
@@ -1255,7 +1371,7 @@ public class UIManager : MonoBehaviour
 
 
         //远程
-        if(player.rangedSlot == -1)
+        if (player.rangedSlot == -1)
         {
             switch (player.pistolType)
             {

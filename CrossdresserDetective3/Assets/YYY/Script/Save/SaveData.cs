@@ -10,9 +10,9 @@ public class SaveData
 
 
 
-    public int chapterCount = 8;//总共8个章节
+    public int chapterCount = 6;//总共6个章节
     public int stagePerChapter = 10;//每个章节10关卡
-    // 8章 × 10关 = 80
+    // 6章 × 10关 = 60
     public int[] stageStars;
 
 
