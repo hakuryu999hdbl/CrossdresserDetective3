@@ -108,28 +108,28 @@ public class UIManager : MonoBehaviour
     }
     public void BackToMenu()
     {
-        //根据当前临时存档确认回退到主菜单后的位置
+        StartCoroutine(BackToMenuCoroutine());
+    }
+
+    private IEnumerator BackToMenuCoroutine()
+    {
+        // 根据当前临时存档确认回退到主菜单后的位置
         switch (GameFlowData.CurrentChapter)
         {
             default:
             case 1:
                 GameFlowData.returnPath = "chapter_1";
                 break;
-
         }
 
+        // 保持暂停状态，避免战斗场景继续运行
+        BlackScreen_FadeIn.SetActive(true);
 
+        // 不受 Time.timeScale 影响
+        yield return new WaitForSecondsRealtime(0.95f);
+
+        // 加载新场景前再恢复
         Time.timeScale = 1f;
-
-        BlackScreen_FadeIn.SetActive(true);//黑幕淡出
-        Invoke(nameof(_BackToMenu), 0.95f);
-
-    }//跳转编号场景
-
-
-
-    private void _BackToMenu()
-    {
 
         SceneManager.LoadScene("Menu");
     }
@@ -1205,7 +1205,7 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// 生命值，体力值，弹药，武器等UI
+    /// 生命值，体力值，弹药，武器，调查显示等UI
     /// </summary>
     #region
 
@@ -1282,6 +1282,25 @@ public class UIManager : MonoBehaviour
     }
 
 
+
+
+    [Header("调查线索UI")]
+    public Text clueText;
+
+    public void RefreshClueUI(int current, int total)
+    {
+        clueText.text =
+            $"调查 {current}/{total}";
+    }
+
+    [Header("救援任务UI")]
+    public Text rescueText;
+
+    public void RefreshRescueUI(int current, int total)
+    {
+        rescueText.gameObject.SetActive(true);
+        rescueText.text = $"救出 {current}/{total}";
+    }
 
 
 

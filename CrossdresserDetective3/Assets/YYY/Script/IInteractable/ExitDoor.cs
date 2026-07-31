@@ -32,7 +32,7 @@ public class ExitDoor : MonoBehaviour, IInteractable
 
       
 
-        GameManager.instance.PlayerEscapeWin();
+        GameManager.instance.PlayerEscapeWin();//玩家从大门出去
 
         anim.SetTrigger("Open");
         player.playerAnimation.anim.SetBool("TeleportStop", true);//为了只触发一次这个进门动画，不触发离开门

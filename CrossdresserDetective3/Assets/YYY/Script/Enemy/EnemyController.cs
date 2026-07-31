@@ -1242,7 +1242,7 @@ public class EnemyController : MonoBehaviour
 
 
         Man_hairIndex = Random.Range(0, 3);
-        Man_clothesIndex = Random.Range(0, 3);
+        Man_clothesIndex = Random.Range(1, 3);
 
 
         meleeType = Random.Range(1, 4);

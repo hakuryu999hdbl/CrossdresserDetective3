@@ -374,6 +374,8 @@ public class FrameEvent : MonoBehaviour
 
     public PlayerController playerController;
 
+    public RescueTarget rescueTarget;
+
     #region 吹灭炸弹
     public void SetOff()
     {
@@ -934,4 +936,30 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
     }//战败尸体调用
+
+
+
+    public void SetRBQ_Bondage_1() 
+    {
+
+        //赤裸的叶语嫣被捆绑
+        rescueTarget.clothesIndex = 10;
+        rescueTarget.glovesIndex = 0;
+        rescueTarget.hatIndex = 0;
+        rescueTarget.maskIndex = 0;
+        rescueTarget.beltIndex = 0;
+        rescueTarget.stockingsIndex = 0;
+        rescueTarget.pantiesIndex = 0;
+        rescueTarget.shoesIndex = 10;
+        rescueTarget.skirtIndex = 0;
+
+
+        //男性小偷
+        rescueTarget.Man_clothesIndex = 1;
+        rescueTarget.Man_hairIndex = 2;
+
+
+        rescueTarget.RefreshPlayerSkin();
+    }
+
 }

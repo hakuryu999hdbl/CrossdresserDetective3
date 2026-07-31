@@ -19,6 +19,8 @@ public class Chest : MonoBehaviour,IInteractable
     private void OnEnable()
     {
         spriteRenderer.sprite = isDone ? openSprite : closeSprite;
+
+        GameManager.instance.RegisterClue();//登记数量
     }
 
     public void TriggerAction()
@@ -36,6 +38,11 @@ public class Chest : MonoBehaviour,IInteractable
         // TODO: 掉落物品 / 加金币 / 播放音效
 
         this.gameObject.tag = "Untagged";//防止再跳出提示
+
+
+
+        GameManager.instance.CompleteClue();//增加数量
+        Destroy(gameObject);
     }
 
 }

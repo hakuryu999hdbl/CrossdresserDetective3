@@ -80,7 +80,10 @@ public class GameManager : MonoBehaviour
 
         }
 
-       
+        //检测是不是调查任务
+        Invoke(nameof(CheckClue), 0.1f);
+        //检测是不是救出任务
+        Invoke(nameof(CheckRescue),0.2f);
     }
 
 
@@ -114,27 +117,48 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private bool isChangingScene;
+
     public void RestartScene()
     {
-        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+        if (isChangingScene) return;
 
-        Invoke(nameof(_RestartScene), 0.95f);
+        StartCoroutine(RestartSceneCoroutine());
     }
 
-    private void _RestartScene()
+    private IEnumerator RestartSceneCoroutine()
     {
+        isChangingScene = true;
+
+        // 此时继续保持暂停，战斗场景不会恢复
+        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+
+        // 不受 Time.timeScale 影响
+        yield return new WaitForSecondsRealtime(0.95f);
+
+        // 只在加载场景前恢复
+        Time.timeScale = 1f;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+
     public void NextScene()
     {
-        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+        if (isChangingScene) return;
 
-        Invoke(nameof(_NextScene), 0.95f);
+        StartCoroutine(NextSceneCoroutine());
     }
 
-    private void _NextScene()
+    private IEnumerator NextSceneCoroutine()
     {
+        isChangingScene = true;
+
+        // 此时依旧保持 Time.timeScale = 0
+        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(0.95f);
+
         GameFlowData.CurrentStage++;
 
         // 每章10关
@@ -144,8 +168,127 @@ public class GameManager : MonoBehaviour
             GameFlowData.CurrentChapter++;
         }
 
+        // 加载之前才恢复正常时间
+        Time.timeScale = 1f;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+
+
+
+
+
+
+    public enum WinMode
+    {
+        Eliminate,   // 消灭
+        Escape,      // 逃脱
+        Investigate, // 搜查
+        Rescue       // 救援
+    }
+
+    public WinMode winMode;
+
+
+
+    /// <summary>
+    /// 线索数量/搜查模式获胜
+    /// </summary>
+    #region
+
+    [Header("搜查模式")]
+    public int totalClues;
+    public int currentClues;
+
+    public void RegisterClue()
+    {
+        totalClues++;
+    }
+
+    public void CompleteClue()
+    {
+        currentClues++;
+
+        UIManager.instance.RefreshClueUI(currentClues, totalClues);
+
+        if (currentClues >= totalClues)
+        {
+            PlayerEscapeWin();//调查模式获胜
+        }
+    }
+
+    public void CheckClue() 
+    {
+        if (totalClues > 0)
+        {
+            winMode = WinMode.Investigate;
+
+            //场景里有线索，这是调查任务
+            UIManager.instance.RefreshClueUI(currentClues, totalClues);
+            UIManager.instance.clueText.gameObject.SetActive(true);   
+        }
+    }
+
+
+
+    #endregion
+
+
+
+    /// <summary>
+    /// 人质数量/救出模式获胜
+    /// </summary>
+    #region 救援模式
+
+    [Header("救援模式")]
+    public int totalRescues;
+    public int currentRescues;
+
+    public void RegisterRescueTarget()
+    {
+        totalRescues++;
+    }
+
+    public void CompleteRescue()
+    {
+        if (PlayerWin)
+            return;
+
+        currentRescues++;
+
+        currentRescues = Mathf.Clamp(
+            currentRescues,
+            0,
+            totalRescues
+        );
+
+        UIManager.instance.RefreshRescueUI(
+            currentRescues,
+            totalRescues
+        );
+
+        if (currentRescues >= totalRescues)
+        {
+            PlayerEscapeWin();//救出模式获胜
+        }
+    }
+
+    public void CheckRescue()
+    {
+        if (totalRescues > 0)
+        {
+            winMode = WinMode.Rescue;
+
+            //场景里有人质，这是救出模式
+            UIManager.instance.RefreshRescueUI(currentRescues,totalRescues);
+            UIManager.instance.rescueText.gameObject.SetActive(true);
+        }
+    }
+
+    #endregion
+
+
 
 
     /// <summary>
@@ -156,6 +299,8 @@ public class GameManager : MonoBehaviour
     public void IsExit(ExitDoor door)
     {
         exitDoor = door;
+
+        winMode = WinMode.Escape;
     }
     public void PlayerEscapeWin()
     {
@@ -209,12 +354,36 @@ public class GameManager : MonoBehaviour
 
         sceneEnemies.RemoveAll(e => e == null || e.isDead);
 
-        if (enemyCreators.Count <= 0 && sceneEnemies.Count <= 0)
+        bool allEnemiesDead =
+        enemyCreators.Count <= 0 &&
+        sceneEnemies.Count <= 0;
+
+        if (!allEnemiesDead)
+            return;
+
+        switch (winMode)
         {
-            UIManager.instance.WinUI();
-            PlayerWin = true;
+            case WinMode.Eliminate:
+                PlayerEscapeWin();//歼灭模式通常胜利
+                break;
+
+            case WinMode.Investigate:
+                PlayerEscapeWin();  // 搜查模式允许全部击杀直接胜利
+                break;
+
+            case WinMode.Rescue:
+                if (currentRescues >= totalRescues && totalRescues > 0)
+                {
+                    PlayerEscapeWin(); // 救援模式杀光敌人不算完成，还必须把人质全部救走
+                }
+                break;
+
+            case WinMode.Escape:
+                // 逃脱模式必须到出口，不因杀光敌人获胜
+                break;
         }
-    }
+
+    }//消灭所有敌人通关，但是有人质的情况下必须救出所有人质
 
 
     //在玩家被击败后清理状态
