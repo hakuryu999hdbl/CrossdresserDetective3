@@ -13,21 +13,11 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     [Header("当前状态")]
     public RescueState state = RescueState.Bound;
+    public RBQController rbqController;
 
-    [Header("Spine动画控制")]
-    public Animator anim;
-
-    [Tooltip("直接可救时播放的拘束动画")]
-    public string boundAnimation;
-
-    [Tooltip("正在受辱时播放的循环动画")]
-    public string abuseAnimation;
-
-    [Tooltip("敌人出现后，切换成的等待救援动画")]
-    public string waitingRescueAnimation;
 
     [Header("守卫敌人")]
-    public GameObject enemyPrefab;
+    public GameObject enemyPrefab;//暂时只有男性Enemy_1
     public Transform enemySpawnPoint;
 
     private EnemyController spawnedEnemy;
@@ -41,11 +31,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        RegisterTarget();
-        RefreshAnimation();
-
-        RandomSkin();
-        frameEvent.SetRBQ_Bondage_1();
+        RegisterTarget();//告诉GameManager当前为救出模式
+        RefreshAnimation();//随机拘束、调教中并告诉rbqController
 
 
         // 正在受辱时不能直接按E
@@ -64,37 +51,38 @@ public class RescueTarget : MonoBehaviour, IInteractable
         registered = true;
 
         GameManager.instance.RegisterRescueTarget();
-    }
+    }//告诉GameManager当前为救出模式
 
     private void RefreshAnimation()
     {
-        if (anim == null)
-            return;
+
+        if (Random.value > 0.5)
+        {
+            state = RescueState.BeingAbused;
+        }
+        else
+        {
+            state = RescueState.Bound;
+        }
+
 
         switch (state)
         {
             case RescueState.Bound:
-                PlayAnimation(boundAnimation);
+                rbqController.BoundAnimation();
                 break;
 
             case RescueState.BeingAbused:
-                PlayAnimation(abuseAnimation);
+                rbqController.AbuseAnimation();
                 break;
 
             case RescueState.Fighting:
-                PlayAnimation(waitingRescueAnimation);
+                rbqController.BoundAnimation();
                 break;
         }
     }
 
-    private void PlayAnimation(string animationName)
-    {
-        if (string.IsNullOrEmpty(animationName))
-            return;
 
-        anim.Play(animationName, 0, 0f);
-        anim.Update(0f);
-    }
 
     public void TriggerAction()
     {
@@ -110,10 +98,12 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
             case RescueState.Fighting:
             case RescueState.Rescued:
+
+                AudioManager.Instance.PlayFX(AudioManager.Instance.SE_falldown);
                 // 当前不能继续交互
                 break;
         }
-    }//执行交互的位置
+    }//按下E执行交互的位置
 
 
     private void StartRescueBattle()
@@ -146,7 +136,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
         spawnedEnemy = enemyObject.GetComponent<EnemyController>();
 
         // 让新生成的敌人立即朝向玩家
-        float dir = GameManager.instance.player.transform.position.x > enemyObject.transform.position.x ? 1f: -1f;
+        float dir = GameManager.instance.player.transform.position.x > enemyObject.transform.position.x ? 1f : -1f;
 
         Vector3 scale = enemyObject.transform.localScale;
         scale.x = Mathf.Abs(scale.x) * dir;
@@ -159,18 +149,18 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
 
         //播放没有敌人的一般拘束动画
-        PlayAnimation(waitingRescueAnimation);
+        rbqController.BoundAnimation();
 
 
         StartCoroutine(WaitForEnemyDead());
     }//产生敌人
 
 
-    void SetEnemySkin() 
+    void SetEnemySkin()
     {
         //将人质皮肤代入敌人
-        spawnedEnemy.Man_clothesIndex = Man_clothesIndex;
-        spawnedEnemy.Man_hairIndex = Man_hairIndex;
+        spawnedEnemy.Man_clothesIndex = rbqController.Man_clothesIndex;
+        spawnedEnemy.Man_hairIndex = rbqController.Man_hairIndex;
         spawnedEnemy.RefreshPlayerSkin();
     }
 
@@ -246,132 +236,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
 
 
-    /// <summary>
-    /// Spine外观
-    /// </summary>
-    #region
-    [Header("Spine外观")]
-    public FrameEvent frameEvent;
-    public int beltIndex;
-    public int hairIndex;
-    public int clothesIndex;
-    public int glovesIndex;
-    public int pantiesIndex;
-    public int shoesIndex;
-    public int skirtIndex;
-    public int stockingsIndex;
-    public int hatIndex;
-    public int maskIndex;
 
-
-    public int Girl_hairIndex;
-    public int Girl_clothesIndex;
-    public int Girl_glovesIndex;
-    public int Girl_underwearIndex;
-    public int Girl_shoesIndex;
-    public int Girl_stockingsIndex;
-    public int Girl_hatIndex;
-    public int Girl_maskIndex;
-
-    public int Man_hairIndex;
-    public int Man_clothesIndex;
-
-    [Header("武器与攻击方式")]
-    public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
-    public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
-    public int rifleType;//0空手 1步枪M4A1 2步枪AK47
-    public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4燃烧弹  5震撼弹  6飞刀
-    public int attackType;//-2步枪射击  -1手枪射击 0踢击 1挥砍
-
-    public int bondageType;//0绳子捆绑 1锁链捆绑
-
-
-    public void RandomSkin()
-    {
-        Girl_hairIndex = Random.Range(0, 3);
-
-        Girl_clothesIndex = Random.Range(0, 3);
-        Girl_glovesIndex = Random.Range(0, 2);
-
-        Girl_shoesIndex = Random.Range(0, 3);
-
-
-        switch (Random.Range(0, 3))
-        {
-            case 0:
-                Girl_underwearIndex = 0;
-                Girl_stockingsIndex = 0;
-                break;
-            case 1:
-                Girl_underwearIndex = 1;
-                Girl_stockingsIndex = 0;
-                break;
-            case 2:
-                Girl_underwearIndex = 2;
-                Girl_stockingsIndex = 2;
-                break;
-        }
-
-        Girl_hatIndex = Random.Range(0, 2);
-        Girl_maskIndex = 1;
-
-
-        Man_hairIndex = Random.Range(0, 3);
-        Man_clothesIndex = Random.Range(1, 3);
-
-
-        meleeType = Random.Range(1, 4);
-
-
-        pistolType = Random.Range(1, 4);
-        rifleType = Random.Range(1, 3);
-
-
-    }
-
-
-
-
-    public void RefreshPlayerSkin()
-    {
-        if (frameEvent == null) return;
-
-        frameEvent.ShowCurrentAll(
-            beltIndex,
-            hairIndex,
-            clothesIndex,
-            glovesIndex,
-            pantiesIndex,
-            shoesIndex,
-            skirtIndex,
-            stockingsIndex,
-            hatIndex,
-            maskIndex,
-
-            Girl_hairIndex,
-            Girl_clothesIndex,
-            Girl_glovesIndex,
-            Girl_underwearIndex,
-            Girl_shoesIndex,
-            Girl_stockingsIndex,
-            Girl_hatIndex,
-            Girl_maskIndex,
-
-            Man_hairIndex,
-            Man_clothesIndex,
-
-            meleeType,
-            pistolType,
-            rifleType,
-            throwType,
-
-            bondageType
-       );
-
-    }//更新外观
-
-
-    #endregion
 
 
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1095344900298063083}
   - component: {fileID: 4361433854631010927}
   - component: {fileID: 5627032404474252360}
+  - component: {fileID: 8604984392994296503}
   m_Layer: 0
   m_Name: RBQ
   m_TagString: Interactable
@@ -142,45 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4df23d594d332c418ea693ee2ffb927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 1
-  anim: {fileID: 1243679181446229204}
-  boundAnimation: Bondage_1
-  abuseAnimation: Bondage_1_Rape
-  waitingRescueAnimation: Bondage_1
+  state: 0
+  rbqController: {fileID: 8604984392994296503}
   enemyPrefab: {fileID: 5316470338597403596, guid: 891cb7b257ff62649839c3032cfce0ec, type: 3}
   enemySpawnPoint: {fileID: 7552958874915625084}
   detectDistance: 8
-  detectMask:
-    serializedVersion: 2
-    m_Bits: 8
-  detectPoint: {fileID: 0}
-  frameEvent: {fileID: 2181123867607644041}
-  beltIndex: 0
-  hairIndex: 0
-  clothesIndex: 0
-  glovesIndex: 0
-  pantiesIndex: 0
-  shoesIndex: 0
-  skirtIndex: 0
-  stockingsIndex: 0
-  hatIndex: 0
-  maskIndex: 0
-  Girl_hairIndex: 0
-  Girl_clothesIndex: 0
-  Girl_glovesIndex: 0
-  Girl_underwearIndex: 0
-  Girl_shoesIndex: 0
-  Girl_stockingsIndex: 0
-  Girl_hatIndex: 0
-  Girl_maskIndex: 0
-  Man_hairIndex: 0
-  Man_clothesIndex: 0
-  meleeType: 0
-  pistolType: 0
-  rifleType: 0
-  throwType: 0
-  attackType: 0
-  bondageType: 0
 --- !u!61 &5627032404474252360
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -227,6 +194,46 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 1.7538316}
   m_EdgeRadius: 0
+--- !u!114 &8604984392994296503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4171874034722223980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e622b0a0460514da91935d6a87ff90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 1243679181446229204}
+  frameEvent: {fileID: 2181123867607644041}
+  beltIndex: 0
+  hairIndex: 0
+  clothesIndex: 0
+  glovesIndex: 0
+  pantiesIndex: 0
+  shoesIndex: 0
+  skirtIndex: 0
+  stockingsIndex: 0
+  hatIndex: 0
+  maskIndex: 0
+  Girl_hairIndex: 0
+  Girl_clothesIndex: 0
+  Girl_glovesIndex: 0
+  Girl_underwearIndex: 0
+  Girl_shoesIndex: 0
+  Girl_stockingsIndex: 0
+  Girl_hatIndex: 0
+  Girl_maskIndex: 0
+  Man_hairIndex: 0
+  Man_clothesIndex: 0
+  meleeType: 0
+  pistolType: 0
+  rifleType: 0
+  throwType: 0
+  attackType: 0
+  bondageType: 0
 --- !u!1 &8712564255948717557
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyController: {fileID: 0}
   playerController: {fileID: 0}
-  rescueTarget: {fileID: 4361433854631010927}
+  rBQController: {fileID: 8604984392994296503}
   pickupPoint: {fileID: 0}
   power: 0
   scale: 0

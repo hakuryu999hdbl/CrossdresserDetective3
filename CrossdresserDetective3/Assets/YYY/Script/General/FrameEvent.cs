@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Spine;
+using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine.Unity;
-using Spine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class FrameEvent : MonoBehaviour
 {
@@ -374,7 +375,7 @@ public class FrameEvent : MonoBehaviour
 
     public PlayerController playerController;
 
-    public RescueTarget rescueTarget;
+    public RBQController rBQController;
 
     #region 吹灭炸弹
     public void SetOff()
@@ -927,39 +928,44 @@ public class FrameEvent : MonoBehaviour
 
     #endregion
 
-    public void SetPlayer_Bondage_1()
+
+
+    public void SetDeadBondage_Bondage_1()
     {
 
-        enemyController.clothesIndex = 10;
-        enemyController.shoesIndex = 10;
-
-        enemyController.RefreshPlayerSkin();
-
-    }//战败尸体调用
+        //赤裸的叶语嫣被捆绑
+        rBQController.clothesIndex = 10;
+        rBQController.shoesIndex = 10;
+        rBQController.bondageType = 0;
 
 
+        //男性小偷
+        //rBQController.Man_clothesIndex = 1;
+        //rBQController.Man_hairIndex = 2;
+
+
+        rBQController.RefreshPlayerSkin();
+
+    }//战败玩家原皮拘束
 
     public void SetRBQ_Bondage_1() 
     {
 
         //赤裸的叶语嫣被捆绑
-        rescueTarget.clothesIndex = 10;
-        rescueTarget.glovesIndex = 0;
-        rescueTarget.hatIndex = 0;
-        rescueTarget.maskIndex = 0;
-        rescueTarget.beltIndex = 0;
-        rescueTarget.stockingsIndex = 0;
-        rescueTarget.pantiesIndex = 0;
-        rescueTarget.shoesIndex = 10;
-        rescueTarget.skirtIndex = 0;
+        rBQController.clothesIndex = 10;
+        rBQController.glovesIndex = 0;
+        rBQController.hatIndex = 0;
+        rBQController.maskIndex = 0;
+        rBQController.beltIndex = 0;
+        rBQController.stockingsIndex = 0;
+        rBQController.pantiesIndex = 0;
+        rBQController.shoesIndex = 10;
+        rBQController.skirtIndex = 0;
+        rBQController.bondageType = 0;
 
 
-        //男性小偷
-        rescueTarget.Man_clothesIndex = 1;
-        rescueTarget.Man_hairIndex = 2;
+        rBQController.RefreshPlayerSkin();
 
-
-        rescueTarget.RefreshPlayerSkin();
-    }
+    }//救出模式失踪少女RBQ皮肤套入
 
 }

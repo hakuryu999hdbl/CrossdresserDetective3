@@ -55,6 +55,25 @@ public class Sign : MonoBehaviour
 
         if (signSprite != null && playerTrans != null)
             signSprite.transform.localScale = playerTrans.localScale/2;
+
+
+        // 防止目标隐藏、销毁或改变Tag后，E提示残留
+        if (targetItem != null)
+        {
+            MonoBehaviour targetBehaviour =
+                targetItem as MonoBehaviour;
+
+            bool targetInvalid =
+                targetBehaviour == null ||
+                !targetBehaviour.gameObject.activeInHierarchy ||
+                !targetBehaviour.CompareTag("Interactable");
+
+            if (targetInvalid)
+            {
+                ClearInteraction();
+            }
+        }
+
     }
 
     private void OnConfirm(InputAction.CallbackContext obj)
@@ -62,7 +81,23 @@ public class Sign : MonoBehaviour
 
         if (canPress && targetItem != null)
         {
+            if (!canPress || targetItem == null)
+                return;
+            IInteractable currentTarget = targetItem;
+
+
             targetItem.TriggerAction();
+
+            // 交互后检查目标是否已经失效、隐藏或取消交互Tag
+            MonoBehaviour targetBehaviour =
+                currentTarget as MonoBehaviour;
+
+            if (targetBehaviour == null ||
+                !targetBehaviour.gameObject.activeInHierarchy ||
+                !targetBehaviour.CompareTag("Interactable"))
+            {
+                ClearInteraction();
+            }
         }
     }
 
@@ -118,8 +153,22 @@ public class Sign : MonoBehaviour
     {
         if (other.CompareTag("Interactable"))
         {
-            canPress = false;
-            targetItem = null;
+            //canPress = false;
+            //targetItem = null;
+
+            ClearInteraction();
         }
     }
+
+
+    public void ClearInteraction()
+    {
+        canPress = false;
+        targetItem = null;
+
+        if (signRenderer != null)
+        {
+            signRenderer.enabled = false;
+        }
+    }//防止万一目标被消耗等，E残留
 }

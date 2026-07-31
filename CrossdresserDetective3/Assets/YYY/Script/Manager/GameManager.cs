@@ -80,10 +80,15 @@ public class GameManager : MonoBehaviour
 
         }
 
+
+
+
         //检测是不是调查任务
         Invoke(nameof(CheckClue), 0.1f);
         //检测是不是救出任务
         Invoke(nameof(CheckRescue),0.2f);
+        //检测是不是歼灭任务
+        Invoke(nameof(CheckEliminate), 0.3f);
     }
 
 
@@ -301,6 +306,7 @@ public class GameManager : MonoBehaviour
         exitDoor = door;
 
         winMode = WinMode.Escape;
+        UIManager.instance.escapeText.gameObject.SetActive(true);
     }
     public void PlayerEscapeWin()
     {
@@ -387,7 +393,7 @@ public class GameManager : MonoBehaviour
 
 
     //在玩家被击败后清理状态
-    public void ClearEnemiesForGameOver(EnemyController exceptEnemy = null)
+    public void ClearEnemiesForGameOver()
     {
         // 先关闭敌人生成器，防止黑幕后继续刷怪
         foreach (AreaEncounterController creator in enemyCreators)
@@ -406,14 +412,23 @@ public class GameManager : MonoBehaviour
             if (enemy == null)
                 continue;
 
-            if (enemy == exceptEnemy)
-                continue;
-
             enemy.gameObject.SetActive(false);
         }
 
         sceneEnemies.Clear();
     }
+
+
+    void CheckEliminate() 
+    {
+        if (winMode == WinMode.Eliminate) 
+        {
+            UIManager.instance.eliminateText.gameObject.SetActive(true);
+        }
+
+
+    }//检测如果没有别的任务，就是歼灭
+
     #endregion
 
 }

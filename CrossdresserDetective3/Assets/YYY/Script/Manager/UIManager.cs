@@ -1015,7 +1015,7 @@ public class UIManager : MonoBehaviour
         BlackScreen_FadeOut.SetActive(true);//再黑幕淡出
 
         // 隐藏并清理场景内敌人
-        GameManager.instance.ClearEnemiesForGameOver(DeadBody);
+        GameManager.instance.ClearEnemiesForGameOver();
 
 
         //隐藏玩家
@@ -1029,8 +1029,8 @@ public class UIManager : MonoBehaviour
         DeadBody.ReadCurrentGame(playerController);
 
         //尸体播放动画
-        DeadBody.frameEvent.SetPlayer_Bondage_1();//捆绑
-        DeadBody.SetEnemy_CatchYYY();
+        DeadBody.frameEvent.SetDeadBondage_Bondage_1();//捆绑
+        DeadBody.AbuseAnimation();
 
         // 等待玩家确认
         waitGameOverInput = true;
@@ -1041,7 +1041,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public Enemy_1 DeadBody;
+    public RBQController DeadBody;
 
 
     public GameObject Skip_GameOver;//跳过提示
@@ -1205,7 +1205,7 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// 生命值，体力值，弹药，武器，调查显示等UI
+    /// 生命值，体力值，弹药，武器，调查救出任务显示等UI
     /// </summary>
     #region
 
@@ -1302,6 +1302,7 @@ public class UIManager : MonoBehaviour
         rescueText.text = $"救出 {current}/{total}";
     }
 
+    public GameObject escapeText, eliminateText;
 
 
 
