@@ -109,6 +109,11 @@ public class Enemy_1 : EnemyController
     {
         checkArea.gameObject.SetActive(true);
 
+        //敌人的动画回归
+        anim.Play("Idle", 0, 0f);
+        anim.Update(0f);
+
+        patrolMode = EnemyPatrolMode.ContinuousPatrol;
 
     }//从过场动画恢复正常状态
 

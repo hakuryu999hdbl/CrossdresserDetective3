@@ -857,6 +857,10 @@ public class FrameEvent : MonoBehaviour
 
     public void SetPlayer_Clothes_01()
     {
+
+        playerController.isUsingStoryClothes = true;//不要记录衣服
+
+
         playerController.beltIndex = 0;
         playerController.clothesIndex = 10;
         playerController.glovesIndex = 0;
@@ -871,6 +875,9 @@ public class FrameEvent : MonoBehaviour
 
     public void SetPlayer_Clothes_02()
     {
+        playerController.isUsingStoryClothes = true;//不要记录衣服
+
+
         playerController.beltIndex = 0;
         playerController.clothesIndex = 0;
         playerController.glovesIndex = 0;
@@ -885,6 +892,9 @@ public class FrameEvent : MonoBehaviour
 
     public void SetPlayer_Clothes_03()
     {
+
+        playerController.isUsingStoryClothes = true;//不要记录衣服
+
         //Debug.Log("第一章衣物");
 
         playerController.beltIndex = 1;
@@ -937,6 +947,11 @@ public class FrameEvent : MonoBehaviour
         rBQController.clothesIndex = 10;
         rBQController.shoesIndex = 10;
         rBQController.bondageType = 0;
+
+
+        //裙子和内裤去掉
+        rBQController.skirtIndex = 0;
+        rBQController.pantiesIndex = 0;
 
 
         //男性小偷

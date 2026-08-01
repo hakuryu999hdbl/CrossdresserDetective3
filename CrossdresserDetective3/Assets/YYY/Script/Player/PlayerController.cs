@@ -641,8 +641,17 @@ public class PlayerController : MonoBehaviour
 
     }//换装口子
 
+
+    [Header("剧情临时服装")]
+    public bool isUsingStoryClothes;//如果我处于剧情关卡中，每次换装换武器，不会记录
+
+
+
     public void SaveCurrentGame()
     {
+        if (isUsingStoryClothes) { return; }
+
+
         SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
 
 

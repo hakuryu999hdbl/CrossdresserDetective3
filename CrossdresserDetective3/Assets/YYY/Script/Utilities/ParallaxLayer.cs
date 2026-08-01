@@ -1,39 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ParallaxLayer : MonoBehaviour
 {
-    Transform cameraTransform;
-    public float parallaxFactor = 0.5f;
+    [Header("拖入玩家或实际跟随目标")]
+    Transform followTarget;
 
-    private Vector3 startCameraPos;
+    [Range(0f, 1f)]
+    float parallaxFactor = 0.05f;
+
+    private Vector3 startTargetPos;
     private Vector3 startLayerPos;
 
-    void Start()
+    private void Start()
     {
-        if (cameraTransform == null)
-            cameraTransform = Camera.main.transform;
 
-        startCameraPos = cameraTransform.position;
+        followTarget = GameManager.instance.player.gameObject.transform;
+
+        if (followTarget == null)
+        {
+            Debug.LogError($"{name} 没有设置 followTarget");
+            enabled = false;
+            return;
+        }
+
+        startTargetPos = followTarget.position;
         startLayerPos = transform.position;
-
-        StartCoroutine(UpdateParallaxAfterCamera());
     }
 
-    IEnumerator UpdateParallaxAfterCamera()
+    private void LateUpdate()
     {
-        while (true)
-        {
-            yield return new WaitForEndOfFrame();
+        float deltaX = followTarget.position.x - startTargetPos.x;
 
-            float cameraDeltaX = cameraTransform.position.x - startCameraPos.x;
-
-            transform.position = new Vector3(
-                startLayerPos.x + cameraDeltaX * parallaxFactor,
-                startLayerPos.y,
-                startLayerPos.z
-            );
-        }
+        transform.position = new Vector3(
+            startLayerPos.x + deltaX * parallaxFactor,
+            startLayerPos.y,
+            startLayerPos.z
+        );
     }
 }
