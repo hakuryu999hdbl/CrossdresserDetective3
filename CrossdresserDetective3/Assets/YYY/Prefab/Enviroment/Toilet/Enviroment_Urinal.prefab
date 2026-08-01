@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4814067621290982250
+--- !u!1 &999993746702345689
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2782569406371261372}
-  - component: {fileID: 5513748361653897181}
-  - component: {fileID: 2712445833271906745}
-  - component: {fileID: 5023240601287267925}
+  - component: {fileID: 1516457419017630940}
+  - component: {fileID: 4931103625130524878}
+  - component: {fileID: 4540616057194174770}
+  - component: {fileID: 975362594961977152}
   m_Layer: 6
-  m_Name: Enviroment_Cabinet_01
+  m_Name: Enviroment_Urinal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2782569406371261372
+--- !u!4 &1516457419017630940
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814067621290982250}
+  m_GameObject: {fileID: 999993746702345689}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.004, y: -0.337, z: 0.8}
-  m_LocalScale: {x: 0.19, y: 0.19, z: 0.19}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.88}
+  m_LocalScale: {x: 0.119780436, y: 0.119780436, z: 0.119780436}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5513748361653897181
+--- !u!212 &4931103625130524878
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814067621290982250}
+  m_GameObject: {fileID: 999993746702345689}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: -1434526869
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e6d1a88f9fb4902488640d8b20716338, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b38f648a0180b1140adbb6a607d4c5ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,13 +88,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2712445833271906745
+--- !u!61 &4540616057194174770
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814067621290982250}
+  m_GameObject: {fileID: 999993746702345689}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -122,34 +122,34 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.011947393, y: -0.01560545}
+  m_Offset: {x: 0, y: 0.13398695}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.47, y: 6.97}
+    oldSize: {x: 10.24, y: 15.36}
     newSize: {x: 9, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.5936413, y: 6.9037085}
+  m_Size: {x: 6.4699287, y: 15.634969}
   m_EdgeRadius: 0
---- !u!50 &5023240601287267925
+--- !u!50 &975362594961977152
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814067621290982250}
+  m_GameObject: {fileID: 999993746702345689}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -159,5 +159,5 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
