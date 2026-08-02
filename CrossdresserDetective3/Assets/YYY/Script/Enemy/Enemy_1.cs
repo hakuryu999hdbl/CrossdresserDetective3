@@ -40,7 +40,7 @@ public class Enemy_1 : EnemyController
 
         if (useChargeSkill)
         {
-            TransitionToState(chargeSkillState);
+            TransitionToState(chargeSkillState);//冲刺型敌人
         }
         else 
         {
