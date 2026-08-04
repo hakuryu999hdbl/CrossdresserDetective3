@@ -1,23 +1,23 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class RescueTarget : MonoBehaviour, IInteractable
 {
     public enum RescueState
     {
-        Bound,          // ÒÑ¾­±»¹ò°ó¡¢µõ°ó£¬¿ÉÒÔÖ±½Ó¾È
-        BeingAbused,    // ÕıÔÚ±»µĞÈËÇÖ·¸»ò±Ş´ò
-        Fighting,       // ÒÑÉú³ÉµĞÈË£¬µÈ´ıµĞÈËËÀÍö
-        Rescued         // ÒÑ»ñ¾È
+        Bound,          //æ‹˜æŸå¾ªç¯çŠ¶æ€
+        BeingAbused,    //è¢«æ•Œäººå‡Œè¾±çŠ¶æ€
+        Fighting,       //æ‹˜æŸå¾ªç¯çŠ¶æ€ï¼Œä½†æ˜¯æ•Œäººæ²¡è¢«å‡»è´¥æ‰€ä»¥ä¸èƒ½æ‹¯æ•‘
+        Rescued         //æ‹˜æŸå¾ªç¯çŠ¶æ€ï¼Œæ•Œäººè¢«å‡»è´¥å¯ä»¥è§£æ•‘
     }
 
-    [Header("µ±Ç°×´Ì¬")]
+    [Header("ï½µï½±ï¾‡ï½°ï¾—ï½´ï¾Œï½¬")]
     public RescueState state = RescueState.Bound;
     public RBQController rbqController;
 
 
-    [Header("ÊØÎÀµĞÈË")]
-    public GameObject enemyPrefab;//ÔİÊ±Ö»ÓĞÄĞĞÔEnemy_1
+    [Header("ï¾Šï¾˜ï¾ï¾€ï½µï¾ï¾ˆï¾‹")]
+    public GameObject enemyPrefab;//ç›®å‰æš‚æ—¶å…¨ä½“Enemy_1
     public Transform enemySpawnPoint;
 
     private EnemyController spawnedEnemy;
@@ -31,11 +31,11 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        RegisterTarget();//¸æËßGameManagerµ±Ç°Îª¾È³öÄ£Ê½
-        RefreshAnimation();//Ëæ»ú¾ĞÊø¡¢µ÷½ÌÖĞ²¢¸æËßrbqController
+        RegisterTarget();//å‘GameManagerç™»è®°è¿™æ˜¯æ•‘å‡ºä»»åŠ¡
+        RefreshAnimation();//éšæœºæ‹˜æŸè¿˜æ˜¯å‡Œè¾±ï¼Œå‘ŠçŸ¥rbqController
 
 
-        // ÕıÔÚÊÜÈèÊ±²»ÄÜÖ±½Ó°´E
+        //å¦‚æœæ˜¯æ‹˜æŸå‡Œè¾±çŠ¶æ€åˆå§‹ä¸èƒ½è¢«æ•‘
         if (state == RescueState.BeingAbused)
         {
             gameObject.tag = "Untagged";
@@ -51,7 +51,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
         registered = true;
 
         GameManager.instance.RegisterRescueTarget();
-    }//¸æËßGameManagerµ±Ç°Îª¾È³öÄ£Ê½
+    }//å‘GameManagerç™»è®°è¿™æ˜¯æ•‘å‡ºä»»åŠ¡
 
     private void RefreshAnimation()
     {
@@ -73,7 +73,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
                 break;
 
             case RescueState.BeingAbused:
-                rbqController.AbuseAnimation();
+                rbqController.AbuseAnimation();//å±€å†…å¤±è¸ªå°‘å¥³å…¥å£
                 break;
 
             case RescueState.Fighting:
@@ -93,33 +93,30 @@ public class RescueTarget : MonoBehaviour, IInteractable
                 break;
 
             case RescueState.BeingAbused:
-                // ÕıÔÚÊÜÈè×´Ì¬ÓÉÍæ¼Ò½Ó½ü×Ô¶¯´¥·¢µĞÈË
+                // åœ¨å‡Œè¾±æœŸé—´
                 break;
 
             case RescueState.Fighting:
             case RescueState.Rescued:
 
                 AudioManager.Instance.PlayFX(AudioManager.Instance.SE_falldown);
-                // µ±Ç°²»ÄÜ¼ÌĞø½»»¥
+                // ä¸èƒ½è¢«æ•‘å£°
                 break;
         }
-    }//°´ÏÂEÖ´ĞĞ½»»¥µÄÎ»ÖÃ
+    }//æ¯å½“Eé”®æŒ‰ä¸‹çš„æ—¶å€™
 
 
     private void StartRescueBattle()
     {
         if (enemyPrefab == null)
         {
-            Debug.LogWarning($"{name} Ã»ÓĞÉèÖÃ¾ÈÔ®µĞÈËPrefab¡£");
-
-            // Ã»ÓĞµĞÈËÊ±£¬Ö±½Ó±ä³É¿É¾È×´Ì¬
             BecomeRescueable();
             return;
         }
 
         state = RescueState.Fighting;
 
-        // Õ½¶·ÖĞÔİÊ±È¡Ïû½»»¥ÌáÊ¾
+        //å˜ä¸ºä¸èƒ½è§£æ•‘çŠ¶æ€
         gameObject.tag = "Untagged";
 
         Vector3 spawnPosition =
@@ -135,7 +132,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
         spawnedEnemy = enemyObject.GetComponent<EnemyController>();
 
-        // ÈÃĞÂÉú³ÉµÄµĞÈËÁ¢¼´³¯ÏòÍæ¼Ò
+        // æ•Œäººæœå‘ç©å®¶
         float dir = GameManager.instance.player.transform.position.x > enemyObject.transform.position.x ? 1f : -1f;
 
         Vector3 scale = enemyObject.transform.localScale;
@@ -148,17 +145,17 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
 
 
-        //²¥·ÅÃ»ÓĞµĞÈËµÄÒ»°ã¾ĞÊø¶¯»­
-        rbqController.BoundAnimation();
+    
+        rbqController.BoundAnimation();    //æ•Œäººç¦»å¼€ã€‚å¤±è¸ªå°‘å¥³å˜æˆæ‹˜æŸ
 
 
         StartCoroutine(WaitForEnemyDead());
-    }//²úÉúµĞÈË
+    }//äº§ç”Ÿæ•Œäºº
 
 
     void SetEnemySkin()
     {
-        //½«ÈËÖÊÆ¤·ô´úÈëµĞÈË
+        //å°†çš®è‚¤å¸¦å…¥äº§ç”Ÿçš„æ•Œäººèº«ä¸Š
         spawnedEnemy.Man_clothesIndex = rbqController.Man_clothesIndex;
         spawnedEnemy.Man_hairIndex = rbqController.Man_hairIndex;
         spawnedEnemy.RefreshPlayerSkin();
@@ -179,9 +176,9 @@ public class RescueTarget : MonoBehaviour, IInteractable
     {
         state = RescueState.Bound;
 
-        // »Ö¸´E¼ü½»»¥
+        //å˜æˆå¯äº¤äº’
         gameObject.tag = interactableTag;
-    }//±ä³ÉÄÜ½»»¥×´Ì¬
+    }
 
     private void Rescue()
     {
@@ -190,20 +187,21 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
         state = RescueState.Rescued;
 
-        // ·ÀÖ¹Á¬Ğø´¥·¢
+        //ä¸å¯äº¤äº’
         gameObject.tag = "Untagged";
 
         GameManager.instance.CompleteRescue();
 
-        // Ä¿Ç°ÏÈÖ±½ÓÏûÊ§
+        // æœªæ¥æ›´æ”¹åˆ«çš„çŠ¶æ€
         gameObject.SetActive(false);
-    }//¾È³öÊ±´¥·¢
+    }//æ•‘å‡º
 
 
 
 
-    [Header("×Ô¶¯·¢ÏÖÍæ¼Ò")]
-    public float detectDistance = 5f;
+    [Header("æ•Œäººè§¦å‘èŒƒå›´")]
+    public float detectDistanceX = 5f;
+    public float maxYDifference = 2f;
 
     private bool battleTriggered;
 
@@ -223,10 +221,16 @@ public class RescueTarget : MonoBehaviour, IInteractable
         if (player == null || player.isDead)
             return;
 
-        if (Vector2.Distance(
-                transform.position,
-                player.transform.position)
-            <= detectDistance)
+        float xDistance = Mathf.Abs(
+      player.transform.position.x - transform.position.x
+  );
+
+        float yDistance = Mathf.Abs(
+            player.transform.position.y - transform.position.y
+        );
+
+        if (xDistance <= detectDistanceX &&
+            yDistance <= maxYDifference)
         {
             battleTriggered = true;
             StartRescueBattle();

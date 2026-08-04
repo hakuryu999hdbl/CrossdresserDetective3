@@ -963,6 +963,31 @@ public class FrameEvent : MonoBehaviour
 
     }//战败玩家原皮拘束
 
+    public void SetDeadBondage_Bondage_2()
+    {
+
+        //赤裸的叶语嫣被捆绑
+        rBQController.clothesIndex = 10;
+        //rBQController.shoesIndex = 10;
+        rBQController.bondageType = 0;
+
+
+        //裙子和内裤去掉
+        rBQController.skirtIndex = 0;
+        rBQController.pantiesIndex = 0;
+
+
+        //男性小偷
+        //rBQController.Man_clothesIndex = 1;
+        //rBQController.Man_hairIndex = 2;
+
+
+        rBQController.RefreshPlayerSkin();
+
+    }//战败玩家原皮拘束,但是不绑腿
+
+
+
     public void SetRBQ_Bondage_1() 
     {
 

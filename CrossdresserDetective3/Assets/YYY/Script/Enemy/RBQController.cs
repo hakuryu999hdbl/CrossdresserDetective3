@@ -1,21 +1,28 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static RescueTarget;
 
 public class RBQController : MonoBehaviour
 {
+    private void Awake()
+    {
+        currentAnimationType = Random.Range(0, 2);//ç©å®¶éšæœºåŠ¨ç”»
+    }//è¿™ä¸ªå¥½åƒåŠ¨ç”»å¾ˆæ—©å°±è¢«è§¦å‘åº”ï¼Œæ‰€ä»¥éšæœºéœ€è¦æ›´æ—©
+
 
     private void Start()
     {
 
-        RandomSkin();//ÓÃÓÚµĞÈËËæ»ú
-        // RefreshPlayerSkin();
+        RandomSkin();
+
         frameEvent.SetRBQ_Bondage_1();
 
 
         RandomizeZ();
 
+
+       
     }
 
 
@@ -24,46 +31,82 @@ public class RBQController : MonoBehaviour
 
 
     /// <summary>
-    /// ³é²åÔË¶¯
+    /// åŠ¨ç”»å¾ªç¯
     /// </summary>
     #region
+
+
+
+    [Header("å½“å‰åŠ¨ç”»ç³»")]
+    [SerializeField]
+    private int currentAnimationType =1;//0 Rapeç³»   1 Abuseç³»
+
+
+
+
+
+
 
     private Coroutine abuseCoroutine;
 
 
-    [Header("Spine¶¯»­¿ØÖÆ")]
+    [Header("SpineåŠ¨ç”»å™¨æ§åˆ¶")]
     public Animator anim;
 
 
-    //µ¥ÈË¾ĞÊøÕõÔú
     public void BoundAnimation()
     {
         StopAbuseAnimation();
 
-        anim.Play("Man_RapeYYY_7", 0, 0f);
+
+        switch (currentAnimationType) 
+        {
+            case 0:
+                anim.Play("Man_RapeYYY_7", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//å…¨èº«æ†ç»‘
+                break;
+
+            case 1:
+                anim.Play("Man_AbuseYYY_8", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//å…¨èº«æ†ç»‘
+                break;
+        }
+       
         anim.Update(0f);
 
 
-    }//Î´À´ÀàĞÍ·á¸»ºó±ä»»
+    }//æ‹˜æŸå¾ªç¯
 
 
-
-
-    //±»¾ĞÊøÇ¿¼éµ÷½ÌÖĞ
     public void AbuseAnimation()
     {
-        // ·ÀÖ¹ÖØ¸´¿ªÆô¶à¸öÑ­»·
+        StopAbuseAnimation();
+
         if (abuseCoroutine != null)
         {
             StopCoroutine(abuseCoroutine);
         }
 
-        anim.Play("Man_RapeYYY_1", 0, 0f);
+
+
+        switch (currentAnimationType)
+        {
+            case 0:
+                anim.Play("Man_RapeYYY_1", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//å…¨èº«æ†ç»‘
+                break;
+
+            case 1:
+                anim.Play("Man_AbuseYYY_1", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_2();//å…¨èº«æ†ç»‘ï¼Œä¸ç»‘è…¿
+                break;
+        }
+
         anim.Update(0f);
 
         abuseCoroutine = StartCoroutine(AbuseLoop());
 
-    }//Î´À´ÀàĞÍ·á¸»ºó±ä»»
+    }//å¸¦æ•Œäººå¼ºå¥¸å¾ªç¯
 
 
 
@@ -71,32 +114,21 @@ public class RBQController : MonoBehaviour
 
     private IEnumerator AbuseLoop()
     {
-        // ´ÓµÚÒ»¶Î¿ªÊ¼
-        anim.Play("Man_RapeYYY_1", 0, 0f);
-        anim.Update(0f);
+
 
         while (true)
         {
-            // 1 / 2 ³ÖĞø10Ãë
-            yield return new WaitForSeconds(10f);
+            // 1 / 2
+            yield return new WaitForSeconds(15f);
 
             anim.SetTrigger("Next");
 
-            // µÈ´ıAnimatorÇĞ»»Íê³É£¬·ÀÖ¹Á¬Ğø³ÔµôTrigger
-            yield return new WaitUntil(
-                () => !anim.IsInTransition(0)
-            );
-
-            // 3 / 4 ³ÖĞø10Ãë
-            yield return new WaitForSeconds(10f);
-
-            anim.SetTrigger("Next");
 
             yield return new WaitUntil(
                 () => !anim.IsInTransition(0)
             );
 
-            // 5 / 6 ³ÖĞø10Ãë
+            // 3 / 4
             yield return new WaitForSeconds(10f);
 
             anim.SetTrigger("Next");
@@ -105,8 +137,15 @@ public class RBQController : MonoBehaviour
                 () => !anim.IsInTransition(0)
             );
 
-            // AnimatorÖĞµÄ6 ¡ú 1Ò²ÓÉNextÍê³É
-            // È»ºówhileÖØĞÂ¿ªÊ¼
+            // 5 / 6 
+            yield return new WaitForSeconds(10f);
+
+            anim.SetTrigger("Next");
+
+            yield return new WaitUntil(
+                () => !anim.IsInTransition(0)
+            );
+
         }
     }
     public void StopAbuseAnimation()
@@ -134,7 +173,9 @@ public class RBQController : MonoBehaviour
 
         RefreshPlayerSkin();
 
-    }//Ê¬Ìå¶ÁÈ¡Íæ¼ÒÆ¤·ô
+    }//å°¸ä½“è¯»å–ç©å®¶
+
+
 
 
     #endregion
@@ -157,10 +198,10 @@ public class RBQController : MonoBehaviour
 
 
     /// <summary>
-    /// SpineÍâ¹Û
+    /// Spineå¤–è§‚
     /// </summary>
     #region
-    [Header("SpineÍâ¹Û")]
+    [Header("Spineå¤–è§‚")]
     public FrameEvent frameEvent;
     public int beltIndex;
     public int hairIndex;
@@ -186,14 +227,14 @@ public class RBQController : MonoBehaviour
     public int Man_hairIndex;
     public int Man_clothesIndex;
 
-    [Header("ÎäÆ÷Óë¹¥»÷·½Ê½")]
-    public int meleeType;//0¿ÕÊÖ 1Ø°Ê× 2ÎäÊ¿µ¶ 3Äá²´¶û¾üµ¶
-    public int pistolType;//0¿ÕÊÖ 1¿Â¶ûÌØM1911 2É³Ó¥ÊÖÇ¹ 3¸ñÂå¿ËÊÖÇ¹
-    public int rifleType;//0¿ÕÊÖ 1²½Ç¹M4A1 2²½Ç¹AK47
-    public int throwType;//0¿ÕÊÖ 1ÊÖÁñµ¯ 2ÑÌÎíµ¯ 3ÉÁ¹âµ¯ 4È¼ÉÕµ¯  5Õğº³µ¯  6·Éµ¶
-    public int attackType;//-2²½Ç¹Éä»÷  -1ÊÖÇ¹Éä»÷ 0Ìß»÷ 1»Ó¿³
+    [Header("æ­¦å™¨ä¸æ”»å‡»æ–¹å¼")]
+    public int meleeType;//0ç©ºæ‰‹ 1åŒ•é¦– 2æ­¦å£«åˆ€ 3å°¼æ³Šå°”å†›åˆ€
+    public int pistolType;//0ç©ºæ‰‹ 1æŸ¯å°”ç‰¹M1911 2æ²™é¹°æ‰‹æª 3æ ¼æ´›å…‹æ‰‹æª
+    public int rifleType;//0ç©ºæ‰‹ 1æ­¥æªM4A1 2æ­¥æªAK47
+    public int throwType;//0ç©ºæ‰‹ 1æ‰‹æ¦´å¼¹ 2çƒŸé›¾å¼¹ 3é—ªå…‰å¼¹ 4ç‡ƒçƒ§å¼¹  5éœ‡æ’¼å¼¹  6é£åˆ€
+    public int attackType;//-2æ­¥æªå°„å‡»  -1æ‰‹æªå°„å‡» 0è¸¢å‡» 1æŒ¥ç 
 
-    public int bondageType;//0Éş×ÓÀ¦°ó 1ËøÁ´À¦°ó
+    public int bondageType;//0ç»³å­æ†ç»‘ 1é”é“¾æ†ç»‘
 
 
     public void RandomSkin()
@@ -278,7 +319,7 @@ public class RBQController : MonoBehaviour
             bondageType
        );
 
-    }//¸üĞÂÍâ¹Û
+    }//æ›´æ–°å¤–è§‚
 
 
     #endregion

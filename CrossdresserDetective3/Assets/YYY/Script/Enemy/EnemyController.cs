@@ -1213,9 +1213,9 @@ public class EnemyController : MonoBehaviour
 
     public void RandomSkin()
     {
-        Girl_hairIndex = Random.Range(0, 3);
+        Girl_hairIndex = Random.Range(3, 4);
 
-        Girl_clothesIndex = Random.Range(0, 3);
+        Girl_clothesIndex = Random.Range(0, 6);
         Girl_glovesIndex = Random.Range(0, 2);
 
         Girl_shoesIndex = Random.Range(0, 3);

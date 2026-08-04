@@ -1029,8 +1029,7 @@ public class UIManager : MonoBehaviour
         DeadBody.ReadCurrentGame(playerController);
 
         //尸体播放动画
-        DeadBody.frameEvent.SetDeadBondage_Bondage_1();//捆绑
-        DeadBody.AbuseAnimation();
+        DeadBody.AbuseAnimation();//战败入口
 
         // 等待玩家确认
         waitGameOverInput = true;
