@@ -914,7 +914,7 @@ public class EnemyController : MonoBehaviour
     public void OnCatchMissCheck()
     {
         anim.ResetTrigger("attack");
-        anim.Play("Girl_Run", attackLayer, 0f);
+        anim.Play("Run", attackLayer, 0f);
     }//万一没抓到，打断当前动画W
 
 

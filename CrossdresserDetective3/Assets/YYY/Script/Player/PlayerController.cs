@@ -1426,7 +1426,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("投掷物数量")]
     public int throwCount = 5;
-    public int maxThrowCount = 5;
+    public int maxThrowCount = 99;//投掷物上限
 
     void CheckThrow()
     {

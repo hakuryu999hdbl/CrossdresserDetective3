@@ -7,6 +7,9 @@ public class EnemyCheckArea : MonoBehaviour
     [Header("传递消息")]
     public EnemyController enemy;
 
+    [Header("特殊视野透明度")]
+    public bool alwaysTransparent = false;
+
     [Header("视野颜色")]
     public Color patrolColor = Color.green;
     public Color searchColor = Color.yellow;
@@ -24,6 +27,20 @@ public class EnemyCheckArea : MonoBehaviour
 
     private void Awake()
     {
+        if (alwaysTransparent)
+        {
+        
+            patrolColor = hitColor;
+            searchColor = hitColor;
+            attackColor = hitColor;
+            chargeSkillColor = hitColor;
+            aimThrowSkillColor = hitColor;
+            blockColor = hitColor;
+            jumpStrikeSkillColor = hitColor;
+        
+        }//特殊敌人隐藏视野
+
+
         meshRenderer = GetComponent<MeshRenderer>();
 
         if (meshRenderer != null)
@@ -32,6 +49,8 @@ public class EnemyCheckArea : MonoBehaviour
             targetColor = patrolColor;
             fovMaterial.color = Color.green;
         }
+    
+
     }
 
     private void Update()

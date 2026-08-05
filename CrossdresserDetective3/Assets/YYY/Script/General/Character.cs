@@ -136,9 +136,19 @@ public class Character : MonoBehaviour, IDamageable
 
     }
 
- 
 
 
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+
+        //传输Character过去
+        OnHealthChange?.Invoke(this);
+
+        UIManager.instance.GreenScreen.SetActive(true); // 玩家回血绿屏幕
+
+
+    }//非Attack系的直接回血端口
 
 
     void TriggerInvulnerable() 

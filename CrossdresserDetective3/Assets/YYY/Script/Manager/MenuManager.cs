@@ -171,6 +171,13 @@ public class MenuManager : MonoBehaviour
         Application.OpenURL(Application.persistentDataPath);
     }//打开存档位置文件夹
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            OpenSaveURL();
+        }
+    }
 
     public void Delete_All()
     {

@@ -857,6 +857,7 @@ public class UIManager : MonoBehaviour
     #region
     [Header("屏幕常驻显示")]
     public GameObject RedScreen;
+    public GameObject GreenScreen;
     public GameObject WhiteScreen;
     public GameObject ShockScreen;
     public GameObject BlackScreen_FadeIn;
