@@ -93,7 +93,15 @@ public class TimelineTrigger : MonoBehaviour
             UIManager.instance.UnregisterTimeline(this);
         // ==============================
 
-        RestorePlayer();
+        if (!endsWithGameOver)
+        {
+            RestorePlayer();
+        }
+        else
+        {
+            // 失败结局不恢复玩家控制
+            player = null;
+        }
     }
 
     private void RestorePlayer()
@@ -164,6 +172,10 @@ public class TimelineTrigger : MonoBehaviour
 
     public void SetInit() 
     {
+
+        GameManager.instance.player.transform.position = PlayerSlot.transform.position;//所有初始统一进入位置，防止跳着在空中进入过场动画
+
+
         switch (Chapter) 
         {
 
@@ -175,6 +187,9 @@ public class TimelineTrigger : MonoBehaviour
                 break;
             case "Chapter_01_3":
                 UIManager.instance.Init_Chapter_01_3();
+                break;
+            case "Chapter_01_4":
+                UIManager.instance.Init_Chapter_01_4();
                 break;
         }
     }
@@ -210,6 +225,11 @@ public class TimelineTrigger : MonoBehaviour
         GameManager.instance.player.playerAnimation.PlayUndressing();
     }
 
+    public void SetPlayerAnim_SelfBondage()
+    {
+        GameManager.instance.player.playerAnimation.PlaySelfBondage();
+    }
+
     public void SetPlayerAnim_Walking()
     {
         GameManager.instance.player.playerAnimation.PlayWalking();
@@ -235,6 +255,14 @@ public class TimelineTrigger : MonoBehaviour
     {
         GameManager.instance.player.playerAnimation.SetPlayer_Turn();
     }
+
+
+    public void SetPlayer_Next()
+    {
+        GameManager.instance.player.playerAnimation.SetPlayer_Next();
+    }
+
+
 
     public GameObject PlayerSlot;
     public void SetPlayerToSlot() 
@@ -302,7 +330,20 @@ public class TimelineTrigger : MonoBehaviour
     }//进入拘束状态
 
 
+
+
+
     #endregion
 
 
+    private bool endsWithGameOver;
+    public void SetPlayer_BondageDie()
+    {
+        endsWithGameOver = true;
+
+
+        if (UIManager.instance != null)
+            UIManager.instance.CutsceneGameOverUI();
+
+    }//拘束逃脱失败结局
 }

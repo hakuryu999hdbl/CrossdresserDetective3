@@ -85,7 +85,12 @@ public class Enemy_4 : EnemyController
             return false;
         }
 
-       
+        // 已经处于防御或反击过程
+        // 只扣格挡值，不要重新进入BlockState、不要重播动画
+        if (isBlocking || isCountering)
+        {
+            return true;
+        }
 
         TransitionToState(blockState);
         return true;
@@ -175,6 +180,9 @@ public class Enemy_4 : EnemyController
         if (isDead )
             return;
 
+        if (isCountering)
+            return;
+
         rb.velocity = Vector2.zero;
 
         isBlocking = false;
@@ -207,5 +215,24 @@ public class Enemy_4 : EnemyController
         {
             TransitionToState(patrolState);
         }
+    }
+
+
+    public override void OnDie()
+    {
+        if (isDead)
+            return;
+
+        // 先隐藏格挡UI
+        if (blockBarRoot != null)
+        {
+            blockBarRoot.SetActive(false);
+        }
+
+        isBlocking = false;
+        isCountering = false;
+
+        // 再执行父类死亡流程
+        base.OnDie();
     }
 }

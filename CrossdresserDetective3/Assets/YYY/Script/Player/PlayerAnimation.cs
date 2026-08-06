@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -20,6 +21,8 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerController.isInCutscene)
+            return;//只要位于过场动画中，关闭自由触发
 
 
         anim.SetFloat("velocityX", Mathf.Abs(playerController.rb.velocity.x));//每帧检测横向速度绝对值
@@ -69,6 +72,15 @@ public class PlayerAnimation : MonoBehaviour
 
     public void EnterCutsceneIdle()
     {
+
+        // 清除可能残留的动作
+        anim.ResetTrigger("attack");
+        anim.ResetTrigger("hurt");
+        anim.ResetTrigger("reload");
+        anim.ResetTrigger("throw");
+        anim.ResetTrigger("airKick");
+
+
         // 清理移动参数
         anim.SetFloat("velocityX", 0f);
         anim.SetFloat("velocityY", 0f);
@@ -77,8 +89,11 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("isCrouch", false);
         anim.SetBool("isGround", true);
 
-        // 根据你动画器里的实际参数补充
+        // 强制伪装成地面静止状态
         anim.SetBool("isAttack", false);
+        anim.SetBool("isSlide", false);
+        anim.SetBool("onWall", false);
+        anim.SetBool("isWallCling", false);
 
         // 强制进入Idle
         anim.Play("Idle", 0, 0f);
@@ -144,6 +159,13 @@ public class PlayerAnimation : MonoBehaviour
         anim.Update(0f);
     }
 
+    public void PlaySelfBondage()
+    {
+        anim.Play("Story_SelfBondage_1", 0, 0f);
+        anim.Update(0f);
+    }
+
+
     public void PlayWalking()
     {
         anim.Play("Story_Walk", 0, 0f);
@@ -178,7 +200,10 @@ public class PlayerAnimation : MonoBehaviour
          );
     }
 
-
+    public void SetPlayer_Next()
+    {
+        anim.SetTrigger("Next");
+    }
 
 
 

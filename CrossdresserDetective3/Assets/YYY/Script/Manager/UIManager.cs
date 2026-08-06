@@ -887,6 +887,7 @@ public class UIManager : MonoBehaviour
     public List<GameObject> Chapter_01_1 = new List<GameObject>();
     public List<GameObject> Chapter_01_2 = new List<GameObject>();
     public List<GameObject> Chapter_01_3 = new List<GameObject>();
+    public List<GameObject> Chapter_01_4 = new List<GameObject>();
 
     List<GameObject> currentList;
 
@@ -910,6 +911,11 @@ public class UIManager : MonoBehaviour
         currentList = Chapter_01_3;
     }//填充章节台词
 
+    public void Init_Chapter_01_4()
+    {
+        currentIndex = 0;
+        currentList = Chapter_01_4;
+    }//填充章节台词
 
     public void ShowNext()
     {
@@ -1189,8 +1195,38 @@ public class UIManager : MonoBehaviour
     #endregion
 
 
+    /// <summary>
+    /// 过场动画结束后，直接进入失败结算。
+    /// 不播放普通战败尸体演出。
+    /// </summary>
+    #region
+    public void CutsceneGameOverUI()
+    {
+        if (isResultShowing)
+            return;
+
+        isResultShowing = true;
+        waitGameOverInput = false;
+
+        // 防止角色和场景继续活动
+        playerController.DisableGameplayInput();
+        // 关闭过场台词、上下黑边
+        UI_Cutscene.SetActive(false);
+        UI_All.SetActive(false);
+
+        BlackScreen_FadeOut.SetActive(true);
 
 
+        gameOverPanel.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(GameOverfirstSelected);
+
+ 
+    }
+
+  
+    #endregion
 
 
 

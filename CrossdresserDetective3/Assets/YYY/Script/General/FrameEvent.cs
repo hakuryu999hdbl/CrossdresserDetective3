@@ -853,7 +853,21 @@ public class FrameEvent : MonoBehaviour
        
     }
 
-  
+
+    public void Bondage()
+    {
+
+        playerController.beltIndex = 0;
+        playerController.clothesIndex = 10;
+        playerController.shoesIndex = 10;
+        playerController.bondageType = 0;
+        playerController.pantiesIndex = 0;
+
+        playerController.RefreshPlayerSkin();
+    }
+
+
+
 
     public void SetPlayer_Clothes_01()
     {

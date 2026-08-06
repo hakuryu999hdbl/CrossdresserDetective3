@@ -1467,8 +1467,11 @@ public class EnemyController : MonoBehaviour
 
 
 
-    public void OnDie()
+    public virtual void OnDie()
     {
+        if (isDead)
+            return;
+
 
         PlayBloodEffect();//不知道为啥死亡有些时候血特效出不来就先这样吧
 
