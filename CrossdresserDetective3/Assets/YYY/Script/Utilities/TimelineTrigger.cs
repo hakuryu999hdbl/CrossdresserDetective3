@@ -142,7 +142,7 @@ public class TimelineTrigger : MonoBehaviour
         Invoke(nameof(SetFadeOutOver), 0.1f);
     }
 
-    void SetFadeOutOver() 
+    void SetFadeOutOver()
     {
         UIManager.instance.BlackScreen_FadeIn.SetActive(false);
     }
@@ -170,13 +170,13 @@ public class TimelineTrigger : MonoBehaviour
     [Header("TimeLine中端帧事件触发")]
     public string Chapter;
 
-    public void SetInit() 
+    public void SetInit()
     {
 
         GameManager.instance.player.transform.position = PlayerSlot.transform.position;//所有初始统一进入位置，防止跳着在空中进入过场动画
 
 
-        switch (Chapter) 
+        switch (Chapter)
         {
 
             case "Chapter_01_1":
@@ -196,7 +196,7 @@ public class TimelineTrigger : MonoBehaviour
 
 
 
-    public void SetBlackScreen_FadeIn() 
+    public void SetBlackScreen_FadeIn()
     {
         UIManager.instance.BlackScreen_FadeIn.SetActive(true);
     }
@@ -204,18 +204,22 @@ public class TimelineTrigger : MonoBehaviour
     {
         UIManager.instance.BlackScreen_FadeOut.SetActive(true);
     }
-    public void ShowText() 
+    public void ShowText()
     {
         UIManager.instance.ShowNext();
     }
 
+    public void SetMissionUI()
+    {
+        GameManager.instance.ShowMissionUI();
+    }//过场动画的导入
 
 
 
     #region 玩家控制
 
-  
-    public void SetPlayerAnim_Washing() 
+
+    public void SetPlayerAnim_Washing()
     {
         GameManager.instance.player.playerAnimation.PlayWashing();
     }
@@ -251,7 +255,7 @@ public class TimelineTrigger : MonoBehaviour
     }
 
 
-    public void SetPlayer_Turn() 
+    public void SetPlayer_Turn()
     {
         GameManager.instance.player.playerAnimation.SetPlayer_Turn();
     }
@@ -265,7 +269,7 @@ public class TimelineTrigger : MonoBehaviour
 
 
     public GameObject PlayerSlot;
-    public void SetPlayerToSlot() 
+    public void SetPlayerToSlot()
     {
         // 1. 将玩家的父级设置为 PlayerSlot 的 transform
         GameManager.instance.player.transform.SetParent(PlayerSlot.transform);
@@ -305,7 +309,7 @@ public class TimelineTrigger : MonoBehaviour
 
 
 
-    public void SetPlayer_Clothes_01() 
+    public void SetPlayer_Clothes_01()
     {
         GameManager.instance.player.frameEvent.SetPlayer_Clothes_01();
     }//主角赤裸绳子捆绑状态
@@ -341,9 +345,10 @@ public class TimelineTrigger : MonoBehaviour
     {
         endsWithGameOver = true;
 
+        UIManager.instance.ResultNumber = 2;
 
-        if (UIManager.instance != null)
-            UIManager.instance.CutsceneGameOverUI();
+
+        UIManager.instance.CutsceneGameOverUI();
 
     }//拘束逃脱失败结局
 }

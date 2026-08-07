@@ -11,12 +11,12 @@ public class RescueTarget : MonoBehaviour, IInteractable
         Rescued         //拘束循环状态，敌人被击败可以解救
     }
 
-    [Header("ｵｱﾇｰﾗｴﾌｬ")]
+    [Header("拘束循环状态")]
     public RescueState state = RescueState.Bound;
     public RBQController rbqController;
 
 
-    [Header("ﾊﾘﾎﾀｵﾐﾈﾋ")]
+    [Header("敌人")]
     public GameObject enemyPrefab;//目前暂时全体Enemy_1
     public Transform enemySpawnPoint;
 

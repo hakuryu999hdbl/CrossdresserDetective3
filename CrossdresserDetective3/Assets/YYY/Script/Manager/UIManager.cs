@@ -47,8 +47,8 @@ public class UIManager : MonoBehaviour
                 break;
             case 1:
             case 2:
-                //第一关不弹出背包界面（好像这个UI层退出一下需要）
-                CloseSetUp();
+                //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
+                //CloseSetUp();
                 break;
 
 
@@ -202,32 +202,88 @@ public class UIManager : MonoBehaviour
 
     public void CloseSetUp()
     {
+        if (isClosingSetUp)
+            return;
+        StartCoroutine(CloseSetUpCoroutine());
+
+        //isSetUp = false;
+        //CurrentOpen = 0;
+        //
+        //SetUpMenu.SetActive(false); PauseButton.SetActive(true);
+        ////Time.timeScale = 1f;
+        //
+        //playerController.EnableGameplayInput();// 关闭 UI 输入
+        //
+        //GameFlowData.suppressNextSelectSound = true;
+        //
+        //SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        //EventSystem.current.SetSelectedGameObject(null);
+        //
+        //
+        ////每次关上界面的时候，让放大图出现一个进来的动画
+        //anim.Play("Show", 0, 0f);
+        //
+        //
+        //UI_CameraChangeMiddle();
+        //
+        //
+        //if (playerController.attackType == -10)
+        //{
+        //    playerController.attackType = playerController.meleeSlot;
+        //}//炸弹动画被武器槽替换
+    }
+    private bool isClosingSetUp;//防止协程多次触发
+    private IEnumerator CloseSetUpCoroutine()
+    {
+        isClosingSetUp = true;
+
+        // 防止淡入过程中玩家再次操作
+        playerController.DisableGameplayInput();
+
+        // 黑幕淡入
+        BlackScreen_FadeIn.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(0.95f);
+
+        // =========================
+        // 黑幕后切换到局内
+        // =========================
+
         isSetUp = false;
         CurrentOpen = 0;
 
-        SetUpMenu.SetActive(false); PauseButton.SetActive(true);
-        //Time.timeScale = 1f;
-
-        playerController.EnableGameplayInput();// 关闭 UI 输入
+        SetUpMenu.SetActive(false);
+        PauseButton.SetActive(true);
 
         GameFlowData.suppressNextSelectSound = true;
 
-        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        SetUpFirstSelected =
+            EventSystem.current.currentSelectedGameObject;
+
         EventSystem.current.SetSelectedGameObject(null);
 
-
-        //每次关上界面的时候，让放大图出现一个进来的动画
+        // 每次关上界面的时候，让放大图出现一个进来的动画
         anim.Play("Show", 0, 0f);
-
 
         UI_CameraChangeMiddle();
 
-
         if (playerController.attackType == -10)
         {
-            playerController.attackType = playerController.meleeSlot;
-        }//炸弹动画被武器槽替换
+            playerController.attackType =
+                playerController.meleeSlot;
+        }
+
+        // 黑幕后重新打开玩家操作
+        playerController.EnableGameplayInput();
+
+        // 黑幕淡出
+        BlackScreen_FadeOut.SetActive(true);
+
+        isClosingSetUp = false;
     }
+
+
+
 
 
     #region 服装菜单
@@ -986,6 +1042,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject MissionFailure;
 
+    public Image ResultPicture;//设置结局图片
+    public int ResultNumber;//0用完扔垃圾桶 1紧缚逃脱失败
+    public Sprite CG_1,CG_2;
+
     public bool waitGameOverInput = false;//等待玩家输入再跳出战败界面
 
     public void GameOverUI()
@@ -1052,9 +1112,28 @@ public class UIManager : MonoBehaviour
 
     public GameObject Skip_GameOver;//跳过提示
 
+    public void SetResultImage() 
+    {
+        switch (ResultNumber)
+        {
+            default:
+            case 1:
+
+                ResultPicture.sprite = CG_1;//用完扔垃圾桶
+                break;
+            case 2:
+
+                ResultPicture.sprite = CG_2;//紧缚逃脱失败
+                break;
+        }
+
+    }
+
     public void ShowGameOverMenu()
     {
         waitGameOverInput = false;
+
+        SetResultImage();
 
         StartCoroutine(ShowGameOverMenuDelay());
     }//跳出战败界面
@@ -1216,6 +1295,7 @@ public class UIManager : MonoBehaviour
 
         BlackScreen_FadeOut.SetActive(true);
 
+        SetResultImage();
 
         gameOverPanel.SetActive(true);
 

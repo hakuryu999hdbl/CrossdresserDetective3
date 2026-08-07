@@ -6,7 +6,7 @@ public class ParallaxLayer : MonoBehaviour
     Transform followTarget;
 
     [Range(0f, 1f)]
-    float parallaxFactor = 0.05f;
+    float parallaxFactor = 0.07f;
 
     private Vector3 startTargetPos;
     private Vector3 startLayerPos;

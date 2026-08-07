@@ -3182,6 +3182,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 657383196}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ShowMissionUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &180794175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13399,7 +13411,7 @@ MonoBehaviour:
   AreaList:
   - {fileID: 1684373087128156941, guid: 3732bf1b1f6e5c940b3175e1b7df1c12, type: 3}
   - {fileID: 162632795386546455, guid: 7b30a04057579134ba77f4c6a2a630f1, type: 3}
-  - {fileID: 68367594759565730, guid: 59dcad26d1d4a76448521bbf9a07f56a, type: 3}
+  - {fileID: 3006276433539335720, guid: a6cd79f95fd77d244833b9b5e422ec49, type: 3}
   - {fileID: 3006276433539335720, guid: a6cd79f95fd77d244833b9b5e422ec49, type: 3}
   - {fileID: 3786105817241067427, guid: 61865d28494781c4cbc4555c3149074a, type: 3}
   - {fileID: 4131576008463150508, guid: 18c1a7a8038e3224f8d278c31f44074a, type: 3}
@@ -13410,6 +13422,7 @@ MonoBehaviour:
   gameOver: 0
   PlayerWin: 0
   winMode: 0
+  roomManager: {fileID: 0}
   totalClues: 0
   currentClues: 0
   totalRescues: 0
@@ -34762,6 +34775,10 @@ MonoBehaviour:
   gameOverPanel: {fileID: 908400527}
   GameOverfirstSelected: {fileID: 1128075498}
   MissionFailure: {fileID: 433539449}
+  ResultPicture: {fileID: 932638484}
+  ResultNumber: 0
+  CG_1: {fileID: 21300000, guid: c8a173ad491f52c4ebe1cfd65484e72d, type: 3}
+  CG_2: {fileID: 21300000, guid: 797796efe422ed645a062a661ac47ed1, type: 3}
   waitGameOverInput: 0
   DeadBody: {fileID: 3167370427497166110}
   Skip_GameOver: {fileID: 2138306169}

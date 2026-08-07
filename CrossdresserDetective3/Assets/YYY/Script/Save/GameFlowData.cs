@@ -9,6 +9,8 @@ public static class GameFlowData
     public static int CurrentChapter;//目前的章节
     public static int CurrentStage;//目前的章节内关卡
 
+
+
     public static string CurrentPlayer = null;   //目前使用的是哪个存档
     public static string returnPath = null;      // 回来的路径 ("cg" / "chapter_1" / null 等)
 

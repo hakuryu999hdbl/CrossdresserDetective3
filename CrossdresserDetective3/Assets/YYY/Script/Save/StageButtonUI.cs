@@ -26,11 +26,15 @@ public class StageButtonUI : MonoBehaviour
         star3.SetActive(unlocked && star >= 3);
     }
 
-
+    [Header("¹Ø¿¨")]
     public int chapter;
     public int stage;
+
+
     public void Click()
     {
+
+
         MenuManager.instance.NewGame(chapter, stage);
     }
 }

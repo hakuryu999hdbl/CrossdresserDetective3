@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,39 +34,38 @@ public class GameManager : MonoBehaviour
 
         //根据当前临时存档读取位置
         switch (GameFlowData.CurrentChapter)
-        {           
-            default:       
+        {
+            default:
             case 1:
 
                 switch (GameFlowData.CurrentStage)
                 {
                     default:
                     case 1:
-                        SetArea(0); 
-                        break;   
+                        SetArea(0); //事务所
+                        break;
                     case 2:
-                        SetArea(1);  
+                        SetArea(1); //事务所外走廊
                         break;
                     case 3:
-                        SetArea(2);
+                        SetArea(3);//O型公寓走廊
                         break;
-                  
                     case 4:
-                        SetArea(3);
+                        SetArea(3);//O型公寓走廊
                         break;
                     case 5:
-                        SetArea(4);
+                        SetArea(3);//O型公寓走廊
                         break;
                     case 6:
-                        SetArea(5);
+                        SetArea(3);//O型公寓走廊
                         break;
                     case 7:
-                        SetArea(6);
+                        SetArea(4);
                         break;
                     case 8:
                         SetArea(7);
                         break;
-                    
+
                     case 9:
                         SetArea(8);
                         break;
@@ -83,12 +83,6 @@ public class GameManager : MonoBehaviour
 
 
 
-        //检测是不是调查任务
-        Invoke(nameof(CheckClue), 0.1f);
-        //检测是不是救出任务
-        Invoke(nameof(CheckRescue),0.2f);
-        //检测是不是歼灭任务
-        Invoke(nameof(CheckEliminate), 0.3f);
     }
 
 
@@ -109,9 +103,12 @@ public class GameManager : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 重启游戏/下一关入口
+    /// </summary>
+    #region
 
-
-    [Header("其他设置")]
+    [Header("重启游戏/下一关入口")]
     public bool gameOver = false;//玩家死亡游戏结束
     public bool PlayerWin = false;//好像获胜界面会触发很多下的样子，为了只触发一下
     public void Update()
@@ -179,11 +176,14 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    #endregion
 
 
 
-
-
+    /// <summary>
+    /// 各类任务UI
+    /// </summary>
+    #region
 
     public enum WinMode
     {
@@ -195,6 +195,68 @@ public class GameManager : MonoBehaviour
 
     public WinMode winMode;
 
+    public RoomManager roomManager;
+
+    public void IsRoomManager(RoomManager _roomManager)
+    {
+        roomManager = _roomManager;
+    }//RoomManager自己来报告
+
+    public void ShowMissionUI()
+    {
+        Debug.Log("显示模式");
+        //根据当前临时存档读取位置
+        switch (GameFlowData.CurrentChapter)
+        {
+            default:
+            case 1:
+
+                switch (GameFlowData.CurrentStage)
+                {
+                    default:
+                    case 1:
+                        ShowEscape();//逃脱模式
+                        break;
+                    case 2:
+                        ShowEliminate();//歼灭模式
+                        break;
+                    case 3:
+                        ShowClue();//搜查模式
+                        break;
+                    case 4:
+                        ShowRescue();//救出模式
+                        break;
+                    case 5:
+                        ShowEscape();//逃脱模式
+                        break;
+                    case 6:
+                        ShowEliminate();//歼灭模式
+                        break;
+                    case 7:
+                        ShowEliminate();//歼灭模式
+                        break;
+                    case 8:
+                        ShowEliminate();//歼灭模式
+                        break;
+                    case 9:
+                        ShowEliminate();//歼灭模式
+                        break;
+                    case 10:
+                        ShowEliminate();//歼灭模式
+                        break;
+
+
+
+                }
+                break;
+
+        }
+
+
+
+    }//一般在装备设置界面关闭和主线剧情过场动画结尾触发这是什么任务的提示和通知RoomManager
+
+    #endregion
 
 
     /// <summary>
@@ -223,17 +285,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CheckClue() 
+    public void ShowClue()
     {
-        if (totalClues > 0)
-        {
-            winMode = WinMode.Investigate;
+        Debug.Log("搜查模式");
 
-            //场景里有线索，这是调查任务
-            UIManager.instance.RefreshClueUI(currentClues, totalClues);
-            UIManager.instance.clueText.gameObject.SetActive(true);   
+
+        if (roomManager != null)
+        {
+            roomManager.SetupInvestigate();
         }
-    }
+        
+
+        winMode = WinMode.Investigate;
+
+        //场景里有线索，这是调查任务
+        UIManager.instance.RefreshClueUI(currentClues, totalClues);
+        UIManager.instance.clueText.gameObject.SetActive(true);
+
+    }//弹出这是搜查模式提示
 
 
 
@@ -279,17 +348,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CheckRescue()
+    public void ShowRescue()
     {
-        if (totalRescues > 0)
-        {
-            winMode = WinMode.Rescue;
+        Debug.Log("救出模式");
 
-            //场景里有人质，这是救出模式
-            UIManager.instance.RefreshRescueUI(currentRescues,totalRescues);
-            UIManager.instance.rescueText.gameObject.SetActive(true);
+        if (roomManager != null) 
+        {
+            roomManager.SetupRescue();
         }
-    }
+       
+
+        winMode = WinMode.Rescue;
+
+        //场景里有人质，这是救出模式
+        UIManager.instance.RefreshRescueUI(currentRescues, totalRescues);
+        UIManager.instance.rescueText.gameObject.SetActive(true);
+    }//弹出这是救出模式提示
 
     #endregion
 
@@ -304,9 +378,6 @@ public class GameManager : MonoBehaviour
     public void IsExit(ExitDoor door)
     {
         exitDoor = door;
-
-        winMode = WinMode.Escape;
-        UIManager.instance.escapeText.gameObject.SetActive(true);
     }
     public void PlayerEscapeWin()
     {
@@ -315,6 +386,21 @@ public class GameManager : MonoBehaviour
         UIManager.instance.WinUI();
         PlayerWin = true;
     }//这个用于逃出模式
+
+    void ShowEscape()
+    {
+        Debug.Log("逃脱模式");
+
+        if (roomManager != null)
+        {
+            roomManager.SetupEscape();
+        }
+       
+
+        winMode = WinMode.Escape;
+        UIManager.instance.escapeText.gameObject.SetActive(true);
+
+    }//弹出这是逃脱任务提示
 
     #endregion
 
@@ -419,15 +505,18 @@ public class GameManager : MonoBehaviour
     }
 
 
-    void CheckEliminate() 
+    void ShowEliminate()
     {
-        if (winMode == WinMode.Eliminate) 
+
+        if (roomManager != null)
         {
-            UIManager.instance.eliminateText.gameObject.SetActive(true);
+            roomManager.SetupEliminate();
         }
 
 
-    }//检测如果没有别的任务，就是歼灭
+        UIManager.instance.eliminateText.gameObject.SetActive(true);
+
+    }//跳出歼灭模式提示
 
     #endregion
 
