@@ -71,23 +71,26 @@ public class DialogSystem : MonoBehaviour
         {
             case 0:
                 //剧情开头
+                textAssets.Add(0, Resources.Load<TextAsset>("TXT_Japanese/J_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Japanese/J_CG_01"));
 
                 break;
             case 1:
                 //剧情开头
+                textAssets.Add(0, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_CG_01"));
-
 
                 break;
             case 2:
                 //剧情开头
+                textAssets.Add(0, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_CG_01"));
 
 
                 break;
             case 3:
                 //剧情开头
+                textAssets.Add(0, Resources.Load<TextAsset>("TXT_English/E_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_English/E_CG_01"));
 
 
@@ -96,6 +99,7 @@ public class DialogSystem : MonoBehaviour
                 break;
             case 4:
                 //剧情开头
+                textAssets.Add(0, Resources.Load<TextAsset>("TXT_Korean/K_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Korean/K_CG_01"));
 
 
@@ -233,14 +237,36 @@ public class DialogSystem : MonoBehaviour
     {
         BlackScreen_FadeIn.SetActive(true);//黑幕淡出
 
-        Invoke(nameof(BackToMenu), 0.95f);
+        Invoke(nameof(ToNextScene), 0.95f);
     }
 
 
-    private void BackToMenu()
+    private void ToNextScene()
     {
+       
 
-        SceneManager.LoadScene("Menu");
+
+        if (GameFlowData.returnPath == "cg")
+        {
+            SceneManager.LoadScene("Menu");
+        }
+        else 
+        {
+           
+            if (GameFlowData.nextAreaId == "Introduce")
+            {
+                //主线剧情1-1介绍
+                GameFlowData.nextAreaId = "CG_Photo";
+                SceneManager.LoadScene("Spine");
+   
+            }        
+            else if (GameFlowData.nextAreaId == "CG_Photo")
+            { //主线剧情1-1照片自慰
+                SceneManager.LoadScene("Level");
+            }
+        }
+
+      
     }
 
 

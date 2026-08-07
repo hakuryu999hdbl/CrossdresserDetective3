@@ -686,7 +686,20 @@ public class MenuManager : MonoBehaviour
         GameFlowData.CurrentChapter = nextChapter;
         GameFlowData.CurrentStage = nextStage;
 
-        SceneManager.LoadScene("Level");
+
+
+        //特殊情况的主线需要单独先进入AVG
+
+        if (nextChapter == 1 && nextStage == 1)
+        {
+            GameFlowData.nextAreaId = "Introduce";
+            StartCG();
+        }
+        else 
+        {
+            SceneManager.LoadScene("Level");
+        }
+
     }
 
 

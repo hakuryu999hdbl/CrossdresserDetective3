@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spine_FrameEvents : MonoBehaviour
 {
-
+    public Animator Introduce;
     public Animator CG_Photo;
     public Animator CG_Clock;
 
@@ -12,7 +12,7 @@ public class Spine_FrameEvents : MonoBehaviour
     //当前播放的动画器
     private Animator currentAnimator;
 
-    
+    public DialogSystem dialogSystem;
 
     public void SetCurrentAnimator()
     {
@@ -20,10 +20,16 @@ public class Spine_FrameEvents : MonoBehaviour
 
         switch (GameFlowData.nextAreaId)
         {
+            case "Introduce":
+                dialogSystem.animation_number = 0;
+                currentAnimator = Introduce;
+                break;
             case "CG_Photo":
+                dialogSystem.animation_number = 1;
                 currentAnimator = CG_Photo;
                 break;
             case "CG_Clock":
+                dialogSystem.animation_number = 6;
                 currentAnimator = CG_Clock;
                 break;
             //case "CG_Bomb":
