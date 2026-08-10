@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    [Header("Íæ¼Ò³öÉúµã")]
+    [Header("Íæ¼Ò³öÉúµ")]
     public Transform playerSpawnPoints_investigate;
     public Transform playerSpawnPoints_rescue;
     public Transform playerSpawnPoints_escape; 
     public Transform playerSpawnPoints_eliminate;
 
-    [Header("ÈÎÎñ¶ÔÏó")]
+    [Header("ÈÎÎñ¶ÔÏ")]
     public GameObject investigateRoot;
     public GameObject rescueRoot;
     public GameObject escapeRoot;
