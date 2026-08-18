@@ -22,22 +22,17 @@ public class Catch : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         PlayerController player = other.GetComponent<PlayerController>();
-        if (player == null) 
+        if (player == null) {return;}
+
+        if (player.isDead ||
+           player.isHurt ||
+           player.isCaptured ||
+           player.isSlide)
         {
-            Debug.Log("抓空了！回撤动画！");
-            enemy.OnCatchMissCheck();
-            return;
-        } 
-
-
-        if (player.isDead || player.isHurt || player.isCaptured || player.isSlide)
-        {
-            Debug.Log("无法抓住！回撤动画！");
-            enemy.OnCatchMissCheck();
-
             return;
         }
-          
+
+
 
         hasCaught = true;
         enemy.StartCatchPlayer(player);

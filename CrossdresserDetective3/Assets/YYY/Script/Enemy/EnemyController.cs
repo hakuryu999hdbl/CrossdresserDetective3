@@ -855,18 +855,12 @@ public class EnemyController : MonoBehaviour
 
     public void StartCatchPlayer(PlayerController player)
     {
-        //Invoke(nameof(CheckMissCatch), 0.5f);//确认有没有抓到进行一个检测
-
-        //CheckMissCatch();
 
         if (isDead) return;
         if (isCatching) return;
         if (capturedPlayer != null) return;
         if (Time.time < nextCatchTime) return;
-        if (player == null || player.isDead) return;
 
-        if (player == null) return;
-        if (capturedPlayer != null) return;
 
         isCatching = true;
         capturedPlayer = player;
@@ -893,29 +887,13 @@ public class EnemyController : MonoBehaviour
         character.skillInvulnerable = true;//技能无敌
 
         //Debug.Log("抓住玩家：" + capturedPlayer.name);
+
+
+        anim.SetTrigger("catchSuccess");
     }
 
 
-    void CheckMissCatch() 
-    {
-        //if (GameManager.instance.player.isSlide || !GameManager.instance.player.physicsCheck.isGround)
-        if (!GameManager.instance.player.isCaptured) 
-        {
-            Debug.Log("抓住的玩家处于无法抓住状态！回撤动画！");
 
-            ThrowCapturedPlayer();
-            anim.ResetTrigger("attack");
-            anim.Play("Girl_Run", attackLayer, 0f);
-        }
-
-        
-    }
-
-    public void OnCatchMissCheck()
-    {
-        anim.ResetTrigger("attack");
-        anim.Play("Run", attackLayer, 0f);
-    }//万一没抓到，打断当前动画W
 
 
     public void ThrowCapturedPlayer()
