@@ -630,10 +630,22 @@ public class FrameEvent : MonoBehaviour
 
         }
     }
+
+
+    public void OnStartPlayerStruggle()
+    {
+        if (enemyController != null)
+        {
+            enemyController.StartPlayerStruggle();
+
+        }
+    }//开启玩家挣扎
+
+
     #endregion
 
     #region  敌人防御反击
-  
+
     public void StartBlockCounter()
     {
         if (enemyController is Enemy_4 biker)

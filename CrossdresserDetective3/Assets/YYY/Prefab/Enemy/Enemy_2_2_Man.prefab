@@ -172,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyController: {fileID: 7288326329586276636}
   playerController: {fileID: 0}
+  rBQController: {fileID: 0}
   pickupPoint: {fileID: 0}
   power: 0
   scale: 0
@@ -1449,7 +1450,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.9269115, y: 0.20000005}
+  m_Offset: {x: 0, y: 0.20000005}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1459,7 +1460,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3461773, y: 2.7}
+  m_Size: {x: 3, y: 2.7}
   m_EdgeRadius: 0
 --- !u!114 &8080592513479040852
 MonoBehaviour:
@@ -1656,6 +1657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7288326329586276636}
+  alwaysTransparent: 0
   patrolColor: {r: 0, g: 1, b: 0, a: 0.39215687}
   searchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.39215687}
   attackColor: {r: 1, g: 0, b: 0, a: 0.39215687}

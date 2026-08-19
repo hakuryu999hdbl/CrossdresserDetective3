@@ -504,8 +504,18 @@ public class EnemyController : MonoBehaviour
             if (Time.time > nextAttack)
             {
 
-                anim.SetInteger("attackType", Random.Range(1, 3));
-                anim.SetTrigger("attack");
+                if (this is Enemy_3)
+                {
+                    anim.SetTrigger("catch");
+                }
+                else
+                {
+                    anim.SetInteger("attackType", Random.Range(1, 3));
+                    anim.SetTrigger("attack");
+                }
+
+
+           
 
                 nextAttack = Time.time + attackRate;
             }
@@ -923,6 +933,66 @@ public class EnemyController : MonoBehaviour
 
         TransitionToState(patrolState);
     }
+
+
+
+
+
+    public void StartPlayerStruggle()
+    {
+        if (!isCatching || capturedPlayer == null)
+            return;
+
+        capturedPlayer.StartStruggle(this);
+    }//开启挣扎
+
+
+    public void BreakFreeFromPlayer(PlayerController player)
+    {
+        if (!isCatching)
+            return;
+
+        if (capturedPlayer != player)
+            return;
+
+        // 先解除双方关系
+        capturedPlayer = null;
+
+        isCatching = false;
+        nextCatchTime = Time.time + catchCooldown;
+
+        if (catchCollider != null)
+            catchCollider.ResetCatch();
+
+        if (Catch_Collider != null)
+            Catch_Collider.SetActive(false);
+
+        // 玩家结束挣扎状态
+        player.EndStruggle();
+
+        // 玩家恢复显示
+        player.ExitCapturedState(Vector2.zero);
+
+
+        // 玩家播放挣脱攻击动画
+        player.playerAnimation.anim.SetTrigger("breakFree");
+
+        // 敌人退出 lewdmove
+        anim.SetTrigger("breakFree");
+        character.skillInvulnerable = false;//技能无敌关闭
+
+    }//玩家挣扎值满了后的挣脱
+
+
+
+
+
+
+
+
+
+
+
 
 
 

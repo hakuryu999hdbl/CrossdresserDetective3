@@ -136,8 +136,22 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(0f, rb.velocity.y);//死亡后在空中的话落地
             }
+
+
+
+            if (isStruggling)
+            {
+                //ChangeStruggle(-1);
+                ChangeSex(2);
+            }//被捕获
+
+
+
             return;
         }
+
+        ChangeSex(-1);//自然下降淫乱值
+
 
         if (!isHurt && !isAttack && !isTeleporting) { Move(); }
 
@@ -747,6 +761,97 @@ public class PlayerController : MonoBehaviour
 
 
 
+    [Header("被抓挣扎")]
+    public bool isStruggling;//状态似乎要和抓了就扔区别开
+
+    public EnemyController catchingEnemy;
+
+    public void StartStruggle(EnemyController enemy)
+    {
+        // 已经在挣扎了，不要重复清零
+        if (isStruggling)
+            return;
+
+
+        isStruggling = true;
+        currentStruggle = 0;
+        catchingEnemy = enemy;
+
+        // 打开挣扎UI
+        UIManager.instance.ShowStruggleBar();
+        UIManager.instance.UpdateStruggleBar(
+            currentStruggle,
+            maxStruggle
+        );
+
+
+
+
+        if (!cameraControl.isZoomIn) 
+        {
+            cameraControl.ToggleZoom();
+        } //被抓住拉近镜头  
+
+
+    }//开启挣扎
+
+    public void EndStruggle()
+    {
+        isStruggling = false;
+        currentStruggle = 0;
+
+
+        //关闭UI
+        UIManager.instance.HideStruggleBar();
+
+        catchingEnemy = null;
+
+
+        if (cameraControl.isZoomIn)
+        {
+            cameraControl.ToggleZoom();
+        } //被抓住拉近镜头
+
+    }//关闭挣扎
+
+    [Header("挣扎值")]
+    public int currentStruggle;
+    public int maxStruggle;
+
+    public void ChangeStruggle(int amount)
+    {
+
+        currentStruggle = Mathf.Clamp(currentStruggle + amount, 0, maxStruggle);
+        UIManager.instance.UpdateStruggleBar(currentStruggle, maxStruggle);
+
+        if (currentStruggle >= maxStruggle)
+        {
+            Debug.Log("挣扎成功");
+            catchingEnemy.BreakFreeFromPlayer(this);
+
+        }
+    }
+
+    [Header("淫乱值")]
+    public int currentSex;
+    public int maxSex;
+
+    public void ChangeSex(int amount)
+    {
+
+        currentSex = Mathf.Clamp(currentSex + amount, 0, maxSex);
+        UIManager.instance.UpdateSexBar(currentSex, maxSex);
+
+        if (currentSex >= maxSex)
+        {
+            Debug.Log("射精/体力下降");
+
+
+        }
+    }
+
+
+
     #endregion
 
 
@@ -867,6 +972,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnTakeDamage(Attack attack)
     {
+        if (isStruggling) return;
 
         if (attack == null)
             return;
@@ -1174,8 +1280,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
-        if (isBondage) { return; }
+
         if (isInCutscene) { return; }//过场动画锁
+        if (isBondage) { return; }
+
+        // 被抓挣扎时，攻击键只负责挣扎
+        if (isStruggling)
+        {
+            ChangeStruggle(100);
+            return;
+        }
+
+
 
 
 
@@ -1184,8 +1300,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
-        if (isBondage) { return; }
+
         if (isInCutscene) { return; }//过场动画锁
+        if (isBondage) { return; }
+
+        if (isStruggling) return;//挣扎
+
+
+
+
+
 
         float holdTime = Time.time - attackPressTime;
 

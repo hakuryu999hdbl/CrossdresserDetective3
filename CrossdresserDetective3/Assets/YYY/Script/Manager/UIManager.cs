@@ -1400,6 +1400,64 @@ public class UIManager : MonoBehaviour
 
 
 
+
+
+
+    [Header("挣扎值")]
+    public Image StruggleBar;
+    public GameObject Struggle;
+
+
+    public void UpdateStruggleBar(int curAmount, int maxAmount)
+    {
+        StruggleBar.fillAmount = (float)curAmount / (float)maxAmount;
+
+
+    }
+    public void ShowStruggleBar()
+    {
+        Struggle.SetActive(true);
+    }//单独显示挣扎
+
+    public void HideStruggleBar()
+    {
+        Struggle.SetActive(false);
+    }//单独隐藏挣扎
+
+
+
+
+    [Header("淫乱值")]
+    public Image SexBar;
+
+
+    public void UpdateSexBar(int curAmount, int maxAmount)
+    {
+        SexBar.fillAmount = (float)curAmount / (float)maxAmount;
+
+        //float percent = Mathf.Clamp01((float)curAmount / (float)maxAmount);
+        //
+        //// 确保使用的是材质实例（不共享全局材质）
+        //if (SexBar.material != null)
+        //{
+        //    SexBar.material.SetFloat("_SexValue", percent);
+        //}
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     [Header("调查线索UI")]
     public Text clueText;
 
