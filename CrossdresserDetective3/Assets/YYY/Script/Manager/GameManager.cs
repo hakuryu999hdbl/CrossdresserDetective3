@@ -360,10 +360,17 @@ public class GameManager : MonoBehaviour
 
         winMode = WinMode.Rescue;
 
+        Invoke(nameof(RenewRescuesUI), 0.2f);//似乎是生成RBQ之后要缓一下更新UI？
+      
+    }//弹出这是救出模式提示
+
+
+    void RenewRescuesUI() 
+    {
         //场景里有人质，这是救出模式
         UIManager.instance.RefreshRescueUI(currentRescues, totalRescues);
         UIManager.instance.rescueText.gameObject.SetActive(true);
-    }//弹出这是救出模式提示
+    }
 
     #endregion
 

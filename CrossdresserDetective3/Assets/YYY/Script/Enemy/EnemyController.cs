@@ -1153,70 +1153,70 @@ public class EnemyController : MonoBehaviour
 
     #region  投掷
 
-    [Header("投掷")]
-    public GameObject throwableWeaponPrefab;
-    public GameObject bombPrefab;//手榴弹
-    public GameObject smokePrefab;//烟雾弹
-    public GameObject flashPrefab;//闪光弹
-    public GameObject incendiaryPrefab;//燃烧弹
-    public GameObject shockPrefab;//震撼弹
-    public GameObject knifePrefab;//飞刀
-
-    float throwForce = 16f;//投掷力度
-
-    public void ThrowWeapon()
-    {
-        if (meleeType == 0) return; // 空手不能扔
-
-
-        switch (throwType)
-        {
-            case 1:
-                throwableWeaponPrefab = bombPrefab;
-                break;
-            case 2:
-                throwableWeaponPrefab = smokePrefab;
-                break;
-            case 3:
-                throwableWeaponPrefab = flashPrefab;
-                break;
-            case 4:
-                throwableWeaponPrefab = incendiaryPrefab;
-                break;
-            case 5:
-                throwableWeaponPrefab = shockPrefab;
-                break;
-            case 6:
-                throwableWeaponPrefab = knifePrefab;
-                break;
-        }
-
-
-
-
-        GameObject obj = Instantiate(
-            throwableWeaponPrefab,
-            transform.position,
-            Quaternion.identity
-        );
-
-        ThrowableWeapon throwable = obj.GetComponent<ThrowableWeapon>();
-
-        if (throwable != null)
-        {
-            throwable.Init();
-        }
-
-        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-
-        if (rb != null)
-        {
-            Vector2 dir = new Vector2(transform.localScale.x * 0.4f, 0.2f).normalized;
-            rb.velocity = dir * throwForce;
-        }
-
-
-    }
+    //[Header("投掷")]
+    //public GameObject throwableWeaponPrefab;
+    //public GameObject bombPrefab;//手榴弹
+    //public GameObject smokePrefab;//烟雾弹
+    //public GameObject flashPrefab;//闪光弹
+    //public GameObject incendiaryPrefab;//燃烧弹
+    //public GameObject shockPrefab;//震撼弹
+    //public GameObject knifePrefab;//飞刀
+    //
+    //float throwForce = 16f;//投掷力度
+    //
+    //public void ThrowWeapon()
+    //{
+    //    if (meleeType == 0) return; // 空手不能扔
+    //
+    //
+    //    switch (throwType)
+    //    {
+    //        case 1:
+    //            throwableWeaponPrefab = bombPrefab;
+    //            break;
+    //        case 2:
+    //            throwableWeaponPrefab = smokePrefab;
+    //            break;
+    //        case 3:
+    //            throwableWeaponPrefab = flashPrefab;
+    //            break;
+    //        case 4:
+    //            throwableWeaponPrefab = incendiaryPrefab;
+    //            break;
+    //        case 5:
+    //            throwableWeaponPrefab = shockPrefab;
+    //            break;
+    //        case 6:
+    //            throwableWeaponPrefab = knifePrefab;
+    //            break;
+    //    }
+    //
+    //
+    //
+    //
+    //    GameObject obj = Instantiate(
+    //        throwableWeaponPrefab,
+    //        transform.position,
+    //        Quaternion.identity
+    //    );
+    //
+    //    ThrowableWeapon throwable = obj.GetComponent<ThrowableWeapon>();
+    //
+    //    if (throwable != null)
+    //    {
+    //        throwable.Init();
+    //    }
+    //
+    //    Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+    //
+    //    if (rb != null)
+    //    {
+    //        Vector2 dir = new Vector2(transform.localScale.x * 0.4f, 0.2f).normalized;
+    //        rb.velocity = dir * throwForce;
+    //    }
+    //
+    //
+    //}
     #endregion
 
     /// <summary>
@@ -1374,7 +1374,8 @@ public class EnemyController : MonoBehaviour
     public GameObject Strike_Effect;//剑光特效
     public GameObject Hit_Effect;//打击特效
 
-
+    [Header("暗杀标记")]
+    public GameObject instantKillSign;
 
     private bool IsHitFromBehind(Vector3 attackPos)
     {
@@ -1431,6 +1432,9 @@ public class EnemyController : MonoBehaviour
         if (hitFromBehind||isDizzy)
         {
             frameEvent_Audio._Attack_largeSword();//暂时先把暗杀声音写在这
+            instantKillSign.SetActive(true);//暗杀标记
+
+
             OnDie();//背后暗杀
             return;
         }
@@ -1526,6 +1530,8 @@ public class EnemyController : MonoBehaviour
 
         GameManager.instance.SceneEnemyDead(this);//从GameManager那里划走
 
+        DropRandomItem();//随机飞出道具
+
 
         isDead = true;
         gameObject.layer = LayerMask.NameToLayer("Environment");
@@ -1570,6 +1576,57 @@ public class EnemyController : MonoBehaviour
 
         // 已经是尸体：重新播一次死亡动画
         anim.Play("Dead", deadLayer, 0f);
+    }
+
+
+    [Header("死亡掉落")]
+    public List<GameObject> dropItemList = new List<GameObject>();
+
+    [Range(0f, 1f)]
+    public float dropChance = 0.25f; // 25%几率掉落
+
+
+    public float dropForceX = 3f;
+    public float dropForceY = 5f;
+
+    public void DropRandomItem()
+    {
+        // 没有配置物品
+        if (dropItemList == null || dropItemList.Count == 0)
+            return;
+
+        // 概率判定
+        if (Random.value > dropChance)
+            return;
+
+        // 随机选一个
+        GameObject prefab = dropItemList[
+            Random.Range(0, dropItemList.Count)
+        ];
+
+        if (prefab == null)
+            return;
+
+        GameObject item = Instantiate(
+            prefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
+
+        if (itemRb != null)
+        {
+            float dir = Random.value < 0.5f ? -1f : 1f;
+
+            itemRb.AddForce(
+                new Vector2(
+                    dir * Random.Range(dropForceX * 0.7f, dropForceX * 1.3f),
+                    Random.Range(dropForceY * 0.8f, dropForceY * 1.2f)
+                ),
+                ForceMode2D.Impulse
+            );
+        }
     }
 
 

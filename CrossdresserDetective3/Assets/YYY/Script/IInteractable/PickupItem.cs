@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PickupItem : MonoBehaviour
 {
+
     public enum PickupType
     {
         Health,        // 回血
@@ -21,6 +22,44 @@ public class PickupItem : MonoBehaviour
 
 
     private bool hasPickedUp;
+
+
+    void Start() 
+    {
+        PlayerController player = GameManager.instance.player;
+
+        if (player == null)
+            return;
+
+        switch (pickupType)
+        {
+            // 子弹：没枪就销毁
+            case PickupType.CurrentAmmo:
+                if (player.attackType >= 0)
+                {
+                    Destroy(gameObject);
+                }
+                break;
+
+            // 弹夹：没枪就销毁
+            case PickupType.Magazine:
+                if (player.attackType >= 0)
+                {
+                    Destroy(gameObject);
+                }
+                break;
+
+            // 投掷补充：没装备投掷品就销毁
+            case PickupType.Throwable:
+                if (player.throwType == 0)
+                {
+                    Destroy(gameObject);
+                }
+                break;
+        }
+    }
+
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -123,9 +162,13 @@ public class PickupItem : MonoBehaviour
         if (player.attackType >= 0)
             return false;
 
-        // 当前弹匣已经满了
+        // 当前弹匣已经满了，所以变成增加一个弹夹
         if (player.currentAmmo >= player.maxAmmo)
-            return false;
+        {
+            player.AddMagazine(1);
+            return true;
+        }
+
 
         player.ChangeAmmo(value);//增加子弹
         return true;
@@ -133,6 +176,10 @@ public class PickupItem : MonoBehaviour
 
     private bool TryPickupMagazine(PlayerController player)
     {
+        // 没有装备枪械
+        if (player.attackType >= 0)
+            return false;
+
         // 可以根据需要增加备用弹匣上限判断
         player.AddMagazine(value);//增加弹夹
         return true;
