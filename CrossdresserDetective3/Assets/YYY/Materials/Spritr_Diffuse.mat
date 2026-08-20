@@ -8,23 +8,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Spritr_Diffuse
-  m_Shader: {fileID: 4800000, guid: 2ce511398fb980f41b7d316c51534590, type: 3}
+  m_Shader: {fileID: 10800, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHAPREMULTIPLY_VERTEX_ONLY
-  - _FULLRANGE_HARD_RAMP
-  m_InvalidKeywords:
   - ETC1_EXTERNAL_ALPHA
+  m_InvalidKeywords:
+  - _ALPHAPREMULTIPLY_VERTEX_ONLY
+  - _EMISSION
+  - _FULLRANGE_HARD_RAMP
   - _USE8NEIGHBOURHOOD_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap:
     AlphaDepth: true
     IGNOREPROJECTOR: true
-    RenderType: Transparent
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -85,6 +85,8 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
+    - _AlphaCutoff: 0.05
+    - _BaseGlow: 1
     - _BlendAmount: 0
     - _BlendOp: 0
     - _Brightness: 1
@@ -101,12 +103,17 @@ Material:
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _EmissionEnabled: 0
     - _EmissionPower: 2
     - _EnableExternalAlpha: 0
     - _Fill: 0
     - _FlipbookMode: 0
+    - _FlowAngle: 90
+    - _FlowGlow: 4
+    - _FlowSoftness: 0.05
+    - _FlowSpeed: 1
+    - _FlowWidth: 0.18
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -126,6 +133,7 @@ Material:
     - _RimPower: 2
     - _Saturation: 1
     - _ShadowAlphaCutoff: 0.1
+    - _Shininess: 0.7
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
@@ -139,12 +147,13 @@ Material:
     - _UVSec: 0
     - _Use8Neighbourhood: 1
     - _UseScreenSpaceOutlineWidth: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _Black: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FixedNormal: {r: 0, g: 0, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

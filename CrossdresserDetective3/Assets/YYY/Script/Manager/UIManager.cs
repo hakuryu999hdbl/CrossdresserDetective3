@@ -47,6 +47,19 @@ public class UIManager : MonoBehaviour
                 break;
             case 1:
             case 2:
+
+                // 主线剧情直接进入游戏，不打开整备界面
+                isSetUp = false;
+                CurrentOpen = 0;
+
+                SetUpMenu.SetActive(false);
+                PauseButton.SetActive(true);
+
+                playerController.EnableGameplayInput();
+
+                EventSystem.current.SetSelectedGameObject(null);
+
+
                 //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
                 //CloseSetUp();
                 break;
