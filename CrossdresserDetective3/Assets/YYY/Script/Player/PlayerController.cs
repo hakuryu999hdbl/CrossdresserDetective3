@@ -793,6 +793,8 @@ public class PlayerController : MonoBehaviour
         } //被抓住拉近镜头  
 
 
+      
+
     }//开启挣扎
 
     public void EndStruggle()

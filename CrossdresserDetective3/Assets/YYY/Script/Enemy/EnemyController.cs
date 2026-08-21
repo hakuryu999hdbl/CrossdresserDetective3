@@ -889,6 +889,10 @@ public class EnemyController : MonoBehaviour
 
         frameEvent_Audio._Attack_pick();//抓取声
 
+
+        capturedPlayer.frameEvent.SetCatch_1();//所有抓取都先把主角裙子内裤吊带去掉
+
+
         ReadCurrentGame(player);//敌人读取玩家皮肤
 
 

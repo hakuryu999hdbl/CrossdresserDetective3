@@ -966,6 +966,35 @@ public class FrameEvent : MonoBehaviour
 
 
 
+
+    public void SetCatch_1() 
+    {
+        playerController.isUsingStoryClothes = true;//不要记录衣服
+
+
+        playerController.skirtIndex = 0;
+        playerController.beltIndex = 0;
+ 
+
+        
+        playerController.pantiesIndex = 0;
+
+        if (playerController.clothesIndex == 3) 
+        {
+            playerController.clothesIndex = 0;
+        }//兔女郎装也脱掉
+
+        if (playerController.stockingsIndex == 3)
+        {
+            playerController.stockingsIndex = 0;
+        }//裤袜也脱掉
+
+        playerController.RefreshPlayerSkin();
+
+        playerController.frameEvent_Audio._SE_Tear();
+
+    }//被敌人抓住后挣扎，裙子吊带内裤为0
+
     public void SetDeadBondage_Bondage_1()
     {
 

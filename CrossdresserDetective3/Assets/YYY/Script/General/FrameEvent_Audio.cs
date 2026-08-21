@@ -396,10 +396,11 @@ public class FrameEvent_Audio : MonoBehaviour
         audioS.PlayOneShot(AudioManager.SE_Tuo);
     }
 
+    //抓住后撕衣服
     public void _SE_Tear() 
     {
         audioS.PlayOneShot(AudioManager.SE_Tear);
-    }
+    }//代码调用
 
     public void _SE_HighHeels_Walk()
     {
