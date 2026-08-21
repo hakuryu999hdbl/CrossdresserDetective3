@@ -1059,6 +1059,16 @@ public class FrameEvent : MonoBehaviour
         rBQController.bondageType = 0;
 
 
+        //赤裸的女孩被捆绑
+        rBQController.Girl_clothesIndex = 10;
+        //rBQController.Girl_glovesIndex = 0;
+        rBQController.Girl_hatIndex = 0;
+        rBQController.Girl_maskIndex = 0;
+        //rBQController.Girl_stockingsIndex = 0;
+        rBQController.Girl_underwearIndex = 10;
+        rBQController.Girl_shoesIndex = 10;
+
+
         rBQController.RefreshPlayerSkin();
 
     }//救出模式失踪少女RBQ皮肤套入

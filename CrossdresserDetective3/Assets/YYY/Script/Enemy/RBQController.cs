@@ -5,9 +5,21 @@ using static RescueTarget;
 
 public class RBQController : MonoBehaviour
 {
+
+    public bool isPlayer = false;
+
     private void Awake()
     {
-        currentAnimationType = Random.Range(0, 2);//玩家随机动画
+
+        if (isPlayer)
+        {
+            currentAnimationType = Random.Range(0, 2);//玩家随机伪娘动画
+        }
+        else
+        {
+            currentAnimationType = -1;//目前先设置解救失踪少女，没有伪娘
+        }
+
     }//这个好像动画很早就被触发应，所以随机需要更早
 
 
@@ -39,7 +51,7 @@ public class RBQController : MonoBehaviour
 
     [Header("当前动画系")]
     [SerializeField]
-    private int currentAnimationType =1;//0 Rape系   1 Abuse系
+    private int currentAnimationType =1;//[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY
 
 
 
@@ -61,6 +73,11 @@ public class RBQController : MonoBehaviour
 
         switch (currentAnimationType) 
         {
+            case -1:
+                anim.Play("Man_AbuseGirl_7", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                break;
+
             case 0:
                 anim.Play("Man_RapeYYY_7", 0, 0f);
                 frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
@@ -91,6 +108,12 @@ public class RBQController : MonoBehaviour
 
         switch (currentAnimationType)
         {
+
+            case -1:
+                anim.Play("Man_AbuseGirl_1", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                break;
+
             case 0:
                 anim.Play("Man_RapeYYY_1", 0, 0f);
                 frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
