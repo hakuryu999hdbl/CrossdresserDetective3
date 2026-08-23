@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
                         SetArea(1); //事务所外走廊
                         break;
                     case 3:
-                        SetArea(3);//O型公寓走廊
+                        SetArea(8);//O型公寓走廊
                         break;
                     case 4:
                         SetArea(3);//O型公寓走廊

@@ -17,8 +17,8 @@ public class SkyboxSample : MonoBehaviour
 
         //Black();
         //DayOrNight();
-        Night();
-        //Day();
+        //Night();
+        Day();
     }
 
     void Update()

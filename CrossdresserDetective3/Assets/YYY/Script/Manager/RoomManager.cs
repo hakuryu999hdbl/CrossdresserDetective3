@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +17,8 @@ public class RoomManager : MonoBehaviour
     public GameObject escapeRoot;
     public GameObject eliminateRoot;
 
+    public GameObject investigateRoot_2;//一般来说显示，隐藏搜查任务电脑
+
 
     private void Start()
     {
@@ -28,6 +30,9 @@ public class RoomManager : MonoBehaviour
     {
         if (investigateRoot != null)
             investigateRoot.SetActive(true);
+
+        if (investigateRoot_2 != null)
+            investigateRoot_2.SetActive(false);//隐藏多余电脑
 
         if (playerSpawnPoints_investigate != null)
             GameManager.instance.player.transform.position =
