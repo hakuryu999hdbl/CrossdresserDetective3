@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
     public bool isOnElevator;//是否在电梯里
     public bool isInCutscene;//是否位于过场动画
 
+    public bool isBoki = false;//是否勃起
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -151,7 +154,7 @@ public class PlayerController : MonoBehaviour
         }
 
         ChangeSex(-1);//自然下降淫乱值
-
+        if (currentSex > 0) { isBoki = true; } else{ isBoki = false; }
 
         if (!isHurt && !isAttack && !isTeleporting) { Move(); }
 

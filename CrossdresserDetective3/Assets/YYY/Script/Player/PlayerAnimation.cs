@@ -38,7 +38,7 @@ public class PlayerAnimation : MonoBehaviour
 
         anim.SetBool("isWallCling", playerController.isWallCling);//每帧检测玩家是滑铲
 
-
+        anim.SetBool("isBoki", playerController.isBoki);//每帧检测玩家是勃起
     }
 
     public void PlayHurt()

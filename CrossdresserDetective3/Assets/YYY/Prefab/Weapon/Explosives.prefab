@@ -77,6 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14872c87c2d7dee45aff8a3ffc8ff163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  frameEvent_Audio: {fileID: 1977814487477092899}
   startTime: 0
   waitTime: 2
   bombForce: 10
@@ -101,10 +105,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  frameEvent_Audio: {fileID: 1977814487477092899}
 --- !u!95 &8834990134354167798
 Animator:
   serializedVersion: 7
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73259054078e0934dba7329cb1b49cb8, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,6 +194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioS: {fileID: 2384925480244458554}
+  isCage: 0
+  voiceAudioS: {fileID: 0}
+  currentVoiceLoopType: 0
 --- !u!82 &2384925480244458554
 AudioSource:
   m_ObjectHideFlags: 0
