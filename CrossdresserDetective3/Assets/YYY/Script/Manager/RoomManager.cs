@@ -62,7 +62,7 @@ public class RoomManager : MonoBehaviour
 
     public void SetupEliminate()
     {
-        if (escapeRoot != null)
+        if (eliminateRoot != null)
             eliminateRoot.SetActive(true);
 
         if (playerSpawnPoints_eliminate != null)

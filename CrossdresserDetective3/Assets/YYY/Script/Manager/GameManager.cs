@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
@@ -26,80 +27,36 @@ public class GameManager : MonoBehaviour
 
 
 
-
+    [Header("关卡")]
+    public GameObject DetectiveAgency_1, DetectiveAgency_2;
+    public GameObject Company_1, Company_2;
 
     private void Start()
     {
         //AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Level_1, true);
 
-        //根据当前临时存档读取位置
-        switch (GameFlowData.CurrentChapter)
+
+        switch (GameFlowData.CurrentMapType)
         {
-            default:
-            case 1:
-
-                switch (GameFlowData.CurrentStage)
-                {
-                    default:
-                    case 1:
-                        SetArea(0); //事务所
-                        break;
-                    case 2:
-                        SetArea(1); //事务所外走廊
-                        break;
-                    case 3:
-                        SetArea(8);//O型公寓走廊
-                        break;
-                    case 4:
-                        SetArea(3);//O型公寓走廊
-                        break;
-                    case 5:
-                        SetArea(3);//O型公寓走廊
-                        break;
-                    case 6:
-                        SetArea(3);//O型公寓走廊
-                        break;
-                    case 7:
-                        SetArea(4);
-                        break;
-                    case 8:
-                        SetArea(7);
-                        break;
-
-                    case 9:
-                        SetArea(8);
-                        break;
-                    case 10:
-                        SetArea(9);
-                        break;
-
-
-
-                }
+            case GameFlowData.MapType.DetectiveAgency_1:
+                Instantiate(DetectiveAgency_1, Vector3.zero, Quaternion.identity);
                 break;
 
+            case GameFlowData.MapType.DetectiveAgency_2:
+                Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
+                break;
+
+            case GameFlowData.MapType.Company_1:
+                Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                break;
+
+            case GameFlowData.MapType.Company_2:
+                Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                break;
         }
 
-
-
-
     }
 
-
-
-    /// <summary>
-    /// 关卡
-    /// </summary>
-    #region
-    [Header("关卡")]
-    public List<GameObject> AreaList; // 在Inspector中添加Area_1~3
-
-    public void SetArea(int index)
-    {
-        Instantiate(AreaList[index], Vector3.zero, Quaternion.identity);
-    }
-
-    #endregion
 
 
 
@@ -185,15 +142,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     #region
 
-    public enum WinMode
-    {
-        Eliminate,   // 消灭
-        Escape,      // 逃脱
-        Investigate, // 搜查
-        Rescue       // 救援
-    }
 
-    public WinMode winMode;
 
     public RoomManager roomManager;
 
@@ -204,52 +153,28 @@ public class GameManager : MonoBehaviour
 
     public void ShowMissionUI()
     {
-        Debug.Log("显示模式");
-        //根据当前临时存档读取位置
-        switch (GameFlowData.CurrentChapter)
+
+
+
+        //Debug.Log("显示模式：" + GameFlowData.CurrentMissionType);
+
+        switch (GameFlowData.CurrentMissionType)
         {
-            default:
-            case 1:
-
-                switch (GameFlowData.CurrentStage)
-                {
-                    default:
-                    case 1:
-                        ShowEscape();//逃脱模式
-                        break;
-                    case 2:
-                        ShowEliminate();//歼灭模式
-                        break;
-                    case 3:
-                        ShowClue();//搜查模式
-                        break;
-                    case 4:
-                        ShowRescue();//救出模式
-                        break;
-                    case 5:
-                        ShowEscape();//逃脱模式
-                        break;
-                    case 6:
-                        ShowEliminate();//歼灭模式
-                        break;
-                    case 7:
-                        ShowEliminate();//歼灭模式
-                        break;
-                    case 8:
-                        ShowEliminate();//歼灭模式
-                        break;
-                    case 9:
-                        ShowEliminate();//歼灭模式
-                        break;
-                    case 10:
-                        ShowEliminate();//歼灭模式
-                        break;
-
-
-
-                }
+            case GameFlowData.MissionType.Eliminate:
+                ShowEliminate();
                 break;
 
+            case GameFlowData.MissionType.Escape:
+                ShowEscape();
+                break;
+
+            case GameFlowData.MissionType.Investigate:
+                ShowClue();
+                break;
+
+            case GameFlowData.MissionType.Rescue:
+                ShowRescue();
+                break;
         }
 
 
@@ -296,7 +221,6 @@ public class GameManager : MonoBehaviour
         }
         
 
-        winMode = WinMode.Investigate;
 
         //场景里有线索，这是调查任务
         UIManager.instance.RefreshClueUI(currentClues, totalClues);
@@ -356,9 +280,7 @@ public class GameManager : MonoBehaviour
         {
             roomManager.SetupRescue();
         }
-       
 
-        winMode = WinMode.Rescue;
 
         Invoke(nameof(RenewRescuesUI), 0.2f);//似乎是生成RBQ之后要缓一下更新UI？
       
@@ -402,9 +324,7 @@ public class GameManager : MonoBehaviour
         {
             roomManager.SetupEscape();
         }
-       
 
-        winMode = WinMode.Escape;
         UIManager.instance.escapeText.gameObject.SetActive(true);
 
     }//弹出这是逃脱任务提示
@@ -460,25 +380,28 @@ public class GameManager : MonoBehaviour
         if (!allEnemiesDead)
             return;
 
-        switch (winMode)
+        switch (GameFlowData.CurrentMissionType)
         {
-            case WinMode.Eliminate:
-                PlayerEscapeWin();//歼灭模式通常胜利
+            case GameFlowData.MissionType.Eliminate:
+                PlayerEscapeWin();
                 break;
 
-            case WinMode.Investigate:
-                PlayerEscapeWin();  // 搜查模式允许全部击杀直接胜利
+            case GameFlowData.MissionType.Investigate:
+                // 搜查模式允许杀光敌人直接胜利
+                PlayerEscapeWin();
                 break;
 
-            case WinMode.Rescue:
-                if (currentRescues >= totalRescues && totalRescues > 0)
+            case GameFlowData.MissionType.Rescue:
+                // 救援必须救完人质
+                if (currentRescues >= totalRescues &&
+                    totalRescues > 0)
                 {
-                    PlayerEscapeWin(); // 救援模式杀光敌人不算完成，还必须把人质全部救走
+                    PlayerEscapeWin();
                 }
                 break;
 
-            case WinMode.Escape:
-                // 逃脱模式必须到出口，不因杀光敌人获胜
+            case GameFlowData.MissionType.Escape:
+                // 逃脱必须到出口
                 break;
         }
 
@@ -514,11 +437,13 @@ public class GameManager : MonoBehaviour
 
     void ShowEliminate()
     {
+        Debug.Log("歼灭模式");
 
         if (roomManager != null)
         {
             roomManager.SetupEliminate();
         }
+
 
 
         UIManager.instance.eliminateText.gameObject.SetActive(true);

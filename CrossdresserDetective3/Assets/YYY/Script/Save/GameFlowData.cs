@@ -32,4 +32,25 @@ public static class GameFlowData
         Rifle,
         Throw
     }
+
+    public enum MissionType
+    {
+        Eliminate,      // 歼灭
+        Escape,         // 逃脱
+        Investigate,    // 搜查
+        Rescue,         // 救出
+    }
+
+    public static MissionType CurrentMissionType;
+
+
+    public enum MapType
+    {
+        DetectiveAgency_1,
+        DetectiveAgency_2,
+        Company_1,
+        Company_2
+    }
+
+    public static MapType CurrentMapType;
 }
