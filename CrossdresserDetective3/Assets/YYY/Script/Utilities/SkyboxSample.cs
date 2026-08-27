@@ -18,6 +18,9 @@ public class SkyboxSample : MonoBehaviour
         //Black();
         //DayOrNight();
         //Night();
+
+        GameManager.instance.IsSkyboxSample(this);
+
         Day();
     }
 
@@ -52,6 +55,8 @@ public class SkyboxSample : MonoBehaviour
 
     public Light dayLight;
 
+    public int DayType;//0白天 1黑夜
+
     public void Day()
     {
         mainCamera.clearFlags = CameraClearFlags.Skybox; // 确保切换回来
@@ -72,6 +77,8 @@ public class SkyboxSample : MonoBehaviour
         }
 
         dayLight.intensity = 0.8f;
+
+        DayType = 0;
     }
 
     public void Night()
@@ -80,6 +87,8 @@ public class SkyboxSample : MonoBehaviour
         RenderSettings.skybox = mats[1];
 
         dayLight.intensity = 0.4f;
+
+        DayType = 1;
     }
 
     public void RedSky()

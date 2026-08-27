@@ -1097,6 +1097,8 @@ public class UIManager : MonoBehaviour
         // 隐藏并清理场景内敌人
         GameManager.instance.ClearEnemiesForGameOver();
 
+        //玩家去调教房
+        playerController.transform.position = GameManager.instance.roomManager.gameOverPoint.transform.position;
 
         //隐藏玩家
         playerController.frameEvent.HideSkeleton();

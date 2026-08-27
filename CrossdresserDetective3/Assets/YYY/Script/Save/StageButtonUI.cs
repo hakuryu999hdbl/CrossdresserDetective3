@@ -30,16 +30,10 @@ public class StageButtonUI : MonoBehaviour
     public int chapter;
     public int stage;
 
-    [Header("任务类型")]
-    public GameFlowData.MissionType missionType;
 
-    [Header("地图类型")]
-    public GameFlowData.MapType mapType;
 
     public void Click()
     {
-        GameFlowData.CurrentMissionType = missionType;//记录当前任务
-        GameFlowData.CurrentMapType = mapType;//记录当前地图
 
         MenuManager.instance.NewGame(chapter, stage);
     }

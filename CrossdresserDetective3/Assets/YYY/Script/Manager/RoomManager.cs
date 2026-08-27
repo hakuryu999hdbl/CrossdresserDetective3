@@ -19,6 +19,8 @@ public class RoomManager : MonoBehaviour
 
     public GameObject investigateRoot_2;//一般来说显示，隐藏搜查任务电脑
 
+    [Header("gameOverPoint")]
+    public Transform gameOverPoint; // 调教房 / 拷问室
 
     private void Start()
     {

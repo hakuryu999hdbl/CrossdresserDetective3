@@ -44,13 +44,5 @@ public static class GameFlowData
     public static MissionType CurrentMissionType;
 
 
-    public enum MapType
-    {
-        DetectiveAgency_1,
-        DetectiveAgency_2,
-        Company_1,
-        Company_2
-    }
 
-    public static MapType CurrentMapType;
 }

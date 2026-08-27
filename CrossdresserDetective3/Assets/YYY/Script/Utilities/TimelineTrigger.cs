@@ -214,6 +214,19 @@ public class TimelineTrigger : MonoBehaviour
         GameManager.instance.ShowMissionUI();
     }//过场动画的导入
 
+    public void SetSkyChange() 
+    {
+
+        if (GameManager.instance.skyboxSample.DayType ==0)
+        {
+            GameManager.instance.skyboxSample.Night();
+        }
+        else 
+        {
+            GameManager.instance.skyboxSample.Day();
+        }
+           
+    }
 
 
     #region 玩家控制

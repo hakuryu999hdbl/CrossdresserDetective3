@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static GameFlowData;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,24 +37,50 @@ public class GameManager : MonoBehaviour
         //AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Level_1, true);
 
 
-        switch (GameFlowData.CurrentMapType)
+
+
+
+
+        //由于点击【下一关】不回到主菜单出发记录，所以GameManager还是需要身上保留关卡地图任务字典
+        switch (CurrentChapter)
         {
-            case GameFlowData.MapType.DetectiveAgency_1:
-                Instantiate(DetectiveAgency_1, Vector3.zero, Quaternion.identity);
-                break;
+            case 1:
+                switch (CurrentStage)
+                {
+                    case 1:
+                        Instantiate(DetectiveAgency_1, Vector3.zero, Quaternion.identity);
+                        break;
 
-            case GameFlowData.MapType.DetectiveAgency_2:
-                Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
-                break;
+                    case 2:
+                        Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
+                        break;
 
-            case GameFlowData.MapType.Company_1:
-                Instantiate(Company_1, Vector3.zero, Quaternion.identity);
-                break;
+                    case 3:
+                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        break;
 
-            case GameFlowData.MapType.Company_2:
-                Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                    case 4:
+                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        break;
+
+                    case 5:
+                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        break;
+
+                    case 6:
+                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        break;
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        break;
+                }
                 break;
         }
+
+
 
     }
 
@@ -142,7 +169,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     #region
 
+    public SkyboxSample skyboxSample;
 
+    public void IsSkyboxSample(SkyboxSample _skyboxSample)
+    {
+        skyboxSample = _skyboxSample;
+    }//天空盒自己来报告
 
     public RoomManager roomManager;
 
@@ -158,22 +190,53 @@ public class GameManager : MonoBehaviour
 
         //Debug.Log("显示模式：" + GameFlowData.CurrentMissionType);
 
-        switch (GameFlowData.CurrentMissionType)
+
+
+
+        //由于点击【下一关】不回到主菜单出发记录，所以GameManager还是需要身上保留关卡地图任务字典
+        switch (GameFlowData.CurrentChapter)
         {
-            case GameFlowData.MissionType.Eliminate:
-                ShowEliminate();
-                break;
+            case 1:
+                switch (GameFlowData.CurrentStage)
+                {
+                    case 1:
+                        GameFlowData.CurrentMissionType = MissionType.Escape;
+                        ShowEscape();
+                        break;
 
-            case GameFlowData.MissionType.Escape:
-                ShowEscape();
-                break;
+                    case 2:
+                        GameFlowData.CurrentMissionType = MissionType.Eliminate;
+                        ShowEliminate();
+                        break;
 
-            case GameFlowData.MissionType.Investigate:
-                ShowClue();
-                break;
+                    case 3:
+                        GameFlowData.CurrentMissionType = MissionType.Investigate;
+                        ShowClue();
+                        break;
 
-            case GameFlowData.MissionType.Rescue:
-                ShowRescue();
+                    case 4:
+                        GameFlowData.CurrentMissionType = MissionType.Rescue;
+                        ShowRescue();
+                        break;
+
+                    case 5:
+                        GameFlowData.CurrentMissionType = MissionType.Escape;
+                        ShowEscape();
+                        break;
+
+                    case 6:
+                        GameFlowData.CurrentMissionType = MissionType.Investigate;
+                        ShowClue();
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        GameFlowData.CurrentMissionType = MissionType.Eliminate;
+                        ShowEliminate();
+                        break;
+                }
                 break;
         }
 
@@ -219,7 +282,7 @@ public class GameManager : MonoBehaviour
         {
             roomManager.SetupInvestigate();
         }
-        
+
 
 
         //场景里有线索，这是调查任务
@@ -276,18 +339,18 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("救出模式");
 
-        if (roomManager != null) 
+        if (roomManager != null)
         {
             roomManager.SetupRescue();
         }
 
 
         Invoke(nameof(RenewRescuesUI), 0.2f);//似乎是生成RBQ之后要缓一下更新UI？
-      
+
     }//弹出这是救出模式提示
 
 
-    void RenewRescuesUI() 
+    void RenewRescuesUI()
     {
         //场景里有人质，这是救出模式
         UIManager.instance.RefreshRescueUI(currentRescues, totalRescues);
