@@ -86,7 +86,8 @@ public class SkyboxSample : MonoBehaviour
         mainCamera.clearFlags = CameraClearFlags.Skybox; // 确保切换回来
         RenderSettings.skybox = mats[1];
 
-        dayLight.intensity = 0.4f;
+        //dayLight.intensity = 0.4f;
+        dayLight.intensity = 0.1f;//夜晚直接去掉直照光
 
         DayType = 1;
     }

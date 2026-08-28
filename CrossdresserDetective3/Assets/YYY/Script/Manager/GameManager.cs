@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 
                     case 3:
                         Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
                         break;
 
                     case 4:
@@ -199,41 +200,34 @@ public class GameManager : MonoBehaviour
             case 1:
                 switch (GameFlowData.CurrentStage)
                 {
-                    case 1:
-                        GameFlowData.CurrentMissionType = MissionType.Escape;
+                    case 1:                
                         ShowEscape();
                         break;
 
-                    case 2:
-                        GameFlowData.CurrentMissionType = MissionType.Eliminate;
+                    case 2:                 
                         ShowEliminate();
                         break;
 
                     case 3:
-                        GameFlowData.CurrentMissionType = MissionType.Investigate;
                         ShowClue();
                         break;
 
                     case 4:
-                        GameFlowData.CurrentMissionType = MissionType.Rescue;
                         ShowRescue();
                         break;
 
                     case 5:
-                        GameFlowData.CurrentMissionType = MissionType.Escape;
                         ShowEscape();
                         break;
 
-                    case 6:
-                        GameFlowData.CurrentMissionType = MissionType.Investigate;
+                    case 6:                    
                         ShowClue();
                         break;
 
                     case 7:
                     case 8:
                     case 9:
-                    case 10:
-                        GameFlowData.CurrentMissionType = MissionType.Eliminate;
+                    case 10:                  
                         ShowEliminate();
                         break;
                 }
@@ -275,6 +269,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowClue()
     {
+        GameFlowData.CurrentMissionType = MissionType.Investigate;
         Debug.Log("搜查模式");
 
 
@@ -337,6 +332,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowRescue()
     {
+        GameFlowData.CurrentMissionType = MissionType.Rescue;
         Debug.Log("救出模式");
 
         if (roomManager != null)
@@ -381,6 +377,7 @@ public class GameManager : MonoBehaviour
 
     void ShowEscape()
     {
+        GameFlowData.CurrentMissionType = MissionType.Escape;
         Debug.Log("逃脱模式");
 
         if (roomManager != null)
@@ -500,6 +497,7 @@ public class GameManager : MonoBehaviour
 
     void ShowEliminate()
     {
+        GameFlowData.CurrentMissionType = MissionType.Eliminate;
         Debug.Log("歼灭模式");
 
         if (roomManager != null)
