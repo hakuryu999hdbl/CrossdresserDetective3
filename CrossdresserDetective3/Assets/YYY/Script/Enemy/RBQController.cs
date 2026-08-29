@@ -13,7 +13,53 @@ public class RBQController : MonoBehaviour
 
         if (isPlayer)
         {
-            currentAnimationType = Random.Range(0, 2);//玩家随机伪娘动画
+
+            switch (GameFlowData.CurrentChapter)
+            {
+                case 1:
+                    switch (GameFlowData.CurrentStage)
+                    {
+                        case 1:
+                            currentAnimationType = 0;//用完垃圾桶
+                            UIManager.instance.ResultNumber = 1;
+                            break;
+
+                        case 2:
+                            currentAnimationType = 0;//用完垃圾桶
+                            UIManager.instance.ResultNumber = 1;
+                            break;
+
+                        case 3:
+                            currentAnimationType = 2;//厕所尿便器
+                            UIManager.instance.ResultNumber = 3;
+                            break;
+
+                        case 4:
+                            currentAnimationType = 2;//厕所尿便器
+                            UIManager.instance.ResultNumber = 3;
+                            break;
+
+                        case 5:
+                            currentAnimationType = 2;//厕所尿便器
+                            UIManager.instance.ResultNumber = 3;
+                            break;
+
+                        case 6:
+                            currentAnimationType = 2;//厕所尿便器
+                            UIManager.instance.ResultNumber = 3;
+                            break;
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                            currentAnimationType = 1;//轮奸结束
+                            UIManager.instance.ResultNumber = 1;
+                            break;
+                    }
+                    break;
+            }
+
+            //currentAnimationType = Random.Range(0, 2);//玩家随机伪娘动画
         }
         else
         {

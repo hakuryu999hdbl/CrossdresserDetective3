@@ -851,6 +851,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("射精/体力下降");
 
+            catchingEnemy.ForceMasturbate();
 
         }
     }
@@ -1287,7 +1288,7 @@ public class PlayerController : MonoBehaviour
     {
 
         if (isInCutscene) { return; }//过场动画锁
-        if (isBondage) { return; }
+      
 
         // 被抓挣扎时，攻击键只负责挣扎
         if (isStruggling)
@@ -1296,7 +1297,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-
+        if (isBondage) { return; }
 
 
 

@@ -504,7 +504,7 @@ public class EnemyController : MonoBehaviour
             if (Time.time > nextAttack)
             {
 
-                if (this is Enemy_3)
+                if (this is Enemy_1)
                 {
                     anim.SetTrigger("catch");
                 }
@@ -988,7 +988,12 @@ public class EnemyController : MonoBehaviour
     }//玩家挣扎值满了后的挣脱
 
 
+    public void ForceMasturbate() 
+    {
+        // 抓射
+        anim.SetTrigger("next");
 
+    }
 
 
 
