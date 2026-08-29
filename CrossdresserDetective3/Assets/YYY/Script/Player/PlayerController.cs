@@ -796,7 +796,7 @@ public class PlayerController : MonoBehaviour
         } //被抓住拉近镜头  
 
 
-      
+        StrugglePower /= 2;//每次被抓都会削弱挣扎
 
     }//开启挣扎
 
@@ -847,17 +847,26 @@ public class PlayerController : MonoBehaviour
         currentSex = Mathf.Clamp(currentSex + amount, 0, maxSex);
         UIManager.instance.UpdateSexBar(currentSex, maxSex);
 
-        if (currentSex >= maxSex)
+        if (currentSex >= maxSex&& weakness <4)
         {
             Debug.Log("射精/体力下降");
 
             catchingEnemy.ForceMasturbate();
-
+            currentSex = 0;
+            maxSex /=2;
+            StrugglePower /= 2;
+            UIManager.instance.UpdateSexBar(currentSex, maxSex);
+            weakness ++;
+            if (weakness>=3) 
+            {
+                catchingEnemy.anim.SetTrigger("over");
+            }
         }
     }
 
-
-
+    [Header("虚弱程度")]
+    public int weakness = 0;
+    public int StrugglePower = 20;
     #endregion
 
 
@@ -1293,7 +1302,7 @@ public class PlayerController : MonoBehaviour
         // 被抓挣扎时，攻击键只负责挣扎
         if (isStruggling)
         {
-            ChangeStruggle(100);
+            ChangeStruggle(StrugglePower);
             return;
         }
 

@@ -504,18 +504,34 @@ public class EnemyController : MonoBehaviour
             if (Time.time > nextAttack)
             {
 
-                if (this is Enemy_1)
+                //如果是逃出模式，只有抓住攻击这一种（当然在这个模式下，关卡里放满了Enemy_1和Enemy_3）
+                if (GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
                 {
                     anim.SetTrigger("catch");
                 }
                 else
                 {
-                    anim.SetInteger("attackType", Random.Range(1, 3));
-                    anim.SetTrigger("attack");
+
+                    //目前只有Enemy_1和Enemy_3随机抓取,别的敌人要么远程攻击要么特殊攻击
+                    if (this is Enemy_1|| this is Enemy_3) 
+                    {
+                        if (Random.Range(0,2)==0)
+                        {
+                            anim.SetTrigger("catch");
+                        }
+                        else
+                        {
+                            anim.SetInteger("attackType", Random.Range(1, 3));
+                            anim.SetTrigger("attack");
+                        }
+                    }
+                    else
+                    {
+                        anim.SetInteger("attackType", Random.Range(1, 3));
+                        anim.SetTrigger("attack");
+                    }         
+
                 }
-
-
-           
 
                 nextAttack = Time.time + attackRate;
             }

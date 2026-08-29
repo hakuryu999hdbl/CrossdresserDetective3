@@ -1062,8 +1062,8 @@ public class UIManager : MonoBehaviour
     public GameObject MissionFailure;
 
     public Image ResultPicture;//设置结局图片
-    public int ResultNumber;//0用完扔垃圾桶 1紧缚逃脱失败  2尿便器
-    public Sprite CG_1,CG_2,CG_3;
+    public int ResultNumber;//1用完扔垃圾桶 2紧缚逃脱失败  3尿便器   4无捆绑轮奸 
+    public Sprite CG_1,CG_2,CG_3, CG_4;
 
     public bool waitGameOverInput = false;//等待玩家输入再跳出战败界面
 
@@ -1149,6 +1149,10 @@ public class UIManager : MonoBehaviour
             case 3:
 
                 ResultPicture.sprite = CG_3;//尿便器
+                break;
+            case 4:
+
+                ResultPicture.sprite = CG_4;//无捆绑轮奸
                 break;
         }
 

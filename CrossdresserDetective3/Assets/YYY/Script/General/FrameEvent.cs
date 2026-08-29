@@ -1076,8 +1076,11 @@ public class FrameEvent : MonoBehaviour
 
 
 
-    public void OnOnLewdmoveOver() 
+    public void OnLewdmoveOver() 
     {
-
+        UIManager.instance.ResultNumber = 4;
+        UIManager.instance.ShowGameOverMenu();
+        
+        
     }//被抓住后没能逃出被处决动画结尾触发结局CG
 }
