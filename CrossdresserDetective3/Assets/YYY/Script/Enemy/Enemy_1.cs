@@ -86,7 +86,7 @@ public class Enemy_1 : EnemyController
 
     public void SetEnemy_CatchYYY()
     {
-        anim.Play("Story_CatchYYY", 0, 0f);
+        anim.Play("Story_CatchBondageYYY_1", 0, 0f);
         anim.Update(0f);
 
         

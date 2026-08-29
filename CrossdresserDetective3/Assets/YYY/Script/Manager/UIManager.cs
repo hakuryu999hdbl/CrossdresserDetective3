@@ -938,15 +938,21 @@ public class UIManager : MonoBehaviour
     public GameObject InputPrompt_1;//普通移动按键提示
     public GameObject InputPrompt_2;//拘束移动按键提示
 
+    public bool isInCutscene = false;//其实因该是GameManager管理这个是不是在过场动画内，目前暂时由UIManager做
+
     public void OnCutsceneStart()
     {
         UI_All.SetActive(false);
         UI_Cutscene.SetActive(true);
+        isInCutscene = true;
+
     }//过场动画开启
     public void OnCutsceneOver()
     {
         UI_All.SetActive(true);
         UI_Cutscene.SetActive(false);
+        isInCutscene = false;
+
     }//过场动画结束
 
 

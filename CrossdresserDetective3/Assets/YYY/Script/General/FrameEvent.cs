@@ -634,12 +634,12 @@ public class FrameEvent : MonoBehaviour
 
     public void OnStartPlayerStruggle()
     {
-        if (enemyController != null)
+        if (enemyController != null && !UIManager.instance.isInCutscene)
         {
             enemyController.StartPlayerStruggle();
 
         }
-    }//开启玩家挣扎
+    }//开启玩家挣扎(剧情中不去触发)
 
 
     #endregion
@@ -1073,4 +1073,11 @@ public class FrameEvent : MonoBehaviour
 
     }//救出模式失踪少女RBQ皮肤套入
 
+
+
+
+    public void OnOnLewdmoveOver() 
+    {
+
+    }//被抓住后没能逃出被处决动画结尾触发结局CG
 }

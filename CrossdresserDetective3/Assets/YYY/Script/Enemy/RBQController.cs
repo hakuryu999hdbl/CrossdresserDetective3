@@ -87,6 +87,10 @@ public class RBQController : MonoBehaviour
                 anim.Play("Man_AbuseYYY_8", 0, 0f);
                 frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
+            case 2:
+                anim.Play("Man_PeeInYYY_6", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                break;
         }
        
         anim.Update(0f);
@@ -122,6 +126,11 @@ public class RBQController : MonoBehaviour
             case 1:
                 anim.Play("Man_AbuseYYY_1", 0, 0f);
                 frameEvent.SetDeadBondage_Bondage_2();//全身捆绑，不绑腿
+                break;
+
+            case 2:
+                anim.Play("Man_PeeInYYY_1", 0, 0f);
+                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
         }
 

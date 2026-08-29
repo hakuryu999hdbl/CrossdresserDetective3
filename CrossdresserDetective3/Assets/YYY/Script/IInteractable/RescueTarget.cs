@@ -24,6 +24,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
     private string interactableTag;
     private bool registered;
 
+    public GameObject NoTouch;//目前没有办法救的提示
+
     private void Awake()
     {
         interactableTag = gameObject.tag;
@@ -69,7 +71,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
         switch (state)
         {
             case RescueState.Bound:
-                rbqController.BoundAnimation();
+                rbqController.BoundAnimation();//局内失踪少女初始单个捆绑状态
                 break;
 
             case RescueState.BeingAbused:
@@ -77,7 +79,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
                 break;
 
             case RescueState.Fighting:
-                rbqController.BoundAnimation();
+                rbqController.BoundAnimation();//局内失踪少女在敌人离开后进入单个捆绑状态
                 break;
         }
     }
@@ -145,7 +147,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
 
 
-    
+        NoTouch.SetActive(true);
         rbqController.BoundAnimation();    //敌人离开。失踪少女变成拘束
 
 
@@ -175,6 +177,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
     private void BecomeRescueable()
     {
         state = RescueState.Bound;
+        NoTouch.SetActive(false);
 
         //变成可交互
         gameObject.tag = interactableTag;
