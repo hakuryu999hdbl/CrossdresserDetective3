@@ -832,7 +832,7 @@ public class PlayerController : MonoBehaviour
         if (currentStruggle >= maxStruggle)
         {
             Debug.Log("挣扎成功");
-            catchingEnemy.BreakFreeFromPlayer(this);
+            catchingEnemy.BreakFreeFromPlayer(this);//一般被抓挣扎结束
 
         }
     }
@@ -854,7 +854,7 @@ public class PlayerController : MonoBehaviour
             catchingEnemy.ForceMasturbate();
             currentSex = 0;
             maxSex /=2;
-            StrugglePower /= 2;
+            //StrugglePower /= 2;
             UIManager.instance.UpdateSexBar(currentSex, maxSex);
             weakness ++;
             if (weakness>=3) 
@@ -866,7 +866,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("虚弱程度")]
     public int weakness = 0;
-    public int StrugglePower = 20;
+    int StrugglePower = 200;
     #endregion
 
 
@@ -987,10 +987,17 @@ public class PlayerController : MonoBehaviour
 
     public void OnTakeDamage(Attack attack)
     {
-        if (isStruggling) return;
+        //if (isStruggling) return;
+        if (isCaptured)
+        {
+
+            catchingEnemy.BreakFreeFromPlayer(this);
+
+        }//被抓住期间被打，把抓住玩家的敌人强制Idle，直接挣脱
+
 
         if (attack == null)
-            return;
+        return;
 
 
         PlayBloodEffect();
@@ -1060,6 +1067,14 @@ public class PlayerController : MonoBehaviour
 
         isDead = true;
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
+
+
+        if (isCaptured) 
+        {
+
+            catchingEnemy.BreakFreeFromPlayer(this);//死亡被抓挣扎结束
+
+        }//被抓住期间被打死，把抓住玩家的敌人强制Idle
 
 
         UIManager.instance.GameOverUI();

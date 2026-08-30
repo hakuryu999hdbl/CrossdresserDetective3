@@ -513,7 +513,7 @@ public class EnemyController : MonoBehaviour
                 {
 
                     //目前只有Enemy_1和Enemy_3随机抓取,别的敌人要么远程攻击要么特殊攻击
-                    if (this is Enemy_1|| this is Enemy_3) 
+                    if (this is Enemy_1 || this is Enemy_3) 
                     {
                         if (Random.Range(0,2)==0)
                         {
@@ -996,6 +996,8 @@ public class EnemyController : MonoBehaviour
 
         // 玩家播放挣脱攻击动画
         player.playerAnimation.anim.SetTrigger("breakFree");
+
+
 
         // 敌人退出 lewdmove
         anim.SetTrigger("breakFree");

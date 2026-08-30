@@ -494,25 +494,19 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_attack() 
     {
-        switch (Random.Range(0, 4))
-        {
-            case 0:
-                audioS.PlayOneShot(AudioManager.YYY_attack1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.YYY_attack2);
-                break;
-            case 2:
-                audioS.PlayOneShot(AudioManager.YYY_attack3);
-                break;
-            case 3:
-                audioS.PlayOneShot(AudioManager.YYY_attack4);
-                break;
-        }
-    }
 
+        AudioClip[] clips =
+ {
+        AudioManager.YYY_attack1,
+        AudioManager.YYY_attack2,
+        AudioManager.YYY_attack3,
+        AudioManager.YYY_attack4
+    };
 
-
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+    }//单次触发，打断循环
 
     public void _YYY_die()
     {
@@ -531,22 +525,16 @@ public class FrameEvent_Audio : MonoBehaviour
         );
 
 
-        // switch (Random.Range(0, 4))
-        // {
-        //     case 0:
-        //         audioS.PlayOneShot(AudioManager.YYY_die1);
-        //         break;
-        //     case 1:
-        //         audioS.PlayOneShot(AudioManager.YYY_die2);
-        //         break;
-        //     case 2:
-        //         audioS.PlayOneShot(AudioManager.YYY_die3);
-        //         break;
-        //     case 3:
-        //         audioS.PlayOneShot(AudioManager.YYY_die4);
-        //         break;
-        // }
-    }//单次触发
+    }//单次触发，打断循环
+
+    public void _YYY_niao()
+    {
+        PlayVoiceLoop(
+    VoiceLoopType.YYY_Niao,
+    AudioManager.YYY_niao
+);
+
+    }//循环触发
 
     public void _YYY_duzui()
     {
@@ -579,29 +567,13 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_breath()
     {
-        //switch (Random.Range(0, 4))
-        //{
-        //    case 0:
-        //        audioS.PlayOneShot(AudioManager.YYY_breath1);
-        //        break;
-        //    case 1:
-        //        audioS.PlayOneShot(AudioManager.YYY_breath2);
-        //        break;
-        //    case 2:
-        //        audioS.PlayOneShot(AudioManager.YYY_breath3);
-        //        break;
-        //    case 3:
-        //        audioS.PlayOneShot(AudioManager.YYY_breath4);
-        //        break;
-        //}
 
         PlayVoiceLoop(
        VoiceLoopType.YYY_Breath,
        AudioManager.YYY_breath1,
        AudioManager.YYY_breath2,
-       AudioManager.YYY_breath3,
-       AudioManager.YYY_breath4
-   );
+       AudioManager.YYY_breath3
+   );//AudioManager.YYY_breath4  单纯感觉喘息4不是非常适合
 
 
 
@@ -609,15 +581,6 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_gasping()
     {
-        // switch (Random.Range(0, 2))
-        // {
-        //     case 0:
-        //         audioS.PlayOneShot(AudioManager.YYY_gasping1);
-        //         break;
-        //     case 1:
-        //         audioS.PlayOneShot(AudioManager.YYY_gasping2);
-        //         break;
-        // }
 
         PlayVoiceLoop(
           VoiceLoopType.YYY_Gasping,
@@ -630,19 +593,6 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_gasping_quick()
     {
-        //switch (Random.Range(0, 3))
-        //{
-        //    case 0:
-        //        audioS.PlayOneShot(AudioManager.YYY_gasping_quick1);
-        //        break;
-        //    case 1:
-        //        audioS.PlayOneShot(AudioManager.YYY_gasping_quick2);
-        //        break;
-        //    case 2:
-        //        audioS.PlayOneShot(AudioManager.YYY_gasping_quick3);
-        //        break;
-        //}
-
 
         PlayVoiceLoop(
         VoiceLoopType.YYY_GaspingQuick,
@@ -655,15 +605,6 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_gasping_weak()
     {
-        //switch (Random.Range(0, 2))
-        //{
-        //    case 0:
-        //        audioS.PlayOneShot(AudioManager.YYY_gasping_weak1);
-        //        break;
-        //    case 1:
-        //        audioS.PlayOneShot(AudioManager.YYY_gasping_weak2);
-        //        break;
-        //}
 
         PlayVoiceLoop(
        VoiceLoopType.YYY_GaspingWeak,
@@ -677,35 +618,6 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_scream_strong()
     {
-        // switch (Random.Range(0, 8))
-        // {
-        //     case 0:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong1);
-        //         break;
-        //     case 1:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong2);
-        //         break;
-        //     case 2:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong3);
-        //         break;
-        //     case 3:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong4);
-        //         break;
-        //     case 4:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong5);
-        //         break;
-        //     case 5:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong6);
-        //         break;
-        //     case 6:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong7);
-        //         break;
-        //     case 7:
-        //         audioS.PlayOneShot(AudioManager.YYY_scream_strong8);
-        //         break;
-        // }
-
-
 
         AudioClip[] clips =
         {
@@ -724,7 +636,7 @@ public class FrameEvent_Audio : MonoBehaviour
         );
 
 
-    }//单次触发
+    }//单次触发，打断循环
 
 
 
@@ -780,7 +692,18 @@ public class FrameEvent_Audio : MonoBehaviour
                 break;
         }
     }
-
+    public void _Girl_thankYou()
+    {
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.Girl_thankYou1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.Girl_thankYou2);
+                break;
+        }
+    }
 
     #endregion
 
@@ -807,6 +730,7 @@ public class FrameEvent_Audio : MonoBehaviour
         YYY_Gasping,
         YYY_GaspingQuick,
         YYY_GaspingWeak,
+        YYY_Niao,
 
     }
 

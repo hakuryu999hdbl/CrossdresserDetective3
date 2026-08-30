@@ -195,11 +195,17 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
         GameManager.instance.CompleteRescue();
 
-        // 未来更改别的状态
-        gameObject.SetActive(false);
+        rbqController.frameEvent_Audio._Girl_thankYou();
+
+        Invoke(nameof(Dis), 1f);
+      
     }//救出
 
-
+    void Dis() 
+    {
+        // 未来更改别的状态
+        gameObject.SetActive(false);
+    }
 
 
     [Header("敌人触发范围")]

@@ -110,7 +110,7 @@ public class RBQController : MonoBehaviour
 
     [Header("Spine动画器控制")]
     public Animator anim;
-
+    public FrameEvent_Audio frameEvent_Audio;
 
     public void BoundAnimation()
     {

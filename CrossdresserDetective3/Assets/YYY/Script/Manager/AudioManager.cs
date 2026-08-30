@@ -102,6 +102,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
     public AudioClip YYY_die1, YYY_die2, YYY_die3, YYY_die4;
 
+    public AudioClip YYY_niao;
     public AudioClip YYY_duzui1, YYY_duzui2, YYY_duzui3, YYY_duzui4;
     public AudioClip YYY_breath1, YYY_breath2, YYY_breath3, YYY_breath4;
     public AudioClip YYY_gasping1, YYY_gasping2;
@@ -119,7 +120,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip Girl_attack1, Girl_attack2, Girl_attack3;
     public AudioClip Girl_die1, Girl_die2, Girl_die3;
-
+    public AudioClip Girl_thankYou1, Girl_thankYou2;
 
 
 
