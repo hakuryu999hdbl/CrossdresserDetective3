@@ -170,6 +170,10 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
+
+    [Header("名称")]
+    public GameObject YYY;
+
     IEnumerator SetTextUI()
     {
         if (index >= textList.Count)
@@ -182,6 +186,9 @@ public class DialogSystem : MonoBehaviour
         textLabel.text = "";
 
         string line = textList[index].Trim();
+
+        //通用隐藏
+        YYY.SetActive(false);
 
         switch (line)
         {
@@ -196,7 +203,9 @@ public class DialogSystem : MonoBehaviour
                 break;
 
             case "YYY":
-                textLabel.color = new Color(1.0f, 0.2f, 0.5f, 1.0f); //浅红色
+                YYY.SetActive(true);
+                textLabel.color = Color.white;
+                //textLabel.color = new Color(1.0f, 0.2f, 0.5f, 1.0f); //浅红色
                 index++;
                 break;
 

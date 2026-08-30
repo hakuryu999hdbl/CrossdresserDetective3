@@ -957,59 +957,36 @@ public class UIManager : MonoBehaviour
 
 
 
+    [Header("过场台词")]
+    public CutsceneDialogue cutsceneDialogue;
 
-    [Header("章节台词")]
-    public List<GameObject> Chapter_01_1 = new List<GameObject>();
-    public List<GameObject> Chapter_01_2 = new List<GameObject>();
-    public List<GameObject> Chapter_01_3 = new List<GameObject>();
-    public List<GameObject> Chapter_01_4 = new List<GameObject>();
-
-    List<GameObject> currentList;
-
-    int currentIndex = 0;
+    // 保留这个名字
+    // 这样 Timeline 现有帧事件不用重新改
+    public void ShowNext()
+    {
+        cutsceneDialogue.ShowNext();
+    }
 
     public void Init_Chapter_01_1()
     {
-        currentIndex = 0;
-        currentList = Chapter_01_1;
+        cutsceneDialogue.LoadDialogue("Chapter_01_1");
     }//填充章节台词
 
     public void Init_Chapter_01_2()
     {
-        currentIndex = 0;
-        currentList = Chapter_01_2;
+        cutsceneDialogue.LoadDialogue("Chapter_01_2");
     }//填充章节台词
 
     public void Init_Chapter_01_3()
     {
-        currentIndex = 0;
-        currentList = Chapter_01_3;
+        cutsceneDialogue.LoadDialogue("Chapter_01_3");
     }//填充章节台词
 
     public void Init_Chapter_01_4()
     {
-        currentIndex = 0;
-        currentList = Chapter_01_4;
+        cutsceneDialogue.LoadDialogue("Chapter_01_4");
     }//填充章节台词
 
-    public void ShowNext()
-    {
-        if (currentList == null) return;
-        if (currentIndex >= currentList.Count) return;
-
-        currentList[currentIndex].SetActive(true);
-
-        StartCoroutine(Hide(currentList[currentIndex]));
-
-        currentIndex++;
-    }
-
-    IEnumerator Hide(GameObject obj)
-    {
-        yield return new WaitForSeconds(3f);
-
-        obj.SetActive(false);
-    }
 
 
     [Header("目前的过场动画跳过")]
