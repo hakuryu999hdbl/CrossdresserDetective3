@@ -747,6 +747,8 @@ public class PlayerController : MonoBehaviour
         isAttack = false;
         isDashAttack = false;
 
+        frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
+        frameEvent_Audio._Voice_Mute();//再次触发的时候循环声也屏蔽
     }
 
     public void ExitCapturedState(Vector2 throwForce)
@@ -760,6 +762,8 @@ public class PlayerController : MonoBehaviour
         //rb.simulated = true;
         rb.velocity = Vector2.zero;
         rb.AddForce(throwForce, ForceMode2D.Impulse);
+
+        frameEvent_Audio._Voice_UnMute();//恢复循环
     }
 
 
@@ -849,6 +853,15 @@ public class PlayerController : MonoBehaviour
 
         if (currentSex >= maxSex&& weakness <4)
         {
+            // =========================
+            // 拘束状态下淫乱值满 → 直接重开
+            // =========================
+            //if (isCaptured)
+            //{
+            //    UIManager.instance.RestartCurrentScene();
+            //    return;
+            //}
+
             Debug.Log("射精/体力下降");
 
             catchingEnemy.ForceMasturbate();
@@ -866,7 +879,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("虚弱程度")]
     public int weakness = 0;
-    int StrugglePower = 200;
+    int StrugglePower = 100;//一般来说能挣脱3次
     #endregion
 
 

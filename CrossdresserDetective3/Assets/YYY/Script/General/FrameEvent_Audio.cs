@@ -754,6 +754,10 @@ public class FrameEvent_Audio : MonoBehaviour
     params AudioClip[] clips
 )
     {
+
+        if (muteVoice)
+            return;
+
         if (voiceAudioS == null)
             return;
 
@@ -867,6 +871,9 @@ public class FrameEvent_Audio : MonoBehaviour
     //单次人物音
     private void PlaySingleVoice(AudioClip clip)
     {
+        if (muteVoice)
+            return;
+
         if (clip == null || voiceAudioS == null)
             return;
 
@@ -935,6 +942,49 @@ public class FrameEvent_Audio : MonoBehaviour
 
         loopPausedBySingle = false;
     }
+
+
+    //声音完全屏蔽
+    [Header("人物音声屏蔽")]
+    public bool muteVoice = false;
+
+    public void _Voice_Mute()
+    {
+        SetMuteVoice(true);
+    }
+
+    public void _Voice_UnMute()
+    {
+        SetMuteVoice(false);
+    }
+
+    public void SetMuteVoice(bool mute)
+    {
+        muteVoice = mute;
+
+        if (mute)
+        {
+            // 停止循环
+            StopVoiceLoop();
+
+            // 停止正在进行的单次人物音协程
+            if (singleVoiceCoroutine != null)
+            {
+                StopCoroutine(singleVoiceCoroutine);
+                singleVoiceCoroutine = null;
+            }
+
+            // 彻底停止人物 AudioSource
+            if (voiceAudioS != null)
+            {
+                voiceAudioS.Stop();
+                voiceAudioS.clip = null;
+            }
+
+            loopPausedBySingle = false;
+        }
+    }
+
 
     #endregion
 }

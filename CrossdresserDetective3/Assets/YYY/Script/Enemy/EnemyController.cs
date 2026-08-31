@@ -508,6 +508,7 @@ public class EnemyController : MonoBehaviour
                 if (GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
                 {
                     anim.SetTrigger("catch");
+                    anim.SetInteger("attackType",1);//代表抓住捆绑拘束挣扎
                 }
                 else
                 {
@@ -518,6 +519,7 @@ public class EnemyController : MonoBehaviour
                         if (Random.Range(0,2)==0)
                         {
                             anim.SetTrigger("catch");
+                            anim.SetInteger("attackType", 1);//代表抓住手淫强奸
                         }
                         else
                         {
@@ -1002,6 +1004,8 @@ public class EnemyController : MonoBehaviour
         // 敌人退出 lewdmove
         anim.SetTrigger("breakFree");
         character.skillInvulnerable = false;//技能无敌关闭
+
+        frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
 
     }//玩家挣扎值满了后的挣脱
 

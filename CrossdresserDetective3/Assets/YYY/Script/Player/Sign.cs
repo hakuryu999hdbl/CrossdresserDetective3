@@ -81,7 +81,10 @@ public class Sign : MonoBehaviour
 
         if (canPress && targetItem != null)
         {
-            if (!canPress || targetItem == null)
+
+
+
+            if (!canPress || targetItem == null|| playerController.isCaptured)//被抓住无法进行交互
                 return;
             IInteractable currentTarget = targetItem;
 

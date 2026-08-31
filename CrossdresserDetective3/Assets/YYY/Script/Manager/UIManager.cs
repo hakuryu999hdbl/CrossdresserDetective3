@@ -1311,14 +1311,42 @@ public class UIManager : MonoBehaviour
  
     }
 
-  
+
     #endregion
 
 
 
 
-
-
+    /// <summary>
+    /// 黑幕淡入后重新加载当前场景
+    /// 用于拘束挣脱失败等直接重开
+    /// </summary>
+    #region
+    //public void RestartCurrentScene()
+    //{
+    //    StartCoroutine(RestartCurrentSceneCoroutine());
+    //}
+    //
+    //private IEnumerator RestartCurrentSceneCoroutine()
+    //{
+    //    // 防止重启过程中继续操作
+    //    playerController.DisableGameplayInput();
+    //
+    //    // 黑幕淡入
+    //    BlackScreen_FadeIn.SetActive(true);
+    //
+    //    // 不受 Time.timeScale 影响
+    //    yield return new WaitForSecondsRealtime(0.95f);
+    //
+    //    // 保险：防止之前暂停
+    //    Time.timeScale = 1f;
+    //
+    //    // 重启当前场景
+    //    SceneManager.LoadScene(
+    //        SceneManager.GetActiveScene().buildIndex
+    //    );
+    //}
+    #endregion
 
 
 

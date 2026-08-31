@@ -197,7 +197,9 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
         rbqController.frameEvent_Audio._Girl_thankYou();
 
-        Invoke(nameof(Dis), 1f);
+        rbqController.anim.Play("Man_AbuseGirl_8");
+
+       Invoke(nameof(Dis), 3f);
       
     }//救出
 
