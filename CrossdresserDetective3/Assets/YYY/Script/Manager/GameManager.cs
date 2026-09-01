@@ -65,11 +65,12 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 5:
-                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
                         break;
 
                     case 6:
                         Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
                         break;
                     case 7:
                     case 8:
@@ -217,7 +218,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 5:
-                        ShowEscape();
+                        ShowRescue();
                         break;
 
                     case 6:                    

@@ -763,7 +763,16 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(throwForce, ForceMode2D.Impulse);
 
-        frameEvent_Audio._Voice_UnMute();//恢复循环
+
+        if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
+        {
+            frameEvent_Audio._Voice_UnMute();//恢复循环
+        }
+        else
+        {
+            frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
+        }
+       
     }
 
 

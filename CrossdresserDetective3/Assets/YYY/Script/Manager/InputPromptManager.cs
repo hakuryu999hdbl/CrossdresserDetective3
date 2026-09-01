@@ -20,8 +20,21 @@ public class InputPromptManager : MonoBehaviour
     {
         InputSystem.onActionChange += OnActionChange;
 
-        // 默认刷新一次
-        RefreshIcon(Keyboard.current != null ? 0 : 2);
+        // =========================
+        // 第一优先：读取上一个场景记录
+        // =========================
+        if (GameFlowData.LastInputDevice >= 0)
+        {
+            RefreshIcon(GameFlowData.LastInputDevice);
+        }
+        else
+        {
+            // 完全没有记录时才使用默认
+            int defaultDevice = Keyboard.current != null ? 0 : 2;
+
+            GameFlowData.LastInputDevice = defaultDevice;
+            RefreshIcon(defaultDevice);
+        }
     }
 
     private void OnDisable()

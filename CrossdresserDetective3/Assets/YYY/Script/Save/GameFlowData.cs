@@ -44,5 +44,12 @@ public static class GameFlowData
     public static MissionType CurrentMissionType;
 
 
-
+    // =========================
+    // 最后使用的输入设备
+    // -1 = 尚未记录
+    //  0 = Keyboard
+    //  1 = PlayStation
+    //  2 = Xbox / 其它Gamepad
+    // =========================
+    public static int LastInputDevice = -1;
 }

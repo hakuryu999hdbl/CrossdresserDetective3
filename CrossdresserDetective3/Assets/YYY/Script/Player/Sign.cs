@@ -32,6 +32,16 @@ public class Sign : MonoBehaviour
 
         InputSystem.onActionChange += OnActionChange;
         playerInput.Gameplay.Confirm.started += OnConfirm;
+
+        // 第一优先读取上次设备
+        if (GameFlowData.LastInputDevice >= 0)
+        {
+            RefreshPrompt(GameFlowData.LastInputDevice);
+        }
+        else
+        {
+            RefreshPrompt(Keyboard.current != null ? 0 : 2);
+        }
     }
 
     private void OnDisable()
@@ -48,16 +58,38 @@ public class Sign : MonoBehaviour
         playerInput.Gameplay.Confirm.started -= OnConfirm;
     }
 
+    private bool lastCaptured;
+
     private void Update()
     {
+        bool captured = playerController != null && playerController.isCaptured;
+
+        // 普通状态：附近有可交互物才显示
+        // 被抓状态：强制显示攻击/挣扎提示
         if (signRenderer != null)
-            signRenderer.enabled = canPress;
+        {
+            signRenderer.enabled = captured || canPress;
+        }
 
         if (signSprite != null && playerTrans != null)
-            signSprite.transform.localScale = playerTrans.localScale/2;
+        {
+            signSprite.transform.localScale = playerTrans.localScale / 2;
+        }
 
+        // 抓取状态发生变化时，立刻换提示
+        if (captured != lastCaptured)
+        {
+            lastCaptured = captured;
 
-        // 防止目标隐藏、销毁或改变Tag后，E提示残留
+            int deviceType =
+                GameFlowData.LastInputDevice >= 0
+                ? GameFlowData.LastInputDevice
+                : 0;
+
+            RefreshPrompt(deviceType);
+        }
+
+        // 防止目标隐藏、销毁或改变Tag后提示残留
         if (targetItem != null)
         {
             MonoBehaviour targetBehaviour =
@@ -73,7 +105,6 @@ public class Sign : MonoBehaviour
                 ClearInteraction();
             }
         }
-
     }
 
     private void OnConfirm(InputAction.CallbackContext obj)
@@ -108,30 +139,42 @@ public class Sign : MonoBehaviour
     {
         if (anim == null) return;
 
-        if (actionChange == InputActionChange.ActionStarted)
+        if (actionChange != InputActionChange.ActionStarted)
+            return;
+
+        InputAction action = obj as InputAction;
+
+        if (action == null || action.activeControl == null)
+            return;
+
+        var device = action.activeControl.device;
+
+        int deviceType = -1;
+
+        if (device is Keyboard)
         {
-            InputAction action = obj as InputAction;
-            if (action == null || action.activeControl == null) return;
-
-            var device = action.activeControl.device;
-
-            if (device is Keyboard)
-            {
-                anim.Play("keyboard");
-            }
-            else if (device is DualShockGamepad)
-            {
-                anim.Play("ps");
-            }
-            else if (device is XInputController)
-            {
-                anim.Play("xbox");
-            }
-            else if (device is Gamepad)
-            {
-                anim.Play("xbox");
-            }
+            deviceType = 0;
         }
+        else if (device is DualShockGamepad)
+        {
+            deviceType = 1;
+        }
+        else if (device is XInputController)
+        {
+            deviceType = 2;
+        }
+        else if (device is Gamepad)
+        {
+            deviceType = 2;
+        }
+
+        if (deviceType < 0)
+            return;
+
+        // Sign自己检测到切换时也更新全局记录
+        GameFlowData.LastInputDevice = deviceType;
+
+        RefreshPrompt(deviceType);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -171,7 +214,33 @@ public class Sign : MonoBehaviour
 
         if (signRenderer != null)
         {
-            signRenderer.enabled = false;
+            signRenderer.enabled =
+                playerController != null &&
+                playerController.isCaptured;
         }
     }//防止万一目标被消耗等，E残留
+
+
+    private void RefreshPrompt(int deviceType)
+    {
+        if (anim == null)
+            return;
+
+        bool captured = playerController != null && playerController.isCaptured;
+
+        switch (deviceType)
+        {
+            case 0:
+                anim.Play(captured ? "keyboard_attack" : "keyboard");
+                break;
+
+            case 1:
+                anim.Play(captured ? "ps_attack" : "ps");
+                break;
+
+            case 2:
+                anim.Play(captured ? "xbox_attack" : "xbox");
+                break;
+        }
+    }
 }
