@@ -118,10 +118,10 @@ public class GameManager : MonoBehaviour
         isChangingScene = true;
 
         // 此时继续保持暂停，战斗场景不会恢复
-        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+        UIManager.instance.blackScreen.SetFadeIn();
 
         // 不受 Time.timeScale 影响
-        yield return new WaitForSecondsRealtime(0.95f);
+        yield return new WaitForSecondsRealtime(1f);
 
         // 只在加载场景前恢复
         Time.timeScale = 1f;
@@ -142,9 +142,9 @@ public class GameManager : MonoBehaviour
         isChangingScene = true;
 
         // 此时依旧保持 Time.timeScale = 0
-        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+        UIManager.instance.blackScreen.SetFadeIn();
 
-        yield return new WaitForSecondsRealtime(0.95f);
+        yield return new WaitForSecondsRealtime(1f);
 
         GameFlowData.CurrentStage++;
 

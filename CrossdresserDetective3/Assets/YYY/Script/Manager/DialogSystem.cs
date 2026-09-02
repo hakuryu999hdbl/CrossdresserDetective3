@@ -240,13 +240,14 @@ public class DialogSystem : MonoBehaviour
         index++;
     }
 
-    public GameObject BlackScreen_FadeIn;
+    public BlackScreen blackScreen;
+
     //结束对话触发
     public void ChangeStory()
     {
-        BlackScreen_FadeIn.SetActive(true);//黑幕淡出
+        blackScreen.SetFadeIn(); // 黑幕淡入
 
-        Invoke(nameof(ToNextScene), 0.95f);
+        Invoke(nameof(ToNextScene), 1f);
     }
 
 

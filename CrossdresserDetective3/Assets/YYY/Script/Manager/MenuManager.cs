@@ -497,8 +497,8 @@ public class MenuManager : MonoBehaviour
         GameFlowData.nextAreaId = Name;
         GameFlowData.returnPath = "cg";
 
-        BlackScreen_FadeIn.SetActive(true); // 黑幕淡入
-        Invoke(nameof(StartCG), 0.95f);
+        blackScreen.SetFadeIn();// 黑幕淡入
+        Invoke(nameof(StartCG), 1f);
 
     }//跳转CG场景
 
@@ -668,15 +668,15 @@ public class MenuManager : MonoBehaviour
 
     #endregion
 
+    public BlackScreen blackScreen;
 
-    public GameObject BlackScreen_FadeIn;
     public void NewGame(int Chapter, int Stage)
     {
         nextChapter = Chapter;
         nextStage = Stage;
 
-        BlackScreen_FadeIn.SetActive(true); // 黑幕淡入
-        Invoke(nameof(StartLevel), 0.95f);
+        blackScreen.SetFadeIn(); // 黑幕淡入
+        Invoke(nameof(StartLevel), 1f);
 
     }//跳转编号场景
     private int nextChapter;

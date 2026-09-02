@@ -136,10 +136,10 @@ public class UIManager : MonoBehaviour
         }
 
         // 保持暂停状态，避免战斗场景继续运行
-        BlackScreen_FadeIn.SetActive(true);
+        blackScreen.SetFadeIn();
 
         // 不受 Time.timeScale 影响
-        yield return new WaitForSecondsRealtime(0.95f);
+        yield return new WaitForSecondsRealtime(1f);
 
         // 加载新场景前再恢复
         Time.timeScale = 1f;
@@ -254,9 +254,9 @@ public class UIManager : MonoBehaviour
         playerController.DisableGameplayInput();
 
         // 黑幕淡入
-        BlackScreen_FadeIn.SetActive(true);
+        blackScreen.SetFadeIn();
 
-        yield return new WaitForSecondsRealtime(0.95f);
+        yield return new WaitForSecondsRealtime(1f);
 
         // =========================
         // 黑幕后切换到局内
@@ -290,7 +290,7 @@ public class UIManager : MonoBehaviour
         playerController.EnableGameplayInput();
 
         // 黑幕淡出
-        BlackScreen_FadeOut.SetActive(true);
+        blackScreen.SetFadeOut();
 
         isClosingSetUp = false;
     }
@@ -929,8 +929,11 @@ public class UIManager : MonoBehaviour
     public GameObject GreenScreen;
     public GameObject WhiteScreen;
     public GameObject ShockScreen;
-    public GameObject BlackScreen_FadeIn;
-    public GameObject BlackScreen_FadeOut;
+
+
+
+    public BlackScreen blackScreen;
+
 
     public GameObject UI_All;//包含血条体力值子弹数当前武器等全体UI，在过场动画弹出的时候隐藏
     public GameObject UI_Cutscene;//过场动画的上下黑幕和台词显示
@@ -1061,7 +1064,7 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        BlackScreen_FadeIn.SetActive(true);//先黑幕淡入
+        blackScreen.SetFadeIn();//先黑幕淡入
 
 
         //放大                                 
@@ -1070,12 +1073,12 @@ public class UIManager : MonoBehaviour
             playerController.cameraControl.ToggleZoom();
         }
 
-        yield return new WaitForSeconds(0.95f);
+        yield return new WaitForSeconds(1f);
 
         //把周边UI全部隐藏
         UI_All.SetActive(false);
 
-        BlackScreen_FadeOut.SetActive(true);//再黑幕淡出
+        blackScreen.SetFadeOut();//再黑幕淡出
 
         // 隐藏并清理场景内敌人
         GameManager.instance.ClearEnemiesForGameOver();
@@ -1147,14 +1150,14 @@ public class UIManager : MonoBehaviour
     IEnumerator ShowGameOverMenuDelay()
     {
         // 黑幕淡入
-        BlackScreen_FadeIn.SetActive(true);
+        blackScreen.SetFadeIn();
 
-        yield return new WaitForSeconds(0.95f);
+        yield return new WaitForSeconds(1f);
 
         // 尸体隐藏
         DeadBody.gameObject.SetActive(false);
 
-        BlackScreen_FadeOut.SetActive(true);//再黑幕淡出
+        blackScreen.SetFadeOut();//再黑幕淡出
 
         // 打开结算菜单
         gameOverPanel.SetActive(true);
@@ -1299,7 +1302,7 @@ public class UIManager : MonoBehaviour
         UI_Cutscene.SetActive(false);
         UI_All.SetActive(false);
 
-        BlackScreen_FadeOut.SetActive(true);
+        blackScreen.SetFadeOut();
 
         SetResultImage();
 

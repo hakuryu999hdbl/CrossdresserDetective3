@@ -144,7 +144,7 @@ public class TimelineTrigger : MonoBehaviour
 
     void SetFadeOutOver()
     {
-        UIManager.instance.BlackScreen_FadeIn.SetActive(false);
+        UIManager.instance.blackScreen.SetFadeOut();
     }
 
 
@@ -198,11 +198,11 @@ public class TimelineTrigger : MonoBehaviour
 
     public void SetBlackScreen_FadeIn()
     {
-        UIManager.instance.BlackScreen_FadeIn.SetActive(true);
+        UIManager.instance.blackScreen.SetFadeIn();
     }
     public void SetBlackScreen_FadeOut()
     {
-        UIManager.instance.BlackScreen_FadeOut.SetActive(true);
+        UIManager.instance.blackScreen.SetFadeOut();
     }
     public void ShowText()
     {
