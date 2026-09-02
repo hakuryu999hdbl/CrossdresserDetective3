@@ -43,7 +43,7 @@ public class FrameEvent_Audio : MonoBehaviour
     public void _Attack_katana_in() { audioS.PlayOneShot(AudioManager.Attack_katana_in); }//这个由Player中代码调用
     public void _Attack_katana_draw() { audioS.PlayOneShot(AudioManager.Attack_katana_draw); }//这个由Player中代码调用
 
-    public void _Attack_sword_clash() 
+    public void _Attack_sword_clash()
     {
         switch (Random.Range(0, 3))
         {
@@ -79,8 +79,8 @@ public class FrameEvent_Audio : MonoBehaviour
 
 
 
-     //拍打声
-    public void _Attack_pai() 
+    //拍打声
+    public void _Attack_pai()
     {
         switch (Random.Range(0, 2))
         {
@@ -91,10 +91,10 @@ public class FrameEvent_Audio : MonoBehaviour
                 audioS.PlayOneShot(AudioManager.Attack_pai2);
                 break;
         }
-      
+
     }
 
-    public void _Attack_largeSword() 
+    public void _Attack_largeSword()
     {
         audioS.PlayOneShot(AudioManager.Attack_largeSword);
     }//这个由敌人脚本调用
@@ -132,7 +132,7 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }//这个由Bomb中代码调用
 
-    public void _Bullet_OutOfBullet() 
+    public void _Bullet_OutOfBullet()
     {
         audioS.PlayOneShot(AudioManager.Bullet_OutOfBullet);
     }//这个由Player中代码调用   
@@ -364,13 +364,13 @@ public class FrameEvent_Audio : MonoBehaviour
 
 
     //走路和拘束的绳索
-    public void _SE_Rope() 
+    public void _SE_Rope()
     {
         audioS.PlayOneShot(AudioManager.SE_Rope_1);
     }//代码调用
 
     //走路和拘束的锁链
-    public void _SE_Chain() 
+    public void _SE_Chain()
     {
         switch (Random.Range(0, 2))
         {
@@ -397,7 +397,7 @@ public class FrameEvent_Audio : MonoBehaviour
     }
 
     //抓住后撕衣服
-    public void _SE_Tear() 
+    public void _SE_Tear()
     {
         audioS.PlayOneShot(AudioManager.SE_Tear);
     }//代码调用
@@ -427,7 +427,7 @@ public class FrameEvent_Audio : MonoBehaviour
 
     }
 
-    public void _SE_Shose_Walk() 
+    public void _SE_Shose_Walk()
     {
         if (Random.Range(0, 2) == 0)
         {
@@ -460,7 +460,7 @@ public class FrameEvent_Audio : MonoBehaviour
     {
 
 
-        if (isCage) 
+        if (isCage)
         {
             audioS.PlayOneShot(AudioManager.SE_Cage);
         }
@@ -468,7 +468,7 @@ public class FrameEvent_Audio : MonoBehaviour
         {
             audioS.PlayOneShot(AudioManager.SE_Door_Open);
         }
-      
+
     }
     public void _SE_Door_Close()
     {
@@ -480,7 +480,7 @@ public class FrameEvent_Audio : MonoBehaviour
         {
             audioS.PlayOneShot(AudioManager.SE_Door_Close);
         }
-       
+
     }
 
 
@@ -492,7 +492,7 @@ public class FrameEvent_Audio : MonoBehaviour
 
     #region 人物音效
 
-    public void _YYY_attack() 
+    public void _YYY_attack()
     {
 
         AudioClip[] clips =
@@ -694,16 +694,31 @@ public class FrameEvent_Audio : MonoBehaviour
     }
     public void _Girl_thankYou()
     {
-        switch (Random.Range(0, 2))
-        {
-            case 0:
-                audioS.PlayOneShot(AudioManager.Girl_thankYou1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.Girl_thankYou2);
-                break;
-        }
-    }
+        //switch (Random.Range(0, 2))
+        //{
+        //    case 0:
+        //        audioS.PlayOneShot(AudioManager.Girl_thankYou1);
+        //        break;
+        //    case 1:
+        //        audioS.PlayOneShot(AudioManager.Girl_thankYou2);
+        //        break;
+        //}
+
+
+        AudioClip[] clips =
+{
+       AudioManager.Girl_thankYou1,
+        AudioManager.Girl_thankYou2
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+    }//单次触发，打断循环
+
+
+
 
     #endregion
 

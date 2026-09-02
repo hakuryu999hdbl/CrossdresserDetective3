@@ -136,6 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioS: {fileID: 1001455496798546567}
   isCage: 1
+  voiceAudioS: {fileID: 0}
+  currentVoiceLoopType: 0
+  muteVoice: 0
 --- !u!82 &1001455496798546567
 AudioSource:
   m_ObjectHideFlags: 0
@@ -158,9 +161,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 3
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -193,7 +196,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

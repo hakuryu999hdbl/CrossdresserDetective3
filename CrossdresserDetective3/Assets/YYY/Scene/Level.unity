@@ -8583,7 +8583,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 3
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -8697,7 +8697,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 3
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -8730,7 +8730,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14171,7 +14171,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 934071645}
-  - component: {fileID: 934071646}
   m_Layer: 0
   m_Name: Player Control
   m_TagString: Untagged
@@ -14197,14 +14196,6 @@ Transform:
   - {fileID: 336022632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &934071646
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934071644}
-  m_Enabled: 1
 --- !u!1 &949320724
 GameObject:
   m_ObjectHideFlags: 0
@@ -22596,6 +22587,7 @@ GameObject:
   - component: {fileID: 1720513878}
   - component: {fileID: 1720513876}
   - component: {fileID: 1720513880}
+  - component: {fileID: 1720513881}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -22949,6 +22941,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   isDead: 0
+--- !u!81 &1720513881
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720513874}
+  m_Enabled: 1
 --- !u!1 &1722843780
 GameObject:
   m_ObjectHideFlags: 0
