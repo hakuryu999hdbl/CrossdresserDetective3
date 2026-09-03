@@ -172,6 +172,7 @@ public class DialogSystem : MonoBehaviour
 
 
     [Header("名称")]
+    public GameObject BlackNameboard;
     public GameObject YYY;
 
     IEnumerator SetTextUI()
@@ -187,35 +188,32 @@ public class DialogSystem : MonoBehaviour
 
         string line = textList[index].Trim();
 
+
         //通用隐藏
+        BlackNameboard.SetActive(false);
         YYY.SetActive(false);
 
         switch (line)
         {
             case "BG":
+                BlackNameboard.SetActive(false);
                 textLabel.color = Color.white;
                 index++;
                 break;
 
-            case "Man":
-                textLabel.color = Color.blue;
-                index++;
-                break;
 
             case "YYY":
+                BlackNameboard.SetActive(true);
                 YYY.SetActive(true);
-                textLabel.color = Color.white;
-                //textLabel.color = new Color(1.0f, 0.2f, 0.5f, 1.0f); //浅红色
+                textLabel.color = new Color(1.0f, 0.70f, 0.82f, 1.0f);// 极淡粉色
                 index++;
                 break;
 
-            case "Girl":
-                textLabel.color = new Color(0.8f, 0.2f, 0.2f, 1.0f); // 深红色
-                index++;
-                break;
+
 
 
             case "--------------------NEXT--------------------":
+                BlackNameboard.SetActive(false);
                 textLabel.color = Color.white;
                 index++;
                 //当前显示的Spine动画器里触发Next

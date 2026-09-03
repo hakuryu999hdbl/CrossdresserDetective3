@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单  5确认删除存档菜单
+    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单  5确认删除存档菜单  6赞助者名单
 
   
 
@@ -506,6 +506,51 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Spine");
     }
+
+    #endregion
+
+
+    /// <summary>
+    /// 赞助名单菜单
+    /// </summary>
+    #region
+
+    [Header("赞助名单菜单")]
+    public GameObject CreditsMenu;
+    public GameObject CreditsFirstSelected;//打开存菜单档默认选中（可变换）
+    public GameObject CreditsButton;//退出存档菜单默认选中
+
+
+    public void OpenCreditsMenu()
+    {
+        CreditsMenu.SetActive(true);
+        MainMenu.SetActive(false);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(CreditsFirstSelected);
+
+        CurrentOpen = 6;
+    }
+
+    public void CloseCreditsMenu()
+    {
+        CreditsMenu.SetActive(false);
+        MainMenu.SetActive(true);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        CreditsFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(CreditsButton);
+
+        CurrentOpen = 0;
+    }
+
+
+
+
 
     #endregion
 

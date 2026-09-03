@@ -297,15 +297,11 @@ public class CutsceneDialogue : MonoBehaviour
         switch (speaker)
         {
 
-            case "Man":
-
-                textLabel.color = Color.white;
-                break;
 
 
             case "YYY":
                 YYY.SetActive(true);
-                textLabel.color = Color.white;
+                textLabel.color = new Color(1.0f, 0.70f, 0.82f, 1.0f);// 极淡粉色
                 break;
 
             case "YYY_Red":
@@ -314,22 +310,17 @@ public class CutsceneDialogue : MonoBehaviour
                 break;
 
 
-            case "Girl":
-
-                textLabel.color = Color.white;
-                break;
-
 
             case "Thief_A":
                 Thief_A.SetActive(true);
-                textLabel.color =Color.white;
+                textLabel.color = new Color(0.62f, 0.84f, 1.0f, 1.0f);// 极淡天蓝
 
                 break;
 
 
             case "Thief_B":
                 Thief_B.SetActive(true);
-                textLabel.color = Color.white;
+                textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);// 极淡偏紫蓝
                 break;
 
 
