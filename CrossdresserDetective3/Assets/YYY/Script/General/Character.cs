@@ -91,10 +91,10 @@ public class Character : MonoBehaviour, IDamageable
         //已经成功抓住玩家后，直到投出前暂时无敌
         EnemyController enemy = GetComponent<EnemyController>();
 
-        if (enemy != null && enemy.isCatching)
-        {
-            return;
-        }
+        //if (enemy != null && enemy.isCatching)
+        //{
+        //    return;
+        //}
 
         // 摩托哥防御反击
         if (enemy != null && enemy.TryHandleIncomingAttack(attacker))

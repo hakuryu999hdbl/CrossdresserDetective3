@@ -71,8 +71,8 @@ public class RBQController : MonoBehaviour
 
     private void Start()
     {
-
-        RandomSkin();
+        StageSkin();
+        //RandomSkin();
 
         frameEvent.SetRBQ_Bondage_1();
 
@@ -358,6 +358,86 @@ public class RBQController : MonoBehaviour
 
     }
 
+
+    public void StageSkin()
+    {
+        switch (GameFlowData.CurrentChapter)
+        {
+            case 1:
+                switch (GameFlowData.CurrentStage)
+                {
+                    case 1:
+                    case 2:
+
+                        frameEvent.Story_Clothes_Man_01();//设置男性小偷
+
+                        break;
+
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+
+
+                        //西服男（无小偷头型）
+                        Man_hairIndex = Random.Range(0, 2);
+                        Man_clothesIndex = 2;
+
+
+                        //西服女
+                        Girl_hairIndex = Random.Range(2, 4);
+                        Girl_clothesIndex = 1;
+                        Girl_glovesIndex = Random.Range(0, 2);
+                        Girl_shoesIndex = Random.Range(1, 3);
+
+
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Girl_underwearIndex = 1;//内衣
+                                Girl_stockingsIndex = 0;
+                                break;
+                            case 2:
+                                Girl_underwearIndex = 2;//内衣裤袜
+                                Girl_stockingsIndex = 2;
+                                break;
+                        }
+
+                        Girl_hatIndex = 0;//没有头饰
+                        Girl_maskIndex = 0;//不戴面具
+
+
+
+
+
+
+
+
+
+
+
+                        break;
+
+                    default:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+
+                        //西服男
+                        Man_hairIndex = Random.Range(0, 3);
+                        Man_clothesIndex = 2;
+
+                        break;
+                }
+                break;
+        }
+
+        //武器完全随机
+        meleeType = Random.Range(1, 4);
+        pistolType = Random.Range(1, 4);
+        rifleType = Random.Range(1, 3);
+    }
 
 
 

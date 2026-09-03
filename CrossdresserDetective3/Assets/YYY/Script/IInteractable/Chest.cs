@@ -54,7 +54,9 @@ public class Chest : MonoBehaviour,IInteractable
 
 
         GameManager.instance.CompleteClue();//增加数量
-        //Destroy(gameObject);
+                                            //Destroy(gameObject);
+
+        AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Keyboard);
     }
 
 }

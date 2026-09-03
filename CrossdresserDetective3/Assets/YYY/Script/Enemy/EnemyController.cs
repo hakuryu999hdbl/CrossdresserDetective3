@@ -507,12 +507,23 @@ public class EnemyController : MonoBehaviour
         {
             if (Time.time > nextAttack)
             {
+                PlayerController player = GameManager.instance.player;
 
+                bool playerAlreadyCaptured = player != null && (player.isCaptured || player.isStruggling);
+
+                // 玩家已经被其他敌人抓住时：
+                // 仍允许普通攻击，但禁止再次触发抓取
+                if (playerAlreadyCaptured)
+                {
+                    anim.SetInteger("attackType", 2);//所有敌人统计普通攻击
+                    anim.SetTrigger("attack");
+
+                    Debug.Log("玩家已经被其他敌人抓住,只能触发attack");
+                }
                 //如果是逃出模式，只有抓住攻击这一种（当然在这个模式下，关卡里放满了Enemy_1和Enemy_3）
-                if (GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
+                else if(GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
                 {
                     anim.SetTrigger("catch");
-                    anim.SetInteger("attackType",1);//代表抓住捆绑拘束挣扎
                 }
                 else
                 {
@@ -523,7 +534,6 @@ public class EnemyController : MonoBehaviour
                         if (Random.Range(0,2)==0)
                         {
                             anim.SetTrigger("catch");
-                            anim.SetInteger("attackType", 1);//代表抓住手淫强奸
                         }
                         else
                         {

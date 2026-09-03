@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip　Attack_largeSword;
 
     public AudioClip Bullet_OutOfBullet;
-    public AudioClip Bullet_Wall;
+    public AudioClip Bullet_Wall;//不经过 FrameEvent_Audio由其它脚本直接 PlayFX
     public AudioClip Bullet_Pistol_1, Bullet_Pistol_2, Bullet_Pistol_3;
     public AudioClip Bullet_Pistol_Load;
     public AudioClip Bullet_AK, Bullet_M4a1, Bullet_SD;
@@ -154,11 +154,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip SE_Man_WalkClip_1, SE_Man_WalkClip_2, SE_Man_RunClip_1, SE_Man_RunClip_2;
     public AudioClip SE_falldown;
     public AudioClip SE_Door_Open, SE_Door_Close, SE_Cage;
-    public AudioClip SE_Button, SE_Elevator_1, SE_Elevator_2;
+    public AudioClip SE_Button, SE_Elevator_1, SE_Elevator_2;//不经过 FrameEvent_Audio由其它脚本直接 PlayFX
+    public AudioClip SE_Keyboard;//不经过 FrameEvent_Audio由其它脚本直接 PlayFX
 
 
-
-    public AudioClip UI_Click, UI_Select;
+    public AudioClip UI_Click, UI_Select;//不经过 FrameEvent_Audio由其它脚本直接 PlayFX
     #endregion
 
 

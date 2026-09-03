@@ -538,21 +538,6 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _YYY_duzui()
     {
-        //switch (Random.Range(0, 4))
-        //{
-        //    case 0:
-        //        audioS.PlayOneShot(AudioManager.YYY_duzui1);
-        //        break;
-        //    case 1:
-        //        audioS.PlayOneShot(AudioManager.YYY_duzui2);
-        //        break;
-        //    case 2:
-        //        audioS.PlayOneShot(AudioManager.YYY_duzui3);
-        //        break;
-        //    case 3:
-        //        audioS.PlayOneShot(AudioManager.YYY_duzui4);
-        //        break;
-        //}
 
         PlayVoiceLoop(
      VoiceLoopType.YYY_Duzui,
@@ -597,7 +582,8 @@ public class FrameEvent_Audio : MonoBehaviour
         PlayVoiceLoop(
         VoiceLoopType.YYY_GaspingQuick,
         AudioManager.YYY_gasping_quick1,
-        AudioManager.YYY_gasping_quick2
+        AudioManager.YYY_gasping_quick2,
+        AudioManager.YYY_gasping_quick3
     );
 
 
@@ -694,16 +680,6 @@ public class FrameEvent_Audio : MonoBehaviour
     }
     public void _Girl_thankYou()
     {
-        //switch (Random.Range(0, 2))
-        //{
-        //    case 0:
-        //        audioS.PlayOneShot(AudioManager.Girl_thankYou1);
-        //        break;
-        //    case 1:
-        //        audioS.PlayOneShot(AudioManager.Girl_thankYou2);
-        //        break;
-        //}
-
 
         AudioClip[] clips =
 {

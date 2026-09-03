@@ -605,7 +605,7 @@ public class FrameEvent : MonoBehaviour
     }
     #endregion
 
-    #region  敌人将玩家投出去
+    #region  敌人将玩家抓住/投出去
     public void OnCatchPlayer()
     {
         if (enemyController != null)
@@ -961,6 +961,9 @@ public class FrameEvent : MonoBehaviour
 
 
     }
+
+
+
 
     #endregion
 
