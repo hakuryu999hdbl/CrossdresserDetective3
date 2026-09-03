@@ -105,10 +105,12 @@ public class EnemyController : MonoBehaviour
 
         //RandomSkin();
 
-        StageSkin();//敌人的皮肤根据关卡决定，脸部更换
+
+        Invoke(nameof(StageSkin), 0.1f);//敌人的皮肤根据关卡决定，脸部更换
 
 
-        RefreshPlayerSkin();//初始更新皮肤
+
+      
 
 
 
@@ -1422,7 +1424,10 @@ public class EnemyController : MonoBehaviour
                     case 1:
                     case 2:
 
-                        frameEvent.Story_Clothes_Man_01();//设置男性小偷
+                        //frameEvent.Story_Clothes_Man_01();//设置男性小偷
+                        //小偷头型
+                        Man_hairIndex = 2;
+                        Man_clothesIndex = 1;
 
                         break;
 
@@ -1490,6 +1495,9 @@ public class EnemyController : MonoBehaviour
         meleeType = Random.Range(1, 4);
         pistolType = Random.Range(1, 4);
         rifleType = Random.Range(1, 3);
+
+
+        RefreshPlayerSkin();//初始更新皮肤
     }
 
 

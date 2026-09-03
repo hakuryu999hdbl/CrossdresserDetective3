@@ -369,7 +369,11 @@ public class RBQController : MonoBehaviour
                     case 1:
                     case 2:
 
-                        frameEvent.Story_Clothes_Man_01();//设置男性小偷
+                        //frameEvent.Story_Clothes_Man_01();//设置男性小偷
+
+                        //小偷头型
+                        Man_hairIndex = 2;
+                        Man_clothesIndex = 1;
 
                         break;
 

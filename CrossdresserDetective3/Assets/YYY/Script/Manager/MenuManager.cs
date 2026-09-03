@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class MenuManager : MonoBehaviour
@@ -59,6 +60,9 @@ public class MenuManager : MonoBehaviour
 
         }
 
+
+        if (GameFlowData.returnPath != null) { ChangeCharacter(); }//小彩蛋，看完CG或者玩完关卡回到主菜单角色变化
+
         GameFlowData.returnPath = null; // 用完清掉
 
 
@@ -102,7 +106,10 @@ public class MenuManager : MonoBehaviour
                 CancelDeleteSave();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
-
+            case 6:
+                CloseCreditsMenu();
+                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+                break;
 
 
             case -1:
@@ -191,6 +198,16 @@ public class MenuManager : MonoBehaviour
     #endregion
 
 
+
+    [Header("姐弟二人")]
+    public Image Character;
+    public Image Shadow;
+    public Sprite Before, After;
+    void ChangeCharacter() 
+    {
+        Character.sprite = After;
+        Shadow.sprite = After;
+    }
 
     /// <summary>
     /// 存档菜单
@@ -553,6 +570,7 @@ public class MenuManager : MonoBehaviour
 
 
     #endregion
+
 
     /// <summary>
     /// 关卡菜单
