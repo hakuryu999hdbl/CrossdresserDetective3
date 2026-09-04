@@ -637,7 +637,7 @@ public class MenuManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-        settingFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        ChapterFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ChapterButton);
 
