@@ -24,13 +24,17 @@ public class Spine_FrameEvents : MonoBehaviour
                 dialogSystem.animation_number = 0;
                 currentAnimator = Introduce;
                 break;
+
             case "CG_Photo":
                 dialogSystem.animation_number = 1;
                 currentAnimator = CG_Photo;
+                if (GameFlowData.returnPath != "cg") { SaveManager.UpdateThumbnail("CG_Photo"); }//非CG路径才能记录照片
                 break;
+
             case "CG_Clock":
                 dialogSystem.animation_number = 6;
                 currentAnimator = CG_Clock;
+                if (GameFlowData.returnPath != "cg") { SaveManager.UpdateThumbnail("CG_Clock"); }//非CG路径才能记录照片
                 break;
             //case "CG_Bomb":
             //    currentAnimator = CG_Bomb;

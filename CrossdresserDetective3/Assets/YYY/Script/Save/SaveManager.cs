@@ -28,6 +28,7 @@ public static class SaveManager
         {
             string json = File.ReadAllText(path);
             return JsonUtility.FromJson<SaveData>(json);
+
         }
         else
         {
@@ -46,4 +47,31 @@ public static class SaveManager
     {
         return File.Exists(GetPath(saveName));
     }//确认这个存档是否存在
+
+
+    public static void UpdateThumbnail(string thumbnailId)
+    {
+        if (string.IsNullOrEmpty(GameFlowData.CurrentPlayer))
+        {
+            Debug.LogWarning("无法记录存档封面：CurrentPlayer为空");
+            return;
+        }
+
+        if (!Exists(GameFlowData.CurrentPlayer))
+        {
+            Debug.LogWarning(
+                "无法记录存档封面：当前存档不存在 " +
+                GameFlowData.CurrentPlayer
+            );
+            return;
+        }
+
+        SaveData data = LoadGame(GameFlowData.CurrentPlayer);
+
+        data.thumbnailId = thumbnailId;
+
+        SaveGame(data);
+    }//更新当前存档的封面图片
+
+
 }

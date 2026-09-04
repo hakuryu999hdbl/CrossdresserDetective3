@@ -1119,19 +1119,19 @@ public class UIManager : MonoBehaviour
         {
             default:
             case 1:
-
+                SaveManager.UpdateThumbnail("EndResult_01");
                 ResultPicture.sprite = CG_1;//用完扔垃圾桶
                 break;
             case 2:
-
+                SaveManager.UpdateThumbnail("EndResult_02");
                 ResultPicture.sprite = CG_2;//紧缚逃脱失败
                 break;
             case 3:
-
+                SaveManager.UpdateThumbnail("EndResult_03");
                 ResultPicture.sprite = CG_3;//尿便器
                 break;
             case 4:
-
+                SaveManager.UpdateThumbnail("EndResult_04");
                 ResultPicture.sprite = CG_4;//无捆绑轮奸
                 break;
         }

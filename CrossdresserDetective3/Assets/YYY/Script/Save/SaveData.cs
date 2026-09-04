@@ -8,7 +8,8 @@ public class SaveData
     public string saveTime;// 存档时间（字符串）
     public string NextAreaId;//当前区域位置(进入该场景时保存)
 
-
+    //存档页面显示的最后CG/结局图片名称
+    public string thumbnailId = "";
 
     public int chapterCount = 6;//总共6个章节
     public int stagePerChapter = 10;//每个章节10关卡
@@ -93,4 +94,40 @@ public class SaveData
         Slot = 0;
 
     }//默认状态
+
+
+
+
+
+    /// <summary>
+    /// 获取目前推进到的最远关卡索引
+    /// 返回范围：0～59
+    /// </summary>
+    public int GetLatestStageIndex()
+    {
+        InitStageData();
+
+        for (int i = stageStars.Length - 1; i >= 0; i--)
+        {
+            // -1是未解锁，0～3代表已解锁
+            if (stageStars[i] >= 0)
+                return i;
+        }
+
+        return 0;
+    }
+
+    /// <summary>
+    /// 获取存档页面显示的关卡进度
+    /// 例如：CH.2-4
+    /// </summary>
+    public string GetLatestStageText()
+    {
+        int index = GetLatestStageIndex();
+
+        int chapter = index / stagePerChapter + 1;
+        int stage = index % stagePerChapter + 1;
+
+        return $"CH.{chapter}-{stage}";
+    }
 }

@@ -9,6 +9,15 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class SaveThumbnailEntry
+    {
+        public string id;
+        public Sprite sprite;
+    }
+
+
+
     public static MenuManager instance;
 
 
@@ -151,6 +160,32 @@ public class MenuManager : MonoBehaviour
     public SaveSlotUI CurrentSaveSlotUI;
     public SaveSlotUI Save_1, Save_2, Save_3;
 
+    [Header("存档封面图片合集")]
+    public List<SaveThumbnailEntry> saveThumbnails =
+    new List<SaveThumbnailEntry>();
+
+    public Sprite GetSaveThumbnail(string thumbnailId)
+    {
+        if (string.IsNullOrEmpty(thumbnailId))
+            return null;
+
+        for (int i = 0; i < saveThumbnails.Count; i++)
+        {
+            SaveThumbnailEntry entry = saveThumbnails[i];
+
+            if (entry != null && entry.id == thumbnailId)
+            {
+                return entry.sprite;
+            }
+        }
+
+        Debug.LogWarning(
+            "MenuManager中没有登记存档封面：" +
+            thumbnailId
+        );
+
+        return null;
+    }
 
     public void OnConfirmNameInput()
     {
@@ -731,6 +766,12 @@ public class MenuManager : MonoBehaviour
 
     #endregion
 
+
+
+    /// <summary>
+    /// 进入游戏
+    /// </summary>
+    #region
     public BlackScreen blackScreen;
 
     public void NewGame(int Chapter, int Stage)
@@ -771,4 +812,5 @@ public class MenuManager : MonoBehaviour
 
         Application.Quit();
     }
+    #endregion
 }

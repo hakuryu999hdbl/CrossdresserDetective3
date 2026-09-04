@@ -10,12 +10,12 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
 
     public string slotName; // "CurrentPlayer1", "CurrentPlayer2", "CurrentPlayer3"
 
-    public Text nameText, timeText;
+    public Text nameText, timeText, ChapterText;
     //public Text nextAreaIdText;//位于区域？
     public Image thumbnail;
 
 
-    public Sprite defaultThumbnail, Thumbnail_1;
+    public Sprite defaultThumbnail;
 
 
     public GameObject X_Button;
@@ -40,9 +40,17 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
             SaveData data = SaveManager.LoadGame(slotName);
             nameText.text = slotName;
             timeText.text = data.saveTime;
+            ChapterText.text = data.GetLatestStageText();
             //nextAreaIdText.text = data.NextAreaId;
 
-            thumbnail.sprite = Thumbnail_1; // 以后可以换成 data.thumbnail
+
+
+            Sprite savedThumbnail = menuManager.GetSaveThumbnail(data.thumbnailId);
+            thumbnail.sprite =
+                savedThumbnail != null
+                ? savedThumbnail
+                : defaultThumbnail;
+
 
             X_Button.SetActive(true);
         }
@@ -55,7 +63,7 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
             //nextAreaIdText.text = "";
 
 
-            thumbnail.sprite = defaultThumbnail; // 以后可以换成 data.thumbnail
+            thumbnail.sprite = defaultThumbnail;
 
             X_Button.SetActive(false);
 
@@ -85,6 +93,7 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
             //UIManager.instance.SaveNameMenu.SetActive(true);
             menuManager.CurrentSaveSlotUI = this;
             menuManager.OnConfirmNameInput();
+
 
         }
 
