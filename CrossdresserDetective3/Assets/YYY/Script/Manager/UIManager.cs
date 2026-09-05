@@ -1540,6 +1540,7 @@ public class UIManager : MonoBehaviour
     public GameObject magazineIcon;
     public Text magazineText;
 
+    public GameObject Melee, Range, Throwable;//玩家在没有设置对应武器的时候不显示
 
 
     public void RefreshAmmoUI(
@@ -1596,6 +1597,20 @@ public class UIManager : MonoBehaviour
             obj.SetActive(false);
 
 
+
+
+        //统一控制三个根目录
+        Melee.SetActive(player.meleeType != 0);
+
+        Range.SetActive(
+            player.pistolType != 0 ||
+            player.rifleType != 0
+        );
+
+        Throwable.SetActive(player.throwType != 0);
+
+
+
         //近战(空手不显示)
         switch (player.meleeType)
         {
@@ -1643,8 +1658,8 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        magazineIcon.SetActive(playerController.attackType < 0);//显示隐藏弹夹数量
-        bulletRoot.gameObject.SetActive(playerController.attackType < 0);//显示隐藏子弹数量
+        //magazineIcon.SetActive(playerController.attackType < 0);//显示隐藏弹夹数量
+        //bulletRoot.gameObject.SetActive(playerController.attackType < 0);//显示隐藏子弹数量
 
         //投掷
         switch (player.throwType)

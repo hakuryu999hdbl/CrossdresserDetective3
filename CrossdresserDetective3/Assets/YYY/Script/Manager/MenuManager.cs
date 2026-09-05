@@ -75,7 +75,22 @@ public class MenuManager : MonoBehaviour
         GameFlowData.returnPath = null; // 用完清掉
 
 
-       
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            Debug.Log("当前是 Android");
+        }
+        else
+        {
+            Debug.Log("当前是 PC");
+
+            StartSetDisplayMode();//根据存档设置对应屏幕以及分辨率
+
+            GetResolutionIndex_Text();//设置屏幕分辨率文字
+
+          
+        }
+
+
     }
     private void OnEnable()
     {
@@ -480,29 +495,186 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    
+    #endregion
 
-    int DetectSystemLanguage()
+
+    /// <summary>
+    /// 頁面設置UI显示
+    /// </summary>
+    #region
+    [Header("画面显示方法")]
+    public GameObject DisplayMode_1;//全屏
+    public GameObject DisplayMode_2;//窗口
+
+
+
+    void StartSetDisplayMode()
     {
-        SystemLanguage sys = Application.systemLanguage;
+        bool fullscreen = PlayerPrefs.GetInt("DisplayMode", 1) == 1;
+        int resIndex = PlayerPrefs.GetInt("ResolutionIndex", 2); // 默认1080p
 
-        switch (sys)
+        currentMode = fullscreen ? DisplayMode.Fullscreen : DisplayMode.Windowed;
+
+        //修改显示
+        if (currentMode == DisplayMode.Fullscreen)
         {
-            case SystemLanguage.Japanese:
-                return 0;
-            case SystemLanguage.ChineseSimplified:
-                return 1;
-            case SystemLanguage.ChineseTraditional:
-                return 2;
-            case SystemLanguage.English:
-                return 3;
-            case SystemLanguage.Korean:
-                return 4;
-
-            default:
-                return 0; //默认日语
+            DisplayMode_1.SetActive(true);
+            DisplayMode_2.SetActive(false);
         }
+        else
+        {
+            DisplayMode_1.SetActive(false);
+            DisplayMode_2.SetActive(true);
+        }
+
+
+
+        var res = supportedResolutions[resIndex];
+        Screen.SetResolution(res.x, res.y, fullscreen);
+
+    }//开始设置屏幕分辨率
+
+
+
+
+    enum DisplayMode
+    {
+        Fullscreen,
+        Windowed
     }
+
+    DisplayMode currentMode;
+    Resolution currentResolution;
+
+
+
+    public void SetFullScreenOrWindowed()
+    {
+        if (currentMode == DisplayMode.Fullscreen)
+        {
+            SetDisplayMode(false);
+        }
+        else
+        {
+            SetDisplayMode(true);
+        }
+    }//设置屏幕模式活扣
+
+    public void SetDisplayMode(bool fullscreen)
+    {
+        Screen.fullScreen = fullscreen;
+        currentMode = fullscreen ? DisplayMode.Fullscreen : DisplayMode.Windowed;
+
+        PlayerPrefs.SetInt("DisplayMode", fullscreen ? 1 : 0);
+
+
+
+        //修改显示
+        if (currentMode == DisplayMode.Fullscreen)
+        {
+            DisplayMode_1.SetActive(true);
+            DisplayMode_2.SetActive(false);
+        }
+        else
+        {
+            DisplayMode_1.SetActive(false);
+            DisplayMode_2.SetActive(true);
+        }
+
+
+    }//设置全屏或者窗口化
+
+    Vector2Int[] supportedResolutions =
+{
+    new Vector2Int(3840, 2160),
+    new Vector2Int(2560, 1440),
+    new Vector2Int(1920, 1080),
+    new Vector2Int(1600, 900),
+    new Vector2Int(1280, 720),
+};
+
+    public void SetResolutionByIndex(int index)
+    {
+        var res = supportedResolutions[index];
+
+        Screen.SetResolution(
+            res.x,
+            res.y,
+            currentMode == DisplayMode.Fullscreen
+        );
+
+        // if (index == 0)
+        // {
+        //     //默认的就是基于当前屏幕分辨率
+        //     InitResolutions();
+        // }
+        // else
+        // {
+        //     var res = supportedResolutions[index];
+        //
+        //     Screen.SetResolution(
+        //         res.x,
+        //         res.y,
+        //         currentMode == DisplayMode.Fullscreen
+        //     );
+        // }
+
+        PlayerPrefs.SetInt("ResolutionIndex", index);
+
+        //设置屏幕分辨率文字
+        GetResolutionIndex_Text();
+
+    }//设置当前屏幕模式的分辨率
+
+
+    public void ChangeResolution()
+    {
+        //读取当前分辨率编号，默认1920×1080（索引2）
+        int index = PlayerPrefs.GetInt("ResolutionIndex", 2);
+
+        //切换到下一个
+        index++;
+
+        //超过最后一个后回到第一个
+        if (index >= supportedResolutions.Length)
+        {
+            index = 0;
+        }
+
+        var res = supportedResolutions[index];
+
+        Screen.SetResolution(
+            res.x,
+            res.y,
+            currentMode == DisplayMode.Fullscreen
+        );
+
+        PlayerPrefs.SetInt("ResolutionIndex", index);
+        PlayerPrefs.Save();
+
+        GetResolutionIndex_Text();
+    }
+
+    public Text ResolutionsText;
+
+    public void GetResolutionIndex_Text()
+    {
+        //设置屏幕分辨率文字
+        int index = PlayerPrefs.GetInt("ResolutionIndex");
+        ResolutionsText.text = GetResolutionLabel(index).ToString();
+
+    }//读取分辨率数字
+
+
+
+    string GetResolutionLabel(int index)
+    {
+        var r = supportedResolutions[index];
+
+        return $"{r.x}×{r.y}";
+    }
+
+
     #endregion
 
     /// <summary>

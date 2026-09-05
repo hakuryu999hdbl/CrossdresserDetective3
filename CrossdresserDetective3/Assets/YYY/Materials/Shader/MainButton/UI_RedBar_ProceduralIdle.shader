@@ -46,6 +46,8 @@ Shader "FTGirl/UI RedBar Procedural Idle"
    float _EdgeWidth,_EdgeFade,_Speed,_Density,_Amount,_Softness,_DriftX,_DriftY,_LeftAmount,_RightAmount;
    float4 _ClipRect;
 
+   float _UnscaledTime;//传入不受TimeScale限制时间
+
    float hash21(float2 p)
    {
     p=frac(p*float2(123.34,456.21));
@@ -89,7 +91,7 @@ Shader "FTGirl/UI RedBar Procedural Idle"
    fixed4 frag(v2f IN):SV_Target
    {
     fixed4 col=tex2D(_MainTex,IN.uv)*IN.color;
-    float t=_Time.y*_Speed;
+    float t = _UnscaledTime * _Speed;
 
     float left=(1-smoothstep(0,max(_EdgeWidth,.0001),IN.uv.x))*_LeftAmount;
     float right=(1-smoothstep(0,max(_EdgeWidth,.0001),1-IN.uv.x))*_RightAmount;
