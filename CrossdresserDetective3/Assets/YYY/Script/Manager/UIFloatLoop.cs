@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class UIFloatLoop : MonoBehaviour
 {
-    [Header("Î»ÖÃÆ¯¸¡")]
+    [Header("moveXY")]
     public bool move = true;
     public float moveX = 5f;
     public float moveY = 8f;
     public float moveSpeed = 1f;
 
-    [Header("Ğı×ª")]
+    [Header("rotate")]
     public bool rotate = false;
     public float rotateAngle = 1f;
     public float rotateSpeed = 0.8f;
 
-    [Header("Ëõ·ÅºôÎü")]
+    [Header("scale")]
     public bool scale = false;
     public float scaleAmount = 0.015f;
     public float scaleSpeed = 1f;
 
-    [Header("´í¿ª¶¯»­")]
+    [Header("phase")]
     public float phase = 0f;
 
     private RectTransform rect;
@@ -64,7 +64,7 @@ public class UIFloatLoop : MonoBehaviour
         }
 
         // --------------------
-        // ºôÎüËõ·Å
+        // ºôÎEõ·Å
         // --------------------
         if (scale)
         {

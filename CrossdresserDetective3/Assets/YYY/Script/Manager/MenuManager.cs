@@ -244,7 +244,7 @@ public class MenuManager : MonoBehaviour
 
         PlayerPrefs.DeleteAll();
 
-    }
+    }//这是删除全部存档，这个不用了
     #endregion
 
 
@@ -744,6 +744,7 @@ public class MenuManager : MonoBehaviour
     public GameObject CreditsFirstSelected;//打开存菜单档默认选中（可变换）
     public GameObject CreditsButton;//退出存档菜单默认选中
 
+    public GameObject SD_YYY;
 
     public void OpenCreditsMenu()
     {
@@ -756,6 +757,8 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(CreditsFirstSelected);
 
         CurrentOpen = 6;
+
+        SD_YYY.SetActive(true);
     }
 
     public void CloseCreditsMenu()
@@ -770,6 +773,8 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(CreditsButton);
 
         CurrentOpen = 0;
+
+        SD_YYY.SetActive(false);
     }
 
 
