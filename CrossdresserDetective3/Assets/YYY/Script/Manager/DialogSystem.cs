@@ -256,7 +256,7 @@ public class DialogSystem : MonoBehaviour
 
         if (GameFlowData.returnPath == "cg")
         {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("CG");
         }
         else 
         {

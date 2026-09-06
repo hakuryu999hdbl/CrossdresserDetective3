@@ -1128,11 +1128,11 @@ public class UIManager : MonoBehaviour
                 break;
             case 3:
                 SaveManager.UpdateThumbnail("EndResult_03");
-                ResultPicture.sprite = CG_3;//尿便器
+                ResultPicture.sprite = CG_3;//厕所尿便器
                 break;
             case 4:
                 SaveManager.UpdateThumbnail("EndResult_04");
-                ResultPicture.sprite = CG_4;//无捆绑轮奸
+                ResultPicture.sprite = CG_4;//轮奸无法合腿
                 break;
         }
 

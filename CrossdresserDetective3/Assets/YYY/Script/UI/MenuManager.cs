@@ -27,9 +27,9 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单  5确认删除存档菜单  6赞助者名单  7社群菜单
+    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4社群菜单  5确认删除存档菜单  6赞助者名单
 
-  
+
 
     private PlayerInputControl inputControl;
 
@@ -61,10 +61,6 @@ public class MenuManager : MonoBehaviour
         {
             case "chapter_1":
                 OpenChapter_Number(1);
-                break;
-
-            case "cg":
-                OpenGalleryMenu();
                 break;
 
         }
@@ -123,7 +119,7 @@ public class MenuManager : MonoBehaviour
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
             case 4:
-                CloseGalleryMenu();
+                CloseCommunityMenu();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
             case 5:
@@ -134,10 +130,7 @@ public class MenuManager : MonoBehaviour
                 CloseCreditsMenu();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
-            case 7:
-                CloseCommunityMenu();
-                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
-                break;
+
 
 
             case -1:
@@ -695,43 +688,10 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     #region
 
-    [Header("回想菜单")]
-    public GameObject GalleryMenu;
-    public GameObject GalleryFirstSelected;//打开存菜单档默认选中（可变换）
-    public GameObject GalleryButton;//退出存档菜单默认选中
-
-    public void OpenGalleryMenu()
-    {
-        GalleryMenu.SetActive(true);
-        MainMenu.SetActive(false);
-
-        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(GalleryFirstSelected);
-
-        CurrentOpen = 4;
-    }
-
-    public void CloseGalleryMenu()
-    {
-        GalleryMenu.SetActive(false);
-        MainMenu.SetActive(true);
-
-        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-
-        GalleryFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(GalleryButton);
-
-        CurrentOpen = 0;
-    }
-
-
-    public void ToCG(string Name)
+    public void ToCG()
     {
 
-        GameFlowData.nextAreaId = Name;
+
         GameFlowData.returnPath = "cg";
 
         blackScreen.SetFadeIn();// 黑幕淡入
@@ -741,7 +701,7 @@ public class MenuManager : MonoBehaviour
 
     private void StartCG()
     {
-        SceneManager.LoadScene("Spine");
+        SceneManager.LoadScene("CG");
     }
 
     #endregion
@@ -820,7 +780,7 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(CommunityFirstSelected);
 
-        CurrentOpen = 7;
+        CurrentOpen = 4;
 
         SD_YYY_02.SetActive(true);
     }

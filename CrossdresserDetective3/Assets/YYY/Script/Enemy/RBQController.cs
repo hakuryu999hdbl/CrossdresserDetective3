@@ -14,39 +14,47 @@ public class RBQController : MonoBehaviour
         if (isPlayer)
         {
 
+            if(GameFlowData.returnPath== "cg")
+            {
+                //这是CG鉴赏界面
+
+                return;
+            }
+
+
             switch (GameFlowData.CurrentChapter)
             {
                 case 1:
                     switch (GameFlowData.CurrentStage)
                     {
                         case 1:
-                            currentAnimationType = 0;//用完垃圾桶
-                            UIManager.instance.ResultNumber = 1;
+                            currentAnimationType = 0;
+                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
                             break;
 
                         case 2:
-                            currentAnimationType = 0;//用完垃圾桶
-                            UIManager.instance.ResultNumber = 1;
+                            currentAnimationType = 0;
+                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
                             break;
 
                         case 3:
-                            currentAnimationType = 2;//厕所尿便器
-                            UIManager.instance.ResultNumber = 3;
+                            currentAnimationType = 2;
+                            UIManager.instance.ResultNumber = 3;//厕所尿便器
                             break;
 
                         case 4:
-                            currentAnimationType = 2;//厕所尿便器
-                            UIManager.instance.ResultNumber = 3;
+                            currentAnimationType = 2;
+                            UIManager.instance.ResultNumber = 3;//厕所尿便器
                             break;
 
                         case 5:
-                            currentAnimationType = 2;//厕所尿便器
-                            UIManager.instance.ResultNumber = 3;
+                            currentAnimationType = 1;
+                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
                             break;
 
                         case 6:
-                            currentAnimationType = 2;//厕所尿便器
-                            UIManager.instance.ResultNumber = 3;
+                            currentAnimationType = 1;
+                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
                             break;
                         case 7:
                         case 8:
@@ -86,8 +94,6 @@ public class RBQController : MonoBehaviour
 
 
 
-
-
     /// <summary>
     /// 动画循环
     /// </summary>
@@ -97,7 +103,8 @@ public class RBQController : MonoBehaviour
 
     [Header("当前动画系")]
     [SerializeField]
-    private int currentAnimationType =1;//[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY
+    private int currentAnimationType =1;
+
 
 
 
@@ -134,9 +141,17 @@ public class RBQController : MonoBehaviour
                 frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
             case 2:
-                anim.Play("Man_PeeInYYY_6", 0, 0f);
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //无
                 break;
+
+            case 3:
+                //无
+                break;
+
+            case 4:
+                //无
+                break;
+
         }
        
         anim.Update(0f);
@@ -165,18 +180,28 @@ public class RBQController : MonoBehaviour
                 break;
 
             case 0:
-                anim.Play("Man_RapeYYY_1", 0, 0f);
+                anim.Play("Man_RapeYYY_1", 0, 0f);//用完扔垃圾桶
                 frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 1:
-                anim.Play("Man_AbuseYYY_1", 0, 0f);
+                anim.Play("Man_AbuseYYY_1", 0, 0f);//轮奸无法合腿
                 frameEvent.SetDeadBondage_Bondage_2();//全身捆绑，不绑腿
                 break;
 
             case 2:
-                anim.Play("Man_PeeInYYY_1", 0, 0f);
+                anim.Play("Man_PeeInYYY_1", 0, 0f);//厕所尿便器
                 frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                break;
+
+            case 3:
+                anim.Play("Story_SelfBondage_2", 0, 0f);//榨精地狱
+                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                break;
+
+            case 4:
+                anim.Play("Story_Girl_LewdmoveYYY_1", 0, 0f);//女干部榨精勒死
+                RandomSkin();//不捆绑
                 break;
         }
 
@@ -263,9 +288,40 @@ public class RBQController : MonoBehaviour
 
 
 
+    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY
 
 
+    /// <summary>
+    /// CG鉴赏场景CGGalleryController衔接
+    /// </summary>
+    #region
+    public void PlayGalleryCG(int animationType)
+    {
+        frameEvent_Audio._Voice_UnMute();
+        currentAnimationType = animationType;
+        AbuseAnimation();
 
+       
+    }//CG鉴赏场景播放指定动画
+
+    public void ResetGalleryCG()
+    {
+        StopAbuseAnimation();
+
+        anim.ResetTrigger("Next");
+
+        //清除当前Animator状态，恢复Controller默认状态
+        anim.Rebind();
+        anim.Update(0f);
+        frameEvent_Audio._Voice_Mute();
+
+        //停止当前CG声音
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.fxSource.Stop();
+        }
+    }//退出CG播放时，停止循环并让Animator恢复初始状态
+    #endregion
 
 
 
