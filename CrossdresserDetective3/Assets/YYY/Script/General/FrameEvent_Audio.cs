@@ -384,6 +384,10 @@ public class FrameEvent_Audio : MonoBehaviour
     }//代码调用
 
 
+    public void _SE_Photo()
+    {
+        audioS.PlayOneShot(AudioManager.SE_Photo);
+    }//代码调用
 
 
     public void _SE_Clothes()

@@ -27,7 +27,7 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单  5确认删除存档菜单  6赞助者名单
+    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4回想菜单  5确认删除存档菜单  6赞助者名单  7社群菜单
 
   
 
@@ -132,6 +132,10 @@ public class MenuManager : MonoBehaviour
                 break;
             case 6:
                 CloseCreditsMenu();
+                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+                break;
+            case 7:
+                CloseCommunityMenu();
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
 
@@ -407,6 +411,9 @@ public class MenuManager : MonoBehaviour
 
     public LanguageSelector languageSelector;//初始化设置的时候直接传输过去
 
+    public GameObject SD_YYY_05;
+
+
     public void OpenSetting()
     {
         // SettingMenu.SetActive(true);
@@ -441,6 +448,8 @@ public class MenuManager : MonoBehaviour
         }
 
         CurrentOpen = 1;
+
+        SD_YYY_05.SetActive(true);
     }
 
     public void CloseSetting()
@@ -481,6 +490,10 @@ public class MenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(settingButton);
 
         CurrentOpen = 0;
+
+
+        SD_YYY_05.SetActive(false);
+
     }
 
 
@@ -744,7 +757,7 @@ public class MenuManager : MonoBehaviour
     public GameObject CreditsFirstSelected;//打开存菜单档默认选中（可变换）
     public GameObject CreditsButton;//退出存档菜单默认选中
 
-    public GameObject SD_YYY;
+    public GameObject SD_YYY_03;
 
     public void OpenCreditsMenu()
     {
@@ -758,7 +771,7 @@ public class MenuManager : MonoBehaviour
 
         CurrentOpen = 6;
 
-        SD_YYY.SetActive(true);
+        SD_YYY_03.SetActive(true);
     }
 
     public void CloseCreditsMenu()
@@ -774,11 +787,87 @@ public class MenuManager : MonoBehaviour
 
         CurrentOpen = 0;
 
-        SD_YYY.SetActive(false);
+        SD_YYY_03.SetActive(false);
     }
 
 
 
+
+
+    #endregion
+
+
+    /// <summary>
+    /// 社群菜单
+    /// </summary>
+    #region
+
+    [Header("社群菜单")]
+    public GameObject CommunityMenu;
+    public GameObject CommunityFirstSelected;//打开社群菜单档默认选中（可变换）
+    public GameObject CommunityButton;//退出社群菜单默认选中
+
+
+    public GameObject SD_YYY_02;
+
+    public void OpenCommunityMenu()
+    {
+        CommunityMenu.SetActive(true);
+        MainMenu.SetActive(false);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(CommunityFirstSelected);
+
+        CurrentOpen = 7;
+
+        SD_YYY_02.SetActive(true);
+    }
+
+    public void CloseCommunityMenu()
+    {
+        CommunityMenu.SetActive(false);
+        MainMenu.SetActive(true);
+
+        GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+        CommunityFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(CommunityButton);
+
+        CurrentOpen = 0;
+
+        SD_YYY_02.SetActive(false);
+    }
+
+
+
+    public void OpenURL_Ci_en()
+    {
+        Application.OpenURL("https://ci-en.dlsite.com/creator/16247");
+
+    }
+
+    public void OpenURL_Patreon()
+    {
+        Application.OpenURL("https://www.patreon.com/c/FTGirl");
+
+
+    }
+
+    public void OpenURL_Discord()
+    {
+        Application.OpenURL("https://discord.gg/bc49G5Xcq9");
+    }
+
+
+
+    public void OpenURL_YYY()
+    {
+        Application.OpenURL("https://x.com/Detective_ye");
+
+    }
 
 
     #endregion

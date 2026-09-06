@@ -1136,6 +1136,8 @@ public class UIManager : MonoBehaviour
                 break;
         }
 
+
+      
     }
 
     public void ShowGameOverMenu()
@@ -1164,6 +1166,9 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(GameOverfirstSelected);
+
+        WhiteScreen.SetActive(true);//模拟白色闪光灯
+        AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Photo);
     }
 
 
@@ -1304,14 +1309,15 @@ public class UIManager : MonoBehaviour
 
         blackScreen.SetFadeOut();
 
-        SetResultImage();
+        SetResultImage();//过场动画跳结局入口
 
         gameOverPanel.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(GameOverfirstSelected);
 
- 
+        WhiteScreen.SetActive(true);//模拟白色闪光灯
+        AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Photo);
     }
 
 
