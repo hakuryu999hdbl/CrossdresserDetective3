@@ -132,6 +132,10 @@ public class CGGalleryController : MonoBehaviour
     /// <summary>
     /// 点击Play按钮
     /// </summary>
+    /// 
+
+    public GameObject Toilet;
+
     public void PlayCurrentCG()
     {
         if (currentSelectedSlot == null)
@@ -168,6 +172,18 @@ public class CGGalleryController : MonoBehaviour
                 isCG = false;
                 EndResult.SetActive(true);
                 CG.SetActive(false);
+
+
+                //特殊背景厕所
+                if (currentSelectedSlot.animationType==2) 
+                {
+                    Toilet.SetActive(true);
+                }
+                else
+                {
+                    Toilet.SetActive(false);
+                }
+
 
                 break;
 

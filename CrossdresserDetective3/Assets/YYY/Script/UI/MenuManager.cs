@@ -704,6 +704,19 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("CG");
     }
 
+    public void ToSpine()
+    {
+
+        blackScreen.SetFadeIn();// 黑幕淡入
+        Invoke(nameof(StartCG), 1f);
+
+    }//跳转Spine场景（开头就是Spine动画章节）
+
+    private void StartSpine()
+    {
+        SceneManager.LoadScene("Spine");
+    }
+
     #endregion
 
 
@@ -1023,7 +1036,7 @@ public class MenuManager : MonoBehaviour
         if (nextChapter == 1 && nextStage == 1)
         {
             GameFlowData.nextAreaId = "Introduce";
-            StartCG();
+            StartSpine();
         }
         else 
         {

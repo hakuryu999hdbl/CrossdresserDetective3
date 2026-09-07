@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class SkyboxSample : MonoBehaviour
 {
@@ -19,14 +20,22 @@ public class SkyboxSample : MonoBehaviour
         //DayOrNight();
         //Night();
 
-        GameManager.instance.IsSkyboxSample(this);
-
-        Day();
+        if (SceneManager.GetActiveScene().name == "Level")
+        {
+            //局内固定
+            GameManager.instance.IsSkyboxSample(this);
+            Day();
+        }
+        else 
+        {
+            DayOrNight();
+        }
+      
     }
 
     void Update()
     {
-        // 按 T 随机换装测试
+        // 按 Y 随机换装测试
         if (Keyboard.current.yKey.wasPressedThisFrame)
         {
             DayOrNight();
