@@ -177,6 +177,24 @@ public class FrameEvent_Audio : MonoBehaviour
 
     #region SE 泛用场景内音效
 
+    //烙铁声
+    public void _SE_Steam()
+    {
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.SE_Steam_1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.SE_Steam_2);
+                break;
+        }
+
+    }
+
+
+
+
     //鞭打声
     public void _SE_Whip()
     {
@@ -499,18 +517,25 @@ public class FrameEvent_Audio : MonoBehaviour
     public void _YYY_attack()
     {
 
-        AudioClip[] clips =
- {
-        AudioManager.YYY_attack1,
-        AudioManager.YYY_attack2,
-        AudioManager.YYY_attack3,
-        AudioManager.YYY_attack4
-    };
 
-        PlaySingleVoice(
-            clips[Random.Range(0, clips.Length)]
-        );
-    }//单次触发，打断循环
+        switch (Random.Range(0, 4))
+        {
+            case 0:
+                audioS.PlayOneShot(AudioManager.YYY_attack1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.YYY_attack2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.YYY_attack3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.YYY_attack4);
+                break;
+        }
+
+
+    }
 
     public void _YYY_die()
     {
@@ -530,6 +555,30 @@ public class FrameEvent_Audio : MonoBehaviour
 
 
     }//单次触发，打断循环
+
+    public void _YYY_scream_strong()
+    {
+
+        AudioClip[] clips =
+        {
+        AudioManager.YYY_scream_strong1,
+        AudioManager.YYY_scream_strong2,
+        AudioManager.YYY_scream_strong3,
+        AudioManager.YYY_scream_strong4,
+        AudioManager.YYY_scream_strong5,
+        AudioManager.YYY_scream_strong6,
+        AudioManager.YYY_scream_strong7,
+        AudioManager.YYY_scream_strong8
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发，打断循环
+
+
 
     public void _YYY_niao()
     {
@@ -606,27 +655,7 @@ public class FrameEvent_Audio : MonoBehaviour
 
     }//循环触发
 
-    public void _YYY_scream_strong()
-    {
-
-        AudioClip[] clips =
-        {
-        AudioManager.YYY_scream_strong1,
-        AudioManager.YYY_scream_strong2,
-        AudioManager.YYY_scream_strong3,
-        AudioManager.YYY_scream_strong4,
-        AudioManager.YYY_scream_strong5,
-        AudioManager.YYY_scream_strong6,
-        AudioManager.YYY_scream_strong7,
-        AudioManager.YYY_scream_strong8
-    };
-
-        PlaySingleVoice(
-            clips[Random.Range(0, clips.Length)]
-        );
-
-
-    }//单次触发，打断循环
+   
 
 
 
@@ -652,6 +681,8 @@ public class FrameEvent_Audio : MonoBehaviour
                 break;
         }
     }
+
+
     public void _Girl_attack()
     {
         switch (Random.Range(0, 3))
@@ -669,19 +700,20 @@ public class FrameEvent_Audio : MonoBehaviour
     }
     public void _Girl_die()
     {
-        switch (Random.Range(0, 3))
-        {
-            case 0:
-                audioS.PlayOneShot(AudioManager.Girl_die1);
-                break;
-            case 1:
-                audioS.PlayOneShot(AudioManager.Girl_die2);
-                break;
-            case 2:
-                audioS.PlayOneShot(AudioManager.Girl_die3);
-                break;
-        }
-    }
+
+        AudioClip[] clips =
+{
+      AudioManager.Girl_die1,
+        AudioManager.Girl_die2,
+        AudioManager.Girl_die3
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发，打断循环
     public void _Girl_thankYou()
     {
 

@@ -124,7 +124,7 @@ public class AudioManager : MonoBehaviour
 
 
 
-
+    public AudioClip SE_Steam_1, SE_Steam_2;
 
     public AudioClip SE_Whip_1, SE_Whip_2, SE_Whip_3;
 

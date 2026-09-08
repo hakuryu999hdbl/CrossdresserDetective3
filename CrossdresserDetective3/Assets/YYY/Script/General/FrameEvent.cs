@@ -1044,6 +1044,37 @@ public class FrameEvent : MonoBehaviour
 
     }//战败玩家原皮拘束,但是不绑腿
 
+    public void SetDeadBondage_RandomEnemy() 
+    {
+
+        //男性
+        rBQController.Man_clothesIndex = Random.Range(0, 3);
+        rBQController.Man_hairIndex = Random.Range(0, 2);
+
+        //女性
+        rBQController.Girl_hairIndex = Random.Range(2, 4);
+        rBQController.Girl_clothesIndex = Random.Range(1, 4);
+        rBQController.Girl_glovesIndex = Random.Range(0, 2);
+        rBQController.Girl_shoesIndex = Random.Range(1, 3);
+
+
+        switch (Random.Range(1, 3))
+        {
+            case 1:
+                rBQController.Girl_underwearIndex = 1;//内衣
+                rBQController.Girl_stockingsIndex = 0;
+                break;
+            case 2:
+                rBQController.Girl_underwearIndex = 2;//内衣裤袜
+                rBQController.Girl_stockingsIndex = 2;
+                break;
+        }
+
+        rBQController.Girl_hatIndex = 0;//没有头饰
+        rBQController.Girl_maskIndex = 0;//不戴面具
+
+    }//战败玩家随机男性女性敌人
+
 
 
     public void SetRBQ_Bondage_1() 

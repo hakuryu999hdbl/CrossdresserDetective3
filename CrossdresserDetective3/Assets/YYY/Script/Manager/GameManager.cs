@@ -170,8 +170,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     #region
 
-    public SkyboxSample skyboxSample;
+    [Header("各类任务UI")]
 
+    public SkyboxSample skyboxSample;
+    public GameObject Mission;
     public void IsSkyboxSample(SkyboxSample _skyboxSample)
     {
         skyboxSample = _skyboxSample;
@@ -187,7 +189,7 @@ public class GameManager : MonoBehaviour
     public void ShowMissionUI()
     {
 
-
+        Mission.SetActive(true);
 
         //Debug.Log("显示模式：" + GameFlowData.CurrentMissionType);
 

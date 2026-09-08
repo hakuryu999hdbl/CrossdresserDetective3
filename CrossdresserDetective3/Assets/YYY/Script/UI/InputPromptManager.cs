@@ -18,6 +18,14 @@ public class InputPromptManager : MonoBehaviour
 
     private void OnEnable()
     {
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
+        //    Debug.Log("当前是 Android");
+        //
+        //    gameObject.SetActive(false);
+        //}
+
+
         InputSystem.onActionChange += OnActionChange;
 
         // =========================

@@ -1519,8 +1519,31 @@ public class UIManager : MonoBehaviour
 
     public void RefreshClueUI(int current, int total)
     {
-        clueText.text =
-            $"调查 {current}/{total}";
+        clueText.gameObject.SetActive(true);
+        switch (PlayerPrefs.GetInt("language"))
+        {
+            case 0:
+                clueText.text = $"コンピューターを調査 {current}/{total}";
+                break;
+            case 1:
+                clueText.text = $"调查电脑 {current}/{total}";
+                break;
+            case 2:
+                clueText.text = $"調查電腦 {current}/{total}";
+                break;
+            default:
+            case 3:
+                clueText.text = $"Investigate Computers {current}/{total}";
+                break;
+            case 4:
+                clueText.text = $"컴퓨터 조사 {current}/{total}";
+                break;
+         
+
+        }
+
+
+        
     }
 
     [Header("救援任务UI")]
@@ -1529,7 +1552,30 @@ public class UIManager : MonoBehaviour
     public void RefreshRescueUI(int current, int total)
     {
         rescueText.gameObject.SetActive(true);
-        rescueText.text = $"救出 {current}/{total}";
+
+
+
+        switch (PlayerPrefs.GetInt("language"))
+        {
+            case 0:
+                rescueText.text = $"人質を救出 {current}/{total}";
+                break;
+            case 1:
+                rescueText.text = $"救出人质 {current}/{total}";
+                break;
+            case 2:
+                rescueText.text = $"救出人质 {current}/{total}";
+                break;
+            default:
+            case 3:
+                rescueText.text = $"Rescue Hostages {current}/{total}";
+                break;
+            case 4:
+                rescueText.text = $"인질 구출 {current}/{total}";
+                break;
+        }
+
+     
     }
 
     public GameObject escapeText, eliminateText;
