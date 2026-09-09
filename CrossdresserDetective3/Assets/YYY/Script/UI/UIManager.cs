@@ -1522,6 +1522,7 @@ public class UIManager : MonoBehaviour
         clueText.gameObject.SetActive(true);
         switch (PlayerPrefs.GetInt("language"))
         {
+
             case 0:
                 clueText.text = $"コンピューターを調査 {current}/{total}";
                 break;
@@ -1621,6 +1622,38 @@ public class UIManager : MonoBehaviour
 
     }
 
+
+
+    [Header("当前选中提示")]
+    public Sprite MRT_Choose;
+    public Sprite MRT_Default;
+    public Image MeleeChoose,RangeChoose,ThrowableChoose;
+
+    public void RefreshWeaponChoose(PlayerController player)
+    {
+        // 先全部恢复默认
+        MeleeChoose.sprite = MRT_Default;
+        RangeChoose.sprite = MRT_Default;
+        ThrowableChoose.sprite = MRT_Default;
+
+        // attackType:
+        // > 0  = 近战
+        // -1/-2 = 远程
+        // 这里投掷按照你的实际字段判断
+
+        if (player.isHoldingThrow)
+        {
+            ThrowableChoose.sprite = MRT_Choose;
+        }
+        else if (player.attackType < 0)
+        {
+            RangeChoose.sprite = MRT_Choose;
+        }
+        else if (player.attackType > 0) // 换成你实际代表“当前选择投掷”的变量
+        {
+            MeleeChoose.sprite = MRT_Choose;
+        }
+    }
 
 
     [Header("近战UI")]

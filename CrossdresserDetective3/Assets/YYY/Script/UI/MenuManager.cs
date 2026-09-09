@@ -892,6 +892,9 @@ public class MenuManager : MonoBehaviour
     public GameObject Chapter_2_FirstSelected;//打开章节默认选中（可变换）
     public GameObject Chapter_2_Button;//退出章节二菜单默认选中
 
+
+    public GameObject ChapterLocked;//章节未解锁
+
     public void OpenChapter_Number(int Number) 
     {
         RefreshChapter1Buttons();//读取更新关卡（每次只有在打开关卡进度的时候更新）
@@ -912,15 +915,25 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 2:
-                ChapterMenu.SetActive(false);
-                Chapter_2_Menu.SetActive(true);
+            case 3:
+            case 4:
+            case 5:
+            case 6:
 
-                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                ChapterLocked.SetActive(true);
+                Invoke(nameof(CloseChapterLocked), 1f);
+                AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Keyboard);
 
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
 
-                CurrentOpen = -2;
+                //ChapterMenu.SetActive(false);
+                //Chapter_2_Menu.SetActive(true);
+                //
+                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                //
+                //EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
+                //
+                //CurrentOpen = -2;
 
                 break;
         }
@@ -944,19 +957,30 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 2:
-                ChapterMenu.SetActive(true);
-                Chapter_2_Menu.SetActive(false);
+            case 3:
+            case 4:
+            case 5:
+            case 6:
 
-                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-
-                Chapter_2_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(Chapter_2_Button);
-
-                CurrentOpen = 2;
+                //ChapterMenu.SetActive(true);
+                //Chapter_2_Menu.SetActive(false);
+                //
+                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                //
+                //Chapter_2_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+                //EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(Chapter_2_Button);
+                //
+                //CurrentOpen = 2;
 
                 break;
         }
+    }
+
+
+    void CloseChapterLocked() 
+    {
+        ChapterLocked.SetActive(false);
     }
 
     #endregion

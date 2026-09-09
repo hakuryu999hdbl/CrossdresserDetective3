@@ -1624,6 +1624,8 @@ public class PlayerController : MonoBehaviour
 
         throwPressTime = Time.time;
         isHoldingThrow = true;
+
+        UIManager.instance.RefreshWeaponChoose(this);//更新当前选中
     }
     private void OnThrowCanceled(InputAction.CallbackContext ctx)
     {
@@ -1641,7 +1643,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             ChangeWeapon();
+
+        
         }
+
+        UIManager.instance.RefreshWeaponChoose(this);//更新当前选中
     }
 
 
