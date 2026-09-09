@@ -99,17 +99,24 @@ public class AudioManager : MonoBehaviour
 
 
 
-    public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
+    public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4, YYY_attack5, YYY_attack6;
+    public AudioClip YYY_damage1, YYY_damage2, YYY_damage3;
     public AudioClip YYY_die1, YYY_die2, YYY_die3, YYY_die4;
 
-    public AudioClip YYY_niao;
+    public AudioClip YYY_chokingBreak1, YYY_chokingBreak2;
+    public AudioClip YYY_Insert1, YYY_Insert2, YYY_Insert3, YYY_Insert4;
+    public AudioClip YYY_Climax1, YYY_Climax2, YYY_Climax3;
+
+    public AudioClip YYY_niao1, YYY_niao2;
     public AudioClip YYY_duzui1, YYY_duzui2, YYY_duzui3, YYY_duzui4;
     public AudioClip YYY_breath1, YYY_breath2, YYY_breath3, YYY_breath4;
+    public AudioClip YYY_breathWeak1, YYY_breathWeak2;
     public AudioClip YYY_gasping1, YYY_gasping2;
     public AudioClip YYY_gasping_quick1, YYY_gasping_quick2, YYY_gasping_quick3;
-    public AudioClip YYY_gasping_weak1, YYY_gasping_weak2;
+    public AudioClip YYY_choking1, YYY_choking2;
 
-    public AudioClip YYY_scream_strong1, YYY_scream_strong2, YYY_scream_strong3, YYY_scream_strong4, YYY_scream_strong5, YYY_scream_strong6, YYY_scream_strong7, YYY_scream_strong8;
+    public AudioClip YYY_gagtalk_breath1, YYY_gagtalk_breath2, YYY_gagtalk_breath3;
+    public AudioClip YYY_gagtalk_gasping1;
 
 
 

@@ -1073,6 +1073,8 @@ public class FrameEvent : MonoBehaviour
         rBQController.Girl_hatIndex = 0;//没有头饰
         rBQController.Girl_maskIndex = 0;//不戴面具
 
+        rBQController.RefreshPlayerSkin();
+
     }//战败玩家随机男性女性敌人
 
 
@@ -1112,8 +1114,13 @@ public class FrameEvent : MonoBehaviour
 
     public void OnLewdmoveOver() 
     {
-        UIManager.instance.ResultNumber = 4;
-        UIManager.instance.ShowGameOverMenu();
+
+        if (UIManager.instance!=null) 
+        {
+            UIManager.instance.ResultNumber = 4;
+            UIManager.instance.ShowGameOverMenu();
+        }//CG鉴赏内
+
         
         
     }//被抓住后没能逃出被处决动画结尾触发结局CG

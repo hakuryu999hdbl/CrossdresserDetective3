@@ -753,7 +753,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Artist\uFF1A\u5976\u51CD\uFF08Naidong\uFF09\nProgramming\uFF1AFT\u5C11\u5973"
+  m_Text: "Artist\uFF1A\u5976\u51CD\uFF08Naidong\uFF09\nProgramming\uFF1AFT\u5C11\u5973\nCV\uFF1A\u6DBC\u8CB4\u6DBC/\u3076\u3089\u3063\u304F\u308F\u30FC\u304F\u3059\u97F3\u58F0\u7D20\u6750\u96C6"
 --- !u!222 &13595402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16575,9 +16575,6 @@ GameObject:
   - component: {fileID: 624971430}
   - component: {fileID: 624971435}
   - component: {fileID: 624971434}
-  - component: {fileID: 624971433}
-  - component: {fileID: 624971432}
-  - component: {fileID: 624971431}
   m_Layer: 5
   m_Name: Black
   m_TagString: Untagged
@@ -16604,97 +16601,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 911.4995, y: 86.708}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &624971431
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624971429}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 520d7247f79887648840d4d28f7a6971, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &624971432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624971429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce02b2c36df08d943accc9e26ab73679, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playHoverOnSelect: 1
---- !u!114 &624971433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624971429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 1
-    m_SelectOnUp: {fileID: 1868913812}
-    m_SelectOnDown: {fileID: 1570420266}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.42731255, g: 1, b: 0.4009434, a: 1}
-    m_PressedColor: {r: 0, g: 0.5377358, b: 0.05950973, a: 1}
-    m_SelectedColor: {r: 0.42745098, g: 1, b: 0.4, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 624971434}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1890368031}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: CloseCommunityMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &624971434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49282,8 +49188,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: -73.67399}
-  m_SizeDelta: {x: 312.5632, y: 533.8511}
+  m_AnchoredPosition: {x: 27, y: -78.08734}
+  m_SizeDelta: {x: 312.5632, y: 566.804}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1816435559
 MonoBehaviour:
@@ -49320,7 +49226,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "EternalHorizon1997\r\nShymidnightFox '\r\nahndrew lunt\r\nravn\r\nDan
     Turner\r\n\u0410\u0441\u044B\u043B \u0416\u0430\u0440\u044B\u043C\u0431\u0435\u0442\u043E\u0432\r\nLucas
-    Peroso Stremel\r\na mm\r\nlizhibbbb\r\nYAEZAKURA\r\nAndres Meza\r\nEnjoyVAC\nRyan"
+    Peroso Stremel\r\na mm\r\nlizhibbbb\r\nYAEZAKURA\r\nAndres Meza\r\nEnjoyVAC\nRyan\nImzzzz"
 --- !u!222 &1816435560
 CanvasRenderer:
   m_ObjectHideFlags: 0
