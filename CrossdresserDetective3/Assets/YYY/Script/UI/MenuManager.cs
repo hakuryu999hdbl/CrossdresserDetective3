@@ -911,6 +911,8 @@ public class MenuManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(Chapter_1_FirstSelected);
 
+
+
                 CurrentOpen = -1;
 
                 break;
@@ -978,6 +980,7 @@ public class MenuManager : MonoBehaviour
     }
 
 
+
     void CloseChapterLocked() 
     {
         ChapterLocked.SetActive(false);
@@ -1007,6 +1010,8 @@ public class MenuManager : MonoBehaviour
     {
         ReadChapter();
         RefreshChapterButtons(1, chapter1Buttons);
+
+        RefreshChapterStars(1);
     }
 
     // 通用刷新：第几章 + 这一章的按钮数组
@@ -1027,6 +1032,67 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    [Header("章节星星")]
+    public Text stageStarText_1;
+    public Text stageStarText_2;
+    public Text stageStarText_3;
+    public Text stageStarText_4;
+    public Text stageStarText_5;
+    public Text stageStarText_6;
+
+    public void RefreshChapterStars(int chapterIndex)
+    {
+        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+
+        if (data == null)
+            return;
+
+        int totalStars = 0;
+
+        int startIndex = (chapterIndex - 1) * data.stagePerChapter;
+
+        for (int i = 0; i < data.stagePerChapter; i++)
+        {
+            int index = startIndex + i;
+
+            if (index >= data.stageStars.Length)
+                break;
+
+            int star = data.stageStars[index];
+
+            if (star > 0)
+            {
+                totalStars += star;
+            }
+        }
+
+        switch (chapterIndex)
+        {
+            case 1:
+                stageStarText_1.text = $"{totalStars} / 30";
+                break;
+
+            case 2:
+                stageStarText_2.text = $"{totalStars} / 30";
+                break;
+
+            case 3:
+                stageStarText_3.text = $"{totalStars} / 30";
+                break;
+
+            case 4:
+                stageStarText_4.text = $"{totalStars} / 30";
+                break;
+
+            case 5:
+                stageStarText_5.text = $"{totalStars} / 30";
+                break;
+
+            case 6:
+                stageStarText_6.text = $"{totalStars} / 30";
+                break;
+        }
+    }
     #endregion
 
 

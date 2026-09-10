@@ -21,9 +21,9 @@ public class StageButtonUI : MonoBehaviour
         if (button != null)
             button.interactable = unlocked;
 
-        star1.SetActive(unlocked && star >= 1);
+        star3.SetActive(unlocked && star >= 1);
         star2.SetActive(unlocked && star >= 2);
-        star3.SetActive(unlocked && star >= 3);
+        star1.SetActive(unlocked && star >= 3);
     }
 
     [Header("¹Ø¿¨")]
