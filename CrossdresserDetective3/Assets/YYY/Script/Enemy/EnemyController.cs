@@ -1723,28 +1723,68 @@ public class EnemyController : MonoBehaviour
     [Header("死亡掉落")]
     public List<GameObject> dropItemList = new List<GameObject>();
 
+    [Header("普通物品掉落")]
     [Range(0f, 1f)]
-    public float dropChance = 0.25f; // 25%几率掉落
+     float dropChance = 0.25f; // 其他物品25%掉落
+
+     float dropForceX = 3f;
+     float dropForceY = 5f;
 
 
-    public float dropForceX = 3f;
-    public float dropForceY = 5f;
+    [Header("金钱掉落（List第0个）")]
+    [Range(0f, 1f)]
+     float moneyDropChance = 0.8f; // 金钱80%掉落
 
+    int moneyDropMin = 1;
+    int moneyDropMax = 3;
+
+  
     public void DropRandomItem()
     {
         // 没有配置物品
         if (dropItemList == null || dropItemList.Count == 0)
             return;
 
-        // 概率判定
+        // =========================
+        // 金钱：List第0个
+        // =========================
+        if (dropItemList[0] != null)
+        {
+            if (Random.value <= moneyDropChance)
+            {
+                int count = Random.Range(
+                    moneyDropMin,
+                    moneyDropMax + 1
+                );
+
+                for (int i = 0; i < count; i++)
+                {
+                    SpawnDropItem(dropItemList[0]);
+                }
+            }
+        }
+
+
+
+        // =========================
+        // 其他普通掉落
+        // =========================
+        if (dropItemList.Count <= 1)
+            return;
+
         if (Random.value > dropChance)
             return;
 
-        // 随机选一个
+        // 从1开始，排除Money
         GameObject prefab = dropItemList[
-            Random.Range(0, dropItemList.Count)
+            Random.Range(1, dropItemList.Count)
         ];
 
+        SpawnDropItem(prefab);
+    }
+
+    private void SpawnDropItem(GameObject prefab)
+    {
         if (prefab == null)
             return;
 
@@ -1758,19 +1798,24 @@ public class EnemyController : MonoBehaviour
 
         if (itemRb != null)
         {
+            // 每个掉落物随机往左/右飞
             float dir = Random.value < 0.5f ? -1f : 1f;
 
             itemRb.AddForce(
                 new Vector2(
-                    dir * Random.Range(dropForceX * 0.7f, dropForceX * 1.3f),
-                    Random.Range(dropForceY * 0.8f, dropForceY * 1.2f)
+                    dir * Random.Range(
+                        dropForceX * 0.7f,
+                        dropForceX * 1.3f
+                    ),
+                    Random.Range(
+                        dropForceY * 0.8f,
+                        dropForceY * 1.2f
+                    )
                 ),
                 ForceMode2D.Impulse
             );
         }
     }
-
-
     #endregion
 
 

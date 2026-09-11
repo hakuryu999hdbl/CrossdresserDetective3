@@ -10,7 +10,8 @@ public class PickupItem : MonoBehaviour
         Health,        // 回血
         CurrentAmmo,   // 当前弹匣子弹
         Magazine,      // 增加备用弹匣
-        Throwable      // 增加投掷品
+        Throwable,     // 增加投掷品
+        Money          // 金钱
     }
 
     [Header("道具类型")]
@@ -96,6 +97,10 @@ public class PickupItem : MonoBehaviour
             case PickupType.Throwable:
                 pickupSucceeded = TryPickupThrowable(player);
                 break;
+
+            case PickupType.Money:
+                pickupSucceeded = TryPickupMoney();
+                break;
         }
 
         if (!pickupSucceeded)
@@ -139,6 +144,12 @@ public class PickupItem : MonoBehaviour
             case PickupType.Throwable:
                 AudioManager.Instance.PlayFX(
                     AudioManager.Instance.Bullet_OutOfBullet
+                );
+                break;
+
+            case PickupType.Money:
+                AudioManager.Instance.PlayFX(
+                    AudioManager.Instance.SE_Reji_1
                 );
                 break;
         }
@@ -191,6 +202,16 @@ public class PickupItem : MonoBehaviour
             return false;
 
         player.AddThrowCount(value);//增加投掷品数量
+        return true;
+    }
+
+    private bool TryPickupMoney()
+    {
+        if (BalanceManager.instance == null)
+            return false;
+
+        BalanceManager.instance.ChangeMoney(value);
+
         return true;
     }
 }

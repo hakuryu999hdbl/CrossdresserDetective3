@@ -10,8 +10,8 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
 
     public string slotName; // "CurrentPlayer1", "CurrentPlayer2", "CurrentPlayer3"
 
-    public Text nameText, timeText, ChapterText;
-    //public Text nextAreaIdText;//位于区域？
+    public Text nameText, timeText, ChapterText, MoneyText;
+
     public Image thumbnail;
 
 
@@ -41,7 +41,8 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
             nameText.text = slotName;
             timeText.text = data.saveTime;
             ChapterText.text = data.GetLatestStageText();
-            //nextAreaIdText.text = data.NextAreaId;
+            MoneyText.text = data.Money.ToString();
+
 
 
 
@@ -60,7 +61,6 @@ public class SaveSlotUI : MonoBehaviour, ISelectHandler
 
             nameText.text = "Unnamed";
             timeText.text = "--------------------";
-            //nextAreaIdText.text = "";
 
 
             thumbnail.sprite = defaultThumbnail;

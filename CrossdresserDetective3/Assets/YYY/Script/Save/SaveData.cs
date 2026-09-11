@@ -56,7 +56,7 @@ public class SaveData
 
 
 
-
+    public int Money;
 
 
 
