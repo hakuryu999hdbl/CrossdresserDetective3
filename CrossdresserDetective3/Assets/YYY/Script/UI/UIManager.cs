@@ -156,6 +156,31 @@ public class UIManager : MonoBehaviour
     /// </summary>
     #region
 
+    [Header("武器UI切换位置")]
+    public RectTransform weaponUI;
+    public RectTransform setupWeaponUIRoot; // 整备界面位置
+    public RectTransform battleWeaponUIRoot; // 局内界面位置
+
+    private void MoveWeaponUIToSetup()
+    {
+        weaponUI.SetParent(setupWeaponUIRoot, false);
+
+        weaponUI.anchorMin = Vector2.zero;
+        weaponUI.anchorMax = Vector2.one;
+        weaponUI.offsetMin = Vector2.zero;
+        weaponUI.offsetMax = Vector2.zero;
+    }
+
+    private void MoveWeaponUIToBattle()
+    {
+        weaponUI.SetParent(battleWeaponUIRoot, false);
+
+        weaponUI.anchorMin = Vector2.zero;
+        weaponUI.anchorMax = Vector2.one;
+        weaponUI.offsetMin = Vector2.zero;
+        weaponUI.offsetMax = Vector2.zero;
+    }
+
     [Header("整备菜单")]
     public GameObject SetUpMenu;
     public GameObject ContactMenu;
@@ -200,6 +225,7 @@ public class UIManager : MonoBehaviour
         isSetUp = true;
         CurrentOpen = 0;
 
+        //MoveWeaponUIToSetup();//武器UI过去
         SetUpMenu.SetActive(true); PauseButton.SetActive(false);
         //Time.timeScale = 0f;
 
@@ -265,6 +291,7 @@ public class UIManager : MonoBehaviour
         isSetUp = false;
         CurrentOpen = 0;
 
+        MoveWeaponUIToBattle();//把背包的武器类UI切换过去
         SetUpMenu.SetActive(false);
         PauseButton.SetActive(true);
 
