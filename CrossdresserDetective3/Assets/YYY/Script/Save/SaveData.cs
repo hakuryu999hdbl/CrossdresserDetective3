@@ -55,11 +55,58 @@ public class SaveData
 
 
 
-
+    #region 商店 钱
     public int Money;
 
- 
+    //已经购买的商品ID
+    public List<string> purchasedItemIds = new List<string>();
 
+
+    /// <summary>
+    /// 兼容旧存档
+    /// </summary>
+    public void InitPurchasedItemData()
+    {
+        if (purchasedItemIds == null)
+        {
+            purchasedItemIds = new List<string>();
+        }
+    }
+
+
+    /// <summary>
+    /// 是否已经购买
+    /// </summary>
+    public bool HasPurchasedItem(string itemId)
+    {
+        InitPurchasedItemData();
+
+        if (string.IsNullOrEmpty(itemId))
+            return false;
+
+        return purchasedItemIds.Contains(itemId);
+    }
+
+
+    /// <summary>
+    /// 记录购买商品
+    /// </summary>
+    public bool AddPurchasedItem(string itemId)
+    {
+        InitPurchasedItemData();
+
+        if (string.IsNullOrEmpty(itemId))
+            return false;
+
+        if (purchasedItemIds.Contains(itemId))
+            return false;
+
+        purchasedItemIds.Add(itemId);
+        return true;
+    }
+
+
+    #endregion
 
     // ✅ 加上这个构造函数 ↓↓↓↓↓↓↓↓↓
     public SaveData(string name)

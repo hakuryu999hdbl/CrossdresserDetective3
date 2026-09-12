@@ -40,7 +40,7 @@ public static class SaveManager
 
         //兼容旧存档缺少的新字段
         data.InitStageData();
-
+        data.InitPurchasedItemData();
 
         return data;
 
