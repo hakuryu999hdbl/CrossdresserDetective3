@@ -1077,7 +1077,10 @@ public class FrameEvent : MonoBehaviour
 
     }//战败玩家随机男性女性敌人
 
+    public void SetYYY_CGClothes() 
+    {
 
+    }//战败固定服装
 
     public void SetRBQ_Bondage_1() 
     {

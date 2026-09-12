@@ -932,7 +932,9 @@ public class EnemyController : MonoBehaviour
 
         player.EnterCapturedState();//玩家进入透明
 
-        character.skillInvulnerable = true;//技能无敌
+        player.transform.position = transform.position;//玩家的位置拉过去
+
+       character.skillInvulnerable = true;//技能无敌
 
         //Debug.Log("抓住玩家：" + capturedPlayer.name);
 
