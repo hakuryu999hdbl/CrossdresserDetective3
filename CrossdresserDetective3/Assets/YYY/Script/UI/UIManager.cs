@@ -227,7 +227,6 @@ public class UIManager : MonoBehaviour
 
         //MoveWeaponUIToSetup();//武器UI过去
         SetUpMenu.SetActive(true); PauseButton.SetActive(false);
-        //Time.timeScale = 0f;
 
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
@@ -235,6 +234,7 @@ public class UIManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
+
 
         UI_CameraChangeAll();
     }
@@ -245,32 +245,8 @@ public class UIManager : MonoBehaviour
             return;
         StartCoroutine(CloseSetUpCoroutine());
 
-        //isSetUp = false;
-        //CurrentOpen = 0;
-        //
-        //SetUpMenu.SetActive(false); PauseButton.SetActive(true);
-        ////Time.timeScale = 1f;
-        //
-        //playerController.EnableGameplayInput();// 关闭 UI 输入
-        //
-        //GameFlowData.suppressNextSelectSound = true;
-        //
-        //SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
-        //EventSystem.current.SetSelectedGameObject(null);
-        //
-        //
-        ////每次关上界面的时候，让放大图出现一个进来的动画
-        //anim.Play("Show", 0, 0f);
-        //
-        //
-        //UI_CameraChangeMiddle();
-        //
-        //
-        //if (playerController.attackType == -10)
-        //{
-        //    playerController.attackType = playerController.meleeSlot;
-        //}//炸弹动画被武器槽替换
     }
+
     private bool isClosingSetUp;//防止协程多次触发
     private IEnumerator CloseSetUpCoroutine()
     {
@@ -448,7 +424,7 @@ public class UIManager : MonoBehaviour
     public void ChangeMelee(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Melee, index);
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -525,7 +501,7 @@ public class UIManager : MonoBehaviour
                 break;
         }
 
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -584,7 +560,7 @@ public class UIManager : MonoBehaviour
             playerController.attackType = -10;//仅仅是为了触发炸弹装备动画
         }
 
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -625,7 +601,7 @@ public class UIManager : MonoBehaviour
         playerController.ChangeEquip(GameFlowData.EquipPart.Clothes, index);
 
 
-    }
+    }//无装备直接使用，商店按钮调用
 
 
     #endregion
@@ -663,7 +639,8 @@ public class UIManager : MonoBehaviour
     public void ChangeGloves(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Gloves, index);
-    }
+    }//无装备直接使用，商店按钮调用
+
     #endregion
 
     #region 裙子菜单
@@ -705,7 +682,7 @@ public class UIManager : MonoBehaviour
     public void ChangeSkirt(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Skirt, index);
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -747,7 +724,7 @@ public class UIManager : MonoBehaviour
     public void ChangePanties(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Panties, index);
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -791,7 +768,7 @@ public class UIManager : MonoBehaviour
         playerController.ChangeEquip(GameFlowData.EquipPart.Stockings, index);
 
 
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -833,7 +810,7 @@ public class UIManager : MonoBehaviour
     public void ChangeShoes(int index)
     {
         playerController.ChangeEquip(GameFlowData.EquipPart.Shoes, index);
-    }
+    }//无装备直接使用，商店按钮调用
 
     #endregion
 
@@ -898,6 +875,7 @@ public class UIManager : MonoBehaviour
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
 
     }
+
 
 
     #endregion

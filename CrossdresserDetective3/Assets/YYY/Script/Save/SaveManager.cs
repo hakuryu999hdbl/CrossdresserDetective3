@@ -24,17 +24,26 @@ public static class SaveManager
     public static SaveData LoadGame(string saveName)
     {
         string path = GetPath(saveName);
+
+        SaveData data;
+
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            return JsonUtility.FromJson<SaveData>(json);
-
+            data = JsonUtility.FromJson<SaveData>(json);
         }
         else
         {
             Debug.Log("未找到存档：" + saveName);
-            return new SaveData(saveName);
+            data = new SaveData(saveName);
         }
+
+        //兼容旧存档缺少的新字段
+        data.InitStageData();
+
+
+        return data;
+
     }//读取存档
 
     public static void DeleteGame(string saveName)

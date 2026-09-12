@@ -58,6 +58,7 @@ public class SaveData
 
     public int Money;
 
+ 
 
 
     // ✅ 加上这个构造函数 ↓↓↓↓↓↓↓↓↓
