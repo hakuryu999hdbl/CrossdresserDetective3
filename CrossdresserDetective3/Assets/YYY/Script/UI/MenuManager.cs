@@ -49,9 +49,11 @@ public class MenuManager : MonoBehaviour
 
 
         //Debug.Log("目前是否根据系统语言进行设置" + PlayerPrefs.GetInt("language_initialized"));//0无设置  1已经设置好
-        Debug.Log("目前储存的语言" + PlayerPrefs.GetInt("language"));//0日语 1简体中文 2繁体中文 3英语 4韩语
+        //Debug.Log("目前储存的语言" + PlayerPrefs.GetInt("language"));//0日语 1简体中文 2繁体中文 3英语 4韩语
+        //Debug.Log("目前储存的屏幕设置" + PlayerPrefs.GetInt("DisplayMode"));//0全屏 1窗口
+        //Debug.Log("目前储存的分辨率设置" + PlayerPrefs.GetInt("ResolutionIndex"));
 
-        
+
     }
     private void Start()
     {

@@ -1,30 +1,30 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using static GameFlowData;
 
 public class ShopItemButton : MonoBehaviour
 {
-    [Header("ÉÌÆ·ĞÅÏ¢")]
-    [Tooltip("ÀıÈç£ºmelee_dagger")]
+    [Header("å•†å“ä¿¡æ¯")]
+    [Tooltip("ä¾‹å¦‚ï¼šmelee_dagger")]
     public string itemId;
 
-    [Tooltip("ÉÌÆ·¼Û¸ñ")]
+    [Tooltip("å•†å“ä»·æ ¼")]
     public int price;
 
-    [Header("¼Û¸ñUI")]
+    [Header("ä»·æ ¼UI")]
     public GameObject priceRoot;
     public Text priceText;
 
-    [Header("¹ºÂò×´Ì¬UI")]
-    [Tooltip("¿ÉÑ¡¡£¹ºÂòºóÏÔÊ¾£¬ÀıÈç¡°ÒÑ¹ºÂò¡±Í¼±ê")]
+    [Header("è´­ä¹°çŠ¶æ€UI")]
+    [Tooltip("å¯é€‰ã€‚è´­ä¹°åæ˜¾ç¤ºï¼Œä¾‹å¦‚â€œå·²è´­ä¹°â€å›¾æ ‡")]
     public GameObject purchasedRoot;
 
-    [Header("½âËøÌõ¼ş")]
-    [Tooltip("µ½´ïµÚ¼¸ÕÂºóÏÔÊ¾£¬ÌîĞ´1¡«6")]
+    [Header("è§£é”æ¡ä»¶")]
+    [Tooltip("åˆ°è¾¾ç¬¬å‡ ç« åæ˜¾ç¤ºï¼Œå¡«å†™1ï½6")]
     [Min(1)]
     public int requiredChapter = 1;
 
-    [Tooltip("µ½´ï¸ÃÕÂµÚ¼¸¹ØºóÏÔÊ¾£¬ÌîĞ´1¡«10")]
+    [Tooltip("åˆ°è¾¾è¯¥ç« ç¬¬å‡ å…³åæ˜¾ç¤ºï¼Œå¡«å†™1ï½10")]
     [Min(1)]
     public int requiredStage = 1;
 
@@ -36,19 +36,19 @@ public class ShopItemButton : MonoBehaviour
 
 
     /// <summary>
-    /// Ë¢ĞÂÉÌÆ·µÄÏÔÊ¾¡¢¼Û¸ñºÍ¹ºÂò×´Ì¬
+    /// åˆ·æ–°å•†å“çš„æ˜¾ç¤ºã€ä»·æ ¼å’Œè´­ä¹°çŠ¶æ€
     /// </summary>
     public void RefreshUI()
     {
         if (string.IsNullOrEmpty(GameFlowData.CurrentPlayer))
         {
-            Debug.LogWarning($"{name}£ºCurrentPlayerÎª¿Õ£¬ÎŞ·¨¶ÁÈ¡ÉÌµê´æµµ");
+            Debug.LogWarning($"{name}ï¼šCurrentPlayerä¸ºç©ºï¼Œæ— æ³•è¯»å–å•†åº—å­˜æ¡£");
             return;
         }
 
         SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
 
-        //¼ì²éÊÇ·ñÒÑ¾­ÍÆ½øµ½ÉÌÆ·ÒªÇóµÄ¹Ø¿¨
+        //æ£€æŸ¥æ˜¯å¦å·²ç»æ¨è¿›åˆ°å•†å“è¦æ±‚çš„å…³å¡
         bool unlocked = IsStageUnlocked(data);
 
         gameObject.SetActive(unlocked);
@@ -58,78 +58,77 @@ public class ShopItemButton : MonoBehaviour
 
         bool purchased = data.HasPurchasedItem(itemId);
 
-        //ÒÑ¾­¹ºÂòºóÒş²Ø¼Û¸ñ
+        //å·²ç»è´­ä¹°åéšè—ä»·æ ¼
         if (priceRoot != null)
             priceRoot.SetActive(!purchased);
 
         if (priceText != null)
             priceText.text = price.ToString();
 
-        //¿ÉÑ¡µÄ¡°ÒÑ¹ºÂò¡±±ê¼Ç
+        //å¯é€‰çš„â€œå·²è´­ä¹°â€æ ‡è®°
         if (purchasedRoot != null)
             purchasedRoot.SetActive(purchased);
     }
 
 
     /// <summary>
-    /// µã»÷ÉÌÆ·Ê±µ÷ÓÃ
+    /// ï½µç¾¹î–¬ï¾Œï¾†ï½·ï¾Šï½±ï½µî–¶ï¾ƒ
     /// </summary>
     public void BuyItem()
     {
         if (string.IsNullOrEmpty(itemId))
         {
-            Debug.LogWarning($"{name}£ºÃ»ÓĞÌîĞ´ÉÌÆ· itemId");
+            Debug.LogWarning($"{name}ï¼šæ²¡æœ‰å¡«å†™å•†å“ itemId");
             return;
         }
 
         if (string.IsNullOrEmpty(GameFlowData.CurrentPlayer))
         {
-            Debug.LogWarning($"{name}£ºCurrentPlayerÎª¿Õ£¬ÎŞ·¨¹ºÂò");
+            Debug.LogWarning($"{name}ï¼šCurrentPlayerä¸ºç©ºï¼Œæ— æ³•è´­ä¹°");
             return;
         }
 
         SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
 
-        //ÒÑ¾­¹ºÂò£¬²»ÔÙÖØ¸´¿ÛÇ®
+        //å·²ç»è´­ä¹°ï¼Œä¸å†é‡å¤æ‰£é’±
         if (data.HasPurchasedItem(itemId))
         {
             RefreshUI();
 
-            //×°ÅäÎïÆ·
+    
             Equip();
 
             return;
         }
 
-        //Ç®²»¹»
+        //ï¾‡ï½®ï½²ï½»ï½¹ï½»
         if (data.Money < price)
         {
-            Debug.Log($"½ğÇ®²»×ã£ºĞèÒª {price}£¬µ±Ç°³ÖÓĞ {data.Money}");
+            Debug.Log($"é‡‘é’±ä¸è¶³ï¼šéœ€è¦ {price}ï¼Œå½“å‰æŒæœ‰ {data.Money}");
 
-            //ÕâÀïÒÔºó¿ÉÒÔ²¥·Å¡°Ç®²»¹»¡±µÄÉùÒô»òÕßÏÔÊ¾ÌáÊ¾
+            //è¿™é‡Œä»¥åå¯ä»¥æ’­æ”¾â€œé’±ä¸å¤Ÿâ€çš„å£°éŸ³æˆ–è€…æ˜¾ç¤ºæç¤º
             AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);
             return;
         }
 
-        //¿ÛÇ®
+ 
         data.Money -= price;
 
-        //µÇ¼Ç¹ºÂò
+
         data.AddPurchasedItem(itemId);
 
-        //Ò»´ÎĞÔ±£´æ
+
         SaveManager.SaveGame(data);
 
-        //Ë¢ĞÂ¶¥²¿½ğÇ®ÏÔÊ¾
+        //åˆ·æ–°é¡¶éƒ¨é‡‘é’±æ˜¾ç¤º
         if (BalanceManager.instance != null)
         {
             BalanceManager.instance.ChangeMoney(0, false);
         }
 
-        //Ë¢ĞÂÕâ¸öÉÌÆ·UI
+        //åˆ·æ–°è¿™ä¸ªå•†å“UI
         RefreshUI();
-
-        Debug.Log($"¹ºÂò³É¹¦£º{itemId}");
+        Debug.Log($"è´­ä¹°æˆåŠŸï¼š{itemId}");
 
 
         AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Reji_2);
@@ -138,7 +137,7 @@ public class ShopItemButton : MonoBehaviour
 
 
     /// <summary>
-    /// ÅĞ¶ÏÒªÇóµÄ¹Ø¿¨ÊÇ·ñÒÑ¾­½âËø
+    /// åˆ¤æ–­è¦æ±‚çš„å…³å¡æ˜¯å¦å·²ç»è§£é”
     /// </summary>
     private bool IsStageUnlocked(SaveData data)
     {
@@ -160,7 +159,7 @@ public class ShopItemButton : MonoBehaviour
         if (index < 0 || index >= data.stageStars.Length)
             return false;
 
-        //-1±íÊ¾Î´½âËø£¬0¡«3±íÊ¾ÒÑ¾­½âËø
+        //-1è¡¨ç¤ºæœªè§£é”ï¼Œ0ï½3è¡¨ç¤ºå·²ç»è§£é”
         return data.stageStars[index] >= 0;
     }
 

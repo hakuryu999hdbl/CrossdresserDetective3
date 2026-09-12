@@ -14,7 +14,7 @@ public class RBQController : MonoBehaviour
         if (isPlayer)
         {
 
-            if(GameFlowData.returnPath== "cg")
+            if (GameFlowData.returnPath == "cg")
             {
                 //这是CG鉴赏界面
 
@@ -88,7 +88,7 @@ public class RBQController : MonoBehaviour
         RandomizeZ();
 
 
-       
+
     }
 
 
@@ -103,7 +103,7 @@ public class RBQController : MonoBehaviour
 
     [Header("当前动画系")]
     [SerializeField]
-    private int currentAnimationType =1;
+    private int currentAnimationType = 1;
 
 
 
@@ -124,7 +124,7 @@ public class RBQController : MonoBehaviour
         StopAbuseAnimation();
 
 
-        switch (currentAnimationType) 
+        switch (currentAnimationType)
         {
             case -1:
                 anim.Play("Man_AbuseGirl_7", 0, 0f);
@@ -153,7 +153,7 @@ public class RBQController : MonoBehaviour
                 break;
 
         }
-       
+
         anim.Update(0f);
 
 
@@ -297,11 +297,33 @@ public class RBQController : MonoBehaviour
     #region
     public void PlayGalleryCG(int animationType)
     {
+
+        //不同的CG对应RBQ衣服也不一样
+
+        switch (animationType)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                frameEvent.SetDeadBondage_Bondage_3();
+                frameEvent.SetDeadBondage_RandomEnemy();
+                break;
+
+            case 4:
+                frameEvent.SetDeadBondage_Bondage_4();
+                frameEvent.SetDeadBondage_RandomEnemy();
+                break;
+        }
+
+
+
+
         frameEvent_Audio._Voice_UnMute();
         currentAnimationType = animationType;
         AbuseAnimation();
 
-       
+
     }//CG鉴赏场景播放指定动画
 
     public void ResetGalleryCG()
@@ -536,6 +558,8 @@ public class RBQController : MonoBehaviour
 
             bondageType
        );
+
+        Debug.Log("rbq服装改变");
 
     }//更新外观
 

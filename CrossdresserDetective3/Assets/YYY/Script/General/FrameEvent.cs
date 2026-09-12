@@ -1025,7 +1025,7 @@ public class FrameEvent : MonoBehaviour
     {
 
         //赤裸的叶语嫣被捆绑
-        rBQController.clothesIndex = 10;
+        //rBQController.clothesIndex = 10;
         //rBQController.shoesIndex = 10;
         rBQController.bondageType = 0;
 
@@ -1042,10 +1042,41 @@ public class FrameEvent : MonoBehaviour
 
         rBQController.RefreshPlayerSkin();
 
-    }//战败玩家原皮拘束,但是不绑腿
+    }//战败玩家原皮,去掉裙子和内裤
 
+    public void SetDeadBondage_Bondage_3() 
+    {
+      
+        rBQController.glovesIndex = 1;
+        rBQController.stockingsIndex = 1;
+        rBQController.clothesIndex = 10;
+        rBQController.shoesIndex = 10;
+        rBQController.bondageType = 0;
+        rBQController.skirtIndex = 0;
+        rBQController.pantiesIndex = 0;
+
+
+    }  //战败玩家只穿着黑丝丝袜手套被捆绑
+    public void SetDeadBondage_Bondage_4()
+    {
+
+        rBQController.glovesIndex = 1;
+        rBQController.stockingsIndex = 1;
+        rBQController.clothesIndex = 0;
+        rBQController.shoesIndex = 0;
+        rBQController.bondageType = 0;
+        rBQController.skirtIndex = 0;
+        rBQController.pantiesIndex = 0;
+
+
+    }  //战败玩家只穿着黑丝丝袜手套没有捆绑
     public void SetDeadBondage_RandomEnemy() 
     {
+
+       
+
+
+
 
         //男性
         rBQController.Man_clothesIndex = Random.Range(0, 3);
@@ -1077,10 +1108,7 @@ public class FrameEvent : MonoBehaviour
 
     }//战败玩家随机男性女性敌人
 
-    public void SetYYY_CGClothes() 
-    {
-
-    }//战败固定服装
+ 
 
     public void SetRBQ_Bondage_1() 
     {

@@ -53,10 +53,29 @@ public class CGGalleryController : MonoBehaviour
 
     private void Start()
     {
+
+        RefreshGallerySlots();
+
         //刚进入场景时没有任何CG被选中
         ClearSelection();
+
+
     }
 
+
+    /// <summary>
+    /// 根据全局解锁记录显示CG Slot
+    /// </summary>
+    public void RefreshGallerySlots()
+    {
+        foreach (CGGallerySlot slot in slots)
+        {
+            if (slot != null)
+            {
+                slot.RefreshUnlockState();
+            }
+        }
+    }
 
     /// <summary>
     /// 初始没有选择任何CG
@@ -125,7 +144,7 @@ public class CGGalleryController : MonoBehaviour
             }
         }
 
-        Debug.Log("当前选中CG：" + slot.cgId);
+        //Debug.Log("当前选中CG：" + slot.cgId);
     }
 
 

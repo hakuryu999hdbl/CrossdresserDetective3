@@ -1126,18 +1126,22 @@ public class UIManager : MonoBehaviour
             case 1:
                 SaveManager.UpdateThumbnail("EndResult_01");
                 ResultPicture.sprite = CG_1;//用完扔垃圾桶
+                GlobalSaveManager.UnlockCG("Man_RapeYYY");
                 break;
             case 2:
                 SaveManager.UpdateThumbnail("EndResult_02");
                 ResultPicture.sprite = CG_2;//紧缚逃脱失败
+                GlobalSaveManager.UnlockCG("SelfBondage");
                 break;
             case 3:
                 SaveManager.UpdateThumbnail("EndResult_03");
                 ResultPicture.sprite = CG_3;//厕所尿便器
+                GlobalSaveManager.UnlockCG("Man_PeeInYYY");
                 break;
             case 4:
                 SaveManager.UpdateThumbnail("EndResult_04");
                 ResultPicture.sprite = CG_4;//轮奸无法合腿
+                GlobalSaveManager.UnlockCG("Man_AbuseYYY");
                 break;
         }
 

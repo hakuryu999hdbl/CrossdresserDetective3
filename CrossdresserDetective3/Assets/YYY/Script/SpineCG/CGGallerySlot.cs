@@ -40,4 +40,16 @@ public class CGGallerySlot : MonoBehaviour
             selectedMark.SetActive(selected);
         }
     }
+
+
+    /// <summary>
+    /// 根据全局CG存档刷新显示
+    /// </summary>
+    public void RefreshUnlockState()
+    {
+        bool unlocked =
+            GlobalSaveManager.IsCGUnlocked(cgId);
+
+        gameObject.SetActive(unlocked);
+    }
 }
