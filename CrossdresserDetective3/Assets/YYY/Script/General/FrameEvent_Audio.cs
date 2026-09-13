@@ -791,6 +791,22 @@ public class FrameEvent_Audio : MonoBehaviour
         }
 
     }
+    public void _Girl_damage()
+    {
+
+        AudioClip[] clips =
+{
+      AudioManager.Girl_damage1,
+        AudioManager.Girl_damage2,
+        AudioManager.Girl_damage3
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发，打断循环
     public void _Girl_die()
     {
 
@@ -825,6 +841,60 @@ public class FrameEvent_Audio : MonoBehaviour
 
 
 
+    public void _Girl_breath()
+    {
+
+        PlayVoiceLoop(
+       VoiceLoopType.Girl_Breath,
+       AudioManager.Girl_breath1,
+       AudioManager.Girl_breath2,
+       AudioManager.Girl_breath3,
+       AudioManager.Girl_breath4
+
+   );
+
+
+
+
+    }//循环触发
+
+    public void _Girl_breathWeak()
+    {
+
+        PlayVoiceLoop(
+       VoiceLoopType.YYY_BreathWeak,
+       AudioManager.YYY_breathWeak1
+   );
+
+
+    }//循环触发
+
+    public void _Girl_gasping()
+    {
+
+        PlayVoiceLoop(
+          VoiceLoopType.Girl_Gasping,
+          AudioManager.Girl_gasping1,
+          AudioManager.Girl_gasping2
+      );
+
+
+    }//循环触发
+
+    public void _Girl_gasping_quick()
+    {
+
+        PlayVoiceLoop(
+        VoiceLoopType.Girl_GaspingQuick,
+        AudioManager.Girl_gasping_quick1,
+        AudioManager.Girl_gasping_quick2,
+        AudioManager.Girl_gasping_quick3
+    );
+
+
+    }//循环触发
+
+
     #endregion
 
     #region UI层音效
@@ -857,6 +927,17 @@ public class FrameEvent_Audio : MonoBehaviour
 
         YYY_Gagtalk_Breath,
         YYY_Gagtalk_Gasping,
+
+
+
+
+
+        Girl_Breath,
+        Girl_BreathWeak,
+        Girl_Gasping,
+        Girl_GaspingQuick,
+
+
     }
 
     [Header("人物音声系统")]

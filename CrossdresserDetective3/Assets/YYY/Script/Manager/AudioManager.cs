@@ -126,10 +126,15 @@ public class AudioManager : MonoBehaviour
 
 
     public AudioClip Girl_attack1, Girl_attack2, Girl_attack3;
+    public AudioClip Girl_damage1, Girl_damage2, Girl_damage3;
     public AudioClip Girl_die1, Girl_die2, Girl_die3;
     public AudioClip Girl_thankYou1, Girl_thankYou2;
 
 
+    public AudioClip Girl_breath1, Girl_breath2, Girl_breath3, Girl_breath4;
+    public AudioClip Girl_breathWeak1;
+    public AudioClip Girl_gasping1, Girl_gasping2;
+    public AudioClip Girl_gasping_quick1, Girl_gasping_quick2, Girl_gasping_quick3;
 
     public AudioClip SE_Steam_1, SE_Steam_2;
 
