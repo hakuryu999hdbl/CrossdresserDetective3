@@ -1047,8 +1047,8 @@ public class UIManager : MonoBehaviour
     public GameObject MissionFailure;
 
     public Image ResultPicture;//设置结局图片
-    public int ResultNumber;//1用完扔垃圾桶 2紧缚逃脱失败  3尿便器   4无捆绑轮奸 
-    public Sprite CG_1,CG_2,CG_3, CG_4;
+    public int ResultNumber;//1用完扔垃圾桶 2紧缚逃脱失败  3尿便器   4无捆绑轮奸   5尸体被检查
+    public Sprite CG_1,CG_2,CG_3,CG_4, CG_5;
 
     public bool waitGameOverInput = false;//等待玩家输入再跳出战败界面
 
@@ -1128,20 +1128,29 @@ public class UIManager : MonoBehaviour
                 ResultPicture.sprite = CG_1;//用完扔垃圾桶
                 GlobalSaveManager.UnlockCG("Man_RapeYYY");
                 break;
+
             case 2:
                 SaveManager.UpdateThumbnail("EndResult_02");
                 ResultPicture.sprite = CG_2;//紧缚逃脱失败
                 GlobalSaveManager.UnlockCG("SelfBondage");
                 break;
+
             case 3:
                 SaveManager.UpdateThumbnail("EndResult_03");
                 ResultPicture.sprite = CG_3;//厕所尿便器
                 GlobalSaveManager.UnlockCG("Man_PeeInYYY");
                 break;
+
             case 4:
                 SaveManager.UpdateThumbnail("EndResult_04");
                 ResultPicture.sprite = CG_4;//轮奸无法合腿
                 GlobalSaveManager.UnlockCG("Man_AbuseYYY");
+                break;
+
+            case 5:
+                SaveManager.UpdateThumbnail("EndResult_05");
+                ResultPicture.sprite = CG_5;//检查艳尸
+                GlobalSaveManager.UnlockCG("Girl_LewdmoveYYY");
                 break;
         }
 
@@ -1201,6 +1210,8 @@ public class UIManager : MonoBehaviour
 
         MissionComplete.SetActive(true);
 
+     
+
         StartCoroutine(WinDelay());
     }
 
@@ -1211,6 +1222,8 @@ public class UIManager : MonoBehaviour
         WinPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(WinfirstSelected);
+
+        AudioManager.Instance.PlayFX(AudioManager.Instance.SE_MissionComplete);//成功音效
     }
 
     public bool isResultShowing = false;//一旦开始结算，另一种结果不能出现

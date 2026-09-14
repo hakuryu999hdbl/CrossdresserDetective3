@@ -1039,8 +1039,8 @@ public class EnemyController : MonoBehaviour
 
 
 
-
-
+    [Header("抓取触发对应结局")]
+    public int CatchingResult;//0  轮奸无法合腿   1检查艳尸
 
 
 

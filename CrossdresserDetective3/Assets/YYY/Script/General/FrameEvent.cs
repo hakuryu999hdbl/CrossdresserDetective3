@@ -1148,8 +1148,20 @@ public class FrameEvent : MonoBehaviour
 
         if (UIManager.instance!=null) 
         {
-            UIManager.instance.ResultNumber = 4;
-            UIManager.instance.ShowGameOverMenu();
+
+
+            if (enemyController.CatchingResult==0) 
+            {
+                UIManager.instance.ResultNumber = 4;
+                UIManager.instance.ShowGameOverMenu();
+            }//轮奸无法合腿
+
+            if (enemyController.CatchingResult == 1)
+            {
+                UIManager.instance.ResultNumber = 5;
+                UIManager.instance.ShowGameOverMenu();
+            }//检查艳尸
+
         }//CG鉴赏内
 
         
