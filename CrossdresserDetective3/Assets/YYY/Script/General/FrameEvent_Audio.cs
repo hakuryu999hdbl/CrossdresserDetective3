@@ -600,10 +600,10 @@ public class FrameEvent_Audio : MonoBehaviour
 
         AudioClip[] clips =
         {
-        AudioManager.YYY_Insert1,
-        AudioManager.YYY_Insert2,
-        AudioManager.YYY_Insert3,
-        AudioManager.YYY_Insert4
+        AudioManager.YYY_insert1,
+        AudioManager.YYY_insert2,
+        AudioManager.YYY_insert3,
+        AudioManager.YYY_insert4
     };
 
         PlaySingleVoice(
@@ -617,9 +617,9 @@ public class FrameEvent_Audio : MonoBehaviour
 
         AudioClip[] clips =
         {
-        AudioManager.YYY_Climax1,
-        AudioManager.YYY_Climax2,
-        AudioManager.YYY_Climax3
+        AudioManager.YYY_climax1,
+        AudioManager.YYY_climax2,
+        AudioManager.YYY_climax3
     };
 
         PlaySingleVoice(
@@ -640,19 +640,6 @@ public class FrameEvent_Audio : MonoBehaviour
 
     }//循环触发
 
-    public void _YYY_duzui()
-    {
-
-        PlayVoiceLoop(
-     VoiceLoopType.YYY_Duzui,
-     AudioManager.YYY_duzui1,
-     AudioManager.YYY_duzui2,
-     AudioManager.YYY_duzui3,
-     AudioManager.YYY_duzui4
- );
-
-
-    }//循环触发
 
     public void _YYY_breath()
     {
@@ -660,9 +647,24 @@ public class FrameEvent_Audio : MonoBehaviour
         PlayVoiceLoop(
        VoiceLoopType.YYY_Breath,
        AudioManager.YYY_breath1,
-       AudioManager.YYY_breath2,
-       AudioManager.YYY_breath3
-   );//AudioManager.YYY_breath4  单纯感觉喘息4不是非常适合
+       AudioManager.YYY_breath2
+
+   );
+
+
+
+
+    }//循环触发
+
+    public void _YYY_breathPain()
+    {
+
+        PlayVoiceLoop(
+       VoiceLoopType.YYY_BreathPain,
+       AudioManager.YYY_breathPain1,
+       AudioManager.YYY_breathPain2
+
+   );
 
 
 
@@ -722,6 +724,70 @@ public class FrameEvent_Audio : MonoBehaviour
 
 
 
+
+    public void _YYY_gagtalk_damage()
+    {
+
+        AudioClip[] clips =
+        {
+        AudioManager.YYY_gagtalk_damage1,
+        AudioManager.YYY_gagtalk_damage2
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发，打断循环
+    public void _YYY_gagtalk_insert()
+    {
+
+        AudioClip[] clips =
+        {
+        AudioManager.YYY_gagtalk_insert1,
+        AudioManager.YYY_gagtalk_insert2
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发，打断循环
+    public void _YYY_gagtalk_climax()
+    {
+
+        AudioClip[] clips =
+        {
+        AudioManager.YYY_gagtalk_climax1
+    };
+
+        PlaySingleVoice(
+            clips[Random.Range(0, clips.Length)]
+        );
+
+
+    }//单次触发，打断循环
+
+
+
+
+
+
+    public void _YYY_gagtalk_resist()
+    {
+
+        PlayVoiceLoop(
+     VoiceLoopType.YYY_Gagtalk_Resist,
+     AudioManager.YYY_gagtalk_resist1,
+     AudioManager.YYY_gagtalk_resist2,
+     AudioManager.YYY_gagtalk_resist3,
+     AudioManager.YYY_gagtalk_resist4
+ );
+
+
+    }//循环触发
     public void _YYY_gagtalk_breath()
     {
 
@@ -735,17 +801,28 @@ public class FrameEvent_Audio : MonoBehaviour
 
     }//循环触发
 
-    public void _YYY_gagtalk_gasping()
+    public void _YYY_gagtalk_fera()
     {
 
         PlayVoiceLoop(
-          VoiceLoopType.YYY_Gasping,
-          AudioManager.YYY_gagtalk_gasping1
+          VoiceLoopType.YYY_Gagtalk_Fera,
+          AudioManager.YYY_gagtalk_fera1,
+          AudioManager.YYY_gagtalk_fera2
       );
 
 
     }//循环触发
 
+    public void _YYY_gagtalk_fera_quick()
+    {
+
+        PlayVoiceLoop(
+          VoiceLoopType.YYY_Gagtalk_Fera_Quick,
+          AudioManager.YYY_gagtalk_fera_quick1
+      );
+
+
+    }//循环触发
 
 
     public void _Man_attack()
@@ -916,8 +993,9 @@ public class FrameEvent_Audio : MonoBehaviour
     {
         None,
 
-        YYY_Duzui,
+      
         YYY_Breath,
+        YYY_BreathPain,
         YYY_BreathWeak,
         YYY_Gasping,
         YYY_GaspingQuick,
@@ -925,9 +1003,11 @@ public class FrameEvent_Audio : MonoBehaviour
         YYY_Niao,
 
 
-        YYY_Gagtalk_Breath,
-        YYY_Gagtalk_Gasping,
 
+        YYY_Gagtalk_Resist,
+        YYY_Gagtalk_Breath,
+        YYY_Gagtalk_Fera,
+        YYY_Gagtalk_Fera_Quick,
 
 
 

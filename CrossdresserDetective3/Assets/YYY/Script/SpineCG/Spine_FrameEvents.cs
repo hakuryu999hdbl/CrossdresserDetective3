@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spine_FrameEvents : MonoBehaviour
 {
+    public Animator Demo;
     public Animator Introduce;
     public Animator CG_Photo;
     public Animator CG_Clock;
@@ -20,6 +21,11 @@ public class Spine_FrameEvents : MonoBehaviour
 
         switch (GameFlowData.nextAreaId)
         {
+            case "Demo":
+                dialogSystem.animation_number = -1;
+                currentAnimator = Demo;
+                break;
+
             case "Introduce":
                 dialogSystem.animation_number = 0;
                 currentAnimator = Introduce;

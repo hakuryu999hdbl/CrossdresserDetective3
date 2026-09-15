@@ -851,7 +851,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }
+    }//洗澡脱上衣
     public void Undressing_Down() 
     {
         playerController.beltIndex = 0;
@@ -863,7 +863,7 @@ public class FrameEvent : MonoBehaviour
         playerController.RefreshPlayerSkin();
 
        
-    }
+    }//洗澡脱下半身
 
 
     public void Bondage()
@@ -876,7 +876,7 @@ public class FrameEvent : MonoBehaviour
         playerController.pantiesIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }
+    }//自缚
 
 
 
@@ -960,7 +960,7 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }
+    }//小偷外貌
 
 
 
@@ -996,7 +996,7 @@ public class FrameEvent : MonoBehaviour
 
         playerController.frameEvent_Audio._SE_Tear();
 
-    }//被敌人抓住后挣扎，裙子吊带内裤为0
+    }//【局内】被敌人抓住后挣扎，裙子吊带内裤为0
 
     public void SetDeadBondage_Bondage_1()
     {
@@ -1019,8 +1019,7 @@ public class FrameEvent : MonoBehaviour
 
         rBQController.RefreshPlayerSkin();
 
-    }//战败玩家原皮拘束
-
+    }//【局内】战败玩家（原皮）拘束（用在自缚/被轮奸等通用CG）
     public void SetDeadBondage_Bondage_2()
     {
 
@@ -1042,7 +1041,7 @@ public class FrameEvent : MonoBehaviour
 
         rBQController.RefreshPlayerSkin();
 
-    }//战败玩家原皮,去掉裙子和内裤
+    }//【局内】战败玩家（原皮）,去掉裙子和内裤（用在掐脖子CG）
 
     public void SetDeadBondage_Bondage_3() 
     {
@@ -1056,7 +1055,7 @@ public class FrameEvent : MonoBehaviour
         rBQController.pantiesIndex = 0;
 
 
-    }  //战败玩家只穿着黑丝丝袜手套被捆绑
+    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套被捆绑（用在自缚/被轮奸等通用CG）
     public void SetDeadBondage_Bondage_4()
     {
 
@@ -1069,7 +1068,7 @@ public class FrameEvent : MonoBehaviour
         rBQController.pantiesIndex = 0;
 
 
-    }  //战败玩家只穿着黑丝丝袜手套没有捆绑
+    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套没有捆绑（用在掐脖子CG）
     public void SetDeadBondage_RandomEnemy() 
     {
 
@@ -1106,7 +1105,7 @@ public class FrameEvent : MonoBehaviour
 
         rBQController.RefreshPlayerSkin();
 
-    }//战败玩家随机男性女性敌人
+    }//【CG鉴赏】战败玩家随机男性女性敌人
 
  
 

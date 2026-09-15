@@ -104,20 +104,26 @@ public class AudioManager : MonoBehaviour
     public AudioClip YYY_die1, YYY_die2, YYY_die3, YYY_die4;
 
     public AudioClip YYY_chokingBreak1, YYY_chokingBreak2;
-    public AudioClip YYY_Insert1, YYY_Insert2, YYY_Insert3, YYY_Insert4;
-    public AudioClip YYY_Climax1, YYY_Climax2, YYY_Climax3;
+    public AudioClip YYY_insert1, YYY_insert2, YYY_insert3, YYY_insert4;
+    public AudioClip YYY_climax1, YYY_climax2, YYY_climax3;
 
     public AudioClip YYY_niao1, YYY_niao2;
-    public AudioClip YYY_duzui1, YYY_duzui2, YYY_duzui3, YYY_duzui4;
-    public AudioClip YYY_breath1, YYY_breath2, YYY_breath3, YYY_breath4;
+    public AudioClip YYY_gagtalk_resist1, YYY_gagtalk_resist2, YYY_gagtalk_resist3, YYY_gagtalk_resist4;
+    public AudioClip YYY_breath1, YYY_breath2;
+    public AudioClip YYY_breathPain1, YYY_breathPain2;
     public AudioClip YYY_breathWeak1, YYY_breathWeak2;
     public AudioClip YYY_gasping1, YYY_gasping2;
     public AudioClip YYY_gasping_quick1, YYY_gasping_quick2, YYY_gasping_quick3;
     public AudioClip YYY_choking1, YYY_choking2;
 
-    public AudioClip YYY_gagtalk_breath1, YYY_gagtalk_breath2, YYY_gagtalk_breath3;
-    public AudioClip YYY_gagtalk_gasping1;
 
+
+    public AudioClip YYY_gagtalk_damage1, YYY_gagtalk_damage2;
+    public AudioClip YYY_gagtalk_insert1, YYY_gagtalk_insert2;
+    public AudioClip YYY_gagtalk_climax1;
+    public AudioClip YYY_gagtalk_breath1, YYY_gagtalk_breath2, YYY_gagtalk_breath3;
+    public AudioClip YYY_gagtalk_fera1, YYY_gagtalk_fera2;
+    public AudioClip YYY_gagtalk_fera_quick1;
 
 
     public AudioClip Man_die1, Man_die2, Man_die3, Man_die4;

@@ -156,6 +156,29 @@ public class UIManager : MonoBehaviour
     /// </summary>
     #region
 
+    [Header("任务开始随机骚话")]
+    public List<GameObject> startTalkList = new List<GameObject>();
+
+    public void RandomStartTalk()
+    {
+        if (startTalkList == null || startTalkList.Count == 0)
+            return;
+
+        // 先全部隐藏
+        foreach (GameObject obj in startTalkList)
+        {
+            if (obj != null)
+                obj.SetActive(false);
+        }
+
+        // 随机一个
+        int index = Random.Range(0, startTalkList.Count);
+
+        if (startTalkList[index] != null)
+            startTalkList[index].SetActive(true);
+    }
+
+
     [Header("武器UI切换位置")]
     public RectTransform weaponUI;
     public RectTransform setupWeaponUIRoot; // 整备界面位置
@@ -237,6 +260,9 @@ public class UIManager : MonoBehaviour
 
 
         UI_CameraChangeAll();
+
+
+        RandomStartTalk();//随机初始骚话
     }
 
     public void CloseSetUp()

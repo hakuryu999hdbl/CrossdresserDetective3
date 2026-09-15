@@ -661,7 +661,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d8035e30480d19246b51f2348a843288, type: 2}
+  - {fileID: 2100000, guid: 14647f9aa072b8c4ca99909904b48e02, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16366,7 +16366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d8035e30480d19246b51f2348a843288, type: 2}
+  - {fileID: 2100000, guid: 14647f9aa072b8c4ca99909904b48e02, type: 2}
   - {fileID: 2100000, guid: e24789a6604fdc44ab4840f4b9b62048, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16606,7 +16606,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -26958,7 +26958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &890685059
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26976,7 +26976,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1185.9342, y: 91.8731}
+  m_SizeDelta: {x: 1473.6073, y: 91.8731}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &890685060
 MonoBehaviour:
@@ -27030,7 +27030,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u2026\u2026\u4EFB\u52D9\u3060\u3051\u3002\u3059\u3050\u7D42\u308F\u308B\u304B\u3089\u3002"
+  m_Text: ...Just a mission. It'll be over soon.
 --- !u!222 &890685062
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27038,6 +27038,105 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890685058}
+  m_CullTransparentMesh: 1
+--- !u!1 &895844492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895844493}
+  - component: {fileID: 895844496}
+  - component: {fileID: 895844495}
+  - component: {fileID: 895844494}
+  m_Layer: 5
+  m_Name: Text_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &895844493
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895844492}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5999851, y: 0.5999851, z: 0.5999851}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1174021754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1473.6073, y: 91.8731}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &895844494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895844492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fa75fc0d88274a92f6c3f9c33ea63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  J: "\u4ECA\u65E5\u306F\u3069\u306E\u670D\u3067\u2026\u2026\u60AA\u3044\u5B50\u306B\u306A\u308D\u3046\u304B\u306A\uFF1F"
+  C_1: "\u4ECA\u5929\u7A7F\u54EA\u4E00\u5957\u2026\u2026\u53BB\u5F53\u4E2A\u574F\u5B69\u5B50\u5462\uFF1F"
+  C_2: "\u4ECA\u5929\u7A7F\u54EA\u4E00\u5957\u2026\u2026\u53BB\u7576\u500B\u58DE\u5B69\u5B50\u5462\uFF1F"
+  E: What should I wear... to be a bad girl today?
+  K: "\uC624\uB298\uC740 \uBB58 \uC785\uACE0\u2026\u2026\uB098\uC05C \uC544\uC774\uAC00
+    \uB418\uC5B4 \uBCFC\uAE4C?"
+  isTyped: 1
+--- !u!114 &895844495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895844492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a2c5e7505a6adfc4bb370f5675330b98, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 259
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: What should I wear... to be a bad girl today?
+--- !u!222 &895844496
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895844492}
   m_CullTransparentMesh: 1
 --- !u!1 &902374558
 GameObject:
@@ -34872,12 +34971,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 890685059}
+  - {fileID: 895844493}
+  - {fileID: 2011758589}
   m_Father: {fileID: 604839306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 369.1775, y: -60.117}
-  m_SizeDelta: {x: 738.355, y: 120.23}
+  m_AnchoredPosition: {x: 443.97534, y: -60.117004}
+  m_SizeDelta: {x: 887.9507, y: 120.23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1176786667
 GameObject:
@@ -56258,6 +56359,10 @@ MonoBehaviour:
   PauseSetUpFirstSelected: {fileID: 201483120}
   isPaused: 0
   playerController: {fileID: 1720513877}
+  startTalkList:
+  - {fileID: 890685058}
+  - {fileID: 895844492}
+  - {fileID: 2011758585}
   weaponUI: {fileID: 610337236}
   setupWeaponUIRoot: {fileID: 507746720}
   battleWeaponUIRoot: {fileID: 233661331}
@@ -59520,6 +59625,105 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008637532}
   m_CullTransparentMesh: 1
+--- !u!1 &2011758585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2011758589}
+  - component: {fileID: 2011758588}
+  - component: {fileID: 2011758587}
+  - component: {fileID: 2011758586}
+  m_Layer: 5
+  m_Name: Text_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2011758586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011758585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fa75fc0d88274a92f6c3f9c33ea63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  J: "\u6355\u307E\u3063\u305F\u308A\u306A\u3093\u304B\u2026\u2026\u3057\u306A\u3044\u3088\u306D\uFF1F
+    \u3075\u3075\u3063\u3002"
+  C_1: "\u5E94\u8BE5\u2026\u2026\u4E0D\u4F1A\u88AB\u6293\u4F4F\u5427\uFF1F\u5475\u5475\u3002"
+  C_2: "\u61C9\u8A72\u2026\u2026\u4E0D\u6703\u88AB\u6293\u4F4F\u5427\uFF1F\u5475\u5475\u3002"
+  E: It's not like I'm going to get caught... right? Hehe.
+  K: "\uC124\uB9C8\u2026\u2026\uC7A1\uD788\uC9C4 \uC54A\uACA0\uC9C0? \uD6C4\uD6D7."
+  isTyped: 1
+--- !u!114 &2011758587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011758585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a2c5e7505a6adfc4bb370f5675330b98, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 259
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: It's not like I'm going to get caught... right? Hehe.
+--- !u!222 &2011758588
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011758585}
+  m_CullTransparentMesh: 1
+--- !u!224 &2011758589
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011758585}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5999851, y: 0.5999851, z: 0.5999851}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1174021754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1473.6073, y: 91.8731}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2015235613
 GameObject:
   m_ObjectHideFlags: 0

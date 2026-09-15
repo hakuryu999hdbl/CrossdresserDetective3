@@ -1445,9 +1445,9 @@ public class EnemyController : MonoBehaviour
 
 
                         //西服女
-                        Girl_hairIndex = Random.Range(2, 4);
-                        Girl_clothesIndex = 1;
-                        Girl_glovesIndex = Random.Range(0, 2);
+                        Girl_hairIndex = Random.Range(3, 5);
+                        Girl_clothesIndex = 6;
+                        Girl_glovesIndex = 1;
                         Girl_shoesIndex = Random.Range(1, 3);
 
 
@@ -1485,7 +1485,7 @@ public class EnemyController : MonoBehaviour
                     case 10:
 
                         //西服男
-                        Man_hairIndex = Random.Range(0, 3);
+                        Man_hairIndex = Random.Range(0, 2);
                         Man_clothesIndex = 2;
 
                         break;
