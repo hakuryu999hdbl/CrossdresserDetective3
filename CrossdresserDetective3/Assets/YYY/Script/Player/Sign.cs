@@ -18,6 +18,9 @@ public class Sign : MonoBehaviour
     private bool canPress;
     private IInteractable targetItem;
 
+
+    public GameObject Interact_Hide; // 手机端交互按钮
+
     private void Awake()
     {
         anim = signSprite.GetComponent<Animator>();
@@ -69,6 +72,12 @@ public class Sign : MonoBehaviour
         if (signRenderer != null)
         {
             signRenderer.enabled = captured || canPress;
+        }
+
+        // 手机交互按钮只在真正可以交互时显示
+        if (Interact_Hide != null)
+        {
+            Interact_Hide.SetActive(canPress && !captured);
         }
 
         if (signSprite != null && playerTrans != null)
@@ -218,6 +227,12 @@ public class Sign : MonoBehaviour
                 playerController != null &&
                 playerController.isCaptured;
         }
+
+        if (Interact_Hide != null)
+        {
+            Interact_Hide.SetActive(false);
+        }
+
     }//防止万一目标被消耗等，E残留
 
 

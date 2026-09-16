@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     }//玩家自己传过来
 
-
+    public GameObject Light_Night;
 
     [Header("关卡")]
     public GameObject DetectiveAgency_1, DetectiveAgency_2;
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
                     case 3:
                         Instantiate(Company_1, Vector3.zero, Quaternion.identity);
                         skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 4:
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
                     case 6:
                         Instantiate(Company_2, Vector3.zero, Quaternion.identity);
                         skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 7:
                     case 8:
