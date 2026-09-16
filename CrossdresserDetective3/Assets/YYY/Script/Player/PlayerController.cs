@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
 
         ReadCurrentGame();//初始读取
 
+
     }
 
 
@@ -495,10 +496,6 @@ public class PlayerController : MonoBehaviour
 
             case GameFlowData.EquipPart.Clothes:
                 clothesIndex = index;
-
-                if (clothesIndex == 3)
-                    skirtIndex = 0;//兔女郎装不能穿裙子
-
                 break;
 
             case GameFlowData.EquipPart.Gloves:
@@ -507,12 +504,6 @@ public class PlayerController : MonoBehaviour
 
             case GameFlowData.EquipPart.Panties:
                 pantiesIndex = index;
-
-                if (pantiesIndex != 3 && stockingsIndex == 3)
-                {
-                    stockingsIndex = 0;
-                }//在裤袜的情况下，更换内裤会把丝袜换掉
-
                 break;
 
             case GameFlowData.EquipPart.Shoes:
@@ -521,34 +512,14 @@ public class PlayerController : MonoBehaviour
 
             case GameFlowData.EquipPart.Skirt:
                 skirtIndex = index;
-
-                if (skirtIndex != 0 && clothesIndex == 3)
-                    clothesIndex = 0;//裙子自动脱兔女郎装
-
                 break;
 
             case GameFlowData.EquipPart.Stockings:
                 stockingsIndex = index;
-
-
-                if (stockingsIndex == 3)
-                {
-                    pantiesIndex = 3;
-
-                }
-                else
-                {
-                    pantiesIndex = 0;
-
-                    if (clothesIndex == 3)
-                        clothesIndex = 0;//兔女郎装的情况下也一并脱掉
-
-                }//裤袜固定部件
-
-
-
-
                 break;
+
+
+            #region  武器
 
             case GameFlowData.EquipPart.Melee:
                 meleeType = index;
@@ -632,22 +603,19 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("为徒手");
                 }
                 break;
+
+
+                #endregion
         }
 
-        if (stockingsIndex == 1 && pantiesIndex != 0)
-        {
-            beltIndex = 1;
-        }
-        else
-        {
-            beltIndex = 0;
-
-        } //吊带袜裤袜固定有内裤的情况下吊带出现
 
 
         //hairIndex = 1;
         //hatIndex = 1;
         //maskIndex = 1;
+
+        ResolveClothesRules(part);
+        RefreshAccessoryState();
 
 
         RefreshPlayerSkin();//换装界面调用
@@ -658,6 +626,98 @@ public class PlayerController : MonoBehaviour
 
     }//换装口子
 
+    private void ResolveClothesRules(GameFlowData.EquipPart changedPart)
+    {
+        // =========================
+        // 兔女郎装
+        // =========================
+        if (changedPart == GameFlowData.EquipPart.Clothes && clothesIndex == 3)
+        {
+            // 兔女郎装自动脱裙子
+            skirtIndex = 0;
+
+            // 贞操锁 → 黑色蕾丝内裤
+            if (pantiesIndex == 10 || pantiesIndex == 11)
+            {
+                pantiesIndex = 1;
+            }
+        }
+
+        // 穿裙子 → 脱兔女郎装
+        if (changedPart == GameFlowData.EquipPart.Skirt && skirtIndex != 0)
+        {
+            if (clothesIndex == 3)
+            {
+                clothesIndex = 0;
+            }
+        }
+
+
+        // =========================
+        // 内裤
+        // =========================
+        if (changedPart == GameFlowData.EquipPart.Panties)
+        {
+            // 玩家主动更换普通内裤/贞操锁
+            // 如果原本穿着裤袜，则脱掉裤袜
+            if (stockingsIndex == 3 && pantiesIndex != 3)
+            {
+                stockingsIndex = 0;
+            }
+
+            // 贞操锁不能和兔女郎装共存
+            if (pantiesIndex == 10 || pantiesIndex == 11)
+            {
+                if (clothesIndex == 3)
+                {
+                    clothesIndex = 0;
+                }
+            }
+        }
+
+
+        // =========================
+        // 丝袜
+        // =========================
+        if (changedPart == GameFlowData.EquipPart.Stockings)
+        {
+            // 穿裤袜
+            if (stockingsIndex == 3)
+            {
+                // 切换成裤袜专用内裤部件
+                pantiesIndex = 3;
+            }
+
+            // 注意：
+            // 普通丝袜之间切换，不再动 pantiesIndex
+            // 黑吊带丝袜 → 白丝袜，也不会莫名脱内裤
+
+            if (stockingsIndex != 3&& pantiesIndex == 3) 
+            {
+                pantiesIndex = 1;
+            }
+
+        }
+    }//换装产生的冲突位置集中解决
+    private void RefreshAccessoryState()
+    {
+        bool isBlackGarterStockings = stockingsIndex == 1;
+
+        bool hasNormalPanties =
+            pantiesIndex != 0 &&
+            pantiesIndex != 3 &&
+            pantiesIndex != 10 &&
+            pantiesIndex != 11;
+
+        if (isBlackGarterStockings && hasNormalPanties)
+        {
+            beltIndex = 1;
+        }
+        else
+        {
+            beltIndex = 0;
+        }
+    }//吊带单独处理
 
     [Header("剧情临时服装")]
     public bool isUsingStoryClothes;//如果我处于剧情关卡中，每次换装换武器，不会记录
@@ -712,6 +772,10 @@ public class PlayerController : MonoBehaviour
         rangedSlot = data.rangedSlot;
         Slot = data.Slot;
 
+
+        // 根据已经读取出来的装备重新计算派生外观
+        RefreshAccessoryState();
+
         RefreshPlayerSkin();//初始更新皮肤
 
         RefreshCurrentWeapon();//初始更新武器动作和UI
@@ -749,6 +813,11 @@ public class PlayerController : MonoBehaviour
 
         frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
         frameEvent_Audio._Voice_Mute();//再次触发的时候循环声也屏蔽
+
+
+        //被抓的时候就需要升级虚弱
+        weakness++;
+        UIManager.instance.RefreshWeaknessUI(weakness);
     }
 
     public void ExitCapturedState(Vector2 throwForce)
@@ -879,8 +948,15 @@ public class PlayerController : MonoBehaviour
             //StrugglePower /= 2;
             UIManager.instance.UpdateSexBar(currentSex, maxSex);
             weakness ++;
+            UIManager.instance.RefreshWeaknessUI(weakness);
             if (weakness>=3) 
             {
+                // 进入处刑，永久停止本次抓取的挣扎
+                isStruggling = false;
+                currentStruggle = 0;
+                UIManager.instance.HideStruggleBar();
+
+
                 catchingEnemy.anim.SetTrigger("over");
             }
         }

@@ -229,7 +229,7 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F8))
+        if (Keyboard.current.f8Key.wasPressedThisFrame)
         {
             OpenSaveURL();
         }
@@ -237,13 +237,30 @@ public class MenuManager : MonoBehaviour
 
     public void Delete_All()
     {
-        Save_1.OnDeleteClicked();
-        Save_2.OnDeleteClicked();
-        Save_3.OnDeleteClicked();
+        // 删除3个角色存档
+        Save_1.DeleteSaveImmediately();
+        Save_2.DeleteSaveImmediately();
+        Save_3.DeleteSaveImmediately();
 
+        // 删除全局CG解锁存档
+        GlobalSaveManager.DeleteGlobalSave();
+
+        // 删除所有PlayerPrefs
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
 
-    }//这是删除全部存档，这个不用了
+        // 清理本次运行中的临时数据
+        GameFlowData.CurrentPlayer = null;
+        GameFlowData.CurrentChapter = 0;
+        GameFlowData.CurrentStage = 0;
+        GameFlowData.nextAreaId = null;
+        GameFlowData.returnPath = null;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        Debug.Log("已删除全部游戏数据");
+
+    }//这是删除全部存档
     #endregion
 
 
@@ -492,13 +509,15 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    public void DeleteAllData()
+    public void InitialSetup()
     {
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Click);
 
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         //Debug.Log("初始化");
     }
 

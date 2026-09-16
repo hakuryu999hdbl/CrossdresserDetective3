@@ -35,6 +35,7 @@ public class Spine_FrameEvents : MonoBehaviour
                 dialogSystem.animation_number = 1;
                 currentAnimator = CG_Photo;
                 if (GameFlowData.returnPath != "cg") { SaveManager.UpdateThumbnail("CG_Photo"); }//非CG路径才能记录照片
+                GlobalSaveManager.UnlockCG("CG_Photo");//解锁CG
                 break;
 
             case "CG_Clock":

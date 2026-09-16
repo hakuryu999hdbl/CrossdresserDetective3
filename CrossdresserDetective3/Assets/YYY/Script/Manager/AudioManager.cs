@@ -99,7 +99,7 @@ public class AudioManager : MonoBehaviour
 
 
 
-    public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4, YYY_attack5, YYY_attack6;
+    public AudioClip YYY_attack1, YYY_attack2, YYY_attack3, YYY_attack4;
     public AudioClip YYY_damage1, YYY_damage2, YYY_damage3;
     public AudioClip YYY_die1, YYY_die2, YYY_die3, YYY_die4;
 

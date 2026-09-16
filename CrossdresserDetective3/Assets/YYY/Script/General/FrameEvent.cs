@@ -1082,9 +1082,9 @@ public class FrameEvent : MonoBehaviour
         rBQController.Man_hairIndex = Random.Range(0, 2);
 
         //女性
-        rBQController.Girl_hairIndex = Random.Range(2, 4);
-        rBQController.Girl_clothesIndex = Random.Range(1, 4);
-        rBQController.Girl_glovesIndex = Random.Range(0, 2);
+        rBQController.Girl_hairIndex = Random.Range(3, 4);
+        rBQController.Girl_clothesIndex = 6;
+        rBQController.Girl_glovesIndex = 1;
         rBQController.Girl_shoesIndex = Random.Range(1, 3);
 
 

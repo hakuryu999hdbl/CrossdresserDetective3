@@ -8,14 +8,17 @@ public class SplashManager : MonoBehaviour
     public AudioSource audioS;
 
     public AudioClip FTgirl;
-
+    public AudioClip NEKOUJI;
 
 
     void PlayFTgirl()
     {
         audioS.PlayOneShot(FTgirl);
     }
-
+    void PlayNEKOUJI()
+    {
+        audioS.PlayOneShot(NEKOUJI);
+    }
     void LoadMenu()
     {
         SceneManager.LoadScene("Menu");

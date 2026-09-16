@@ -1285,7 +1285,11 @@ public class UIManager : MonoBehaviour
             (chapter - 1) * data.stagePerChapter
             + (stage - 1);
 
-        int star = CalculateStageStar(); //目前暂时只有生命值权重判断
+        int star = CalculateStageStar(); //目前暂时只有生命值权重/虚弱权重判断
+
+        // 显示本次通关评价
+        RefreshResultStar(star);
+
 
         // 保留最高评价
         data.stageStars[index] =
@@ -1306,6 +1310,18 @@ public class UIManager : MonoBehaviour
     }
 
 
+    [Header("通关星级UI")]
+    public GameObject[] resultStars;
+
+    public void RefreshResultStar(int star)
+    {
+        for (int i = 0; i < resultStars.Length; i++)
+        {
+            resultStars[i].SetActive(i < star);
+        }
+    }
+
+
     private int CalculateStageStar()
     {
         float currentHealth = playerController.character.currentHealth;
@@ -1316,6 +1332,20 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("玩家最大生命值异常，默认给予1星。");
             return 1;
         }
+
+        // 虚弱2以上：强制1星
+        if (playerController.weakness >= 2)
+            return 1;
+
+        // 虚弱1：最高只能2星
+        if (playerController.weakness == 1)
+        {
+            if (currentHealth > maxHealth * 0.5f)
+                return 2;
+
+            return 1;
+        }
+
 
         // 满血：三星
         if (currentHealth >= maxHealth)
@@ -1412,7 +1442,7 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// 生命值，体力值，弹药，武器，调查救出任务显示等UI
+    /// 生命值，体力值，虚弱，弹药，武器，调查救出任务显示等UI
     /// </summary>
     #region
 
@@ -1503,7 +1533,29 @@ public class UIManager : MonoBehaviour
 
 
 
+    [Header("虚弱程度UI")]
+    public Image weaknessBackground;
 
+    public Color weaknessColor_0 = new Color(0f, 0f, 0f, 0.8f);
+    public Color weaknessColor_1 = new Color(0.45f, 0f, 0.25f, 0.8f);
+    public Color weaknessColor_2 = new Color(0.8f, 0f, 0.45f, 0.8f);
+
+    public void RefreshWeaknessUI(int weakness)
+    {
+        if (weakness <= 0)
+        {
+            weaknessBackground.color = weaknessColor_0;
+        }
+        else if (weakness == 1)
+        {
+            weaknessBackground.color = weaknessColor_1;
+        }
+        else
+        {
+            // weakness 2、3、4……全部一样
+            weaknessBackground.color = weaknessColor_2;
+        }
+    }
 
 
 

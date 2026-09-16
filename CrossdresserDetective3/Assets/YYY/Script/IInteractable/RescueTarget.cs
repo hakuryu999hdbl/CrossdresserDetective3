@@ -211,7 +211,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
 
     [Header("敌人触发范围")]
-    public float detectDistanceX = 5f;
+    public float detectDistanceX = 2f;
     public float maxYDifference = 2f;
 
     private bool battleTriggered;

@@ -299,7 +299,7 @@ public class RBQController : MonoBehaviour
     {
 
         //不同的CG对应RBQ衣服也不一样
-
+        //这一层是先设置衣服，到了下一层设置捆绑的绳子还是锁链
         switch (animationType)
         {
             case 0:
@@ -321,7 +321,8 @@ public class RBQController : MonoBehaviour
 
         frameEvent_Audio._Voice_UnMute();
         currentAnimationType = animationType;
-        AbuseAnimation();
+
+        AbuseAnimation();//CG鉴赏入口
 
 
     }//CG鉴赏场景播放指定动画
@@ -439,8 +440,12 @@ public class RBQController : MonoBehaviour
 
     public void StageSkin()
     {
+
+
+
         switch (GameFlowData.CurrentChapter)
         {
+
             case 1:
                 switch (GameFlowData.CurrentStage)
                 {
@@ -448,7 +453,6 @@ public class RBQController : MonoBehaviour
                     case 2:
 
                         //frameEvent.Story_Clothes_Man_01();//设置男性小偷
-
                         //小偷头型
                         Man_hairIndex = 2;
                         Man_clothesIndex = 1;
@@ -467,9 +471,9 @@ public class RBQController : MonoBehaviour
 
 
                         //西服女
-                        Girl_hairIndex = Random.Range(2, 4);
-                        Girl_clothesIndex = 1;
-                        Girl_glovesIndex = Random.Range(0, 2);
+                        Girl_hairIndex = Random.Range(3, 5);
+                        Girl_clothesIndex = 6;
+                        Girl_glovesIndex = 1;
                         Girl_shoesIndex = Random.Range(1, 3);
 
 
@@ -477,7 +481,8 @@ public class RBQController : MonoBehaviour
                         {
                             case 1:
                                 Girl_underwearIndex = 1;//内衣
-                                Girl_stockingsIndex = 0;
+                                Girl_stockingsIndex = Random.Range(0, 2);
+                                if (Girl_stockingsIndex==1) { Girl_shoesIndex = 0; }
                                 break;
                             case 2:
                                 Girl_underwearIndex = 2;//内衣裤袜
@@ -507,7 +512,7 @@ public class RBQController : MonoBehaviour
                     case 10:
 
                         //西服男
-                        Man_hairIndex = Random.Range(0, 3);
+                        Man_hairIndex = Random.Range(0, 2);
                         Man_clothesIndex = 2;
 
                         break;
@@ -519,6 +524,9 @@ public class RBQController : MonoBehaviour
         meleeType = Random.Range(1, 4);
         pistolType = Random.Range(1, 4);
         rifleType = Random.Range(1, 3);
+
+
+        RefreshPlayerSkin();//初始更新皮肤
     }
 
 
@@ -559,7 +567,7 @@ public class RBQController : MonoBehaviour
             bondageType
        );
 
-        Debug.Log("rbq服装改变");
+        //Debug.Log("rbq服装改变");
 
     }//更新外观
 

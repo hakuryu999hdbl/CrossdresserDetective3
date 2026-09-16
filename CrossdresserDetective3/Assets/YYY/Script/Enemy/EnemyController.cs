@@ -1455,7 +1455,8 @@ public class EnemyController : MonoBehaviour
                         {
                             case 1:
                                 Girl_underwearIndex = 1;//内衣
-                                Girl_stockingsIndex = 0;
+                                Girl_stockingsIndex = Random.Range(0, 2);
+                                if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
                                 break;
                             case 2:
                                 Girl_underwearIndex = 2;//内衣裤袜

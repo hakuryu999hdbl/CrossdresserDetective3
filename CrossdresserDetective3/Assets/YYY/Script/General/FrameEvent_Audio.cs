@@ -517,33 +517,21 @@ public class FrameEvent_Audio : MonoBehaviour
     public void _YYY_attack()
     {
 
-        if (Random.Range(0, 2)==0)
+        switch (Random.Range(0, 6))
         {
-            switch (Random.Range(0, 6))
-            {
-                case 0:
-                    audioS.PlayOneShot(AudioManager.YYY_attack1);
-                    break;
-                case 1:
-                    audioS.PlayOneShot(AudioManager.YYY_attack2);
-                    break;
-                case 2:
-                    audioS.PlayOneShot(AudioManager.YYY_attack3);
-                    break;
-                case 3:
-                    audioS.PlayOneShot(AudioManager.YYY_attack4);
-                    break;
-                case 4:
-                    audioS.PlayOneShot(AudioManager.YYY_attack5);
-                    break;
-                case 5:
-                    audioS.PlayOneShot(AudioManager.YYY_attack6);
-                    break;
-            }
+            case 0:
+                audioS.PlayOneShot(AudioManager.YYY_attack1);
+                break;
+            case 1:
+                audioS.PlayOneShot(AudioManager.YYY_attack2);
+                break;
+            case 2:
+                audioS.PlayOneShot(AudioManager.YYY_attack3);
+                break;
+            case 3:
+                audioS.PlayOneShot(AudioManager.YYY_attack4);
+                break;
         }
-
-  
-
 
     }
     public void _YYY_damage()
@@ -871,6 +859,7 @@ public class FrameEvent_Audio : MonoBehaviour
     public void _Girl_damage()
     {
 
+
         AudioClip[] clips =
 {
       AudioManager.Girl_damage1,
@@ -939,8 +928,8 @@ public class FrameEvent_Audio : MonoBehaviour
     {
 
         PlayVoiceLoop(
-       VoiceLoopType.YYY_BreathWeak,
-       AudioManager.YYY_breathWeak1
+       VoiceLoopType.Girl_BreathWeak,
+       AudioManager.Girl_breathWeak1
    );
 
 
