@@ -344,8 +344,15 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private void RefreshStateSign()
     {
-        bool isSearching = currentState == searchState;
-        bool isAttacking = currentState == attackState;
+        bool isSearching =
+         currentState == searchState;
+
+        bool isAttacking =
+            currentState == attackState ||
+            currentState == chargeSkillState ||
+            currentState == aimThrowSkillState ||
+            currentState == blockState;
+
 
         if (questionSign != null)
             questionSign.SetActive(isSearching);
@@ -1141,17 +1148,11 @@ public class EnemyController : MonoBehaviour
     public void TurnAround()
     {
         patrolDir *= -1;
-
-        if (patrolDir > 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        else
-            transform.localScale = new Vector3(-1, 1, 1);
-        //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        ApplyPatrolDirection();
     }
 
 
- 
+
 
     [Header("巡逻模式")]
     public EnemyPatrolMode patrolMode = EnemyPatrolMode.RandomPatrol;
@@ -1159,26 +1160,48 @@ public class EnemyController : MonoBehaviour
     [Header("固定站岗")]
     public int startFaceDir = 1; // 1 向右，-1 向左
 
+    [Header("站岗左右看")]
+    public float minGuardTurnTime = 3f;
+    public float maxGuardTurnTime = 5f;
 
     public void SetFirstDirection() 
     {
 
-        startFaceDir = startFaceDir >= 0 ? 1 : -1;
-        patrolDir = startFaceDir;
+        switch (patrolMode)
+        {
+            // 固定站岗和过场敌人使用Inspector指定的方向
+            case EnemyPatrolMode.Guard:
+                patrolDir = startFaceDir >= 0 ? 1 : -1;
+                break;
 
-        FaceStartDirection();
+            // 定时转向的站岗敌人也可以随机初始方向
+            case EnemyPatrolMode.RandomGuard:
 
-        patrolDir = startFaceDir;
+            // 两种移动巡逻随机初始方向
+            case EnemyPatrolMode.RandomPatrol:
+            case EnemyPatrolMode.ContinuousPatrol:
+                patrolDir = Random.value < 0.5f ? -1 : 1;
+                break;
+        }
 
+        ApplyPatrolDirection();
+    }
+
+    private void ApplyPatrolDirection()
+    {
+        Vector3 scale = transform.localScale;
+
+        scale.x =
+            Mathf.Abs(scale.x) *
+            (patrolDir >= 0 ? 1f : -1f);
+
+        transform.localScale = scale;
     }
 
     public void FaceStartDirection()
     {
-        patrolDir = startFaceDir;
-
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * startFaceDir;
-        transform.localScale = scale;
+        patrolDir = startFaceDir >= 0 ? 1 : -1;
+        ApplyPatrolDirection();
     }
 
     #endregion
@@ -1471,7 +1494,8 @@ public class EnemyController : MonoBehaviour
                     case 4:
                     case 5:
                     case 6:
-
+                    case 7:
+                    case 8:
 
                         //西服男（无小偷头型）
                         Man_hairIndex = Random.Range(0, 2);
@@ -1513,9 +1537,7 @@ public class EnemyController : MonoBehaviour
 
                         break;
 
-                    default:
-                    case 7:
-                    case 8:
+                    default:    
                     case 9:
                     case 10:
 
@@ -1897,7 +1919,8 @@ public enum EnemyPatrolMode
 {
     Guard,          // 固定站岗，不移动
     RandomPatrol,   // 走走停停
-    ContinuousPatrol // 不停巡逻
+    ContinuousPatrol, // 不停巡逻
+    RandomGuard  // 原地站岗，定时转身
 }
 
 public enum TargetYMode

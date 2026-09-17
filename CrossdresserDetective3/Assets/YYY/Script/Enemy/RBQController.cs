@@ -28,40 +28,35 @@ public class RBQController : MonoBehaviour
                     switch (GameFlowData.CurrentStage)
                     {
                         case 1:
-                            currentAnimationType = 0;
-                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
-                            break;
-
                         case 2:
-                            currentAnimationType = 0;
-                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
+                            currentAnimationType = 3;
+                            UIManager.instance.ResultNumber = 2;//榨精地狱
                             break;
 
                         case 3:
-                            currentAnimationType = 2;
-                            UIManager.instance.ResultNumber = 3;//厕所尿便器
-                            break;
-
                         case 4:
                             currentAnimationType = 2;
                             UIManager.instance.ResultNumber = 3;//厕所尿便器
                             break;
 
                         case 5:
-                            currentAnimationType = 1;
-                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
-                            break;
-
                         case 6:
                             currentAnimationType = 1;
                             UIManager.instance.ResultNumber = 4;//轮奸无法合腿
                             break;
+
                         case 7:
                         case 8:
+                            currentAnimationType = 0;
+                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
+                            break;
+
+
+
                         case 9:
                         case 10:
-                            currentAnimationType = 1;//轮奸结束
-                            UIManager.instance.ResultNumber = 1;
+                            currentAnimationType = 1;
+                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
                             break;
                     }
                     break;
@@ -463,6 +458,8 @@ public class RBQController : MonoBehaviour
                     case 4:
                     case 5:
                     case 6:
+                    case 7:
+                    case 8:
 
 
                         //西服男（无小偷头型）
@@ -506,8 +503,6 @@ public class RBQController : MonoBehaviour
                         break;
 
                     default:
-                    case 7:
-                    case 8:
                     case 9:
                     case 10:
 

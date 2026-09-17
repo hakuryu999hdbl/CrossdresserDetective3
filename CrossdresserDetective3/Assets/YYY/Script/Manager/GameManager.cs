@@ -56,8 +56,6 @@ public class GameManager : MonoBehaviour
 
                     case 3:
                         Instantiate(Company_1, Vector3.zero, Quaternion.identity);
-                        skyboxSample.Night();//晚上关卡单独指定
-                        Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 4:
@@ -66,6 +64,8 @@ public class GameManager : MonoBehaviour
 
                     case 5:
                         Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 6:
@@ -74,7 +74,11 @@ public class GameManager : MonoBehaviour
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 7:
+                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        break;
                     case 8:
+                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        break;
                     case 9:
                     case 10:
                         Instantiate(Company_1, Vector3.zero, Quaternion.identity);
@@ -152,10 +156,10 @@ public class GameManager : MonoBehaviour
 
 
         // =========================
-        // Demo限制：第一章只开放1~5关
+        // Demo限制：第一章只开放1~8关
         // =========================
         if (GameFlowData.CurrentChapter == 1 &&
-            GameFlowData.CurrentStage >= 6)
+            GameFlowData.CurrentStage >= 9)
         {
             GameFlowData.nextAreaId = "Demo";
 
@@ -245,7 +249,11 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 7:
+                        ShowEliminate();
+                        break;
                     case 8:
+                        ShowEliminate();
+                        break;
                     case 9:
                     case 10:                  
                         ShowEliminate();
