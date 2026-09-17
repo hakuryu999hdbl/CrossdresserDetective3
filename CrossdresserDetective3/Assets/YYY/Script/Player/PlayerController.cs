@@ -832,15 +832,19 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(throwForce, ForceMode2D.Impulse);
 
+        // 离开抓取状态后，人物语音必须恢复
+        frameEvent_Audio._Voice_UnMute();
+        // 结束抓取期间的循环音
+        frameEvent_Audio._Voice_StopLoop();
 
-        if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
-        {
-            frameEvent_Audio._Voice_UnMute();//恢复循环
-        }
-        else
-        {
-            frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
-        }
+        //if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
+        //{
+        //    frameEvent_Audio._Voice_UnMute();//恢复循环
+        //}
+        //else
+        //{
+        //    frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
+        //}
        
     }
 

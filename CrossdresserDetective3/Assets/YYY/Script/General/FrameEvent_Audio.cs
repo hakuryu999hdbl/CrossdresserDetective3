@@ -536,6 +536,8 @@ public class FrameEvent_Audio : MonoBehaviour
     }
     public void _YYY_damage()
     {
+        //Debug.Log("_YYY_damage");
+
         AudioClip[] clips =
      {
         AudioManager.YYY_damage1,
@@ -551,7 +553,7 @@ public class FrameEvent_Audio : MonoBehaviour
     }//单次触发，打断循环
     public void _YYY_die()
     {
-
+        //Debug.Log("_YYY_die");
 
         AudioClip[] clips =
      {
@@ -1143,6 +1145,10 @@ public class FrameEvent_Audio : MonoBehaviour
     }
 
 
+    //防止短时间播放多次
+    private float lastSingleVoiceTime = -999f;
+    private const float singleVoiceMinInterval = 0.1f;
+
     //单次人物音
     private void PlaySingleVoice(AudioClip clip)
     {
@@ -1152,11 +1158,19 @@ public class FrameEvent_Audio : MonoBehaviour
         if (clip == null || voiceAudioS == null)
             return;
 
+        // 防止同一帧/极短时间重复触发
+        if (Time.unscaledTime - lastSingleVoiceTime < singleVoiceMinInterval)
+            return;
+
         if (singleVoiceCoroutine != null)
         {
             StopCoroutine(singleVoiceCoroutine);
             singleVoiceCoroutine = null;
         }
+
+        // 关键：协程停了，AudioSource也一起停
+        voiceAudioS.Stop();
+
 
         singleVoiceCoroutine =
             StartCoroutine(SingleVoiceRoutine(clip));
@@ -1164,35 +1178,80 @@ public class FrameEvent_Audio : MonoBehaviour
 
     private IEnumerator SingleVoiceRoutine(AudioClip clip)
     {
+        // bool hadLoop =
+        //     currentVoiceLoopType != VoiceLoopType.None &&
+        //     voiceAudioS.isPlaying;
+        //
+        // if (hadLoop)
+        // {
+        //     voiceAudioS.Pause();
+        //     loopPausedBySingle = true;
+        // }
+        //
+        // /*
+        //  * 这里同一个AudioSource无法在暂停循环的同时播放单次音。
+        //  * 所以必须临时保存循环进度。
+        //  */
+        //
+        // AudioClip pausedLoopClip = null;
+        // float pausedLoopTime = 0f;
+        //
+        // if (loopPausedBySingle)
+        // {
+        //     pausedLoopClip = voiceAudioS.clip;
+        //     pausedLoopTime = voiceAudioS.time;
+        //
+        //     voiceAudioS.Stop();
+        // }
+        //
+        // voiceAudioS.clip = clip;
+        // voiceAudioS.time = 0f;
+        // voiceAudioS.Play();
+        //
+        // while (voiceAudioS.isPlaying)
+        // {
+        //     yield return null;
+        // }
+        //
+        // singleVoiceCoroutine = null;
+        //
+        // if (loopPausedBySingle &&
+        //     currentVoiceLoopType != VoiceLoopType.None &&
+        //     pausedLoopClip != null)
+        // {
+        //     voiceAudioS.clip = pausedLoopClip;
+        //     voiceAudioS.time = Mathf.Clamp(
+        //         pausedLoopTime,
+        //         0f,
+        //         pausedLoopClip.length
+        //     );
+        //
+        //     voiceAudioS.Play();
+        // }
+        //
+        // loopPausedBySingle = false;
+
+        // 保存当前循环信息
         bool hadLoop =
-            currentVoiceLoopType != VoiceLoopType.None &&
-            voiceAudioS.isPlaying;
+            currentVoiceLoopType != VoiceLoopType.None;
 
-        if (hadLoop)
+        VoiceLoopType savedLoopType = currentVoiceLoopType;
+        AudioClip[] savedLoopClips = currentVoiceLoopClips;
+
+        // 暂停循环协程
+        if (voiceLoopCoroutine != null)
         {
-            voiceAudioS.Pause();
-            loopPausedBySingle = true;
+            StopCoroutine(voiceLoopCoroutine);
+            voiceLoopCoroutine = null;
         }
 
-        /*
-         * 这里同一个AudioSource无法在暂停循环的同时播放单次音。
-         * 所以必须临时保存循环进度。
-         */
-
-        AudioClip pausedLoopClip = null;
-        float pausedLoopTime = 0f;
-
-        if (loopPausedBySingle)
-        {
-            pausedLoopClip = voiceAudioS.clip;
-            pausedLoopTime = voiceAudioS.time;
-
-            voiceAudioS.Stop();
-        }
-
+        // 单次声音独占 AudioSource
+        voiceAudioS.Stop();
         voiceAudioS.clip = clip;
         voiceAudioS.time = 0f;
         voiceAudioS.Play();
+
+        Debug.Log("播放单次人物音：" + clip.name);
 
         while (voiceAudioS.isPlaying)
         {
@@ -1201,21 +1260,18 @@ public class FrameEvent_Audio : MonoBehaviour
 
         singleVoiceCoroutine = null;
 
-        if (loopPausedBySingle &&
-            currentVoiceLoopType != VoiceLoopType.None &&
-            pausedLoopClip != null)
+        // 恢复之前的循环
+        if (hadLoop &&
+            savedLoopType != VoiceLoopType.None &&
+            savedLoopClips != null &&
+            savedLoopClips.Length > 0)
         {
-            voiceAudioS.clip = pausedLoopClip;
-            voiceAudioS.time = Mathf.Clamp(
-                pausedLoopTime,
-                0f,
-                pausedLoopClip.length
-            );
+            currentVoiceLoopType = savedLoopType;
+            currentVoiceLoopClips = savedLoopClips;
 
-            voiceAudioS.Play();
+            voiceLoopCoroutine =
+                StartCoroutine(VoiceLoopRoutine());
         }
-
-        loopPausedBySingle = false;
     }
 
 
