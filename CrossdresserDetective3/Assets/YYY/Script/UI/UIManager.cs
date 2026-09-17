@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
 
 
                 //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
+                MoveWeaponUIToBattle();//把背包的武器类UI切换过去
                 //CloseSetUp();
                 break;
 
