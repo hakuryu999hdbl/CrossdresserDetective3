@@ -482,26 +482,26 @@ public class FrameEvent_Audio : MonoBehaviour
     {
 
 
-        if (isCage)
-        {
-            audioS.PlayOneShot(AudioManager.SE_Cage);
-        }
-        else
-        {
-            audioS.PlayOneShot(AudioManager.SE_Door_Open);
-        }
+        //if (isCage)
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_Cage);
+        //}
+        //else
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_Door_Open);
+        //}
 
     }
     public void _SE_Door_Close()
     {
-        if (isCage)
-        {
-            audioS.PlayOneShot(AudioManager.SE_Cage);
-        }
-        else
-        {
-            audioS.PlayOneShot(AudioManager.SE_Door_Close);
-        }
+        //if (isCage)
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_Cage);
+        //}
+        //else
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_Door_Close);
+        //}
 
     }
 

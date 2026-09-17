@@ -16,8 +16,6 @@ public class SearchState : EnemyBaseState
         reachedLastPos = false;
         turnTimer = 0f;
 
-        if (enemy.questionSign != null)
-            enemy.questionSign.SetActive(true);
     }
 
     public override void OnUpdate(EnemyController enemy)
@@ -25,8 +23,7 @@ public class SearchState : EnemyBaseState
         // 重新看到目标，立刻追击
         if (enemy.attackList.Count > 0)
         {
-            if (enemy.questionSign != null)
-                enemy.questionSign.SetActive(false);
+
 
             enemy.EnterBattleState();//虚类进入战斗
             return;
@@ -63,8 +60,7 @@ public class SearchState : EnemyBaseState
                 reachedLastPos = true;
                 enemy.animState = 0;
 
-                if (enemy.questionSign != null)
-                    enemy.questionSign.SetActive(true);
+
             }
 
             // 没到也超时了，开始疑惑
@@ -73,8 +69,7 @@ public class SearchState : EnemyBaseState
                 reachedLastPos = true;
                 enemy.animState = 0;
 
-                if (enemy.questionSign != null)
-                    enemy.questionSign.SetActive(true);
+
             }
 
             return;
@@ -93,8 +88,7 @@ public class SearchState : EnemyBaseState
 
         if (lookTimer <= 0f)
         {
-            if (enemy.questionSign != null)
-                enemy.questionSign.SetActive(false);
+
 
             enemy.TransitionToState(enemy.patrolState);
         }

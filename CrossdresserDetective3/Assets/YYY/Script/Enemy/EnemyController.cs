@@ -57,10 +57,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Init()
     {
-        //别找了我直接赋值，这样后面加东西一改排序就出问题
-        //anim = transform.GetChild(1).GetComponentInChildren<Animator>();//我把敌人动画放下面了第二个物体
-        //alarmSign = transform.GetChild(0).gameObject;//所有敌人都有这个感叹号标识，抓下面第一个物体
-
 
         //抓层，让死亡的时候把别的层权重关掉
         attackLayer = anim.GetLayerIndex("Attack Layer");
@@ -194,18 +190,14 @@ public class EnemyController : MonoBehaviour
 
 
 
-        if (questionSign == null) return;
+        float parentDir = transform.localScale.x >= 0f ? 1f : -1f;
 
-        float parentDir = transform.localScale.x >= 0 ? 1f : -1f;
-
-        questionSign.transform.localScale = new Vector3(
-            Mathf.Abs(questionSign.transform.localScale.x) * parentDir,
-            Mathf.Abs(questionSign.transform.localScale.y),
-            Mathf.Abs(questionSign.transform.localScale.z)
-        );
+        KeepSignFacingForward(questionSign, parentDir);
+        KeepSignFacingForward(alarmSign, parentDir);
+        KeepSignFacingForward(InvulnerableSign, parentDir);
 
 
-       AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(attackLayer);
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(attackLayer);
        
        if (stateInfo.IsName("Shooting") ||
            stateInfo.IsName("Shooting_Crouch") ||
@@ -240,10 +232,10 @@ public class EnemyController : MonoBehaviour
         }
 
         //只有攻击和技能产生警告
-        if (state == attackState|| state == chargeSkillState) 
-        {
-            checkArea.ShowAlarm();
-        }
+        //if (state == attackState|| state == chargeSkillState) 
+        //{
+        //    checkArea.ShowAlarm();
+        //}
 
 
 
@@ -251,6 +243,12 @@ public class EnemyController : MonoBehaviour
 
 
         currentState = state;
+
+        // 统一刷新敌人头顶状态图标
+        RefreshStateSign();
+
+
+
         currentState.EnterState(this);
     }//切换状态
 
@@ -335,6 +333,42 @@ public class EnemyController : MonoBehaviour
     }
     #endregion
 
+
+
+
+    /// <summary>
+    /// 根据当前状态刷新敌人头顶图标
+    /// Search：显示问号
+    /// Attack：显示感叹号
+    /// 其他状态：全部隐藏
+    /// </summary>
+    private void RefreshStateSign()
+    {
+        bool isSearching = currentState == searchState;
+        bool isAttacking = currentState == attackState;
+
+        if (questionSign != null)
+            questionSign.SetActive(isSearching);
+
+        if (alarmSign != null)
+            alarmSign.SetActive(isAttacking);
+    }
+
+    private void KeepSignFacingForward(GameObject sign, float parentDir)
+    {
+        if (sign == null)
+            return;
+
+        Vector3 scale = sign.transform.localScale;
+
+        sign.transform.localScale = new Vector3(
+            Mathf.Abs(scale.x) * parentDir,
+            Mathf.Abs(scale.y),
+            Mathf.Abs(scale.z)
+        );
+    }
+
+
     /// <summary>
     /// 搜索状态
     /// </summary>
@@ -345,7 +379,7 @@ public class EnemyController : MonoBehaviour
     public float lookTime = 1.2f;        // 左右看的时间
     public Vector3 lastKnownTargetPos;   // 最后看到目标的位置
 
-    public GameObject questionSign;      // 问号标记，可选
+    public GameObject questionSign;      // 问号标记
     public GameObject alarmSign;    //警戒标记
     public GameObject InvulnerableSign;    //无敌标记
     #endregion
@@ -1572,8 +1606,14 @@ public class EnemyController : MonoBehaviour
 
         bool hitFromBehind = IsHitFromBehind(attackSourcePos);//判断伤害来源是不是伤害的主人
 
+        // 只有巡逻状态下，从背后攻击才能暗杀
+        bool canBackstab = currentState == patrolState && hitFromBehind;
+
+        // 眩晕状态依然可以直接处决
+        bool canExecuteDizzy = isDizzy;
+
         // 👉 攻击从背后打来 = 直接死  // 👉 眩晕 = 直接死
-        if (hitFromBehind||isDizzy)
+        if (canBackstab || canExecuteDizzy)
         {
             frameEvent_Audio._Attack_largeSword();//暂时先把暗杀声音写在这
             instantKillSign.SetActive(true);//暗杀标记
@@ -1690,7 +1730,27 @@ public class EnemyController : MonoBehaviour
             throwAimTarget.gameObject.SetActive(false);
         }
 
+
+
+        //隐藏所有标识
+        if (questionSign != null)
+            questionSign.SetActive(false);
+
+        if (alarmSign != null)
+            alarmSign.SetActive(false);
+
+        if (InvulnerableSign != null)
+            InvulnerableSign.SetActive(false);
+        Invoke(nameof(Hide_instantKillSign), 0.5f);
     }
+
+    void Hide_instantKillSign() 
+    {
+
+        instantKillSign.SetActive(false);
+
+    }
+
 
 
     public virtual bool IgnoreIncomingDamage()
