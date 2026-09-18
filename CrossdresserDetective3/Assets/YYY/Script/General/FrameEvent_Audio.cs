@@ -426,50 +426,50 @@ public class FrameEvent_Audio : MonoBehaviour
 
     public void _SE_HighHeels_Walk()
     {
-        if (Random.Range(0, 2) == 0)
-        {
-            audioS.PlayOneShot(AudioManager.SE_WalkClip_1);
-        }
-        else
-        {
-            audioS.PlayOneShot(AudioManager.SE_WalkClip_2);
-        }
+        //if (Random.Range(0, 2) == 0)
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_WalkClip_1);
+        //}
+        //else
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_WalkClip_2);
+        //}
 
     }
     public void _SE_HighHeels_Run()
     {
-        if (Random.Range(0, 2) == 0)
-        {
-            audioS.PlayOneShot(AudioManager.SE_RunClip_1);
-        }
-        else
-        {
-            audioS.PlayOneShot(AudioManager.SE_RunClip_2);
-        }
+       // if (Random.Range(0, 2) == 0)
+       // {
+       //     audioS.PlayOneShot(AudioManager.SE_RunClip_1);
+       // }
+       // else
+       // {
+       //     audioS.PlayOneShot(AudioManager.SE_RunClip_2);
+       // }
 
     }
 
     public void _SE_Shose_Walk()
     {
-        if (Random.Range(0, 2) == 0)
-        {
-            audioS.PlayOneShot(AudioManager.SE_Man_WalkClip_1);
-        }
-        else
-        {
-            audioS.PlayOneShot(AudioManager.SE_Man_WalkClip_2);
-        }
+       // if (Random.Range(0, 2) == 0)
+       // {
+       //     audioS.PlayOneShot(AudioManager.SE_Man_WalkClip_1);
+       // }
+       // else
+       // {
+       //     audioS.PlayOneShot(AudioManager.SE_Man_WalkClip_2);
+       // }
     }
     public void _SE_Shose_Run()
     {
-        if (Random.Range(0, 2) == 0)
-        {
-            audioS.PlayOneShot(AudioManager.SE_Man_RunClip_1);
-        }
-        else
-        {
-            audioS.PlayOneShot(AudioManager.SE_Man_RunClip_2);
-        }
+        //if (Random.Range(0, 2) == 0)
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_Man_RunClip_1);
+        //}
+        //else
+        //{
+        //    audioS.PlayOneShot(AudioManager.SE_Man_RunClip_2);
+        //}
     }
 
     public void _SE_Falldown() { audioS.PlayOneShot(AudioManager.SE_falldown); }

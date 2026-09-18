@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -30,7 +32,8 @@ public class DialogSystem : MonoBehaviour
     private void OnEnable()
     {
 
-
+        // 对话期间只开启UI输入
+        inputControl.UI.Enable();
 
 
         spine_FrameEvents.SetCurrentAnimator();
@@ -125,8 +128,6 @@ public class DialogSystem : MonoBehaviour
         textFinished = true;
         StartCoroutine(SetTextUI());
     }
-
-
 
 
 
@@ -284,5 +285,38 @@ public class DialogSystem : MonoBehaviour
       
     }
 
+
+
+
+
+    #region 多端输入
+
+    [Header("多端输入")]
+    public PlayerInputControl inputControl;
+
+    private void Awake()
+    {
+        inputControl = new PlayerInputControl();
+
+        // 下一句
+        inputControl.UI.Submit.started += OnSubmit;
+
+        // 跳过剧情
+        inputControl.UI.Cancel.started += OnSkip;
+    }
+    private void OnSubmit(InputAction.CallbackContext ctx)
+    {
+        ShowText();
+    }
+
+    private void OnSkip(InputAction.CallbackContext ctx)
+    {
+        ChangeStory();
+    }
+    private void OnDisable()
+    {
+        inputControl.UI.Disable();
+    }
+    #endregion
 
 }
