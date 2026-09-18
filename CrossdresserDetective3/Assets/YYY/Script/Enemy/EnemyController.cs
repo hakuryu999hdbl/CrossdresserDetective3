@@ -469,6 +469,12 @@ public class EnemyController : MonoBehaviour
     [Header("楼层判断")]
     public float loseTargetYDiff = 1.2f;    // 超过这个，丢失目标
     public float regainTargetYDiff = 0.8f;  // 小于这个，重新发现目标
+
+    [Header("宽松楼层判断")]
+    float looseLoseTargetYDiff = 3f;
+    float looseRegainTargetYDiff = 2.2f;
+
+
     public bool IsValidAttackTarget(Transform t)
     {
         if (t == null) return false;
@@ -574,7 +580,10 @@ public class EnemyController : MonoBehaviour
                     //目前只有Enemy_1和Enemy_3随机抓取,别的敌人要么远程攻击要么特殊攻击
                     if (this is Enemy_1 || this is Enemy_3) 
                     {
-                        if (Random.Range(0,3)==0)
+
+                        bool canCatchPlayer = player.character.currentHealth < player.character.maxHealth * 0.5f;// 玩家生命值必须低于一半，敌人才允许抓取
+
+                        if (canCatchPlayer)
                         {
                             anim.SetTrigger("catch");
                         }
@@ -604,25 +613,30 @@ public class EnemyController : MonoBehaviour
     [Header("目标Y轴判断")]
     public TargetYMode targetYMode = TargetYMode.SameFloor;
 
-    public bool ShouldCheckTargetY()
-    {
-        return targetYMode == TargetYMode.SameFloor;
-    }
+    //public bool ShouldCheckTargetY()
+    //{
+    //    return targetYMode == TargetYMode.SameFloor;
+    //}
 
     public bool CanAcquireTargetByHeight(Transform target)
     {
         if (target == null)
             return false;
 
-        // 冲锋、瞄准投掷等敌人完全忽略高度差
-        if (!ShouldCheckTargetY())
-            return true;
-
         float yDiff = Mathf.Abs(
             target.position.y - transform.position.y
         );
 
-        return yDiff <= regainTargetYDiff;
+        switch (targetYMode)
+        {
+            case TargetYMode.SameFloor:
+                return yDiff <= regainTargetYDiff;
+
+            case TargetYMode.IgnoreHeight:
+                return yDiff <= looseRegainTargetYDiff;
+        }
+
+        return false;
     }
 
     public bool ShouldLoseTargetByHeight(Transform target)
@@ -630,17 +644,21 @@ public class EnemyController : MonoBehaviour
         if (target == null)
             return true;
 
-        // 无视高度差的敌人永远不会因为Y轴丢失玩家
-        if (!ShouldCheckTargetY())
-            return false;
-
         float yDiff = Mathf.Abs(
             target.position.y - transform.position.y
         );
 
-        return yDiff > loseTargetYDiff;
-    }
+        switch (targetYMode)
+        {
+            case TargetYMode.SameFloor:
+                return yDiff > loseTargetYDiff;
 
+            case TargetYMode.IgnoreHeight:
+                return yDiff > looseLoseTargetYDiff;
+        }
+
+        return true;
+    }
 
 
 
@@ -1629,7 +1647,7 @@ public class EnemyController : MonoBehaviour
         bool hitFromBehind = IsHitFromBehind(attackSourcePos);//判断伤害来源是不是伤害的主人
 
         // 只有巡逻状态下，从背后攻击才能暗杀
-        bool canBackstab = currentState == patrolState && hitFromBehind;
+        bool canBackstab = currentState == patrolState;// && hitFromBehind  //暂时近战正面完全偷袭巡逻状态
 
         // 眩晕状态依然可以直接处决
         bool canExecuteDizzy = isDizzy;
@@ -1925,6 +1943,7 @@ public enum EnemyPatrolMode
 
 public enum TargetYMode
 {
-    SameFloor,  // 攻击状态下一定要同楼层Y接近才能攻击，否则一直移动
-    IgnoreHeight  // 只要进入视野范围就攻击
+    SameFloor,    // 严格判断楼层，只攻击接近同高度的玩家
+
+    IgnoreHeight  // 宽松判断高度，但偏差过大仍会丢失玩家
 }

@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5237263863428684106}
-  damage: 30
+  damage: 10
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 13
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 50
   currentHealth: 0
   maxPower: 0
   currentPower: 0
@@ -400,6 +400,8 @@ MonoBehaviour:
   patrolDir: 1
   patrolMode: 2
   startFaceDir: 1
+  minGuardTurnTime: 3
+  maxGuardTurnTime: 5
   checkArea: {fileID: 4506052227750001928}
   frameEvent: {fileID: 8327335487173339032}
   beltIndex: 0
@@ -1792,7 +1794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5237263863428684106}
-  damage: 30
+  damage: 10
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 10

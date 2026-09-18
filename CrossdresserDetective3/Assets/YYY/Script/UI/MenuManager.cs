@@ -1143,13 +1143,13 @@ public class MenuManager : MonoBehaviour
 
 
         //特殊情况的主线需要单独先进入AVG
-
+        // Demo限制：第一章只开放1~6关
         if (nextChapter == 1 && nextStage == 1)
         {
             GameFlowData.nextAreaId = "Introduce";
             StartSpine();
         }
-        else if (nextChapter == 1 && nextStage >= 9)
+        else if (nextChapter == 1 && nextStage >= 7)
         {
             GameFlowData.nextAreaId = "Demo";
             StartSpine();

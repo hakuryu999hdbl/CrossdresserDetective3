@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     [Header("关卡")]
     public GameObject DetectiveAgency_1, DetectiveAgency_2;
-    public GameObject Company_1, Company_2;
+    public GameObject Company_1, Company_2, Company_3;
 
     private void Start()
     {
@@ -74,14 +74,16 @@ public class GameManager : MonoBehaviour
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 7:
-                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        Instantiate(Company_3, Vector3.zero, Quaternion.identity);
                         break;
                     case 8:
-                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        Instantiate(Company_3, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 9:
                     case 10:
-                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        Instantiate(Company_3, Vector3.zero, Quaternion.identity);
                         break;
                 }
                 break;
@@ -156,10 +158,10 @@ public class GameManager : MonoBehaviour
 
 
         // =========================
-        // Demo限制：第一章只开放1~8关
+        // Demo限制：第一章只开放1~6关
         // =========================
         if (GameFlowData.CurrentChapter == 1 &&
-            GameFlowData.CurrentStage >= 9)
+            GameFlowData.CurrentStage >= 7)
         {
             GameFlowData.nextAreaId = "Demo";
 
@@ -249,10 +251,10 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 7:
-                        ShowEliminate();
+                        ShowClue();
                         break;
                     case 8:
-                        ShowEliminate();
+                        ShowRescue();
                         break;
                     case 9:
                     case 10:                  
