@@ -71,13 +71,17 @@ public class Sign : MonoBehaviour
         // 被抓状态：强制显示攻击/挣扎提示
         if (signRenderer != null)
         {
-            signRenderer.enabled = captured || canPress;
+            signRenderer.enabled = captured || (canPress && !playerController.isCrouch);
         }
 
         // 手机交互按钮只在真正可以交互时显示
         if (Interact_Hide != null)
         {
-            Interact_Hide.SetActive(canPress && !captured);
+            Interact_Hide.SetActive(
+        canPress &&
+        !captured &&
+        !playerController.isCrouch
+    );
         }
 
         if (signSprite != null && playerTrans != null)
@@ -119,12 +123,17 @@ public class Sign : MonoBehaviour
     private void OnConfirm(InputAction.CallbackContext obj)
     {
 
+        // 下蹲时禁止交互
+        if (playerController.isCrouch)
+            return;
+
+
         if (canPress && targetItem != null)
         {
 
 
 
-            if (!canPress || targetItem == null|| playerController.isCaptured)//被抓住无法进行交互
+            if (!canPress || targetItem == null || playerController.isCaptured)//被抓住无法进行交互
                 return;
             IInteractable currentTarget = targetItem;
 
@@ -188,7 +197,7 @@ public class Sign : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Interactable")&& playerController.physicsCheck.isGround)
+        if (other.CompareTag("Interactable") && playerController.physicsCheck.isGround)
         {
             IInteractable item = other.GetComponent<IInteractable>();
 

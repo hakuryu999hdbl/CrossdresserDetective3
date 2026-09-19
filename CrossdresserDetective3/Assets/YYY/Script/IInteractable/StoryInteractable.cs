@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class StoryInteractable : MonoBehaviour, IInteractable
 {
-    [Header("¿¿½üÊ±ÏÔÊ¾µÄÎÄ×ÖÎïÌå")]
+    [Header("¿¿½E±ÏÔÊ¾µÄÎÄ×ÖÎ")]
     public GameObject textTip;
 
-    [Header("°´ÏÂEºó¿ªÆôµÄ¹ı³¡Åö×²Ìå")]
+    [Header("°´ÏÂEºó¿ªÆôµÄ¹ı³¡Åö×²Ì")]
     public GameObject cutsceneTrigger;
 
     [Header("ÊÇ·ñÖ»ÄÜ´¥·¢Ò»´Î")]
