@@ -32,6 +32,8 @@ public class PickupItem : MonoBehaviour
         if (player == null)
             return;
 
+        rb = GetComponent<Rigidbody2D>();
+
         switch (pickupType)
         {
             // 子弹：没枪就销毁
@@ -56,6 +58,11 @@ public class PickupItem : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
+                break;
+
+            // 金钱：掉落2秒后自动飞向玩家
+            case PickupType.Money:
+                StartCoroutine(StartMoneyFly());
                 break;
         }
     }
@@ -213,5 +220,68 @@ public class PickupItem : MonoBehaviour
         BalanceManager.instance.ChangeMoney(value);
 
         return true;
+    }
+
+
+
+
+
+
+
+
+
+    [Header("金钱自动吸附")]
+    public float moneyFlyDelay = 2f;
+    public float moneyFlySpeed = 10f;
+
+    private PlayerController targetPlayer;
+    private bool isFlyingToPlayer;
+    private Rigidbody2D rb;
+
+    private IEnumerator StartMoneyFly()
+    {
+        yield return new WaitForSeconds(moneyFlyDelay);
+
+        if (hasPickedUp)
+            yield break;
+
+        // 玩家可能在生成金钱时还没取得
+        if (targetPlayer == null && GameManager.instance != null)
+        {
+            targetPlayer = GameManager.instance.player;
+        }
+
+        if (targetPlayer == null)
+            yield break;
+
+        // 开始吸附后不再受重力影响
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0f;
+        }
+
+        isFlyingToPlayer = true;
+    }
+
+    private void Update()
+    {
+        if (!isFlyingToPlayer || hasPickedUp || targetPlayer == null)
+            return;
+
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPlayer.transform.position,
+            moneyFlySpeed * Time.deltaTime
+        );
+
+        // 足够接近后直接拾取，不依赖碰撞器
+        if (Vector2.Distance(
+            transform.position,
+            targetPlayer.transform.position
+        ) <= 0.15f)
+        {
+            TryPickup(targetPlayer);
+        }
     }
 }

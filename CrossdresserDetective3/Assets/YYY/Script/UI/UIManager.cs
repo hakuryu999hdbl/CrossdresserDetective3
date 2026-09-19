@@ -300,8 +300,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        SetUpFirstSelected =
-            EventSystem.current.currentSelectedGameObject;
+        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;
 
         EventSystem.current.SetSelectedGameObject(null);
 

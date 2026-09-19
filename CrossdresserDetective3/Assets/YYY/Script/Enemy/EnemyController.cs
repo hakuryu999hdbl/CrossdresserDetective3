@@ -581,9 +581,9 @@ public class EnemyController : MonoBehaviour
                     if (this is Enemy_1 || this is Enemy_3) 
                     {
 
-                        bool canCatchPlayer = player.character.currentHealth < player.character.maxHealth * 0.5f;// 玩家生命值必须低于一半，敌人才允许抓取
+                        bool canCatchPlayer = player.character.currentHealth < player.character.maxHealth * 0.6f;// 玩家生命值必须低于三分之二，敌人才允许抓取
 
-                        if (canCatchPlayer)
+                        if (canCatchPlayer && Random.Range(0,2) == 0)
                         {
                             anim.SetTrigger("catch");
                         }

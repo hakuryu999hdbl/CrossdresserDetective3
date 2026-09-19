@@ -82,15 +82,44 @@ public class ChargeSkillState : EnemyBaseState
             //enemy.animState = 3;//State为3为死亡
             return;
         }// || enemy.isHurt
-           
 
-        if (enemy.attackList == null || enemy.attackList.Count <= 0)
+
+
+
+
+
+        bool hasTarget =
+            enemy.attackList != null &&
+            enemy.attackList.Count > 0;
+
+        if (hasTarget)
         {
-            enemy.TransitionToState(enemy.patrolState);
+            enemy.targetPoint = enemy.attackList[0];
+        }
+        else if (phase == Phase.Ready)
+        {
+            // 还在蓄力时丢失玩家，直接进入搜索
+            enemy.targetPoint = null;
+            enemy.TransitionToState(enemy.searchState);
             return;
         }
 
-        enemy.targetPoint = enemy.attackList[0];
+        // 如果已经开始冲刺或进入硬直，即使丢失玩家也继续执行当前阶段
+
+
+
+
+        //if (enemy.attackList == null || enemy.attackList.Count <= 0)
+        //{
+        //    //enemy.TransitionToState(enemy.patrolState);
+        //
+        //    enemy.targetPoint = null;
+        //    enemy.TransitionToState(enemy.searchState);//丢失目标后保持搜索
+        //
+        //    return;
+        //}
+        //
+        //enemy.targetPoint = enemy.attackList[0];
 
         switch (phase)
         {
@@ -179,7 +208,18 @@ public class ChargeSkillState : EnemyBaseState
             enemy.anim.SetInteger("skillState", 0);
             enemy.animState = 0;
 
-            enemy.EnterBattleState();//虚类进入战斗
+
+            if (enemy.attackList != null && enemy.attackList.Count > 0)
+            {
+                enemy.EnterBattleState();//虚类进入战斗
+            }
+            else
+            {
+                enemy.targetPoint = null;
+                enemy.TransitionToState(enemy.searchState);
+            }
+
+            
         }
     }
 

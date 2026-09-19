@@ -29,8 +29,10 @@ public class RBQController : MonoBehaviour
                     {
                         case 1:
                         case 2:
-                            currentAnimationType = 3;
-                            UIManager.instance.ResultNumber = 2;//榨精地狱
+                            //currentAnimationType = 3;
+                            //UIManager.instance.ResultNumber = 2;//榨精地狱
+                            currentAnimationType = 0;
+                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
                             break;
 
                         case 3:

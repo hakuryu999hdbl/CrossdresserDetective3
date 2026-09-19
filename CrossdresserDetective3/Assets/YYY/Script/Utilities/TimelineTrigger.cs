@@ -231,6 +231,25 @@ public class TimelineTrigger : MonoBehaviour
 
     #region 玩家控制
 
+    public void SetPlayer_FaceLeft()
+    {
+        Transform playerTransform =
+            GameManager.instance.player.transform;
+
+        Vector3 scale = playerTransform.localScale;
+        scale.x = -Mathf.Abs(scale.x);
+        playerTransform.localScale = scale;
+    }// 强制玩家朝左
+
+    public void SetPlayer_FaceRight()
+    {
+        Transform playerTransform =
+            GameManager.instance.player.transform;
+
+        Vector3 scale = playerTransform.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        playerTransform.localScale = scale;
+    }// 强制玩家朝右
 
     public void SetPlayerAnim_Washing()
     {
