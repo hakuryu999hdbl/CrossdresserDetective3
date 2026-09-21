@@ -1725,36 +1725,35 @@ public class UIManager : MonoBehaviour
 
 
     [Header("当前选中提示")]
-    public Sprite MRT_Choose;
-    public Sprite MRT_Default;
-    public Image MeleeChoose,RangeChoose,ThrowableChoose;
+    public Image MeleeChoose;
+    public Image RangeChoose;
+    public Image ThrowableChoose;
+
+
+    public Color MRT_DefaultColor = Color.black;
+    public Color MRT_ChooseColor = Color.red;
 
     public void RefreshWeaponChoose(PlayerController player)
     {
-        // 先全部恢复默认
-        MeleeChoose.sprite = MRT_Default;
-        RangeChoose.sprite = MRT_Default;
-        ThrowableChoose.sprite = MRT_Default;
+        // 默认全部黑色
+        MeleeChoose.color = MRT_DefaultColor;
+        RangeChoose.color = MRT_DefaultColor;
+        ThrowableChoose.color = MRT_DefaultColor;
 
-        // attackType:
-        // > 0  = 近战
-        // -1/-2 = 远程
-        // 这里投掷按照你的实际字段判断
-
+        // 当前使用的变红
         if (player.isHoldingThrow)
         {
-            ThrowableChoose.sprite = MRT_Choose;
+            ThrowableChoose.color = MRT_ChooseColor;
         }
         else if (player.attackType < 0)
         {
-            RangeChoose.sprite = MRT_Choose;
+            RangeChoose.color = MRT_ChooseColor;
         }
-        else if (player.attackType > 0) // 换成你实际代表“当前选择投掷”的变量
+        else if (player.attackType > 0)
         {
-            MeleeChoose.sprite = MRT_Choose;
+            MeleeChoose.color = MRT_ChooseColor;
         }
     }
-
 
     [Header("近战UI")]
     public GameObject[] meleeIcons;

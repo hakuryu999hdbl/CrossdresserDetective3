@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3226595314236093079}
@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44e8a6708597d3c43b11a1ce82692cd1, type: 2}
+  - {fileID: 2100000, guid: 4ec58a31f353e4a408ae6630b6f6cad4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,7 +115,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6848114934452393762}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.095, y: 0.095, z: 0.095}
   m_ConstrainProportionsScale: 1
@@ -157,7 +157,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.18192732}
+  m_Offset: {x: 0.24120605, y: -0.1819272}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -167,7 +167,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 7.3737946, y: 4.830407}
+  m_Size: {x: 6.891382, y: 5.51925}
   m_EdgeRadius: 0
 --- !u!50 &3212892955387722347
 Rigidbody2D:
@@ -212,6 +212,7 @@ MonoBehaviour:
   isCage: 0
   voiceAudioS: {fileID: 0}
   currentVoiceLoopType: 0
+  muteVoice: 0
 --- !u!114 &6878620841507757426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +228,8 @@ MonoBehaviour:
   pickupType: 3
   value: 3
   frameEvent_Audio: {fileID: 6602260031199735775}
+  moneyFlyDelay: 2
+  moneyFlySpeed: 10
 --- !u!82 &6258828952831403132
 AudioSource:
   m_ObjectHideFlags: 0

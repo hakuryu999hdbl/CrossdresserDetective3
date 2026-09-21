@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+    private bool useGamepadMove = false;//初始先读取键盘，直到手柄的东南西北左右肩键输入
 
     public void Update()
     {
@@ -115,7 +115,47 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
+        // =========================
+        // 键盘输入
+        // =========================
+        Vector2 keyboardInput = Vector2.zero;
+
+        if (Keyboard.current != null)
+        {
+            if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
+                keyboardInput.x = -1;
+
+            if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
+                keyboardInput.x = 1;
+
+            if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed)
+                keyboardInput.y = -1;
+
+            if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)
+                keyboardInput.y = 1;
+
+
+            // 只要真的按了键盘方向键，就夺回控制权
+            if (keyboardInput != Vector2.zero)
+            {
+                useGamepadMove = false;
+            }
+        }
+
+
+        // =========================
+        // 最终方向
+        // =========================
+        if (useGamepadMove)
+        {
+            // 手柄 / 手机虚拟手柄
+            inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
+        }
+        else
+        {
+            // 键盘模式下，即使松手为0，也继续使用键盘
+            inputDirection = keyboardInput;
+        }
 
 
     }//输入用Update（听）
@@ -1369,6 +1409,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
+        CheckGamepadInput(obj);//南输入
 
         if (isBondage) { return; }
 
@@ -1412,6 +1453,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
+        CheckGamepadInput(ctx);//西输入
 
         if (isInCutscene) { return; }//过场动画锁
       
@@ -1604,6 +1646,8 @@ public class PlayerController : MonoBehaviour
 
     private void Slide(InputAction.CallbackContext obj)
     {
+        CheckGamepadInput(obj);//左肩输入
+
         if (isBondage) { return; }
         if (isInCutscene) { return; }//过场动画锁
 
@@ -1698,6 +1742,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnThrowStart(InputAction.CallbackContext obj)
     {
+        CheckGamepadInput(obj);//北输入
+
         if (isBondage) { return; }
         if (isInCutscene) { return; }//过场动画锁
 
@@ -2135,6 +2181,8 @@ public class PlayerController : MonoBehaviour
     public GameObject Sign;
     private void OnPause(InputAction.CallbackContext ctx)
     {
+        CheckGamepadInput(ctx);//菜单键输入
+
         if (isInCutscene) { return; }//过场动画锁
 
 
@@ -2157,6 +2205,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnZoomCamera(InputAction.CallbackContext ctx)
     {
+        CheckGamepadInput(ctx);//右肩输入
+
         if (isInCutscene) { return; }//过场动画锁
 
 
@@ -2169,4 +2219,15 @@ public class PlayerController : MonoBehaviour
 
 
     #endregion
+
+
+
+    public void CheckGamepadInput(InputAction.CallbackContext ctx)
+    {
+        if (ctx.control != null &&
+            ctx.control.device is Gamepad)
+        {
+            useGamepadMove = true;
+        }
+    }
 }

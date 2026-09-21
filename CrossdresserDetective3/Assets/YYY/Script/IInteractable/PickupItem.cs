@@ -167,8 +167,10 @@ public class PickupItem : MonoBehaviour
 
     private bool TryPickupHealth(PlayerController player)
     {
-        if (player.character.currentHealth== player.character.maxHealth)
-            return false;
+       //满血也能捡起
+
+       // if (player.character.currentHealth== player.character.maxHealth)
+       //     return false;
 
         player.character.Heal(value);//回复生命值
         return true;

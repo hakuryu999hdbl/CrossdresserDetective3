@@ -122,6 +122,7 @@ public class Sign : MonoBehaviour
 
     private void OnConfirm(InputAction.CallbackContext obj)
     {
+        playerController.CheckGamepadInput(obj);//东输入
 
         // 下蹲时禁止交互
         if (playerController.isCrouch)

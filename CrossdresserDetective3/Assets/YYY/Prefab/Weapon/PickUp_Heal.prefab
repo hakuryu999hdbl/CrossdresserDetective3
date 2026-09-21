@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3258285025198013476}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.095, y: 0.095, z: 0.095}
   m_ConstrainProportionsScale: 1
@@ -71,7 +71,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.36479497}
+  m_Offset: {x: -0.022948146, y: -0.11256707}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -81,7 +81,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 7.5141454, y: 5.665379}
+  m_Size: {x: 6.941688, y: 5.735732}
   m_EdgeRadius: 0
 --- !u!50 &6820940956964917613
 Rigidbody2D:
@@ -126,6 +126,7 @@ MonoBehaviour:
   isCage: 0
   voiceAudioS: {fileID: 0}
   currentVoiceLoopType: 0
+  muteVoice: 0
 --- !u!114 &3263809567617250932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +142,8 @@ MonoBehaviour:
   pickupType: 0
   value: 50
   frameEvent_Audio: {fileID: 2999771405842154713}
+  moneyFlyDelay: 2
+  moneyFlySpeed: 10
 --- !u!82 &2658662486634516346
 AudioSource:
   m_ObjectHideFlags: 0
@@ -265,7 +268,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6843659302277257617}
@@ -292,7 +295,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44e8a6708597d3c43b11a1ce82692cd1, type: 2}
+  - {fileID: 2100000, guid: 4ec58a31f353e4a408ae6630b6f6cad4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
