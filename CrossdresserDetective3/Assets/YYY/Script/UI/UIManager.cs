@@ -68,6 +68,11 @@ public class UIManager : MonoBehaviour
 
 
         }
+
+
+        // ===== 游戏开始时初始化武器UI =====
+        RefreshWeaponSlotUI(playerController);
+        RefreshWeaponChoose(playerController);
     }
 
 
