@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class StoryInteractable : MonoBehaviour, IInteractable
 {
-    [Header("¿¿½E±ÏÔÊ¾µÄÎÄ×ÖÎ")]
+    [Header("Txt")]
     public GameObject textTip;
 
-    [Header("°´ÏÂEºó¿ªÆôµÄ¹ı³¡Åö×²Ì")]
+    [Header("Touch_E")]
     public GameObject cutsceneTrigger;
 
-    [Header("ÊÇ·ñÖ»ÄÜ´¥·¢Ò»´Î")]
+    [Header("triggerOnce")]
     public bool triggerOnce = true;
 
     private bool isTriggered;
