@@ -11,7 +11,7 @@ public class Spine_FrameEvents : MonoBehaviour
 
 
     //当前播放的动画器
-    private Animator currentAnimator;
+    public Animator currentAnimator;
 
     public DialogSystem dialogSystem;
 

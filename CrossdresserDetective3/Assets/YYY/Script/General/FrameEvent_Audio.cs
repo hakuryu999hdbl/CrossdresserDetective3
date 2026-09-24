@@ -1022,7 +1022,7 @@ public class FrameEvent_Audio : MonoBehaviour
     private Coroutine voiceLoopCoroutine;
     private Coroutine singleVoiceCoroutine;
 
-    private bool loopPausedBySingle;
+    //private bool loopPausedBySingle;
     private int lastVoiceLoopIndex = -1;
 
 
@@ -1129,7 +1129,7 @@ public class FrameEvent_Audio : MonoBehaviour
         currentVoiceLoopType = VoiceLoopType.None;
         currentVoiceLoopClips = null;
         lastVoiceLoopIndex = -1;
-        loopPausedBySingle = false;
+        //loopPausedBySingle = false;
 
         if (voiceLoopCoroutine != null)
         {
@@ -1312,7 +1312,7 @@ public class FrameEvent_Audio : MonoBehaviour
                 voiceAudioS.clip = null;
             }
 
-            loopPausedBySingle = false;
+            //loopPausedBySingle = false;
         }
     }
 

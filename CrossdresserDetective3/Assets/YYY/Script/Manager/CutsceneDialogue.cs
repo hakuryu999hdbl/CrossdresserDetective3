@@ -8,8 +8,7 @@ public class CutsceneDialogue : MonoBehaviour
     [Header("UI")]
     public Text textLabel;
 
-    [Header("文字速度")]
-    public float textSpeed = 0.04f;
+    float textSpeed = 0.01f;
 
     [Header("台词显示结束后保持时间")]
     public float showTime = 3f;

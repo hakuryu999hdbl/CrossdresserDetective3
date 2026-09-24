@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         // Demo限制：第一章只开放1~6关
         // =========================
         if (GameFlowData.CurrentChapter == 1 &&
-            GameFlowData.CurrentStage >= 7)
+            GameFlowData.CurrentStage >= 9)
         {
             GameFlowData.nextAreaId = "Demo";
 

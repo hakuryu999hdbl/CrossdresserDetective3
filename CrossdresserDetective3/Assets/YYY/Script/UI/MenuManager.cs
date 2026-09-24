@@ -1149,7 +1149,7 @@ public class MenuManager : MonoBehaviour
             GameFlowData.nextAreaId = "Introduce";
             StartSpine();
         }
-        else if (nextChapter == 1 && nextStage >= 7)
+        else if (nextChapter == 1 && nextStage >= 9)
         {
             GameFlowData.nextAreaId = "Demo";
             StartSpine();

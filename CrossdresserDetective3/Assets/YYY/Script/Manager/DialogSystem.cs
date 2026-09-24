@@ -15,7 +15,7 @@ public class DialogSystem : MonoBehaviour
 
 
     public int index;
-    public float textSpeed;
+    float textSpeed = 0.01f;
     bool textFinished;//是否完成打字
     bool cancelTyping;//取消打字
     List<string> textList = new List<string>();
@@ -299,7 +299,7 @@ public class DialogSystem : MonoBehaviour
         inputControl = new PlayerInputControl();
 
         // 下一句
-        inputControl.UI.Submit.started += OnSubmit;
+        //inputControl.UI.Submit.started += OnSubmit;
 
         // 跳过剧情
         inputControl.UI.Cancel.started += OnSkip;
@@ -317,6 +317,8 @@ public class DialogSystem : MonoBehaviour
     {
         inputControl.UI.Disable();
     }
+
+
     #endregion
 
 }
