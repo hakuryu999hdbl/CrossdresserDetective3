@@ -389,6 +389,42 @@ public class EnemyController : MonoBehaviour
     public GameObject questionSign;      // 问号标记
     public GameObject alarmSign;    //警戒标记
     public GameObject InvulnerableSign;    //无敌标记
+
+
+
+    [Header("尸体警报")]
+    public GameObject deadAlertPrefab;
+
+    private void SpawnDeadAlert()
+    {
+        if (deadAlertPrefab == null)
+            return;
+
+        Instantiate(
+            deadAlertPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+    }//死亡的时候生成一个tag为bomb物体吸引敌人过来检查
+
+    public void AlertByPosition(Vector3 position)
+    {
+        if (isDead)
+            return;
+
+        if (isCatching)
+            return;
+
+        // 玩家优先
+        if (attackList != null && attackList.Count > 0)
+            return;
+
+        lastKnownTargetPos = position;
+
+        TransitionToState(searchState);
+    }//看到尸体进入搜索
+
     #endregion
 
 
@@ -1755,6 +1791,8 @@ public class EnemyController : MonoBehaviour
         GameManager.instance.SceneEnemyDead(this);//从GameManager那里划走
 
         DropRandomItem();//随机飞出道具
+
+        SpawnDeadAlert();//生成一个tag为Bomb物体吸引敌人
 
 
         isDead = true;

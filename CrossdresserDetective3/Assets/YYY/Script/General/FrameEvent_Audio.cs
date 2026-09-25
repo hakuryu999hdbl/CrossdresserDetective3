@@ -1251,7 +1251,7 @@ public class FrameEvent_Audio : MonoBehaviour
         voiceAudioS.time = 0f;
         voiceAudioS.Play();
 
-        Debug.Log("播放单次人物音：" + clip.name);
+        //Debug.Log("播放单次人物音：" + clip.name);
 
         while (voiceAudioS.isPlaying)
         {
