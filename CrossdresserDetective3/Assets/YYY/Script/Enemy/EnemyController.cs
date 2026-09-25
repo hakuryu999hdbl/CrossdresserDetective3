@@ -1139,7 +1139,24 @@ public class EnemyController : MonoBehaviour
 
 
 
+    public void ReleaseCapturedPlayerForRoomEscape(PlayerController player)
+    {
+        if (capturedPlayer != player)
+            return;
 
+        capturedPlayer = null;
+        isCatching = false;
+        nextCatchTime = Time.time + catchCooldown;
+
+        if (catchCollider != null)
+            catchCollider.ResetCatch();
+
+        if (Catch_Collider != null)
+            Catch_Collider.SetActive(false);
+
+        character.skillInvulnerable = false;
+        frameEvent_Audio._Voice_StopLoop();
+    }//清理抓取状态
     #endregion
 
 

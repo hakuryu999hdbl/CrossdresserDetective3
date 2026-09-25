@@ -71,8 +71,26 @@ public class RBQController : MonoBehaviour
             currentAnimationType = -1;//目前先设置解救失踪少女，没有伪娘
         }
 
+
+        stageAnimationType = currentAnimationType;//先记录关卡需要的死亡动画
+
     }//这个好像动画很早就被触发应，所以随机需要更早
 
+    private int stageAnimationType;//关卡指定动画
+    public void PlayCaptivityAnimation(PlayerController player)
+    {
+        // 每次进入调教室，都在现有两套演出中重新抽一套。
+        currentAnimationType = Random.Range(0, 2); // 只会得到 0 或 1
+
+        ReadCurrentGame(player);
+        AbuseAnimation();
+    }//进入调教室入口
+    public void PlayStageGameOverAnimation(PlayerController player)
+    {
+        currentAnimationType = stageAnimationType;
+        ReadCurrentGame(player);
+        AbuseAnimation();
+    }//进入处刑室入口
 
     private void Start()
     {

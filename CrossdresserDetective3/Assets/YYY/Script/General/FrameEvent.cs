@@ -876,7 +876,7 @@ public class FrameEvent : MonoBehaviour
         playerController.pantiesIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//自缚
+    }//自缚（局内拘束）
 
 
 
@@ -1145,25 +1145,28 @@ public class FrameEvent : MonoBehaviour
     public void OnLewdmoveOver() 
     {
 
-        if (UIManager.instance!=null) 
-        {
+        //if (UIManager.instance!=null) 
+        //{
+        //
+        //
+        //    if (enemyController.CatchingResult==0) 
+        //    {
+        //        UIManager.instance.ResultNumber = 4;
+        //        UIManager.instance.ShowGameOverMenu();
+        //    }//轮奸无法合腿
+        //
+        //    if (enemyController.CatchingResult == 1)
+        //    {
+        //        UIManager.instance.ResultNumber = 5;
+        //        UIManager.instance.ShowGameOverMenu();
+        //    }//检查艳尸
+        //
+        //}//CG鉴赏内
 
 
-            if (enemyController.CatchingResult==0) 
-            {
-                UIManager.instance.ResultNumber = 4;
-                UIManager.instance.ShowGameOverMenu();
-            }//轮奸无法合腿
+        // 接入普通死亡的黑幕 → 调教房 → RBQ 演出流程
+        UIManager.instance.StartCaptivityUI();
 
-            if (enemyController.CatchingResult == 1)
-            {
-                UIManager.instance.ResultNumber = 5;
-                UIManager.instance.ShowGameOverMenu();
-            }//检查艳尸
 
-        }//CG鉴赏内
-
-        
-        
     }//被抓住后没能逃出被处决动画结尾触发结局CG
 }

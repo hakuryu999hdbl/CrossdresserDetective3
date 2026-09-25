@@ -22,6 +22,9 @@ public class RoomManager : MonoBehaviour
     [Header("gameOverPoint")]
     public Transform gameOverPoint; // 调教房 / 拷问室
 
+    [Header("captivityPoint")]
+    public Transform captivityPoint; // 抓取失败后解缚逃脱的位置
+
     private void Start()
     {
         GameManager.instance.IsRoomManager(this);

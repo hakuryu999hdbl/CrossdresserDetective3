@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeadBodyAlert : MonoBehaviour
 {
 
-    [Header(" ¨ÃÂ÷ÿ∏¥æØΩ‰")]
+    [Header("DeadBody_All")]
     public float reactivateTime = 5f;
     public GameObject DeadBody_All;
     private bool coolingDown;

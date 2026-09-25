@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("关卡")]
     public GameObject DetectiveAgency_1, DetectiveAgency_2;
     public GameObject Company_1, Company_2, Company_3;
+    public GameObject ParkingArea_1;
 
     private void Start()
     {
@@ -501,16 +502,17 @@ public class GameManager : MonoBehaviour
     //在玩家被击败后清理状态
     public void ClearEnemiesForGameOver()
     {
+        //不用关闭，变成生成ENEMY_1
         // 先关闭敌人生成器，防止黑幕后继续刷怪
-        foreach (AreaEncounterController creator in enemyCreators)
-        {
-            if (creator == null)
-                continue;
-
-            creator.gameObject.SetActive(false);
-        }
-
-        enemyCreators.Clear();
+        //foreach (AreaEncounterController creator in enemyCreators)
+        //{
+        //    if (creator == null)
+        //        continue;
+        //
+        //    creator.gameObject.SetActive(false);
+        //}
+        //
+        //enemyCreators.Clear();
 
         // 隐藏所有现存敌人，但保留尸体替身
         foreach (EnemyController enemy in sceneEnemies)

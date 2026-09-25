@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -858,7 +858,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (waitGameOverInput)
+        if (waitGameOverInput && !isCaptivityShowing)//不能是调教，必须处刑
         {
             ShowGameOverMenu();
             return;
@@ -1129,11 +1129,8 @@ public class UIManager : MonoBehaviour
         DeadBody.gameObject.transform.position = playerController.transform.position;
         DeadBody.gameObject.SetActive(true);
 
-        //尸体读取玩家皮肤
-        DeadBody.ReadCurrentGame(playerController);
-
-        //尸体播放动画
-        DeadBody.AbuseAnimation();//战败入口
+        //尸体读取玩家皮肤与动画
+        DeadBody.PlayStageGameOverAnimation(playerController);
 
         // 等待玩家确认
         waitGameOverInput = true;
@@ -1534,6 +1531,10 @@ public class UIManager : MonoBehaviour
         {
             playerController.UI_anim.SetBool("isBoki", false);
         }
+
+
+
+        Test_Input();//测试按钮
     }
 
 
@@ -1890,9 +1891,115 @@ public class UIManager : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 复活进入解缚状态
+    /// </summary>
+    #region
+
+    //按下J键挣扎解缚
+    private void Test_Input()
+    {
+        // 仅在抓取失败后的 RBQ 演出中允许测试复活。
+        // 普通死亡时 isCaptured 已被 PlayerDead() 清除，不会进入这里。
+        if (waitGameOverInput &&
+            DeadBody != null &&
+            DeadBody.gameObject.activeInHierarchy &&
+            playerController.isCaptured &&
+            Keyboard.current != null &&
+            Keyboard.current.jKey.wasPressedThisFrame)
+        {
+            TestReviveFromRBQ();
+        }
+    }
+
+    public void TestReviveFromRBQ()
+    {
+        if (!waitGameOverInput || !playerController.isCaptured)
+            return;
+
+        waitGameOverInput = false; // 防止 J 同时触发结算跳过
+        isResultShowing = false;
+
+        // 先清理原敌人的抓取关系。敌人即使已 SetActive(false)，
+        // 这里仍可以直接调用它的方法。
+        EnemyController enemy = playerController.catchingEnemy;
+        if (enemy != null)
+            enemy.ReleaseCapturedPlayerForRoomEscape(playerController);
+
+        playerController.EndStruggle();
+
+        DeadBody.StopAbuseAnimation();
+        DeadBody.gameObject.SetActive(false);
+
+        playerController.ExitCapturedState(Vector2.zero);
+        playerController.rb.velocity = Vector2.zero;
+        playerController.EnterBondageState();
+        playerController.frameEvent.Bondage();
+
+        MissionFailure.SetActive(false);
+        Skip_GameOver.SetActive(false);
+        gameOverPanel.SetActive(false);
+        UI_All.SetActive(true);
+
+        playerController.EnableGameplayInput();
+
+        isCaptivityShowing = false;//调教结束
+    }
 
 
 
+    //调教室入口
+    public bool isCaptivityShowing;//目前是调教不是处刑
+
+    public void StartCaptivityUI()
+    {
+        if (isResultShowing)
+            return;
+
+        RoomManager room = GameManager.instance.roomManager;
+        if (room == null || room.captivityPoint == null)
+        {
+            Debug.LogError("RoomManager 没有设置 captivityPoint");
+            return;
+        }
+
+        isResultShowing = true;
+        isCaptivityShowing = true;
+
+        playerController.DisableGameplayInput();
+        StartCoroutine(CaptivityDelay());
+    }
+
+    private IEnumerator CaptivityDelay()
+    {
+        blackScreen.SetFadeIn();
+        yield return new WaitForSeconds(1f);
+
+        if (!playerController.cameraControl.isZoomIn)
+            playerController.cameraControl.ToggleZoom();
+
+        UI_All.SetActive(false);
+
+        // 此处沿用你已改好的“只隐藏现有敌人，不关闭 AreaEncounterController”的方法。
+        // 将下面的方法名替换成你当前工程里的实际方法名。
+        GameManager.instance.ClearEnemiesForGameOver();
+
+        playerController.transform.position =
+            GameManager.instance.roomManager.captivityPoint.position;
+        playerController.rb.velocity = Vector2.zero;
+        playerController.frameEvent.HideSkeleton();
+
+        DeadBody.transform.position = playerController.transform.position;
+        DeadBody.gameObject.SetActive(true);
+        DeadBody.PlayCaptivityAnimation(playerController);
+
+        blackScreen.SetFadeOut();
+
+        // 供当前测试版 J 键解绳使用。
+        waitGameOverInput = true;
+    }
+
+    #endregion
 
 
 

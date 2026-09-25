@@ -855,8 +855,8 @@ public class PlayerController : MonoBehaviour
         frameEvent_Audio._Voice_Mute();//再次触发的时候循环声也屏蔽
 
 
-        //被抓的时候就需要升级虚弱
-        weakness++;
+        //被抓的时候就需要升级虚弱，最大不超过3
+        weakness = Mathf.Min(weakness + 1, 3);
         UIManager.instance.RefreshWeaknessUI(weakness);
     }
 
@@ -973,7 +973,7 @@ public class PlayerController : MonoBehaviour
         currentSex = Mathf.Clamp(currentSex + amount, 0, maxSex);
         UIManager.instance.UpdateSexBar(currentSex, maxSex);
 
-        if (currentSex >= maxSex&& weakness <4)
+        if (currentSex >= maxSex && isCaptured && isStruggling)
         {
             // =========================
             // 拘束状态下淫乱值满 → 直接重开
@@ -988,12 +988,12 @@ public class PlayerController : MonoBehaviour
 
             catchingEnemy.ForceMasturbate();
             currentSex = 0;
-            maxSex /=2;
+            maxSex = Mathf.Max(1, maxSex / 2);
             //StrugglePower /= 2;
             UIManager.instance.UpdateSexBar(currentSex, maxSex);
             weakness ++;
             UIManager.instance.RefreshWeaknessUI(weakness);
-            if (weakness>=3) 
+            if (weakness>=4) 
             {
                 // 进入处刑，永久停止本次抓取的挣扎
                 isStruggling = false;
