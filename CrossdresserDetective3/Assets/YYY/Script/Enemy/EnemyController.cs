@@ -1181,6 +1181,10 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
+    public virtual bool CanBeAssassinated()
+    {
+        return currentState == patrolState;
+    }//破防后可被暗杀
 
     #endregion
 
@@ -1712,7 +1716,9 @@ public class EnemyController : MonoBehaviour
         bool hitFromBehind = IsHitFromBehind(attackSourcePos);//判断伤害来源是不是伤害的主人
 
         // 只有巡逻状态下，从背后攻击才能暗杀
-        bool canBackstab = currentState == patrolState;// && hitFromBehind  //暂时近战正面完全偷袭巡逻状态
+        //bool canBackstab = currentState == patrolState;// && hitFromBehind  //暂时近战正面完全偷袭巡逻状态
+        bool canBackstab = CanBeAssassinated();
+
 
         // 眩晕状态依然可以直接处决
         bool canExecuteDizzy = isDizzy;

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class BondageUnlocker : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class BondageUnlocker : MonoBehaviour
 
         player.ExitBondageState();
 
-        // ÓÉ UIManager Çå³ıµ±Ç°½âËøÆ÷ÒıÓÃ²¢Ïú»ÙÎïÌå
+        // ï¾“ï¾‰ UIManager ï¾‡èŸ²ï£±ï½µï½±ï¾‡ï½°ï½½ç°î™¥î–µï£±ï¾“ï¾ƒï½²ï½¢ï¾å¿ï¾™ï¾ãƒ»ãƒ»
         UIManager.instance.RemoveBondageUnlocker();
 
 
@@ -35,9 +35,9 @@ public class BondageUnlocker : MonoBehaviour
 
         player.playerAnimation.ExitBondageIdle();
 
-        player.frameEvent.BondageUnlocker();//È¥µôÉş×Ó
+        player.frameEvent.BondageUnlocker();//ï¾ˆï½¥ï½µî¸ï£²ï¾—ï¾“
+        player.frameEvent_Audio._Voice_StopLoop();//å¾ªç¯éŸ³å…³é—­
 
-
-        GameManager.instance.HideBondageUnlockText();//ÈÎÎñ¸üĞÂ
+        GameManager.instance.HideBondageUnlockText();//ï¾ˆï¾ï¾î„³ãƒ»ï¾‚
     }
 }

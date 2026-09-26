@@ -146,7 +146,7 @@ public class Enemy_4 : EnemyController
             return;
         }
 
-
+    
 
         currentBlockValue =
             Mathf.Min(currentBlockValue, maxBlockValue);
@@ -213,7 +213,8 @@ public class Enemy_4 : EnemyController
         }
         else
         {
-            TransitionToState(patrolState);
+            // 看不到玩家 → 去最后已知位置搜索
+            TransitionToState(searchState);
         }
     }
 
@@ -234,5 +235,16 @@ public class Enemy_4 : EnemyController
 
         // 再执行父类死亡流程
         base.OnDie();
+    }
+
+
+    public override bool CanBeAssassinated()
+    {
+        // 防御值没破：即使巡逻也不能暗杀
+        if (currentBlockValue > 0f)
+            return false;
+
+        // 破防以后：遵守普通敌人的暗杀规则
+        return base.CanBeAssassinated();
     }
 }

@@ -1262,6 +1262,8 @@ public class FrameEvent_Audio : MonoBehaviour
 
         // 恢复之前的循环
         if (hadLoop &&
+             !muteVoice &&
+    currentVoiceLoopType == savedLoopType &&
             savedLoopType != VoiceLoopType.None &&
             savedLoopClips != null &&
             savedLoopClips.Length > 0)
