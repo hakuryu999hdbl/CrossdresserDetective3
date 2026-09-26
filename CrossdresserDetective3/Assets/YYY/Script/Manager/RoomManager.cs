@@ -75,4 +75,12 @@ public class RoomManager : MonoBehaviour
            playerSpawnPoints_eliminate.position;
     }
 
+
+
+    [Header("调教室解锁器")]
+    public GameObject bondageUnlockerPrefab;
+    public Transform bondageUnlockerPoint;
+
+
+
 }

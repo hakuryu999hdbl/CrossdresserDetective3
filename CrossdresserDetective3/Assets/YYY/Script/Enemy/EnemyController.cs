@@ -389,7 +389,7 @@ public class EnemyController : MonoBehaviour
     public GameObject questionSign;      // 问号标记
     public GameObject alarmSign;    //警戒标记
     public GameObject InvulnerableSign;    //无敌标记
-
+    public GameObject catchSign; // 抓取提示
 
 
     [Header("尸体警报")]
@@ -609,6 +609,9 @@ public class EnemyController : MonoBehaviour
                 else if(GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
                 {
                     anim.SetTrigger("catch");
+                    catchSign.SetActive(true);
+
+                    Invoke(nameof(HideCatchSign), 1f);
                 }
                 else
                 {
@@ -622,6 +625,9 @@ public class EnemyController : MonoBehaviour
                         if (canCatchPlayer && Random.Range(0,2) == 0)
                         {
                             anim.SetTrigger("catch");
+                            catchSign.SetActive(true);
+
+                            Invoke(nameof(HideCatchSign), 1f);
                         }
                         else
                         {
@@ -644,6 +650,12 @@ public class EnemyController : MonoBehaviour
 
 
     }//攻击
+
+
+    void HideCatchSign() 
+    {
+        catchSign.SetActive(false);
+    }
 
 
     [Header("目标Y轴判断")]
@@ -1836,6 +1848,10 @@ public class EnemyController : MonoBehaviour
 
         if (InvulnerableSign != null)
             InvulnerableSign.SetActive(false);
+
+        HideCatchSign();
+
+
         Invoke(nameof(Hide_instantKillSign), 0.5f);
     }
 

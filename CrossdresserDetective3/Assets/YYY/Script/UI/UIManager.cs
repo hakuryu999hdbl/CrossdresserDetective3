@@ -1689,6 +1689,10 @@ public class UIManager : MonoBehaviour
 
 
 
+    public GameObject BondageUnlockText;
+
+
+
 
     [Header("弹药UI")]
     public Transform bulletRoot;
@@ -1895,23 +1899,68 @@ public class UIManager : MonoBehaviour
     /// 复活进入解缚状态
     /// </summary>
     #region
+    [Header("挣扎提示")]
+    public GameObject Struggle_Captured;//挣扎提示
+    private bool captivityBreakFreeStarted;
+
 
     //按下J键挣扎解缚
     private void Test_Input()
     {
-        // 仅在抓取失败后的 RBQ 演出中允许测试复活。
-        // 普通死亡时 isCaptured 已被 PlayerDead() 清除，不会进入这里。
-        if (waitGameOverInput &&
-            DeadBody != null &&
-            DeadBody.gameObject.activeInHierarchy &&
-            playerController.isCaptured &&
+        if (!isCaptivityShowing ||
+         !waitGameOverInput ||
+         captivityBreakFreeStarted ||
+         DeadBody == null ||
+         !DeadBody.gameObject.activeInHierarchy ||
+         !playerController.isCaptured)
+            return;
+
+        bool keyboardPressed =
             Keyboard.current != null &&
-            Keyboard.current.jKey.wasPressedThisFrame)
-        {
-            TestReviveFromRBQ();
-        }
+            Keyboard.current.jKey.wasPressedThisFrame;
+
+        bool gamepadPressed =
+            Gamepad.current != null &&
+            Gamepad.current.buttonSouth.wasPressedThisFrame;
+
+        if (keyboardPressed || gamepadPressed)
+            StartCaptivityBreakFree();
     }
 
+
+    // 手机攻击按钮也可以在 OnClick 绑定这个 public 方法
+    public void StartCaptivityBreakFree()
+    {
+        if (!isCaptivityShowing ||
+            !waitGameOverInput ||
+            captivityBreakFreeStarted ||
+            DeadBody == null ||
+            !DeadBody.gameObject.activeInHierarchy ||
+            !playerController.isCaptured)
+            return;
+
+        captivityBreakFreeStarted = true;
+        DeadBody.anim.ResetTrigger("Next");
+        DeadBody.anim.SetTrigger("Next"); // Man_RapeYYY_7 → 8
+
+        StartCoroutine(WaitForCaptivityAnimation8());
+    }//开启黑幕淡入淡出，进入解缚逃脱模式入口
+
+    private IEnumerator WaitForCaptivityAnimation8()
+    {
+        // 从 Animator 真正切进 8 开始计时，而不是从按 J 开始计时
+        yield return new WaitUntil(() =>
+            DeadBody != null &&
+            DeadBody.anim.GetCurrentAnimatorStateInfo(0)
+                .IsName("Man_RapeYYY_8"));
+
+        yield return new WaitForSeconds(1f);
+
+        if (isCaptivityShowing && waitGameOverInput)
+            TestReviveFromRBQ(); // 原有的隐藏 RBQ、恢复玩家、进入拘束状态
+
+        captivityBreakFreeStarted = false;
+    }
     public void TestReviveFromRBQ()
     {
         if (!waitGameOverInput || !playerController.isCaptured)
@@ -1944,7 +1993,13 @@ public class UIManager : MonoBehaviour
         playerController.EnableGameplayInput();
 
         isCaptivityShowing = false;//调教结束
-    }
+
+
+        SpawnBondageUnlocker();//生成解锁器
+        GameManager.instance.ShowBondageUnlockText();//任务更新
+
+        Struggle_Captured.SetActive(false);//关闭提示
+    }//进入可移动入口
 
 
 
@@ -1968,6 +2023,12 @@ public class UIManager : MonoBehaviour
 
         playerController.DisableGameplayInput();
         StartCoroutine(CaptivityDelay());
+
+
+
+        captivityBreakFreeStarted = false;//重置
+
+        
     }
 
     private IEnumerator CaptivityDelay()
@@ -1997,7 +2058,53 @@ public class UIManager : MonoBehaviour
 
         // 供当前测试版 J 键解绳使用。
         waitGameOverInput = true;
+
+        Struggle_Captured.SetActive(true);//开启提示
     }
+
+
+
+
+
+
+
+    private GameObject activeBondageUnlocker;
+
+    public void SpawnBondageUnlocker()
+    {
+        RemoveBondageUnlocker();
+
+        if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
+            return;//逃脱模式里不允许解缚
+
+        RoomManager room = GameManager.instance.roomManager;
+
+        if (room == null ||
+            room.bondageUnlockerPrefab == null ||
+            room.bondageUnlockerPoint == null)
+        {
+            Debug.LogError("RoomManager 未设置解锁器预制体或生成点");
+            return;
+        }
+
+        activeBondageUnlocker = Instantiate(
+            room.bondageUnlockerPrefab,
+            room.bondageUnlockerPoint.position,
+            Quaternion.identity
+        );
+    }
+
+    public void RemoveBondageUnlocker()
+    {
+        if (activeBondageUnlocker == null)
+            return;
+
+        Destroy(activeBondageUnlocker);
+        activeBondageUnlocker = null;
+    }
+
+
+
 
     #endregion
 

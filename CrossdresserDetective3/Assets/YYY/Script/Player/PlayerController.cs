@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 5f;
     public float walkSpeed = 2f;
     public float walkSpeed_Bondage = 1.8f;
-    private bool isWalking;
+    public bool isWalking;
 
     [Header("碰撞体与下蹲")]
     public CapsuleCollider2D coll;
@@ -838,6 +838,9 @@ public class PlayerController : MonoBehaviour
     public void EnterCapturedState()
     {
 
+        UIManager.instance.RemoveBondageUnlocker();//移除开锁器
+
+
         isCaptured = true;
 
         inputDirection = Vector2.zero;
@@ -1019,7 +1022,7 @@ public class PlayerController : MonoBehaviour
     [Header("拘束状态")]
     public bool isBondage;
 
-    private int attackTypeBeforeBondage;   // 记录拘束之前的武器动作
+    public int attackTypeBeforeBondage;   // 记录拘束之前的武器动作
 
 
   
@@ -1078,7 +1081,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void UI_anim_Change() 
+    public void UI_anim_Change() 
     {
         UI_anim.SetTrigger("Change");//小图像显示也变
     }
@@ -1205,6 +1208,9 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDead()
     {
+
+        UIManager.instance.RemoveBondageUnlocker();//移除开锁器
+
         PlayBloodEffect();
 
         isDead = true;

@@ -545,4 +545,48 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+
+
+
+
+  
+
+
+    // 进入解缚逃脱
+    public void ShowBondageUnlockText()
+    {
+        // 隐藏原任务信息
+        UIManager.instance.clueText.gameObject.SetActive(false);
+        UIManager.instance.rescueText.gameObject.SetActive(false);
+        UIManager.instance.escapeText.SetActive(false);
+        UIManager.instance.eliminateText.SetActive(false);
+
+        // 显示解缚任务
+        UIManager.instance.BondageUnlockText.SetActive(true);
+    }
+
+
+    // 拿到开锁器，恢复原任务
+    public void HideBondageUnlockText()
+    {
+        UIManager.instance.BondageUnlockText.SetActive(false);
+
+        // 根据当前任务模式恢复
+
+        switch (GameFlowData.CurrentMissionType)
+        {
+            case GameFlowData.MissionType.Investigate:
+                UIManager.instance.clueText.gameObject.SetActive(true);
+                break;
+
+            case GameFlowData.MissionType.Rescue:
+                UIManager.instance.rescueText.gameObject.SetActive(true);
+                break;
+        }
+
+    
+    }
+
+
+
 }

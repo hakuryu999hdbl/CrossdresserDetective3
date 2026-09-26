@@ -876,10 +876,22 @@ public class FrameEvent : MonoBehaviour
         playerController.pantiesIndex = 0;
 
         playerController.RefreshPlayerSkin();
+
     }//自缚（局内拘束）
 
 
+    public void BondageUnlocker()
+    {
 
+        playerController.beltIndex = 0;
+        playerController.clothesIndex = 0;
+        playerController.shoesIndex = 0;
+        playerController.bondageType = 0;
+        playerController.pantiesIndex = 0;
+
+        playerController.RefreshPlayerSkin();
+
+    }//（局内解缚）
 
     public void SetPlayer_Clothes_01()
     {
@@ -1162,6 +1174,26 @@ public class FrameEvent : MonoBehaviour
         //    }//检查艳尸
         //
         //}//CG鉴赏内
+
+
+
+
+
+
+        //逃脱和歼灭里不能有解缚逃脱
+        var missionType = GameFlowData.CurrentMissionType;
+
+        if (missionType == GameFlowData.MissionType.Escape ||
+            missionType == GameFlowData.MissionType.Eliminate)
+        {
+            UIManager.instance.GameOverUI();
+
+
+            return;
+        }
+
+
+
 
 
         // 接入普通死亡的黑幕 → 调教房 → RBQ 演出流程

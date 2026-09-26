@@ -21,6 +21,8 @@ public class Sign : MonoBehaviour
 
     public GameObject Interact_Hide; // 手机端交互按钮
 
+    public GameObject Forbidden;//禁止交互提示
+
     private void Awake()
     {
         anim = signSprite.GetComponent<Animator>();
@@ -74,14 +76,26 @@ public class Sign : MonoBehaviour
             signRenderer.enabled = captured || (canPress && !playerController.isCrouch);
         }
 
+        //禁止状态
+        bool showForbidden =
+    canPress &&
+    !captured &&
+    !playerController.isCrouch &&
+    IsForbiddenTarget();
+
+        if (Forbidden != null)
+            Forbidden.SetActive(showForbidden);
+
+
         // 手机交互按钮只在真正可以交互时显示
         if (Interact_Hide != null)
         {
             Interact_Hide.SetActive(
-        canPress &&
-        !captured &&
-        !playerController.isCrouch
-    );
+       canPress &&
+       !captured &&
+       !playerController.isCrouch &&
+       !showForbidden
+   );
         }
 
         if (signSprite != null && playerTrans != null)
@@ -128,6 +142,9 @@ public class Sign : MonoBehaviour
         if (playerController.isCrouch)
             return;
 
+        //拘束时特殊对象禁止交互
+        if (IsForbiddenTarget())
+            return;
 
         if (canPress && targetItem != null)
         {
@@ -243,6 +260,9 @@ public class Sign : MonoBehaviour
             Interact_Hide.SetActive(false);
         }
 
+        if (Forbidden != null)
+            Forbidden.SetActive(false);
+
     }//防止万一目标被消耗等，E残留
 
 
@@ -268,4 +288,16 @@ public class Sign : MonoBehaviour
                 break;
         }
     }
+
+
+
+    
+    private bool IsForbiddenTarget()
+    {
+
+        return playerController != null &&
+               playerController.isBondage &&
+               (targetItem is Chest || targetItem is RescueTarget);
+
+    }//拘束下碰到chest和RescueTarget显示
 }

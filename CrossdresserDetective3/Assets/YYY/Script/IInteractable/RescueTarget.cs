@@ -88,6 +88,10 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     public void TriggerAction()
     {
+        if (GameManager.instance.player.isBondage)
+            return;
+
+
         switch (state)
         {
             case RescueState.Bound:

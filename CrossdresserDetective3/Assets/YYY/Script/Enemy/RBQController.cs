@@ -80,17 +80,32 @@ public class RBQController : MonoBehaviour
     public void PlayCaptivityAnimation(PlayerController player)
     {
         // 每次进入调教室，都在现有两套演出中重新抽一套。
-        currentAnimationType = Random.Range(0, 2); // 只会得到 0 或 1
+        //currentAnimationType = Random.Range(0, 2); // 只会得到 0 或 1
 
-        ReadCurrentGame(player);
-        AbuseAnimation();
+        //ReadCurrentGame(player);
+        //AbuseAnimation();
+
+        StopAbuseAnimation(); // 停掉原有自动推进动画的协程
+        anim.ResetTrigger("Next");
+
+        currentAnimationType = 0;
+        frameEvent.SetDeadBondage_Bondage_1();
+        anim.Play("Man_RapeYYY_7", 0, 0f);
+
+
     }//进入调教室入口
+
+
     public void PlayStageGameOverAnimation(PlayerController player)
     {
         currentAnimationType = stageAnimationType;
         ReadCurrentGame(player);
         AbuseAnimation();
     }//进入处刑室入口
+
+
+  
+
 
     private void Start()
     {

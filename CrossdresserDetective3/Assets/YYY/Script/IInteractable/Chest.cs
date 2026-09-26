@@ -37,6 +37,9 @@ public class Chest : MonoBehaviour,IInteractable
 
     public void TriggerAction()
     {
+        if (GameManager.instance.player.isBondage)
+            return;
+
         //Debug.Log("Open Chest!");
         if (isDone) return;
         OpenChest();
