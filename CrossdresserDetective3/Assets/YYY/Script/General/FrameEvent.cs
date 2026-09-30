@@ -618,7 +618,8 @@ public class FrameEvent : MonoBehaviour
     {
         if (enemyController != null)
         {
-            enemyController.Catch_Collider.SetActive(false);
+            enemyController.CatchAttackEnd();//这里头包含了关闭抓取碰撞体和无敌状态
+            //enemyController.Catch_Collider.SetActive(false);
         }
     }//抓取碰撞体消失
 

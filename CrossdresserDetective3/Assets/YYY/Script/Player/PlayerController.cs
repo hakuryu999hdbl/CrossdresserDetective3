@@ -185,8 +185,8 @@ public class PlayerController : MonoBehaviour
 
             if (isStruggling)
             {
-                //ChangeStruggle(-1);
-                ChangeSex(2);
+                ChangeStruggle(-1);
+                ChangeSex(4);
             }//被捕获
 
 
@@ -194,7 +194,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        ChangeSex(-1);//自然下降淫乱值
+        SexNaturalDecrease();//自然下降淫乱值
+
         if (currentSex > 0) { isBoki = true; } else{ isBoki = false; }
 
         if (!isHurt && !isAttack && !isTeleporting) { Move(); }
@@ -970,6 +971,31 @@ public class PlayerController : MonoBehaviour
     public int currentSex;
     public int maxSex;
 
+
+    private float sexDecreaseTimer;
+    private void SexNaturalDecrease()
+    {
+        //if (currentSex <= 0)
+        //    return;
+
+        // weakness越高，下降越慢
+        // 0 = 每0.02秒下降1
+        // 1 = 每0.04秒下降1
+        // 2 = 每0.06秒下降1
+        // 3 = 每0.08秒下降1
+        float interval = 0.02f * (weakness + 1);
+
+        sexDecreaseTimer += Time.fixedDeltaTime;
+
+        if (sexDecreaseTimer >= interval)
+        {
+            sexDecreaseTimer = 0f;
+            ChangeSex(-1);
+        }
+    }//让淫乱值缓慢下降的方法
+
+    public GameObject Forbidden_2;//Sign高潮禁止交互
+
     public void ChangeSex(int amount)
     {
 
@@ -991,12 +1017,14 @@ public class PlayerController : MonoBehaviour
 
             catchingEnemy.ForceMasturbate();
             currentSex = 0;
+            currentStruggle = 0;   // 挣扎槽也清零
+
             maxSex = Mathf.Max(1, maxSex / 2);
             //StrugglePower /= 2;
             UIManager.instance.UpdateSexBar(currentSex, maxSex);
-            weakness ++;
+            weakness++;
             UIManager.instance.RefreshWeaknessUI(weakness);
-            if (weakness>=4) 
+            if (weakness >= 4)
             {
                 // 进入处刑，永久停止本次抓取的挣扎
                 isStruggling = false;
@@ -1006,6 +1034,12 @@ public class PlayerController : MonoBehaviour
 
                 catchingEnemy.anim.SetTrigger("over");
             }
+
+            Forbidden_2.SetActive(true);
+        }
+        else 
+        {
+            Forbidden_2.SetActive(false);
         }
     }
 
@@ -1136,7 +1170,16 @@ public class PlayerController : MonoBehaviour
         if (isCaptured)
         {
 
-            catchingEnemy.BreakFreeFromPlayer(this);
+            if (catchingEnemy != null)
+            {
+                catchingEnemy.BreakFreeFromPlayer(this);
+            }
+            else
+            {
+                // 异常保险：防止玩家永久透明
+                isCaptured = false;
+                frameEvent.ShowSkeleton();
+            }
 
         }//被抓住期间被打，把抓住玩家的敌人强制Idle，直接挣脱
 

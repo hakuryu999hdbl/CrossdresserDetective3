@@ -608,10 +608,7 @@ public class EnemyController : MonoBehaviour
                 //如果是逃出模式，只有抓住攻击这一种（当然在这个模式下，关卡里放满了Enemy_1和Enemy_3）
                 else if(GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
                 {
-                    anim.SetTrigger("catch");
-                    catchSign.SetActive(true);
-
-                    Invoke(nameof(HideCatchSign), 1f);
+                    StartCatchAttack();//开启抓取
                 }
                 else
                 {
@@ -624,10 +621,7 @@ public class EnemyController : MonoBehaviour
 
                         if (canCatchPlayer && Random.Range(0,2) == 0)
                         {
-                            anim.SetTrigger("catch");
-                            catchSign.SetActive(true);
-
-                            Invoke(nameof(HideCatchSign), 1f);
+                            StartCatchAttack();//开启抓取
                         }
                         else
                         {
@@ -651,6 +645,34 @@ public class EnemyController : MonoBehaviour
 
     }//攻击
 
+    private void StartCatchAttack()
+    {
+        // 抓取前摇开始就进入技能无敌
+        character.skillInvulnerable = true;
+
+        anim.SetTrigger("catch");
+
+        catchSign.SetActive(true);
+        Invoke(nameof(HideCatchSign), 1f);
+    }//触发抓取的时候统一入口
+
+
+    public void CatchAttackEnd()
+    {
+        // 已经成功抓到玩家就继续保持无敌
+        if (isCatching || capturedPlayer != null)
+            return;
+
+        character.skillInvulnerable = false;
+
+        if (Catch_Collider != null)
+            Catch_Collider.SetActive(false);
+
+        if (catchCollider != null)
+            catchCollider.ResetCatch();
+
+        HideCatchSign();
+    }//抓空统一入口（由于OnCatchPlayer在很后面的时候，可以直接触发）
 
     void HideCatchSign() 
     {
@@ -1006,6 +1028,8 @@ public class EnemyController : MonoBehaviour
 
     public void StartCatchPlayer(PlayerController player)
     {
+        if (player == null) return;
+        if (player.isSlide) return;
 
         if (isDead) return;
         if (isCatching) return;
@@ -1016,7 +1040,8 @@ public class EnemyController : MonoBehaviour
         isCatching = true;
         capturedPlayer = player;
 
-
+        // ★ 抓取成立的瞬间就建立双方关系
+        player.catchingEnemy = this;
 
         //开始抓取的清理
         anim.ResetTrigger("attack");

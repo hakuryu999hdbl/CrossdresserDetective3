@@ -23,6 +23,7 @@ public class Sign : MonoBehaviour
 
     public GameObject Forbidden;//禁止交互提示
 
+
     private void Awake()
     {
         anim = signSprite.GetComponent<Animator>();
