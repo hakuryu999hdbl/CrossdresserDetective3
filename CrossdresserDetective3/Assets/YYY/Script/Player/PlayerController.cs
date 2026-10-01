@@ -1793,7 +1793,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckGamepadInput(obj);//北输入
 
-        if (isBondage) { return; }
+        if (isBondage || isCaptured) { return; }
         if (isInCutscene) { return; }//过场动画锁
 
 
@@ -1946,7 +1946,8 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeWeapon()
     {
-        if (isBondage) { return; }
+        if (isBondage || isCaptured) { return; }
+
 
         Slot = Slot == 0 ? 1 : 0;
 
@@ -2181,7 +2182,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Reload()
     {
-        if (isBondage) { return; }
+        if (isBondage || isCaptured) { return; }
         if (!physicsCheck.isGround) return; // 空中禁止换弹
         if (attackType >= 0) return; // 不是枪
 

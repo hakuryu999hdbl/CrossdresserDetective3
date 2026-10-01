@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject DetectiveAgency_1, DetectiveAgency_2;
     public GameObject Company_1, Company_2, Company_3;
     public GameObject ParkingArea_1;
+    public GameObject Outside_1;
 
     private void Start()
     {
@@ -52,7 +53,8 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 2:
-                        Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
+                        //Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
+                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
                         break;
 
                     case 3:
