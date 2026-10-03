@@ -1,25 +1,25 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class CarSpawner : MonoBehaviour
 {
-    [Header("Æû³µÔ¤ÉèÌå£¨¸ùÎïÌå¹Ò BackgroundCar£©")]
+    [Header("å°è½¦è½¦")]
     public BackgroundCar[] carPrefabs;
 
-    [Header("½ÓÊÕÆ÷")]
+    [Header("æ¥æ”¶å™¨")]
     public Transform receiver;
 
-    [Header("Ëæ»úÉú³É¼ä¸ô£¨Ãë£©")]
+    [Header("é¢‘ç‡")]
     public float minInterval = 5f;
     public float maxInterval = 12f;
 
-    [Header("Ëæ»úÒÆ¶¯ËÙ¶È")]
+    [Header("é€Ÿåº¦")]
     public float minSpeed = 3f;
     public float maxSpeed = 5f;
 
     private Coroutine spawnRoutine;
 
-    [Header("Éú³ÉÎ»ÖÃ Z Ëæ»úÆ«ÒÆ")]
+    [Header("Zè½´åå·®")]
     public float minZOffset = -0.1f;
     public float maxZOffset = 0.1f;
 
@@ -58,10 +58,10 @@ public class CarSpawner : MonoBehaviour
 
             Vector3 spawnPosition = transform.position;
 
-            // Ã¿ÖÖ³µµ¥¶Àµ÷Õû¸ß¶È
+            //å„ä¸ªè½¦é«˜åº¦ä¸åŒ
             spawnPosition.y += prefab.spawnYOffset;
 
-            // ±£ÁôÖ®Ç°µÄËæ»ú Z
+            //éšæœºZ
             spawnPosition.z += Random.Range(minZOffset, maxZOffset);
 
             BackgroundCar car = Instantiate(

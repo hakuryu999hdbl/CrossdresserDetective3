@@ -102,12 +102,7 @@ public class Bomb :  ThrowableEffectBase, IDamageable
                 }
             }
 
-            //触发可掉落物体
-            FallOnExplosion fall = item.GetComponent<FallOnExplosion>();
-            if (fall != null)
-            {
-                fall.OnBlastHit(transform.position);
-            }
+
 
             if (item.CompareTag("Bomb"))
             {
