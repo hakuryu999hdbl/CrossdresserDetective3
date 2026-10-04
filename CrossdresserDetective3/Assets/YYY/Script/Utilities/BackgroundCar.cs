@@ -1,8 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class BackgroundCar : MonoBehaviour
 {
-    [Header("Í¼Æ¬Ô­±¾µÄ³µÍ·ÊÇ·ñ³¯ÓÒ")]
+    [Header("è½¦é€Ÿç­‰")]
     public bool originallyFacesRight = false;
 
     private float targetX;
@@ -10,7 +10,7 @@ public class BackgroundCar : MonoBehaviour
     private float direction;
     private bool initialized;
 
-    [Header("Éú³É¸ß¶ÈÆ«ÒÆ")]
+    [Header("Yæ‹‰é«˜")]
     public float spawnYOffset = 0f;
 
 
@@ -20,7 +20,7 @@ public class BackgroundCar : MonoBehaviour
         speed = Mathf.Abs(moveSpeed);
         direction = targetX >= transform.position.x ? 1f : -1f;
 
-        // ·­×ªÕûÁ¾³µ£¬³µÉíºÍÂÖ×ÓÒ»Æð·­×ª¡£
+        // ï½·ï½­ï¾—ï½ªï¾•éˆ†ï½¾ï½³ï½µï½£ï½¬ï½³ï½µï¾‰æ™—ï¾ï¾‚ï¾–ï¾—ï¾“ï¾’ï½»ï¾†î¶ï½­ï¾—ï½ªï½¡ï½£
         Vector3 scale = transform.localScale;
         bool movingRight = direction > 0f;
         bool needsFlip = movingRight != originallyFacesRight;
@@ -38,7 +38,7 @@ public class BackgroundCar : MonoBehaviour
 
         Vector3 position = transform.position;
 
-        // Ö»¸Ä±ä X£¬±£³ÖÉú³ÉµãµÄ Y¡¢Z¡£
+        // ï¾–ï½»ï½¸ï¾„ï½±ãƒ»Xï½£ï½¬ï½±ï½£ï½³ï¾–ï¾‰åµ­ï¾‰ï½µç¾žï¾„ Yï½¡ï½¢Zï½¡ï½£
         position.x = Mathf.MoveTowards(
             position.x, targetX, speed * Time.deltaTime);
 

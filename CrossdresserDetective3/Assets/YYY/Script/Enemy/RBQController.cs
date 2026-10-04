@@ -548,6 +548,69 @@ public class RBQController : MonoBehaviour
                         break;
                 }
                 break;
+            case 2:
+                switch (GameFlowData.CurrentStage)
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+
+                        //西服男（无小偷头型）
+                        Man_hairIndex = Random.Range(0, 2);
+                        Man_clothesIndex = 2;
+
+
+                        //西服女
+                        Girl_hairIndex = Random.Range(3, 5);
+                        Girl_clothesIndex = 6;
+                        Girl_glovesIndex = 1;
+                        Girl_shoesIndex = Random.Range(1, 3);
+
+
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Girl_underwearIndex = 1;//内衣
+                                Girl_stockingsIndex = Random.Range(0, 2);
+                                if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
+                                break;
+                            case 2:
+                                Girl_underwearIndex = 2;//内衣裤袜
+                                Girl_stockingsIndex = 2;
+                                break;
+                        }
+
+                        Girl_hatIndex = 0;//没有头饰
+                        Girl_maskIndex = 0;//不戴面具
+
+
+
+
+
+
+
+
+
+
+
+                        break;
+
+                    default:
+                    case 9:
+                    case 10:
+
+                        //西服男
+                        Man_hairIndex = Random.Range(0, 2);
+                        Man_clothesIndex = 2;
+
+                        break;
+                }
+                break;
         }
 
         //武器完全随机

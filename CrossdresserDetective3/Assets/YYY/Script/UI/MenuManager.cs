@@ -64,7 +64,9 @@ public class MenuManager : MonoBehaviour
             case "chapter_1":
                 OpenChapter_Number(1);
                 break;
-
+            case "chapter_2":
+                OpenChapter_Number(2);
+                break;
         }
 
 
@@ -939,6 +941,19 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 2:
+                ChapterMenu.SetActive(false);
+                Chapter_2_Menu.SetActive(true);
+
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
+
+
+
+                CurrentOpen = -1;
+
+                break;
             case 3:
             case 4:
             case 5:
@@ -981,6 +996,18 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 2:
+                ChapterMenu.SetActive(true);
+                Chapter_2_Menu.SetActive(false);
+
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+                Chapter_2_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_2_Button);
+
+                CurrentOpen = 2;
+
+                break;
             case 3:
             case 4:
             case 5:
@@ -1018,6 +1045,8 @@ public class MenuManager : MonoBehaviour
 
     [Header("第一章关卡按钮")]
     public StageButtonUI[] chapter1Buttons;
+    [Header("第二章关卡按钮")]
+    public StageButtonUI[] chapter2Buttons;
 
     private SaveData currentData;
 
@@ -1032,8 +1061,10 @@ public class MenuManager : MonoBehaviour
     {
         ReadChapter();
         RefreshChapterButtons(1, chapter1Buttons);
+        RefreshChapterButtons(2, chapter2Buttons);
 
         RefreshChapterStars(1);
+        RefreshChapterStars(2);
     }
 
     // 通用刷新：第几章 + 这一章的按钮数组
@@ -1141,7 +1172,7 @@ public class MenuManager : MonoBehaviour
         GameFlowData.CurrentChapter = nextChapter;
         GameFlowData.CurrentStage = nextStage;
 
-
+        Debug.Log("进入：章节" + nextChapter + "关卡" + nextStage);
 
         //特殊情况的主线需要单独先进入AVG
         // Demo限制：第一章只开放1~6关

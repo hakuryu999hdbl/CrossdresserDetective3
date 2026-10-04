@@ -53,8 +53,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 2:
-                        //Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
-                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);   
                         break;
 
                     case 3:
@@ -87,6 +86,34 @@ public class GameManager : MonoBehaviour
                     case 9:
                     case 10:
                         Instantiate(Company_3, Vector3.zero, Quaternion.identity);
+                        break;
+                }
+                break;
+
+            case 2:
+                switch (CurrentStage)
+                {
+                    case 1:
+                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        break;
+
+                    case 2:
+                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
+                        break;
+
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
                 }
                 break;
@@ -218,7 +245,7 @@ public class GameManager : MonoBehaviour
 
         Mission.SetActive(true);
 
-        //Debug.Log("显示模式：" + GameFlowData.CurrentMissionType);
+        Debug.Log("显示模式：" + GameFlowData.CurrentMissionType);
 
 
 
@@ -261,6 +288,46 @@ public class GameManager : MonoBehaviour
                         break;
                     case 9:
                     case 10:                  
+                        ShowEliminate();
+                        break;
+                }
+                break;
+
+            case 2:
+                switch (GameFlowData.CurrentStage)
+                {
+                    case 1:
+                        ShowClue();
+                        break;
+
+                    case 2:
+                        ShowRescue();
+                        break;
+
+                    case 3:
+                        ShowClue();
+                        break;
+
+                    case 4:
+                        ShowRescue();
+                        break;
+
+                    case 5:
+                        ShowRescue();
+                        break;
+
+                    case 6:
+                        ShowClue();
+                        break;
+
+                    case 7:
+                        ShowClue();
+                        break;
+                    case 8:
+                        ShowRescue();
+                        break;
+                    case 9:
+                    case 10:
                         ShowEliminate();
                         break;
                 }

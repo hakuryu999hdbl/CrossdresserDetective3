@@ -40,34 +40,55 @@ public class UIManager : MonoBehaviour
     public void Start()
     {
         Time.timeScale = 1f;//防止重刷场景前的暂停
-        switch (GameFlowData.CurrentStage)
+
+        //由于点击【下一关】不回到主菜单出发记录，所以GameManager还是需要身上保留关卡地图任务字典
+        switch (GameFlowData.CurrentChapter)
         {
-            default:
-                OpenSetUp();
-                break;
             case 1:
-            case 2:
+                switch (GameFlowData.CurrentStage)
+                {
+                    default:
+                        OpenSetUp();
+                        break;
+                    case 1:
+                    case 2:
 
-                // 主线剧情直接进入游戏，不打开整备界面
-                isSetUp = false;
-                CurrentOpen = 0;
+                        // 主线剧情直接进入游戏，不打开整备界面
+                        isSetUp = false;
+                        CurrentOpen = 0;
 
-                SetUpMenu.SetActive(false);
-                PauseButton.SetActive(true);
+                        SetUpMenu.SetActive(false);
+                        PauseButton.SetActive(true);
 
-                playerController.EnableGameplayInput();
+                        playerController.EnableGameplayInput();
 
-                EventSystem.current.SetSelectedGameObject(null);
+                        EventSystem.current.SetSelectedGameObject(null);
 
 
-                //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
-                MoveWeaponUIToBattle();//把背包的武器类UI切换过去
-                //CloseSetUp();
+                        //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
+                        MoveWeaponUIToBattle();//把背包的武器类UI切换过去
+                                               //CloseSetUp();
+                        break;
+
+
+
+                }
                 break;
 
+            case 2:
+                switch (GameFlowData.CurrentStage)
+                {
+                    default:
+                        OpenSetUp();
+                        break;
 
 
+                }
+                break;
         }
+
+
+      
 
 
         // ===== 游戏开始时初始化武器UI =====

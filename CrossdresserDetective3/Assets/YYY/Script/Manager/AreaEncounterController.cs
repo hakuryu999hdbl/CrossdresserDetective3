@@ -12,6 +12,8 @@ public class AreaEncounterController : MonoBehaviour
     private List<GameObject> aliveEnemies = new List<GameObject>();
     private bool areaActivated = false;//是否被触发一遍
 
+    [Header("面包车模式：延迟1秒生成敌人")]
+    public bool isVan = false;
 
     private void Start()
     {
@@ -37,7 +39,41 @@ public class AreaEncounterController : MonoBehaviour
 
     void ActivateArea()
     {
+
         areaActivated = true;
+
+        if (isVan)
+        {
+            StartCoroutine(VanSpawnDelay());
+        }
+        else
+        {
+            SpawnEnemies();
+        }
+
+
+    }
+    IEnumerator VanSpawnDelay()
+    {
+        // 先触发面包车动画
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            Animator animator = spawnPoint.GetComponent<Animator>();
+
+            if (animator != null)
+                animator.SetTrigger("Open");
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        SpawnEnemies();
+    }
+
+
+    public void SpawnEnemies() 
+    {
+
+        //areaActivated = true;
 
         // 生成敌人
         foreach (GameObject enemyPrefab in enemyPrefabs)
@@ -61,16 +97,18 @@ public class AreaEncounterController : MonoBehaviour
 
 
 
-            if (spawnPoint.GetComponent<Animator>()!=null) 
+            if (spawnPoint.GetComponent<Animator>() != null)
             {
                 spawnPoint.GetComponent<Animator>().SetTrigger("Open");//开门动画
             }
-           
+
         }
 
         // 4. 监听敌人是否全部死亡
         StartCoroutine(CheckEnemiesDead());
     }
+
+
 
     System.Collections.IEnumerator CheckEnemiesDead()
     {
