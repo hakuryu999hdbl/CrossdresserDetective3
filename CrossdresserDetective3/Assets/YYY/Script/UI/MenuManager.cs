@@ -951,7 +951,7 @@ public class MenuManager : MonoBehaviour
 
 
 
-                CurrentOpen = -1;
+                CurrentOpen = -2;
 
                 break;
             case 3:

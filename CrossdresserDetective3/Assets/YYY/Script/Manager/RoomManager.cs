@@ -83,4 +83,29 @@ public class RoomManager : MonoBehaviour
 
 
 
+
+
+
+
+    [Header("这张地图的背景")]
+    public int BGM;//0没有 1道路  2城市
+
+    public void PlayBGM() 
+    {
+        //BGM
+        switch (BGM)
+        {
+         
+
+            case 1:
+                AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_Road, true);
+                break;
+
+            case 2:
+                AudioManager.Instance.PlayBGM(AudioManager.Instance.BGM_City, true);
+                break;
+        }
+    }
+
+
 }

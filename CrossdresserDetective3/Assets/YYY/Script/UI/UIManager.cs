@@ -160,6 +160,10 @@ public class UIManager : MonoBehaviour
             case 1:
                 GameFlowData.returnPath = "chapter_1";
                 break;
+
+            case 2:
+                GameFlowData.returnPath = "chapter_2";
+                break;
         }
 
         // 保持暂停状态，避免战斗场景继续运行
@@ -229,6 +233,14 @@ public class UIManager : MonoBehaviour
         weaponUI.anchorMax = Vector2.one;
         weaponUI.offsetMin = Vector2.zero;
         weaponUI.offsetMax = Vector2.zero;
+
+        Invoke(nameof(PlayBGM), 0.5f);
+     
+    }
+
+    void PlayBGM() 
+    {
+        GameManager.instance.roomManager.PlayBGM();//开启房间专属BGM端口
     }
 
     [Header("整备菜单")]
@@ -348,6 +360,9 @@ public class UIManager : MonoBehaviour
         blackScreen.SetFadeOut();
 
         isClosingSetUp = false;
+
+       
+
     }
 
 

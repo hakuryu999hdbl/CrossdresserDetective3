@@ -78,7 +78,7 @@ public class AudioManager : MonoBehaviour
     #region
     [Header("效果音")]
     public AudioClip BGM_Theme;
-    public AudioClip BGM_Level_1;
+    public AudioClip BGM_City, BGM_Road;
 
     public AudioClip Attack_sword_chop1, Attack_sword_chop2, Attack_sword_chop3, Attack_katana, Attack_katana_in, Attack_katana_draw,
                      Attack_sword_clash1, Attack_sword_clash2, Attack_sword_clash3,

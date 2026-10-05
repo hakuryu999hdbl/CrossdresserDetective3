@@ -91,11 +91,32 @@ public class EnemyController : MonoBehaviour
         //frameEvent.FadeIn(0.4f);//所有Spine都淡入
 
 
-       
-        SetFirstDirection(); //初始朝向
+        if (isAreaSpawnedEnemy)
+        {
+            //生成的敌人朝向玩家
+            Transform player = GameManager.instance.player.transform;
 
 
-        TransitionToState(patrolState);//一开始进入巡逻状态
+            targetPoint = player;
+
+            if (!attackList.Contains(player))
+                attackList.Add(player);
+
+            FaceToPosition(player.position);
+
+            TransitionToState(attackState);
+
+            
+
+        }
+        else
+        {
+            SetFirstDirection(); //初始朝向
+
+            TransitionToState(patrolState);//一开始进入巡逻状态
+        }
+
+   
 
         RandomizeZ();
 
