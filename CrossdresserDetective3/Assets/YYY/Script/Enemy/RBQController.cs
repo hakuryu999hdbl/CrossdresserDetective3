@@ -414,6 +414,9 @@ public class RBQController : MonoBehaviour
     public int Man_hairIndex;
     public int Man_clothesIndex;
 
+    public int FatMan_hairIndex;
+    public int FatMan_clothesIndex;
+
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
@@ -487,6 +490,10 @@ public class RBQController : MonoBehaviour
                         Man_hairIndex = 2;
                         Man_clothesIndex = 1;
 
+                        //死宅
+                        FatMan_hairIndex = 1;
+                        FatMan_clothesIndex = 1;
+
                         break;
 
                     case 3:
@@ -500,6 +507,10 @@ public class RBQController : MonoBehaviour
                         //西服男（无小偷头型）
                         Man_hairIndex = Random.Range(0, 2);
                         Man_clothesIndex = 2;
+
+                        //死宅
+                        FatMan_hairIndex = 1;
+                        FatMan_clothesIndex = 1;
 
 
                         //西服女
@@ -651,6 +662,9 @@ public class RBQController : MonoBehaviour
 
             Man_hairIndex,
             Man_clothesIndex,
+
+            FatMan_hairIndex,
+            FatMan_clothesIndex,
 
             meleeType,
             pistolType,

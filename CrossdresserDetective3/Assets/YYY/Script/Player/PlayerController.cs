@@ -441,6 +441,9 @@ public class PlayerController : MonoBehaviour
     public int Man_hairIndex;
     public int Man_clothesIndex;
 
+    public int FatMan_hairIndex;
+    public int FatMan_clothesIndex;
+
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
@@ -478,6 +481,9 @@ public class PlayerController : MonoBehaviour
             Man_hairIndex,
             Man_clothesIndex,
 
+            FatMan_hairIndex,
+            FatMan_clothesIndex,
+
             meleeType,
             pistolType,
             rifleType,
@@ -501,6 +507,9 @@ public class PlayerController : MonoBehaviour
 
             Man_hairIndex,
             Man_clothesIndex,
+
+            FatMan_hairIndex,
+            FatMan_clothesIndex,
 
             Girl_hairIndex,
             Girl_clothesIndex,
