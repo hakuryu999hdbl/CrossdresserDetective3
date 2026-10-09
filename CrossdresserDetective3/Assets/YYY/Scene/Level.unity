@@ -22240,6 +22240,7 @@ MonoBehaviour:
   Light_Night: {fileID: 510735294}
   DetectiveAgency_1: {fileID: 1684373087128156941, guid: 3732bf1b1f6e5c940b3175e1b7df1c12, type: 3}
   DetectiveAgency_2: {fileID: 162632795386546455, guid: 7b30a04057579134ba77f4c6a2a630f1, type: 3}
+  DetectiveAgency_3: {fileID: 162632795386546455, guid: a2e69a1fe6d102543a280fb07f323caa, type: 3}
   Company_1: {fileID: 68367594759565730, guid: 59dcad26d1d4a76448521bbf9a07f56a, type: 3}
   Company_2: {fileID: 3006276433539335720, guid: a6cd79f95fd77d244833b9b5e422ec49, type: 3}
   Company_3: {fileID: 3556914679955763084, guid: 0c60501e31645354685f17f34057fe82, type: 3}
@@ -37740,6 +37741,7 @@ RectTransform:
   - {fileID: 1489205310}
   - {fileID: 1894171097}
   - {fileID: 1489715057}
+  - {fileID: 1441938314}
   m_Father: {fileID: 1395979338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -45389,6 +45391,120 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435649440}
+  m_CullTransparentMesh: 1
+--- !u!1 &1441938313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1441938314}
+  - component: {fileID: 1441938318}
+  - component: {fileID: 1441938317}
+  - component: {fileID: 1441938316}
+  - component: {fileID: 1441938315}
+  m_Layer: 5
+  m_Name: FatMan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1441938314
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441938313}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1159463169}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 74}
+  m_SizeDelta: {x: 333.6763, y: 52.011}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1441938315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441938313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fa75fc0d88274a92f6c3f9c33ea63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  J: "\u3010\u30AD\u30E2\u30AA\u30BF\u3011"
+  C_1: "\u3010\u6B7B\u5B85\u3011"
+  C_2: "\u3010\u6B7B\u5B85\u7537\u3011"
+  E: "\u3010Creepy Otaku\u3011"
+  K: "\u3010\uC539\uB355\u3011"
+  isTyped: 0
+--- !u!114 &1441938316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441938313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
+--- !u!114 &1441938317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441938313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5754717, g: 0.57438934, b: 0.18729976, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a2c5e7505a6adfc4bb370f5675330b98, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\u3010\u30AD\u30E2\u30AA\u30BF\u3011"
+--- !u!222 &1441938318
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441938313}
   m_CullTransparentMesh: 1
 --- !u!1 &1445634282
 GameObject:
@@ -54247,6 +54363,8 @@ MonoBehaviour:
   Girl_maskIndex: 0
   Man_hairIndex: 0
   Man_clothesIndex: 0
+  FatMan_hairIndex: 0
+  FatMan_clothesIndex: 0
   meleeType: 1
   pistolType: 3
   rifleType: 1
@@ -63088,6 +63206,7 @@ MonoBehaviour:
   YYY: {fileID: 1489715056}
   Thief_A: {fileID: 1894171096}
   Thief_B: {fileID: 1489205309}
+  FatMan: {fileID: 1441938313}
 --- !u!1 &1969368807
 GameObject:
   m_ObjectHideFlags: 0
@@ -69289,6 +69408,8 @@ MonoBehaviour:
   Girl_maskIndex: 0
   Man_hairIndex: 0
   Man_clothesIndex: 0
+  FatMan_hairIndex: 0
+  FatMan_clothesIndex: 0
   meleeType: 0
   pistolType: 0
   rifleType: 0

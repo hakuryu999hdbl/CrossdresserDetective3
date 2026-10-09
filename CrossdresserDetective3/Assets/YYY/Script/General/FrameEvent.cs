@@ -984,7 +984,41 @@ public class FrameEvent : MonoBehaviour
 
     }//小偷外貌
 
+    public void Story_Clothes_FatMan_01()
+    {
+        //通常装的叶语嫣
+        enemyController.clothesIndex = 10;
+        enemyController.glovesIndex = 0;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
+        enemyController.beltIndex = 0;
+        enemyController.stockingsIndex = 0;
+        enemyController.pantiesIndex = 0;
+        enemyController.shoesIndex = 10;
+        enemyController.skirtIndex = 0;
 
+
+
+        enemyController.beltIndex = 1;
+        enemyController.stockingsIndex = 1;
+        enemyController.pantiesIndex = 4;
+        enemyController.shoesIndex = 1;
+        enemyController.skirtIndex = 0;
+
+        enemyController.clothesIndex = 1;
+        enemyController.glovesIndex = 1;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
+
+        //眼睛衬衫死宅
+        enemyController.FatMan_clothesIndex = 1;
+        enemyController.FatMan_hairIndex = 1;
+
+
+        enemyController.RefreshPlayerSkin();
+
+
+    }//眼睛衬衫死宅外貌
 
 
     #endregion

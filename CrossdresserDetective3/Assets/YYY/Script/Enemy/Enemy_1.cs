@@ -55,13 +55,27 @@ public class Enemy_1 : EnemyController
     public void SetEnemy_Clothes_01()
     {
         frameEvent.Story_Clothes_Man_01();
-    }//设置男性小偷服装
+
+    }//设置男性小偷服装  叶语嫣赤裸
+
+    public void SetEnemy_Clothes_02()
+    {
+        frameEvent.Story_Clothes_FatMan_01();
+
+    }//设置男性眼镜衬衫死宅服装  叶语嫣正常服装
 
     public void SetEnemy_Walk()
     {
         anim.Play("Story_Walk", 0, 0f);
         anim.Update(0f);
     }
+
+    public void SetEnemy_Run()
+    {
+        anim.Play("Story_Run", 0, 0f);
+        anim.Update(0f);
+    }
+
 
     public void SetEnemy_Idle()
     {

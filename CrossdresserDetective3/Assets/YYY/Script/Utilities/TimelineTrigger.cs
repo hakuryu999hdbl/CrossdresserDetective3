@@ -191,6 +191,9 @@ public class TimelineTrigger : MonoBehaviour
             case "Chapter_01_4":
                 UIManager.instance.Init_Chapter_01_4();
                 break;
+            case "Chapter_01_5":
+                UIManager.instance.Init_Chapter_01_5();
+                break;
         }
     }
 
@@ -286,7 +289,10 @@ public class TimelineTrigger : MonoBehaviour
         GameManager.instance.player.playerAnimation.PlayCrouch();
     }
 
-
+    public void SetPlayerAnim_Kick()
+    {
+        GameManager.instance.player.playerAnimation.PlayKick();
+    }
     public void SetPlayer_Turn()
     {
         GameManager.instance.player.playerAnimation.SetPlayer_Turn();

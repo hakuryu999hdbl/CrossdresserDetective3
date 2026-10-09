@@ -284,6 +284,7 @@ public class CutsceneDialogue : MonoBehaviour
     public GameObject YYY;
     public GameObject Thief_A;
     public GameObject Thief_B;
+    public GameObject FatMan;
 
     private void SetSpeakerStyle(string speaker)
     {
@@ -292,6 +293,7 @@ public class CutsceneDialogue : MonoBehaviour
         YYY.SetActive(false);
         Thief_A.SetActive(false);
         Thief_B.SetActive(false);
+        FatMan.SetActive(false);
 
         switch (speaker)
         {
@@ -320,6 +322,12 @@ public class CutsceneDialogue : MonoBehaviour
             case "Thief_B":
                 Thief_B.SetActive(true);
                 textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);// 极淡偏紫蓝
+                break;
+
+            case "FatMan":
+                FatMan.SetActive(true);
+                textLabel.color = new Color(0.576f, 0.573f, 0.188f, 1.0f); // 脏黄色
+
                 break;
 
 

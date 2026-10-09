@@ -1181,11 +1181,11 @@ public class MenuManager : MonoBehaviour
             GameFlowData.nextAreaId = "Introduce";
             StartSpine();
         }
-        else if (nextChapter == 1 && nextStage >= 9)
-        {
-            GameFlowData.nextAreaId = "Demo";
-            StartSpine();
-        }
+        //else if (nextChapter == 1 && nextStage >= 9)
+        //{
+        //    GameFlowData.nextAreaId = "Demo";
+        //    StartSpine();
+        //}
         else
         {
             SceneManager.LoadScene("Level");

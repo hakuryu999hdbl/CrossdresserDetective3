@@ -192,6 +192,11 @@ public class PlayerAnimation : MonoBehaviour
         anim.Update(0f);
     }
 
+    public void PlayKick()
+    {
+        anim.Play("Story_Kick", 0, 0f);
+        anim.Update(0f);
+    }
 
     public void SetPlayer_Turn()
     {

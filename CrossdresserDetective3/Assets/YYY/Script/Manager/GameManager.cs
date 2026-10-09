@@ -25,10 +25,11 @@ public class GameManager : MonoBehaviour
 
     }//玩家自己传过来
 
-    public GameObject Light_Night;
 
     [Header("关卡")]
-    public GameObject DetectiveAgency_1, DetectiveAgency_2;
+    public GameObject Light_Night;
+
+    public GameObject DetectiveAgency_1, DetectiveAgency_2, DetectiveAgency_3;
     public GameObject Company_1, Company_2, Company_3;
     public GameObject ParkingArea_1;
     public GameObject Outside_1;
@@ -85,8 +86,12 @@ public class GameManager : MonoBehaviour
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 9:
+                        Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
+                        break;
                     case 10:
-                        Instantiate(Company_3, Vector3.zero, Quaternion.identity);
+                        Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
                 }
                 break;
@@ -191,16 +196,16 @@ public class GameManager : MonoBehaviour
         // =========================
         // Demo限制：第一章只开放1~6关
         // =========================
-        if (GameFlowData.CurrentChapter == 1 &&
-            GameFlowData.CurrentStage >= 9)
-        {
-            GameFlowData.nextAreaId = "Demo";
-
-            Time.timeScale = 1f;
-
-            SceneManager.LoadScene("Spine");
-            yield break;
-        }
+        //if (GameFlowData.CurrentChapter == 1 &&
+        //    GameFlowData.CurrentStage >= 9)
+        //{
+        //    GameFlowData.nextAreaId = "Demo";
+        //
+        //    Time.timeScale = 1f;
+        //
+        //    SceneManager.LoadScene("Spine");
+        //    yield break;
+        //}
 
 
         // 每章10关
@@ -288,8 +293,10 @@ public class GameManager : MonoBehaviour
                         ShowRescue();
                         break;
                     case 9:
-                    case 10:                  
                         ShowEliminate();
+                        break;
+                    case 10:
+                        ShowRescue();
                         break;
                 }
                 break;
