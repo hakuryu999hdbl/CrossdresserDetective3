@@ -201,7 +201,6 @@ public class TimelineTrigger : MonoBehaviour
     }
 
 
-
     public void SetBlackScreen_FadeIn()
     {
         UIManager.instance.blackScreen.SetFadeIn();

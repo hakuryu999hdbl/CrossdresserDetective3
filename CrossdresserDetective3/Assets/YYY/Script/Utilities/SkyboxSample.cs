@@ -35,8 +35,8 @@ public class SkyboxSample : MonoBehaviour
 
     void Update()
     {
-        // 按 Y 随机换装测试
-        if (Keyboard.current.yKey.wasPressedThisFrame)
+        // 按 f9 随机换装测试
+        if (Keyboard.current.f9Key.wasPressedThisFrame)
         {
             DayOrNight();
         }

@@ -64,6 +64,12 @@ public class Enemy_1 : EnemyController
 
     }//设置男性眼镜衬衫死宅服装  叶语嫣正常服装
 
+    public void SetEnemy_Clothes_03()
+    {
+        frameEvent.Story_Clothes_FatMan_02();
+
+    }//设置男性裸体死宅服装  叶语嫣正常服装
+
     public void SetEnemy_Walk()
     {
         anim.Play("Story_Walk", 0, 0f);
