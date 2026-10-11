@@ -1179,16 +1179,18 @@ public class PlayerController : MonoBehaviour
         if (isCaptured)
         {
 
-            if (catchingEnemy != null)
-            {
-                catchingEnemy.BreakFreeFromPlayer(this);
-            }
-            else
-            {
-                // 异常保险：防止玩家永久透明
-                isCaptured = false;
-                frameEvent.ShowSkeleton();
-            }
+            //if (catchingEnemy != null)
+            //{
+            //    catchingEnemy.BreakFreeFromPlayer(this);
+            //}
+            //else
+            //{
+            //    // 异常保险：防止玩家永久透明
+            //    isCaptured = false;
+            //    frameEvent.ShowSkeleton();
+            //}
+
+            return;//被抓期间无敌
 
         }//被抓住期间被打，把抓住玩家的敌人强制Idle，直接挣脱
 

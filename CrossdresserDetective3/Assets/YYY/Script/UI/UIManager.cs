@@ -2036,6 +2036,9 @@ public class UIManager : MonoBehaviour
 
         playerController.EnableGameplayInput();
 
+        // 玩家恢复拘束移动，全体敌人恢复巡逻
+        GameManager.instance.ResumeEnemiesAfterCaptivity();
+
         isCaptivityShowing = false;//调教结束
 
 
@@ -2064,6 +2067,7 @@ public class UIManager : MonoBehaviour
 
         isResultShowing = true;
         isCaptivityShowing = true;
+        GameManager.instance.SuspendEnemiesForCaptivity();
 
         playerController.DisableGameplayInput();
         StartCoroutine(CaptivityDelay());
@@ -2087,7 +2091,7 @@ public class UIManager : MonoBehaviour
 
         // 此处沿用你已改好的“只隐藏现有敌人，不关闭 AreaEncounterController”的方法。
         // 将下面的方法名替换成你当前工程里的实际方法名。
-        GameManager.instance.ClearEnemiesForGameOver();
+        GameManager.instance.SuspendEnemiesForCaptivity();
 
         playerController.transform.position =
             GameManager.instance.roomManager.captivityPoint.position;

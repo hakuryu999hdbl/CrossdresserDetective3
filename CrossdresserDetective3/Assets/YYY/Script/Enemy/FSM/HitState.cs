@@ -42,8 +42,14 @@ public class HitState : EnemyBaseState
         enemy.isDizzy = false;
 
         if (enemy.attackList.Count > 0)
-            enemy.EnterBattleState();//虚类进入战斗
+        {
+            enemy.EnterBattleState();
+        }
         else
-            enemy.TransitionToState(enemy.patrolState);
+        {
+            //本来说是回巡逻……但是因为挣扎脱出这个缘故，通过攻击挣脱，所以还是至少回搜索
+            enemy.targetPoint = null;
+            enemy.TransitionToState(enemy.searchState);
+        }
     }
 }

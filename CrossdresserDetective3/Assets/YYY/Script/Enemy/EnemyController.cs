@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("动画状态")]
-    EnemyBaseState currentState;//当前状态
+    public EnemyBaseState currentState;//当前状态
     public Animator anim;
     public int animState;
 
@@ -123,6 +123,9 @@ public class EnemyController : MonoBehaviour
         //RandomSkin();
 
 
+        if (GameManager.instance != null && GameManager.instance.EnemiesSuspendedForCaptivity)
+            SuspendForCaptivity();
+
         Invoke(nameof(StageSkin), 0.1f);//敌人的皮肤根据关卡决定，脸部更换
 
 
@@ -139,6 +142,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Update()
     {
+        if (IsSuspended) { HoldSuspendedPosition(); return; }
 
         anim.SetBool("dead", isDead);
         anim.SetBool("isDizzy", isDizzy);
@@ -246,6 +250,7 @@ public class EnemyController : MonoBehaviour
 
     public void TransitionToState(EnemyBaseState state)
     {
+        if (IsSuspended && state != suspendedState) return;
         // 只要从巡逻状态离开，之后就变成普通走走停停
         if (currentState == patrolState && state != patrolState)
         {
@@ -275,9 +280,138 @@ public class EnemyController : MonoBehaviour
 
     public virtual void EnterBattleState()
     {
+        if (IsSuspended) return;
         TransitionToState(attackState);
     }//敌人子类进入战斗状态
 
+
+
+    // 暂停独立于死亡；保留敌人身份、生命值和救援任务引用。
+    public bool IsSuspended { get; private set; }
+    public SuspendedState suspendedState = new SuspendedState();
+    private RigidbodyType2D suspendedBodyType;
+    private bool suspendedAnimatorEnabled;
+    private float[] suspendedLayerWeights;
+    private readonly List<Collider2D> suspendedDamageColliders = new List<Collider2D>();
+    private readonly List<Behaviour> suspendedDamageBehaviours = new List<Behaviour>();
+
+    public void SuspendForCaptivity()
+    {
+        if (isDead || IsSuspended) return;
+        IsSuspended = true; // 先锁住所有战斗入口，再执行退出清理。
+        if (rb != null) suspendedBodyType = rb.bodyType;
+        suspendedAnimatorEnabled = anim.enabled;
+        suspendedLayerWeights = new float[anim.layerCount];
+        for (int i = 0; i < anim.layerCount; i++)
+            suspendedLayerWeights[i] = anim.GetLayerWeight(i);
+
+        if (capturedPlayer != null)
+            ReleaseCapturedPlayerForRoomEscape(capturedPlayer);
+        isCatching = false;
+        TransitionToState(suspendedState);
+    }
+
+    public virtual void EnterSuspendedPose()
+    {
+        attackList.Clear();
+        targetPoint = null;
+        isDizzy = false;
+        isCrouch = false;
+        animState = 0;
+        if (character != null) character.skillInvulnerable = false;
+        if (frameEvent_Audio != null) frameEvent_Audio._Voice_StopLoop();
+        if (frameEvent != null) frameEvent.ShowSkeleton();
+        if (Catch_Collider != null) Catch_Collider.SetActive(false);
+        if (catchCollider != null) catchCollider.ResetCatch();
+
+        // 重置 Animator 内部各层，保留武器等非触发参数。
+        var savedInts = new Dictionary<int, int>();
+        var savedFloats = new Dictionary<int, float>();
+        var savedBools = new Dictionary<int, bool>();
+        foreach (AnimatorControllerParameter p in anim.parameters)
+        {
+            if (p.type == AnimatorControllerParameterType.Int) savedInts[p.nameHash] = anim.GetInteger(p.nameHash);
+            if (p.type == AnimatorControllerParameterType.Float) savedFloats[p.nameHash] = anim.GetFloat(p.nameHash);
+            if (p.type == AnimatorControllerParameterType.Bool) savedBools[p.nameHash] = anim.GetBool(p.nameHash);
+        }
+        Vector3 savedPosition = transform.position;
+        Vector3 savedScale = transform.localScale;
+        anim.Rebind();
+        foreach (var p in savedInts) anim.SetInteger(p.Key, p.Value);
+        foreach (var p in savedFloats) anim.SetFloat(p.Key, p.Value);
+        foreach (var p in savedBools) anim.SetBool(p.Key, p.Value);
+        transform.position = savedPosition;
+        transform.localScale = savedScale;
+
+        // 攻击范围可能在动画中开着；暂停期间禁用脚本和碰撞体。
+        suspendedDamageColliders.Clear();
+        suspendedDamageBehaviours.Clear();
+        foreach (Attack attack in GetComponentsInChildren<Attack>(true))
+        {
+            if (attack.enabled) { suspendedDamageBehaviours.Add(attack); attack.enabled = false; }
+            foreach (Collider2D c in attack.GetComponents<Collider2D>())
+                if (c.enabled && !suspendedDamageColliders.Contains(c))
+                { suspendedDamageColliders.Add(c); c.enabled = false; }
+        }
+        foreach (Catch catcher in GetComponentsInChildren<Catch>(true))
+        {
+            if (catcher.enabled) { suspendedDamageBehaviours.Add(catcher); catcher.enabled = false; }
+            foreach (Collider2D c in catcher.GetComponents<Collider2D>())
+                if (c.enabled && !suspendedDamageColliders.Contains(c))
+                { suspendedDamageColliders.Add(c); c.enabled = false; }
+        }
+        if (questionSign != null) questionSign.SetActive(false);
+        if (alarmSign != null) alarmSign.SetActive(false);
+        if (InvulnerableSign != null) InvulnerableSign.SetActive(false);
+        if (catchSign != null) catchSign.SetActive(false);
+        foreach (AnimatorControllerParameter p in anim.parameters)
+            if (p.type == AnimatorControllerParameterType.Trigger) anim.ResetTrigger(p.nameHash);
+        anim.SetInteger("state", 0);
+        anim.SetInteger("skillState", 0);
+        anim.SetBool("isCrouch", false);
+        anim.SetBool("isDizzy", false);
+        anim.SetBool("isGround", true);
+        anim.SetFloat("yVelocity", 0f);
+        // 重置各层内部状态，避免恢复权重时继续半截攻击。
+        for (int i = 1; i < anim.layerCount; i++) { anim.SetLayerWeight(i, 0f); }
+        anim.enabled = true;
+        anim.Play("Idle", 0, 0f);
+        anim.Update(0f);
+        foreach (Collider2D c in suspendedDamageColliders) if (c != null) c.enabled = false;
+        anim.enabled = false; // 待机姿势定格，阻止动画继续产生帧事件。
+        HoldSuspendedPosition();
+    }
+
+    public void HoldSuspendedPosition()
+    {
+        if (rb == null) return;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public void ResumeFromCaptivity()
+    {
+        if (!IsSuspended || isDead) return;
+        if (rb != null) { rb.bodyType = suspendedBodyType; rb.velocity = Vector2.zero; }
+        attackList.Clear();
+        targetPoint = null;
+        gameOverStopped = false;
+        // 解锁后先初始化巡逻，再恢复动画更新。
+        IsSuspended = false;
+        TransitionToState(patrolState);
+        anim.SetInteger("state", animState);
+        for (int i = 0; i < anim.layerCount; i++)
+            anim.SetLayerWeight(i, suspendedLayerWeights[i]);
+        anim.enabled = suspendedAnimatorEnabled;
+        foreach (Behaviour b in suspendedDamageBehaviours) if (b != null) b.enabled = true;
+        foreach (Collider2D c in suspendedDamageColliders) if (c != null) c.enabled = true;
+        suspendedDamageBehaviours.Clear();
+        suspendedDamageColliders.Clear();
+
+        //视野也恢复
+        checkArea.gameObject.SetActive(true);
+    }
 
     private bool gameOverStopped = false;
     private void StopEnemyOnGameOver()
@@ -329,6 +463,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public EnemyBaseState stateBeforeHit;
     public void Stun(float duration)
     {
+        if (IsSuspended) return;
         if (isDead) return;
 
         if (duration > 0.2f)
@@ -345,6 +480,7 @@ public class EnemyController : MonoBehaviour
 
     public void Shock(float duration)
     {
+        if (IsSuspended) return;
         if (isDead) return;
 
         Character character = GetComponent<Character>();
@@ -431,6 +567,7 @@ public class EnemyController : MonoBehaviour
 
     public void AlertByPosition(Vector3 position)
     {
+        if (IsSuspended) return;
         if (isDead)
             return;
 
@@ -536,6 +673,14 @@ public class EnemyController : MonoBehaviour
     {
         if (t == null) return false;
 
+        if (t.CompareTag("Player"))
+        {
+            PlayerController player = t.GetComponent<PlayerController>();
+
+            if (player != null && player.isCaptured)
+                return false;
+        }//其他敌人回到巡逻后，即使视野碰到透明玩家，也不会再次进入战斗
+
         if (!t.CompareTag("Player") && !t.CompareTag("Bomb"))
             return false;
 
@@ -559,6 +704,7 @@ public class EnemyController : MonoBehaviour
 
     public void AttackAction()
     {
+        if (IsSuspended) return;
         //抓取期间锁住再度攻击
         if (isCatching) return;
         if (capturedPlayer != null) return;
@@ -638,7 +784,8 @@ public class EnemyController : MonoBehaviour
                     if (this is Enemy_1 || this is Enemy_3) 
                     {
 
-                        bool canCatchPlayer = player.character.currentHealth < player.character.maxHealth * 0.6f;// 玩家生命值必须低于三分之二，敌人才允许抓取
+
+                        bool canCatchPlayer = player.character.currentHealth < player.character.maxHealth * 0.8f;// 玩家生命值必须低于五分之四，敌人才允许抓取
 
                         if (canCatchPlayer && Random.Range(0,2) == 0)
                         {
@@ -850,6 +997,7 @@ public class EnemyController : MonoBehaviour
     }//弹壳飞舞
     public void Shoot()
     {
+        if (IsSuspended) return;
         if (bulletPrefab == null) return;
 
         if (isCrouch)
@@ -984,6 +1132,7 @@ public class EnemyController : MonoBehaviour
 
     public void AimThrowSpawnExplosion()
     {
+        if (IsSuspended) return;
         if (throwExplosionPrefab != null)
         {
             //GameObject effect = Instantiate(
@@ -1001,11 +1150,13 @@ public class EnemyController : MonoBehaviour
 
     public void AimThrowStartLaugh()
     {
+        if (IsSuspended) return;
         anim.SetInteger("skillState", 3);
     }
 
     public void AimThrowOver()
     {
+        if (IsSuspended) return;
         //StopMove();
 
         anim.SetInteger("skillState", 0);
@@ -1049,10 +1200,20 @@ public class EnemyController : MonoBehaviour
 
     public void StartCatchPlayer(PlayerController player)
     {
+        if (IsSuspended) return;
         if (player == null) return;
-        if (player.isSlide) return;
 
-        if (isDead) return;
+        if (player.isDead ||
+            player.isHurt ||
+            player.isCaptured ||
+            player.isStruggling ||
+            player.isSlide ||
+            player.isTeleporting ||
+            player.isInCutscene)
+            return;
+
+        if (isDead || IsSuspended || isDizzy || currentState == hitState)
+            return;
         if (isCatching) return;
         if (capturedPlayer != null) return;
         if (Time.time < nextCatchTime) return;
@@ -1085,6 +1246,28 @@ public class EnemyController : MonoBehaviour
 
         player.EnterCapturedState();//玩家进入透明
 
+
+        // 其他敌人放弃玩家，回到巡逻
+        foreach (EnemyController enemy in
+                 FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
+        {
+            if (enemy == this || enemy.isDead || enemy.IsSuspended)
+                continue;
+
+            enemy.attackList.Clear();
+            enemy.targetPoint = null;
+
+            // 退出当前技能，再进入巡逻
+            enemy.TransitionToState(enemy.patrolState);
+
+            enemy.anim.ResetTrigger("attack");
+            enemy.anim.ResetTrigger("skill");
+            enemy.anim.ResetTrigger("catch");
+            enemy.anim.SetInteger("skillState", 0);
+            enemy.anim.SetInteger("state", enemy.animState);
+        }
+
+
         player.transform.position = transform.position;//玩家的位置拉过去
 
        character.skillInvulnerable = true;//技能无敌
@@ -1101,6 +1284,7 @@ public class EnemyController : MonoBehaviour
 
     public void ThrowCapturedPlayer()
     {
+        if (IsSuspended) return;
 
         //Debug.Log("投出");
 
@@ -1133,6 +1317,7 @@ public class EnemyController : MonoBehaviour
 
     public void StartPlayerStruggle()
     {
+        if (IsSuspended) return;
         if (!isCatching || capturedPlayer == null)
             return;
 
@@ -1142,6 +1327,7 @@ public class EnemyController : MonoBehaviour
 
     public void BreakFreeFromPlayer(PlayerController player)
     {
+        if (IsSuspended) return;
         if (!isCatching)
             return;
 
@@ -1178,11 +1364,24 @@ public class EnemyController : MonoBehaviour
 
         frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
 
+
+        // 挣脱后仍然记得玩家的位置
+        lastKnownTargetPos = player.transform.position;
+
+        // 重新指定玩家为追击目标
+        attackList.Clear();
+        attackList.Add(player.transform);
+        targetPoint = player.transform;
+
+        // 继续追击
+        EnterBattleState();
+
     }//玩家挣扎值满了后的挣脱
 
 
     public void ForceMasturbate() 
     {
+        if (IsSuspended) return;
         // 抓射
         anim.SetTrigger("next");
 
@@ -1351,6 +1550,7 @@ public class EnemyController : MonoBehaviour
 
     public void OnCheckAreaStay(Collider2D collision)
     {
+        if (IsSuspended) return;
         //if (!attackList.Contains(collision.transform) && !hasBomb && !isDead && !GameManager.instance.gameOver)
         //{
         //
@@ -1799,7 +1999,10 @@ public class EnemyController : MonoBehaviour
 
     public void OnTakeDamage(Attack attack)
     {
+        if (IsSuspended) return;
 
+        if (isCatching)
+            return;
 
         if (attack == null)
             return;
@@ -1877,6 +2080,8 @@ public class EnemyController : MonoBehaviour
             Transform attacker = attackerCharacter.transform;
 
             targetPoint = attacker;
+
+            lastKnownTargetPos = attacker.position;
 
             if (!attackList.Contains(attacker))
             {
@@ -2002,6 +2207,7 @@ public class EnemyController : MonoBehaviour
 
     public void OnBlastHit(Vector3 blastPos, float force)
     {
+        if (IsSuspended) return;
         if (rb == null) return;
 
         // 炸飞方向

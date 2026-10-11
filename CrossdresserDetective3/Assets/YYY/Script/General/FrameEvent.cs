@@ -617,6 +617,7 @@ public class FrameEvent : MonoBehaviour
     #region  敌人将玩家抓住/投出去
     public void OnCatchPlayer()
     {
+        if (enemyController != null && enemyController.IsSuspended) return;
         if (enemyController != null)
         {
             enemyController.Catch_Collider.SetActive(true);
@@ -698,6 +699,7 @@ public class FrameEvent : MonoBehaviour
     //特殊大范围攻击
     public void JumpStrikeHit()
     {
+        if (enemyController != null && enemyController.IsSuspended) return;
         if (enemyController is Enemy_5 enemy5)
         {
             if (enemy5.jumpStrikeCollider != null)
@@ -900,6 +902,7 @@ public class FrameEvent : MonoBehaviour
         playerController.pantiesIndex = 0;
 
         playerController.RefreshPlayerSkin();
+       // if (GameManager.instance != null) GameManager.instance.ResumeEnemiesAfterCaptivity();
 
     }//（局内解缚）
 
@@ -1234,6 +1237,7 @@ public class FrameEvent : MonoBehaviour
 
     public void OnLewdmoveOver() 
     {
+        if (enemyController != null && enemyController.IsSuspended) return;
 
         //if (UIManager.instance!=null) 
         //{
@@ -1259,16 +1263,16 @@ public class FrameEvent : MonoBehaviour
 
 
         //逃脱和歼灭里不能有解缚逃脱
-        var missionType = GameFlowData.CurrentMissionType;
-
-        if (missionType == GameFlowData.MissionType.Escape ||
-            missionType == GameFlowData.MissionType.Eliminate)
-        {
-            UIManager.instance.GameOverUI();
-
-
-            return;
-        }
+        //var missionType = GameFlowData.CurrentMissionType;
+        //
+        //if (missionType == GameFlowData.MissionType.Escape ||
+        //    missionType == GameFlowData.MissionType.Eliminate)
+        //{
+        //    UIManager.instance.GameOverUI();
+        //
+        //
+        //    return;
+        //}
 
 
 

@@ -36,6 +36,7 @@ public class JumpStrikeSkillState : EnemyBaseState
 
 
       
+        enemy5.jumpStrikeStartPosition = enemy.transform.position;
         enemy.FaceToPosition(enemy.targetPoint.position);  // 进入跳跃攻击时朝向目标
 
 
@@ -138,6 +139,7 @@ public class JumpStrikeSkillState : EnemyBaseState
 
     public void StartAim(EnemyController enemy)
     {
+        if (enemy.IsSuspended) return;
 
 
         if (enemy5 == null)
@@ -169,6 +171,7 @@ public class JumpStrikeSkillState : EnemyBaseState
 
     public void StartAttack(EnemyController enemy)
     {
+        if (enemy.IsSuspended) return;
         phase = Phase.Attack;
 
         //enemy.StopMove();
@@ -180,6 +183,7 @@ public class JumpStrikeSkillState : EnemyBaseState
 
     public void EndSkill(EnemyController enemy)
     {
+        if (enemy.IsSuspended) return;
         if (enemy5 == null)
             enemy5 = enemy as Enemy_5;
 
@@ -231,7 +235,16 @@ public class JumpStrikeSkillState : EnemyBaseState
 
     public override void ExitState(EnemyController enemy)
     {
-        //enemy.StopMove();
+        // 退出时完整取消瞬移技能。暂停时回到技能起点，避免停在半空。
+        if (enemy5 != null)
+        {
+            if (enemy.IsSuspended) enemy.transform.position = enemy5.jumpStrikeStartPosition;
+            enemy5.isJumpStrikeUntargetable = false;
+            if (enemy5.jumpStrikeCollider != null) enemy5.jumpStrikeCollider.SetActive(false);
+        }
+        enemy.anim.SetInteger("skillState", 0);
+        enemy.animState = 0;
+        enemy.frameEvent.ShowSkeleton();
 
         if (enemy5 != null &&
             enemy5.jumpAimTarget != null)

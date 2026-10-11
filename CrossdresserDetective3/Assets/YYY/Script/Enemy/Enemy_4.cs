@@ -44,6 +44,7 @@ public class Enemy_4 : EnemyController
 
     public override void Update()
     {
+        if (IsSuspended) return;
         base.Update();
 
         UpdateBlockRecovery();
@@ -51,6 +52,7 @@ public class Enemy_4 : EnemyController
 
     public override bool TryHandleIncomingAttack(Attack attack)
     {
+        if (IsSuspended) return true;
         if (attack == null)
         {
             //Debug.Log("格挡失败：attack为空");
@@ -177,6 +179,7 @@ public class Enemy_4 : EnemyController
     // 举起武器后开始反击
     public void StartCounterAttack()
     {
+        if (IsSuspended) return;
         if (isDead )
             return;
 
@@ -199,6 +202,7 @@ public class Enemy_4 : EnemyController
     // 反击动画结束事件
     public void EndCounterAttack()
     {
+        if (IsSuspended) return;
         isBlocking = false;
         isCountering = false;
 

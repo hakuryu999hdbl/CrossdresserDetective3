@@ -28,6 +28,7 @@ public class Enemy_5 : EnemyController
         new JumpStrikeSkillState();
 
 
+    public Vector3 jumpStrikeStartPosition;
     public bool isJumpStrikeUntargetable;//跳跃攻击期间的无敌状态
     public override bool IgnoreIncomingDamage()
     {
@@ -36,11 +37,13 @@ public class Enemy_5 : EnemyController
 
     public override void EnterBattleState()
     {
+        if (IsSuspended) return;
         TryEnterJumpStrikeOrAttack();
     }
 
     public void TryEnterJumpStrikeOrAttack()
     {
+        if (IsSuspended) return;
         //if (Random.value < 0.5f)
         //{
         //    TransitionToState(jumpStrikeState);

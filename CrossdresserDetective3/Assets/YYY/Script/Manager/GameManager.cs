@@ -577,6 +577,37 @@ public class GameManager : MonoBehaviour
 
 
     //在玩家被击败后清理状态
+
+    public bool EnemiesSuspendedForCaptivity { get; private set; }
+    private readonly List<EnemyController> captivitySuspendedEnemies = new List<EnemyController>();
+
+    [ContextMenu("测试/暂停全体敌人")]
+    public void SuspendEnemiesForCaptivity()
+    {
+        EnemiesSuspendedForCaptivity = true;
+        // 包括救援对象生成的敌人；不删 sceneEnemies、不改变任务引用。
+        foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsSortMode.None))
+        {
+            if (enemy == null || enemy.isDead) continue;
+            if (!captivitySuspendedEnemies.Contains(enemy)) captivitySuspendedEnemies.Add(enemy);
+            enemy.SuspendForCaptivity();
+        }
+    }
+
+    [ContextMenu("测试/恢复全体敌人")]
+    public void ResumeEnemiesAfterCaptivity()
+    {
+        if (!EnemiesSuspendedForCaptivity) return;
+        EnemiesSuspendedForCaptivity = false;
+        // 同时收集暂停期间新生成的敌人。
+        foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            if (enemy != null && enemy.IsSuspended && !captivitySuspendedEnemies.Contains(enemy))
+                captivitySuspendedEnemies.Add(enemy);
+        foreach (EnemyController enemy in captivitySuspendedEnemies)
+            if (enemy != null && !enemy.isDead) enemy.ResumeFromCaptivity();
+        captivitySuspendedEnemies.Clear();
+    }
+
     public void ClearEnemiesForGameOver()
     {
         //不用关闭，变成生成ENEMY_1
@@ -632,6 +663,21 @@ public class GameManager : MonoBehaviour
     // 进入解缚逃脱
     public void ShowBondageUnlockText()
     {
+
+
+        // 逃脱模式保留原任务标题
+        if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
+        {
+            UIManager.instance.BondageUnlockText.SetActive(false);
+            UIManager.instance.escapeText.SetActive(true);
+            return;
+        }
+
+
+
+
+
+
         // 隐藏原任务信息
         UIManager.instance.clueText.gameObject.SetActive(false);
         UIManager.instance.rescueText.gameObject.SetActive(false);
@@ -658,6 +704,14 @@ public class GameManager : MonoBehaviour
 
             case GameFlowData.MissionType.Rescue:
                 UIManager.instance.rescueText.gameObject.SetActive(true);
+                break;
+
+            case GameFlowData.MissionType.Eliminate:
+                UIManager.instance.eliminateText.SetActive(true);
+                break;
+
+            case GameFlowData.MissionType.Escape:
+                UIManager.instance.escapeText.SetActive(true);
                 break;
         }
 

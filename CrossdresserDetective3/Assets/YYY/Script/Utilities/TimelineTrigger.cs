@@ -137,15 +137,16 @@ public class TimelineTrigger : MonoBehaviour
 
         // 保险注销（Stop 会触发 stopped，但双重保险无害）
         if (UIManager.instance != null)
+        {
             UIManager.instance.UnregisterTimeline(this);
 
-        Invoke(nameof(SetFadeOutOver), 0.1f);
+            // Timeline 结束处理全部完成后，最后指定淡出
+            if (UIManager.instance.blackScreen != null)
+                UIManager.instance.blackScreen.SetFadeOut();
+        }
+
     }
 
-    void SetFadeOutOver()
-    {
-        UIManager.instance.blackScreen.SetFadeOut();
-    }
 
 
 

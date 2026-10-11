@@ -107,6 +107,14 @@ public class Character : MonoBehaviour, IDamageable
         if (enemy != null && enemy.IgnoreIncomingDamage())
             return;
 
+        // 抓住玩家的敌人无敌
+        if (enemy != null && enemy.isCatching)
+            return;
+        //被抓的玩家也无敌
+        PlayerController player = GetComponent<PlayerController>();
+        if (player != null && player.isCaptured)
+            return;
+
         if (currentHealth - attacker.damage > 0) 
         {
             currentHealth -= attacker.damage;
