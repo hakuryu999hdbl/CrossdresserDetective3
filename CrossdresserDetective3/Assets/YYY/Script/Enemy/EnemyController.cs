@@ -1203,6 +1203,9 @@ public class EnemyController : MonoBehaviour
         if (IsSuspended) return;
         if (player == null) return;
 
+        if (player.physicsCheck == null || !player.physicsCheck.isGround)
+            return;
+
         if (player.isDead ||
             player.isHurt ||
             player.isCaptured ||

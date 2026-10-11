@@ -25,6 +25,10 @@ public class Catch : MonoBehaviour
         PlayerController player = other.GetComponent<PlayerController>();
         if (player == null) return;
 
+        // 空中不能建立抓取关系
+        if (player.physicsCheck == null || !player.physicsCheck.isGround)
+            return;
+
         if (player.isDead ||
             player.isHurt ||
             player.isCaptured ||
