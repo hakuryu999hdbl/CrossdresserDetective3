@@ -867,10 +867,13 @@ public class PlayerController : MonoBehaviour
         frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
         frameEvent_Audio._Voice_Mute();//再次触发的时候循环声也屏蔽
 
-
-        //被抓的时候就需要升级虚弱，最大不超过3
-        weakness = Mathf.Min(weakness + 1, 3);
-        UIManager.instance.RefreshWeaknessUI(weakness);
+        if (catchingEnemy is Enemy_1)
+        {
+            //被抓的时候就需要升级虚弱，最大不超过3
+            weakness = Mathf.Min(weakness + 1, 3);
+            UIManager.instance.RefreshWeaknessUI(weakness);
+        }
+        
     }
 
     public void ExitCapturedState(Vector2 throwForce)
@@ -1262,8 +1265,11 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDead()
     {
-
-        UIManager.instance.RemoveBondageUnlocker();//移除开锁器
+        if (catchingEnemy is Enemy_1)
+        {
+            UIManager.instance.RemoveBondageUnlocker();//移除开锁器
+        }
+     
 
         PlayBloodEffect();
 

@@ -772,7 +772,7 @@ public class EnemyController : MonoBehaviour
 
                     Debug.Log("玩家已经被其他敌人抓住,只能触发attack");
                 }
-                //如果是逃出模式，只有抓住攻击这一种（当然在这个模式下，关卡里放满了Enemy_1和Enemy_3）
+                //如果是逃出模式，只有抓住攻击这一种（当然在这个模式下，关卡里放满了Enemy_1）
                 else if(GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
                 {
                     StartCatchAttack();//开启抓取
@@ -780,8 +780,8 @@ public class EnemyController : MonoBehaviour
                 else
                 {
 
-                    //目前只有Enemy_1和Enemy_3随机抓取,别的敌人要么远程攻击要么特殊攻击
-                    if (this is Enemy_1 || this is Enemy_3) 
+                    //目前只有Enemy_1随机抓取,别的敌人要么远程攻击要么特殊攻击
+                    if (this is Enemy_1) 
                     {
 
 
@@ -827,19 +827,22 @@ public class EnemyController : MonoBehaviour
 
     public void CatchAttackEnd()
     {
-        // 已经成功抓到玩家就继续保持无敌
+
+        // 抓取窗口结束，碰撞体始终关闭。
+        if (Catch_Collider != null)
+            Catch_Collider.SetActive(false);
+
+        HideCatchSign();
+
+        // 抓取成功：保留抓取关系与技能无敌。
         if (isCatching || capturedPlayer != null)
             return;
 
         character.skillInvulnerable = false;
 
-        if (Catch_Collider != null)
-            Catch_Collider.SetActive(false);
-
         if (catchCollider != null)
             catchCollider.ResetCatch();
 
-        HideCatchSign();
     }//抓空统一入口（由于OnCatchPlayer在很后面的时候，可以直接触发）
 
     void HideCatchSign() 
@@ -1200,6 +1203,8 @@ public class EnemyController : MonoBehaviour
 
     public void StartCatchPlayer(PlayerController player)
     {
+        Debug.Log("[丢出帧事件] 已执行", this);
+
         if (IsSuspended) return;
         if (player == null) return;
 
@@ -1221,12 +1226,29 @@ public class EnemyController : MonoBehaviour
         if (capturedPlayer != null) return;
         if (Time.time < nextCatchTime) return;
 
+        // Enemy_3 只有抓取前摇正在播放时，才能真正抓住玩家。
+        // 根据截图，前摇状态名是 Catch_Ready_1。
+        if (this is Enemy_3)
+        {
+            AnimatorStateInfo info =
+                anim.GetCurrentAnimatorStateInfo(attackLayer);
+
+            if (!info.IsName("Catch_Ready_1") ||
+                anim.IsInTransition(attackLayer))
+            {
+                return;
+            }
+        }
 
         isCatching = true;
         capturedPlayer = player;
 
         // ★ 抓取成立的瞬间就建立双方关系
         player.catchingEnemy = this;
+
+        // 已经抓到，结束检测窗口。
+        if (Catch_Collider != null)
+            Catch_Collider.SetActive(false);
 
         //开始抓取的清理
         anim.ResetTrigger("attack");
@@ -1240,8 +1262,12 @@ public class EnemyController : MonoBehaviour
 
         frameEvent_Audio._Attack_pick();//抓取声
 
-
-        capturedPlayer.frameEvent.SetCatch_1();//所有抓取都先把主角裙子内裤吊带去掉
+        // Enemy_1 抓取时剥衣；Enemy_3 保留衣服。
+        if (this is Enemy_1)
+        {
+            capturedPlayer.frameEvent.SetCatch_1();//所有抓取都先把主角裙子内裤吊带去掉
+        }
+     
 
 
         ReadCurrentGame(player);//敌人读取玩家皮肤
@@ -1279,6 +1305,7 @@ public class EnemyController : MonoBehaviour
 
 
         anim.SetTrigger("catchSuccess");
+        Debug.Log($"[抓取成立] {name}，已发送 catchSuccess", this);
     }
 
 
@@ -1288,28 +1315,39 @@ public class EnemyController : MonoBehaviour
     public void ThrowCapturedPlayer()
     {
         if (IsSuspended) return;
+        if (!isCatching || capturedPlayer == null) return;
 
-        //Debug.Log("投出");
+        PlayerController player = capturedPlayer;
+        float dir = transform.localScale.x >= 0f ? 1f : -1f;
 
-        if (capturedPlayer != null)
-        {
-            float dir = transform.localScale.x > 0 ? 1f : -1f;
-            capturedPlayer.ExitCapturedState(new Vector2(6f * dir, 4f));//玩家恢复
-            capturedPlayer = null;
-        }
+        // 先关闭抓取碰撞体，避免释放时仍然接触。
+        if (Catch_Collider != null)
+            Catch_Collider.SetActive(false);
 
+        capturedPlayer = null;
         isCatching = false;
         nextCatchTime = Time.time + catchCooldown;
 
+        if (catchCollider != null)
+            catchCollider.ResetCatch();
 
-        //丢出后的清理
+        // Enemy_3 正常不会开启挣扎，这里兼容异常残留。
+        if (player.isStruggling)
+            player.EndStruggle();
+
+        player.catchingEnemy = null;
+        player.ExitCapturedState(new Vector2(6f * dir, 4f));
+
         attackList.Clear();
         targetPoint = null;
+
         anim.ResetTrigger("attack");
+        anim.ResetTrigger("skill");
+        anim.ResetTrigger("catch");
+        anim.ResetTrigger("catchSuccess");
 
-        catchCollider.ResetCatch();
-
-        character.skillInvulnerable = false;//技能无敌关闭
+        character.skillInvulnerable = false;
+        HideCatchSign();
 
         TransitionToState(patrolState);
     }
@@ -1320,6 +1358,9 @@ public class EnemyController : MonoBehaviour
 
     public void StartPlayerStruggle()
     {
+        // 只有 Enemy_1 开启挣扎。
+        if (!(this is Enemy_1)) return;
+
         if (IsSuspended) return;
         if (!isCatching || capturedPlayer == null)
             return;

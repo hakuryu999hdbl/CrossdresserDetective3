@@ -635,6 +635,14 @@ public class FrameEvent : MonoBehaviour
 
     public void OnThrowCapturedPlayer()
     {
+        Debug.Log(
+       $"[丢出帧事件] {enemyController.name}，" +
+       $"isCatching={enemyController.isCatching}，" +
+       $"有玩家={enemyController.capturedPlayer != null}",
+       enemyController
+   );
+
+
         if (enemyController != null)
         {
             enemyController.ThrowCapturedPlayer();
