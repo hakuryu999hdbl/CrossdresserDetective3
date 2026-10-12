@@ -1228,12 +1228,43 @@ public class EnemyController : MonoBehaviour
 
         // Enemy_3 只有抓取前摇正在播放时，才能真正抓住玩家。
         // 根据截图，前摇状态名是 Catch_Ready_1。
-        if (this is Enemy_3)
+        //if (this is Enemy_3)
+        //{
+        //    AnimatorStateInfo info =
+        //        anim.GetCurrentAnimatorStateInfo(attackLayer);
+        //
+        //    if (!info.IsName("Catch_Ready_1") ||
+        //        anim.IsInTransition(attackLayer))
+        //    {
+        //        return;
+        //    }
+        //}
+        //
+        //// Enemy_1 只有抓取前摇正在播放时，才能真正抓住玩家。
+        //// 根据截图，前摇状态名是 Catch_Ready_1。
+        //if (this is Enemy_1)
+        //{
+        //    AnimatorStateInfo info =
+        //        anim.GetCurrentAnimatorStateInfo(attackLayer);
+        //
+        //    if (!info.IsName("Catch_Ready_2") ||
+        //        anim.IsInTransition(attackLayer))
+        //    {
+        //        return;
+        //    }
+        //}
+
+        // 必须仍处于各自的抓取前摇，才能建立抓取关系。
+        if (this is Enemy_1 || this is Enemy_3)
         {
+            string readyState = this is Enemy_1
+                ? "Catch_Ready_2"
+                : "Catch_Ready_1";
+
             AnimatorStateInfo info =
                 anim.GetCurrentAnimatorStateInfo(attackLayer);
 
-            if (!info.IsName("Catch_Ready_1") ||
+            if (!info.IsName(readyState) ||
                 anim.IsInTransition(attackLayer))
             {
                 return;
@@ -1883,6 +1914,8 @@ public class EnemyController : MonoBehaviour
                     case 6:
                     case 7:
                     case 8:
+                    case 9:
+                    case 10:
 
                         //西服男（无小偷头型）
                         Man_hairIndex = Random.Range(0, 2);
@@ -1928,15 +1961,6 @@ public class EnemyController : MonoBehaviour
 
                         break;
 
-                    default:    
-                    case 9:
-                    case 10:
-
-                        //西服男
-                        Man_hairIndex = Random.Range(0, 2);
-                        Man_clothesIndex = 2;
-
-                        break;
                 }
                 break;
             case 2:

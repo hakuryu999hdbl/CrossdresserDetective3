@@ -18,6 +18,12 @@ public class Sign : MonoBehaviour
     private bool canPress;
     private IInteractable targetItem;
 
+    private bool ShowStrugglePrompt =>
+    playerController != null &&
+    playerController.isCaptured &&
+    playerController.catchingEnemy is Enemy_1 &&
+    playerController.isStruggling;//检测抓住玩家的是Enemy_1/Enemy_3
+
 
     public GameObject Interact_Hide; // 手机端交互按钮
 
@@ -69,12 +75,15 @@ public class Sign : MonoBehaviour
     private void Update()
     {
         bool captured = playerController != null && playerController.isCaptured;
+        bool strugglePrompt = ShowStrugglePrompt;
 
         // 普通状态：附近有可交互物才显示
         // 被抓状态：强制显示攻击/挣扎提示
         if (signRenderer != null)
         {
-            signRenderer.enabled = captured || (canPress && !playerController.isCrouch);
+            signRenderer.enabled =
+     strugglePrompt ||
+     (!captured && canPress && !playerController.isCrouch);
         }
 
         //禁止状态
@@ -107,7 +116,7 @@ public class Sign : MonoBehaviour
         // 抓取状态发生变化时，立刻换提示
         if (captured != lastCaptured)
         {
-            lastCaptured = captured;
+            lastCaptured = strugglePrompt;
 
             int deviceType =
                 GameFlowData.LastInputDevice >= 0
@@ -251,9 +260,7 @@ public class Sign : MonoBehaviour
 
         if (signRenderer != null)
         {
-            signRenderer.enabled =
-                playerController != null &&
-                playerController.isCaptured;
+            signRenderer.enabled = ShowStrugglePrompt;
         }
 
         if (Interact_Hide != null)
@@ -272,7 +279,7 @@ public class Sign : MonoBehaviour
         if (anim == null)
             return;
 
-        bool captured = playerController != null && playerController.isCaptured;
+        bool captured = ShowStrugglePrompt;
 
         switch (deviceType)
         {

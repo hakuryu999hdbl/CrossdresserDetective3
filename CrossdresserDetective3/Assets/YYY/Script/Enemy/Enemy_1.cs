@@ -137,4 +137,19 @@ public class Enemy_1 : EnemyController
 
     }//从过场动画恢复正常状态
 
+
+    public void SetEnemy_Remove()
+    {
+        Debug.Log("① 进入 SetEnemy_Remove", this);
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.SceneEnemyDead(this);
+            Debug.Log("② 已退出关卡统计", this);
+        }
+
+        Debug.Log("③ 准备删除敌人", this);
+        Destroy(gameObject);
+    }//告诉过场动画，自己不在歼灭模式里必须消灭的敌人名单里
+
 }
