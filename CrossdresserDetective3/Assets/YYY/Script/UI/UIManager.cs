@@ -1122,8 +1122,8 @@ public class UIManager : MonoBehaviour
     public GameObject MissionFailure;
 
     public Image ResultPicture;//设置结局图片
-    public int ResultNumber;//1用完扔垃圾桶 2紧缚逃脱失败  3尿便器   4无捆绑轮奸   5尸体被检查
-    public Sprite CG_1,CG_2,CG_3,CG_4, CG_5;
+    public int ResultNumber;//1用完扔垃圾桶  2紧缚逃脱失败  3尿便器   4无捆绑轮奸   5尸体被检查   6死宅玩弄
+    public Sprite CG_1,CG_2,CG_3,CG_4,CG_5, CG_6;
 
     public bool waitGameOverInput = false;//等待玩家输入再跳出战败界面
 
@@ -1223,6 +1223,12 @@ public class UIManager : MonoBehaviour
                 SaveManager.UpdateThumbnail("EndResult_05");
                 ResultPicture.sprite = CG_5;//检查艳尸
                 GlobalSaveManager.UnlockCG("Girl_LewdmoveYYY");
+                break;
+
+            case 6:
+                SaveManager.UpdateThumbnail("EndResult_06");
+                ResultPicture.sprite = CG_6;//死宅玩弄
+                GlobalSaveManager.UnlockCG("FatMan_RapeYYY");
                 break;
         }
 

@@ -1284,6 +1284,8 @@ public class PlayerController : MonoBehaviour
 
         }//被抓住期间被打死，把抓住玩家的敌人强制Idle
 
+        //死亡后停止本体人物声音，并屏蔽后续动画帧事件
+        frameEvent_Audio._Voice_Mute();
 
         UIManager.instance.GameOverUI();
     }

@@ -57,8 +57,8 @@ public class RBQController : MonoBehaviour
 
                         case 9:
                         case 10:
-                            currentAnimationType = 1;
-                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
+                            currentAnimationType = 5;
+                            UIManager.instance.ResultNumber = 6;//死宅玩弄
                             break;
                     }
                     break;
@@ -233,6 +233,12 @@ public class RBQController : MonoBehaviour
                 anim.Play("Story_Girl_LewdmoveYYY_1", 0, 0f);//女干部榨精勒死
                 RandomSkin();//不捆绑
                 break;
+
+            case 5:
+                anim.Play("FatMan_RapeYYY_1", 0, 0f);//死宅玩弄
+                RandomSkin();//不捆绑
+                break;
+
         }
 
         anim.Update(0f);
@@ -318,7 +324,7 @@ public class RBQController : MonoBehaviour
 
 
 
-    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY
+    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY   [5]  FatMan_RapeYYY
 
 
     /// <summary>
@@ -341,6 +347,7 @@ public class RBQController : MonoBehaviour
                 break;
 
             case 4:
+            case 5:
                 frameEvent.SetDeadBondage_Bondage_4();
                 frameEvent.SetDeadBondage_RandomEnemy();
                 break;
@@ -502,7 +509,8 @@ public class RBQController : MonoBehaviour
                     case 6:
                     case 7:
                     case 8:
-
+                    case 9:
+                    case 10:
 
                         //西服男（无小偷头型）
                         Man_hairIndex = Random.Range(0, 2);
@@ -545,16 +553,6 @@ public class RBQController : MonoBehaviour
 
 
 
-
-                        break;
-
-                    default:
-                    case 9:
-                    case 10:
-
-                        //西服男
-                        Man_hairIndex = Random.Range(0, 2);
-                        Man_clothesIndex = 2;
 
                         break;
                 }

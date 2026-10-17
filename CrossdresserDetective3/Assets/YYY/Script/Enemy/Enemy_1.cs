@@ -104,6 +104,12 @@ public class Enemy_1 : EnemyController
         anim.Update(0f);
     }
 
+    public void SetEnemy_Onanism()
+    {
+        anim.Play("Story_Onanism", 0, 0f);
+        anim.Update(0f);
+    }
+
     public void SetEnemy_CatchYYY()
     {
         anim.Play("Story_CatchBondageYYY_1", 0, 0f);
