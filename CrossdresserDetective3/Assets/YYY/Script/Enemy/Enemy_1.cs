@@ -124,6 +124,14 @@ public class Enemy_1 : EnemyController
         anim.Update(0f);
     }
 
+
+    public void SetEnemy_Girl_Rbq_1() 
+    {
+        anim.Play("Story_Girl_Rbq_1", 0, 0f);
+        anim.Update(0f);
+    }
+
+
     public void SetEnemy_Next()
     {
         anim.SetTrigger("next");

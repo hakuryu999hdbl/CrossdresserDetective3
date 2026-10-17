@@ -282,6 +282,7 @@ public class CutsceneDialogue : MonoBehaviour
 
     [Header("名称")]
     public GameObject YYY;
+    public GameObject LL;
     public GameObject Thief_A;
     public GameObject Thief_B;
     public GameObject FatMan;
@@ -291,6 +292,7 @@ public class CutsceneDialogue : MonoBehaviour
 
         //通用隐藏
         YYY.SetActive(false);
+        LL.SetActive(false);
         Thief_A.SetActive(false);
         Thief_B.SetActive(false);
         FatMan.SetActive(false);
@@ -308,6 +310,11 @@ public class CutsceneDialogue : MonoBehaviour
             case "YYY_Red":
                 YYY.SetActive(true);
                 textLabel.color = Color.red;
+                break;
+
+            case "LL":
+                LL.SetActive(true);
+                textLabel.color = new Color32(219, 162, 148, 255);//淡橘黄
                 break;
 
 

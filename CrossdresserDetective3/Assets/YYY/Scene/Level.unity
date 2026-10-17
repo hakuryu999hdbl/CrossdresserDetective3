@@ -23326,6 +23326,120 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696248747}
   m_CullTransparentMesh: 1
+--- !u!1 &696309003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696309004}
+  - component: {fileID: 696309008}
+  - component: {fileID: 696309007}
+  - component: {fileID: 696309006}
+  - component: {fileID: 696309005}
+  m_Layer: 5
+  m_Name: LL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &696309004
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696309003}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1159463169}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 73.999985}
+  m_SizeDelta: {x: 333.6763, y: 52.011}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &696309005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696309003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fa75fc0d88274a92f6c3f9c33ea63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  J: "\u3010\u30EB\u30EA\u3011"
+  C_1: "\u3010\u7409\u7483\u3011"
+  C_2: "\u3010\u7409\u7483\u3011"
+  E: "\u3010Liuli\u3011"
+  K: "\u3010\uB8E8\uB9AC\u3011"
+  isTyped: 0
+--- !u!114 &696309006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696309003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
+--- !u!114 &696309007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696309003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8584906, g: 0.6364948, b: 0.5790762, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a2c5e7505a6adfc4bb370f5675330b98, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\u3010\u5AE3\u3011"
+--- !u!222 &696309008
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696309003}
+  m_CullTransparentMesh: 1
 --- !u!1 &700219993
 GameObject:
   m_ObjectHideFlags: 0
@@ -37741,6 +37855,7 @@ RectTransform:
   - {fileID: 1489205310}
   - {fileID: 1894171097}
   - {fileID: 1489715057}
+  - {fileID: 696309004}
   - {fileID: 1441938314}
   m_Father: {fileID: 1395979338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47002,7 +47117,7 @@ MonoBehaviour:
   J: "\u3010\u5AE3\u3011"
   C_1: "\u3010\u5AE3\u3011"
   C_2: "\u3010\u5AE3\u3011"
-  E: "\u3010En\u3011"
+  E: "\u3010Yan\u3011"
   K: "\u3010\uC5D4\u3011"
   isTyped: 0
 --- !u!1 &1491245652
@@ -63205,6 +63320,7 @@ MonoBehaviour:
   textLabel: {fileID: 1159463166}
   showTime: 3
   YYY: {fileID: 1489715056}
+  LL: {fileID: 696309003}
   Thief_A: {fileID: 1894171096}
   Thief_B: {fileID: 1489205309}
   FatMan: {fileID: 1441938313}
