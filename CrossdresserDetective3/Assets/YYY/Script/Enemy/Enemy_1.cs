@@ -87,6 +87,9 @@ public class Enemy_1 : EnemyController
     {
         anim.Play("Story_Idle", 0, 0f);
         anim.Update(0f);
+
+
+        if (frameEvent_Audio != null) frameEvent_Audio._Voice_StopLoop();//这是在琉璃初登场，由拘束变成站立，在这里插入暂停循环声
     }
 
     public void SetEnemy_Turn()

@@ -110,6 +110,8 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 3:
+                        Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
+                        break;
                     case 4:
                     case 5:
                     case 6:
