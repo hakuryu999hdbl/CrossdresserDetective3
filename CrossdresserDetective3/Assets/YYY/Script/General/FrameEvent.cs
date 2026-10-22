@@ -889,13 +889,13 @@ public class FrameEvent : MonoBehaviour
     public void Bondage()
     {
 
-        playerController.beltIndex = 0;
-        playerController.clothesIndex = 10;
-        playerController.shoesIndex = 10;
-        playerController.bondageType = 0;
-        playerController.pantiesIndex = 0;
+        //playerController.beltIndex = 0;
+        //playerController.clothesIndex = 10;
+        //playerController.shoesIndex = 10;
+        //playerController.bondageType = 0;
+        //playerController.pantiesIndex = 0;
 
-        playerController.RefreshPlayerSkin();
+        //playerController.RefreshPlayerSkin();
 
     }//自缚（局内拘束）
 
@@ -903,32 +903,31 @@ public class FrameEvent : MonoBehaviour
     public void BondageUnlocker()
     {
 
-        playerController.beltIndex = 0;
-        playerController.clothesIndex = 0;
-        playerController.shoesIndex = 0;
-        playerController.bondageType = 0;
-        playerController.pantiesIndex = 0;
+        //playerController.beltIndex = 0;
+        //playerController.clothesIndex = 0;
+        //playerController.shoesIndex = 0;
+        //playerController.bondageType = 0;
+        //playerController.pantiesIndex = 0;
 
-        playerController.RefreshPlayerSkin();
-       // if (GameManager.instance != null) GameManager.instance.ResumeEnemiesAfterCaptivity();
+        //playerController.RefreshPlayerSkin();
 
     }//（局内解缚）
 
     public void SetPlayer_Clothes_01()
     {
 
-        playerController.isUsingStoryClothes = true;//不要记录衣服
-
-
-        playerController.beltIndex = 0;
-        playerController.clothesIndex = 10;
-        playerController.glovesIndex = 0;
-        playerController.pantiesIndex = 0;
-        playerController.shoesIndex = 10;
-        playerController.skirtIndex = 0;
-        playerController.stockingsIndex = 0;
-        playerController.bondageType = 0;
-        playerController.RefreshPlayerSkin();
+        //playerController.isUsingStoryClothes = true;//不要记录衣服
+        //
+        //
+        //playerController.beltIndex = 0;
+        //playerController.clothesIndex = 10;
+        //playerController.glovesIndex = 0;
+        //playerController.pantiesIndex = 0;
+        //playerController.shoesIndex = 10;
+        //playerController.skirtIndex = 0;
+        //playerController.stockingsIndex = 0;
+        //playerController.bondageType = 0;
+        //playerController.RefreshPlayerSkin();
 
     }//赤裸绳子捆绑状态
 
@@ -974,14 +973,14 @@ public class FrameEvent : MonoBehaviour
     public void Story_Clothes_Man_01()
     {
         //赤裸的叶语嫣被捆绑
-        enemyController.clothesIndex = 10;
+        enemyController.clothesIndex = 0;
         enemyController.glovesIndex = 0;
         enemyController.hatIndex = 0;
         enemyController.maskIndex = 0;
         enemyController.beltIndex = 0;
         enemyController.stockingsIndex = 0;
         enemyController.pantiesIndex = 0;
-        enemyController.shoesIndex = 10;
+        enemyController.shoesIndex = 0;
         enemyController.skirtIndex = 0;
 
 
@@ -998,14 +997,14 @@ public class FrameEvent : MonoBehaviour
     public void Story_Clothes_FatMan_01()
     {
         //通常装的叶语嫣
-        enemyController.clothesIndex = 10;
+        enemyController.clothesIndex = 0;
         enemyController.glovesIndex = 0;
         enemyController.hatIndex = 0;
         enemyController.maskIndex = 0;
         enemyController.beltIndex = 0;
         enemyController.stockingsIndex = 0;
         enemyController.pantiesIndex = 0;
-        enemyController.shoesIndex = 10;
+        enemyController.shoesIndex = 0;
         enemyController.skirtIndex = 0;
 
 
@@ -1034,14 +1033,14 @@ public class FrameEvent : MonoBehaviour
     public void Story_Clothes_FatMan_02()
     {
         //通常装的叶语嫣
-        enemyController.clothesIndex = 10;
+        enemyController.clothesIndex = 0;
         enemyController.glovesIndex = 0;
         enemyController.hatIndex = 0;
         enemyController.maskIndex = 0;
         enemyController.beltIndex = 0;
         enemyController.stockingsIndex = 0;
         enemyController.pantiesIndex = 0;
-        enemyController.shoesIndex = 10;
+        enemyController.shoesIndex = 0;
         enemyController.skirtIndex = 0;
 
 
@@ -1103,8 +1102,8 @@ public class FrameEvent : MonoBehaviour
     {
 
         //赤裸的叶语嫣被捆绑
-        rBQController.clothesIndex = 10;
-        rBQController.shoesIndex = 10;
+        rBQController.clothesIndex = 0;
+        rBQController.shoesIndex = 0;
         rBQController.bondageType = 0;
 
 
@@ -1149,8 +1148,8 @@ public class FrameEvent : MonoBehaviour
       
         rBQController.glovesIndex = 1;
         rBQController.stockingsIndex = 1;
-        rBQController.clothesIndex = 10;
-        rBQController.shoesIndex = 10;
+        rBQController.clothesIndex = 0;
+        rBQController.shoesIndex = 0;
         rBQController.bondageType = 0;
         rBQController.skirtIndex = 0;
         rBQController.pantiesIndex = 0;
@@ -1214,26 +1213,26 @@ public class FrameEvent : MonoBehaviour
     {
 
         //赤裸的叶语嫣被捆绑
-        rBQController.clothesIndex = 10;
+        rBQController.clothesIndex = 0;
         rBQController.glovesIndex = 0;
         rBQController.hatIndex = 0;
         rBQController.maskIndex = 0;
         rBQController.beltIndex = 0;
         rBQController.stockingsIndex = 0;
         rBQController.pantiesIndex = 0;
-        rBQController.shoesIndex = 10;
+        rBQController.shoesIndex = 0;
         rBQController.skirtIndex = 0;
         rBQController.bondageType = 0;
 
 
         //赤裸的女孩被捆绑
-        rBQController.Girl_clothesIndex = 10;
-        //rBQController.Girl_glovesIndex = 0;
+        rBQController.Girl_clothesIndex = 0;
+        rBQController.Girl_glovesIndex = 0;
         rBQController.Girl_hatIndex = 0;
         rBQController.Girl_maskIndex = 0;
-        //rBQController.Girl_stockingsIndex = 0;
-        rBQController.Girl_underwearIndex = 10;
-        rBQController.Girl_shoesIndex = 10;
+        rBQController.Girl_stockingsIndex = 0;
+        rBQController.Girl_underwearIndex = 0;
+        rBQController.Girl_shoesIndex = 0;
 
 
         rBQController.RefreshPlayerSkin();
