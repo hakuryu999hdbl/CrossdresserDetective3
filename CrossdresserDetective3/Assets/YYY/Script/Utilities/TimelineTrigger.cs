@@ -201,6 +201,9 @@ public class TimelineTrigger : MonoBehaviour
             case "Chapter_01_7":
                 UIManager.instance.Init_Chapter_01_7();
                 break;
+            case "Chapter_01_8":
+                UIManager.instance.Init_Chapter_01_8();
+                break;
         }
     }
 
@@ -395,4 +398,10 @@ public class TimelineTrigger : MonoBehaviour
         UIManager.instance.CutsceneGameOverUI();
 
     }//拘束逃脱失败结局
+
+    public void SetWin() 
+    {
+        GameManager.instance.PlayerEscapeWin();
+
+    }//一般过程动画胜利
 }

@@ -1883,8 +1883,9 @@ public class EnemyController : MonoBehaviour
 
 
 
-
-
+    [Header("特殊角色皮肤")]
+    public bool isLL_1;//常服琉璃
+    public bool isLL_2;//女反派琉璃
 
 
     public void StageSkin()
@@ -2032,6 +2033,23 @@ public class EnemyController : MonoBehaviour
         meleeType = Random.Range(1, 4);
         pistolType = Random.Range(1, 4);
         rifleType = Random.Range(1, 3);
+
+
+        if (isLL_1) 
+        {
+            Girl_hairIndex = 0;
+            Girl_clothesIndex = 5;
+            Girl_glovesIndex = 0;
+            Girl_shoesIndex = 2;
+
+
+            Girl_underwearIndex = 2;//内衣裤袜
+            Girl_stockingsIndex = 2;
+
+            Girl_hatIndex = 0;//没有头饰
+            Girl_maskIndex = 0;//不戴面具
+        }
+
 
 
         RefreshPlayerSkin();//初始更新皮肤
