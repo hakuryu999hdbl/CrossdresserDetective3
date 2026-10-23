@@ -886,32 +886,32 @@ public class FrameEvent : MonoBehaviour
     }//洗澡脱下半身
 
 
-    public void Bondage()
-    {
+    //public void Bondage()
+    //{
+    //
+    //    //playerController.beltIndex = 0;
+    //    //playerController.clothesIndex = 10;
+    //    //playerController.shoesIndex = 10;
+    //    //playerController.bondageType = 0;
+    //    //playerController.pantiesIndex = 0;
+    //
+    //    //playerController.RefreshPlayerSkin();
+    //
+    //}//自缚（局内拘束）
 
-        //playerController.beltIndex = 0;
-        //playerController.clothesIndex = 10;
-        //playerController.shoesIndex = 10;
-        //playerController.bondageType = 0;
-        //playerController.pantiesIndex = 0;
 
-        //playerController.RefreshPlayerSkin();
-
-    }//自缚（局内拘束）
-
-
-    public void BondageUnlocker()
-    {
-
-        //playerController.beltIndex = 0;
-        //playerController.clothesIndex = 0;
-        //playerController.shoesIndex = 0;
-        //playerController.bondageType = 0;
-        //playerController.pantiesIndex = 0;
-
-        //playerController.RefreshPlayerSkin();
-
-    }//（局内解缚）
+    //public void BondageUnlocker()
+    //{
+    //
+    //    //playerController.beltIndex = 0;
+    //    //playerController.clothesIndex = 0;
+    //    //playerController.shoesIndex = 0;
+    //    //playerController.bondageType = 0;
+    //    //playerController.pantiesIndex = 0;
+    //
+    //    //playerController.RefreshPlayerSkin();
+    //
+    //}//（局内解缚）
 
     public void SetPlayer_Clothes_01()
     {
@@ -1073,29 +1073,29 @@ public class FrameEvent : MonoBehaviour
     public void SetCatch_1() 
     {
         playerController.isUsingStoryClothes = true;//不要记录衣服
-
-
+    
+    
         playerController.skirtIndex = 0;
-        playerController.beltIndex = 0;
- 
-
+        //playerController.beltIndex = 0;
+    
+    
         
-        playerController.pantiesIndex = 0;
-
+        //playerController.pantiesIndex = 0;
+    
         if (playerController.clothesIndex == 3) 
         {
             playerController.clothesIndex = 0;
         }//兔女郎装也脱掉
-
-        if (playerController.stockingsIndex == 3)
-        {
-            playerController.stockingsIndex = 0;
-        }//裤袜也脱掉
-
+    
+        //if (playerController.stockingsIndex == 3)
+        //{
+        //    playerController.stockingsIndex = 0;
+        //}//裤袜也脱掉
+    
         playerController.RefreshPlayerSkin();
-
+    
         playerController.frameEvent_Audio._SE_Tear();
-
+    
     }//【局内】被敌人抓住后挣扎，裙子吊带内裤为0
 
     public void SetDeadBondage_Bondage_1()
@@ -1209,35 +1209,35 @@ public class FrameEvent : MonoBehaviour
 
  
 
-    public void SetRBQ_Bondage_1() 
-    {
-
-        //赤裸的叶语嫣被捆绑
-        rBQController.clothesIndex = 0;
-        rBQController.glovesIndex = 0;
-        rBQController.hatIndex = 0;
-        rBQController.maskIndex = 0;
-        rBQController.beltIndex = 0;
-        rBQController.stockingsIndex = 0;
-        rBQController.pantiesIndex = 0;
-        rBQController.shoesIndex = 0;
-        rBQController.skirtIndex = 0;
-        rBQController.bondageType = 0;
-
-
-        //赤裸的女孩被捆绑
-        rBQController.Girl_clothesIndex = 0;
-        rBQController.Girl_glovesIndex = 0;
-        rBQController.Girl_hatIndex = 0;
-        rBQController.Girl_maskIndex = 0;
-        rBQController.Girl_stockingsIndex = 0;
-        rBQController.Girl_underwearIndex = 0;
-        rBQController.Girl_shoesIndex = 0;
-
-
-        rBQController.RefreshPlayerSkin();
-
-    }//救出模式失踪少女RBQ皮肤套入
+    //public void SetRBQ_Bondage_1() 
+    //{
+    //
+    //    //赤裸的叶语嫣被捆绑
+    //    rBQController.clothesIndex = 0;
+    //    rBQController.glovesIndex = 0;
+    //    rBQController.hatIndex = 0;
+    //    rBQController.maskIndex = 0;
+    //    rBQController.beltIndex = 0;
+    //    rBQController.stockingsIndex = 0;
+    //    rBQController.pantiesIndex = 0;
+    //    rBQController.shoesIndex = 0;
+    //    rBQController.skirtIndex = 0;
+    //    rBQController.bondageType = 0;
+    //
+    //
+    //    //赤裸的女孩被捆绑
+    //    rBQController.Girl_clothesIndex = 0;
+    //    rBQController.Girl_glovesIndex = 0;
+    //    rBQController.Girl_hatIndex = 0;
+    //    rBQController.Girl_maskIndex = 0;
+    //    rBQController.Girl_stockingsIndex = 0;
+    //    rBQController.Girl_underwearIndex = 0;
+    //    rBQController.Girl_shoesIndex = 0;
+    //
+    //
+    //    rBQController.RefreshPlayerSkin();
+    //
+    //}//救出模式失踪少女RBQ皮肤套入
 
 
 

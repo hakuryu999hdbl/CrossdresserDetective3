@@ -2038,7 +2038,7 @@ public class UIManager : MonoBehaviour
         playerController.ExitCapturedState(Vector2.zero);
         playerController.rb.velocity = Vector2.zero;
         playerController.EnterBondageState();
-        playerController.frameEvent.Bondage();
+        //playerController.frameEvent.Bondage();
 
         MissionFailure.SetActive(false);
         Skip_GameOver.SetActive(false);

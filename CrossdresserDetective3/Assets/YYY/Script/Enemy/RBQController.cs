@@ -89,7 +89,11 @@ public class RBQController : MonoBehaviour
         anim.ResetTrigger("Next");
 
         currentAnimationType = 0;
-        frameEvent.SetDeadBondage_Bondage_1();
+
+        ReadCurrentGame(player); // ★ 新增：读取玩家当前服装
+
+
+        //frameEvent.SetDeadBondage_Bondage_1();
         anim.Play("Man_RapeYYY_7", 0, 0f);
 
 
@@ -100,7 +104,7 @@ public class RBQController : MonoBehaviour
     {
         currentAnimationType = stageAnimationType;
         ReadCurrentGame(player);
-        AbuseAnimation();
+        AbuseAnimation();//战败进入处刑室入口
     }//进入处刑室入口
 
 
@@ -112,7 +116,7 @@ public class RBQController : MonoBehaviour
         StageSkin();
         //RandomSkin();
 
-        frameEvent.SetRBQ_Bondage_1();
+        //frameEvent.SetRBQ_Bondage_1();
 
 
         RandomizeZ();
@@ -158,17 +162,17 @@ public class RBQController : MonoBehaviour
         {
             case -1:
                 anim.Play("Man_AbuseGirl_7", 0, 0f);
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 0:
                 anim.Play("Man_RapeYYY_7", 0, 0f);
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 1:
                 anim.Play("Man_AbuseYYY_8", 0, 0f);
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
             case 2:
                 //无
@@ -206,37 +210,37 @@ public class RBQController : MonoBehaviour
 
             case -1:
                 anim.Play("Man_AbuseGirl_1", 0, 0f);
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 0:
                 anim.Play("Man_RapeYYY_1", 0, 0f);//用完扔垃圾桶
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 1:
                 anim.Play("Man_AbuseYYY_1", 0, 0f);//轮奸无法合腿
-                frameEvent.SetDeadBondage_Bondage_2();//全身捆绑，不绑腿
+                //frameEvent.SetDeadBondage_Bondage_2();//全身捆绑，不绑腿
                 break;
 
             case 2:
                 anim.Play("Man_PeeInYYY_1", 0, 0f);//厕所尿便器
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 3:
                 anim.Play("Story_SelfBondage_2", 0, 0f);//榨精地狱
-                frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 4:
                 anim.Play("Story_Girl_LewdmoveYYY_1", 0, 0f);//女干部榨精勒死
-                RandomSkin();//不捆绑
+                //RandomSkin();//不捆绑
                 break;
 
             case 5:
                 anim.Play("FatMan_RapeYYY_1", 0, 0f);//死宅玩弄
-                RandomSkin();//不捆绑
+                //RandomSkin();//不捆绑
                 break;
 
         }
@@ -492,7 +496,6 @@ public class RBQController : MonoBehaviour
                     case 1:
                     case 2:
 
-                        //frameEvent.Story_Clothes_Man_01();//设置男性小偷
                         //小偷头型
                         Man_hairIndex = 2;
                         Man_clothesIndex = 1;
@@ -520,40 +523,6 @@ public class RBQController : MonoBehaviour
                         FatMan_hairIndex = 1;
                         FatMan_clothesIndex = 1;
 
-
-                        //西服女
-                        Girl_hairIndex = Random.Range(3, 5);
-                        Girl_clothesIndex = 6;
-                        Girl_glovesIndex = 1;
-                        Girl_shoesIndex = Random.Range(1, 3);
-
-
-                        switch (Random.Range(1, 3))
-                        {
-                            case 1:
-                                Girl_underwearIndex = 1;//内衣
-                                Girl_stockingsIndex = Random.Range(0, 2);
-                                if (Girl_stockingsIndex==1) { Girl_shoesIndex = 0; }
-                                break;
-                            case 2:
-                                Girl_underwearIndex = 2;//内衣裤袜
-                                Girl_stockingsIndex = 2;
-                                break;
-                        }
-
-                        Girl_hatIndex = 0;//没有头饰
-                        Girl_maskIndex = 0;//不戴面具
-
-
-
-
-
-
-
-
-
-
-
                         break;
                 }
                 break;
@@ -568,54 +537,17 @@ public class RBQController : MonoBehaviour
                     case 6:
                     case 7:
                     case 8:
+                    case 9:
+                    case 10:
 
                         //西服男（无小偷头型）
                         Man_hairIndex = Random.Range(0, 2);
                         Man_clothesIndex = 2;
 
 
-                        //西服女
-                        Girl_hairIndex = Random.Range(3, 5);
-                        Girl_clothesIndex = 6;
-                        Girl_glovesIndex = 1;
-                        Girl_shoesIndex = Random.Range(1, 3);
-
-
-                        switch (Random.Range(1, 3))
-                        {
-                            case 1:
-                                Girl_underwearIndex = 1;//内衣
-                                Girl_stockingsIndex = Random.Range(0, 2);
-                                if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
-                                break;
-                            case 2:
-                                Girl_underwearIndex = 2;//内衣裤袜
-                                Girl_stockingsIndex = 2;
-                                break;
-                        }
-
-                        Girl_hatIndex = 0;//没有头饰
-                        Girl_maskIndex = 0;//不戴面具
-
-
-
-
-
-
-
-
-
-
-
-                        break;
-
-                    default:
-                    case 9:
-                    case 10:
-
-                        //西服男
-                        Man_hairIndex = Random.Range(0, 2);
-                        Man_clothesIndex = 2;
+                        //死宅
+                        FatMan_hairIndex = 1;
+                        FatMan_clothesIndex = 1;
 
                         break;
                 }
@@ -626,6 +558,43 @@ public class RBQController : MonoBehaviour
         meleeType = Random.Range(1, 4);
         pistolType = Random.Range(1, 4);
         rifleType = Random.Range(1, 3);
+
+
+
+
+
+
+        //女性，伪娘单独拉出来，RBQ里面尽量不做女性敌人
+        Girl_hairIndex = Random.Range(3, 5);//除去琉璃绫鬼崎
+        Girl_clothesIndex = Random.Range(0, 7);//全体衣物
+    
+        Girl_shoesIndex = 0;//RBQ女性本来就没有鞋子
+
+
+        switch (Random.Range(1, 3))
+        {
+            case 1:              
+                Girl_underwearIndex = Random.Range(0, 2);//裸体或内衣
+                Girl_stockingsIndex = Random.Range(0, 2);//裸腿或黑皮靴
+                Girl_glovesIndex = Random.Range(0, 3);//除去全身丝
+                break;
+            case 2:
+                Girl_underwearIndex = 2;//内衣裤袜
+                Girl_stockingsIndex = 2;//内衣裤袜
+                Girl_glovesIndex = Random.Range(0, 3);//除去全身丝
+                break;
+            case 3:
+                //全身丝
+                Girl_underwearIndex = 3;
+                Girl_stockingsIndex = 3;
+                Girl_glovesIndex = 3;
+                break;
+        }
+
+        Girl_hatIndex = 0;//没有头饰
+        Girl_maskIndex = 0;//不戴面具
+
+
 
 
         RefreshPlayerSkin();//初始更新皮肤

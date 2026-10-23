@@ -35,7 +35,7 @@ public class BondageUnlocker : MonoBehaviour
 
         player.playerAnimation.ExitBondageIdle();
 
-        player.frameEvent.BondageUnlocker();//ﾈ･ｵﾗﾓ
+        //player.frameEvent.BondageUnlocker();//ﾈ･ｵﾗﾓ
         player.frameEvent_Audio._Voice_StopLoop();//循环音关闭
 
         GameManager.instance.HideBondageUnlockText();//ﾈﾎﾎ・ﾂ
