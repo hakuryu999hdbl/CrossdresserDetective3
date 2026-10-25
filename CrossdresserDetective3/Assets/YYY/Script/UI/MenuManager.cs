@@ -940,20 +940,20 @@ public class MenuManager : MonoBehaviour
                 CurrentOpen = -1;
 
                 break;
-            case 2:
-                ChapterMenu.SetActive(false);
-                Chapter_2_Menu.SetActive(true);
-
-                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
-
-
-
-                CurrentOpen = -2;
-
-                break;
+            case 2://Demo限制
+                //ChapterMenu.SetActive(false);
+                //Chapter_2_Menu.SetActive(true);
+                //
+                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                //
+                //EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
+                //
+                //
+                //
+                //CurrentOpen = -2;
+                //
+                //break;
             case 3:
             case 4:
             case 5:
@@ -1175,17 +1175,17 @@ public class MenuManager : MonoBehaviour
         Debug.Log("进入：章节" + nextChapter + "关卡" + nextStage);
 
         //特殊情况的主线需要单独先进入AVG
-        // Demo限制：第一章只开放1~6关
+        // Demo限制：第一章只开放1~9关
         if (nextChapter == 1 && nextStage == 1)
         {
             GameFlowData.nextAreaId = "Introduce";
             StartSpine();
         }
-        //else if (nextChapter == 1 && nextStage >= 9)
-        //{
-        //    GameFlowData.nextAreaId = "Demo";
-        //    StartSpine();
-        //}
+        else if (nextChapter == 1 && nextStage >= 10)
+        {
+            GameFlowData.nextAreaId = "Demo";
+            StartSpine();
+        }
         else
         {
             SceneManager.LoadScene("Level");

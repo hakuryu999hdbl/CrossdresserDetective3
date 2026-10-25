@@ -1772,8 +1772,20 @@ public class UIManager : MonoBehaviour
      int maxAmmo, int magazineCount
  )
     {
-        if (playerController.attackType == -1) { bulletPrefab = bulletPrefab_Pistol; }
-        if (playerController.attackType == -2) { bulletPrefab = bulletPrefab_Rifle; }
+        if (playerController.attackType == -1)
+        {
+            bulletPrefab = bulletPrefab_Pistol;
+        }
+        else if (playerController.attackType == -2)
+        {
+            bulletPrefab = bulletPrefab_Rifle;
+        }
+        else
+        {
+            bulletPrefab = playerController.rangedSlot == -2
+                ? bulletPrefab_Rifle
+                : bulletPrefab_Pistol;
+        }//即使当前使用近战武器，也能根据装备的远程武器槽决定显示哪种子弹
 
         foreach (Transform child in bulletRoot)
         {

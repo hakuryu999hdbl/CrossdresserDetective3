@@ -94,11 +94,13 @@ public class PlayerController : MonoBehaviour
 
         OnReloadAnimationEnd();//更新子弹
 
-        frameEvent.FadeIn(0.4f);//所有Spine都淡入
+     
 
         ReadCurrentGame();//初始读取
 
+        OnReloadAnimationEnd();//再初始化子弹数量和UI
 
+        frameEvent.FadeIn(0.4f);//所有Spine都淡入
     }
 
 
@@ -642,7 +644,11 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case GameFlowData.EquipPart.Throw:
-                throwType = index;
+                if (throwType != index)
+                {
+                    throwType = index;
+                    ResetThrowCount();
+                }
 
                 if (index == 0)
                 {
@@ -816,7 +822,7 @@ public class PlayerController : MonoBehaviour
         meleeType = data.meleeType;
         pistolType = data.pistolType;
         rifleType = data.rifleType;
-        throwType = data.throwType;
+        throwType = data.throwType; ResetThrowCount();//投掷品对应数量
 
         meleeSlot = data.meleeSlot;
         rangedSlot = data.rangedSlot;
@@ -1793,8 +1799,35 @@ public class PlayerController : MonoBehaviour
     float maxThrowForce = 30f;
 
     [Header("投掷物数量")]
-    public int throwCount = 5;
+    public int throwCount = 3;
     public int maxThrowCount = 99;//投掷物上限
+
+
+    int bombStartCount = 2;
+    int smokeStartCount = 3;
+    int flashStartCount = 1;
+    int incendiaryStartCount = 2;
+    int shockStartCount = 1;
+    int knifeStartCount = 3;
+
+    public void ResetThrowCount()
+    {
+        switch (throwType)
+        {
+            case 0: throwCount = 0; break;
+            case 1: throwCount = bombStartCount; break;
+            case 2: throwCount = smokeStartCount; break;
+            case 3: throwCount = flashStartCount; break;
+            case 4: throwCount = incendiaryStartCount; break;
+            case 5: throwCount = shockStartCount; break;
+            case 6: throwCount = knifeStartCount; break;
+        }
+
+        throwCount = Mathf.Clamp(throwCount, 0, maxThrowCount);
+
+        UIManager.instance.RefreshThrowUI(throwCount);
+    }
+
 
     void CheckThrow()
     {
@@ -2008,6 +2041,13 @@ public class PlayerController : MonoBehaviour
 
 
         UIManager.instance.RefreshWeaponSlotUI(this);
+
+        // 切换武器后，同时更新子弹图标
+        UIManager.instance.RefreshAmmoUI(
+            currentAmmo,
+            maxAmmo,
+            magazineCount
+        );
 
     }//更换玩家当前装备显示与UI层显示
 

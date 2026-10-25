@@ -196,18 +196,18 @@ public class GameManager : MonoBehaviour
 
 
         // =========================
-        // Demo限制：第一章只开放1~6关
+        // Demo限制：第一章只开放1~9关
         // =========================
-        //if (GameFlowData.CurrentChapter == 1 &&
-        //    GameFlowData.CurrentStage >= 9)
-        //{
-        //    GameFlowData.nextAreaId = "Demo";
-        //
-        //    Time.timeScale = 1f;
-        //
-        //    SceneManager.LoadScene("Spine");
-        //    yield break;
-        //}
+        if (GameFlowData.CurrentChapter == 1 &&
+            GameFlowData.CurrentStage >= 10)
+        {
+            GameFlowData.nextAreaId = "Demo";
+        
+            Time.timeScale = 1f;
+        
+            SceneManager.LoadScene("Spine");
+            yield break;
+        }
 
 
         // 每章10关

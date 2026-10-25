@@ -210,7 +210,33 @@ public class PickupItem : MonoBehaviour
         if (player.throwCount >= player.maxThrowCount)
             return false;
 
-        player.AddThrowCount(value);//增加投掷品数量
+        //player.AddThrowCount(value);//增加投掷品数量
+        //投掷品按照当前持有类型增加
+
+        switch (player.throwType)
+        {
+            case 1:
+                player.AddThrowCount(2);//手雷
+                break;
+            case 2:
+                player.AddThrowCount(3);//烟雾弹
+                break;
+            case 3:
+                player.AddThrowCount(1);//闪光弹
+                break;
+            case 4:
+                player.AddThrowCount(2);//燃烧弹
+                break;
+            case 5:
+                player.AddThrowCount(1);//震撼弹
+                break;
+            case 6:
+                player.AddThrowCount(3);//飞刀
+                break;
+        }
+
+
+
         return true;
     }
 

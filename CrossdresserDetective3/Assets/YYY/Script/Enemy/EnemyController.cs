@@ -909,18 +909,20 @@ public class EnemyController : MonoBehaviour
 
     public virtual void SkillAction()
     {
+        //暂时隐藏针对炸弹的动作（同时隐藏尸体）
+
 
         //Debug.Log("这是炸弹，技能攻击");
-        if (Vector2.Distance(transform.position, targetPoint.position) < skillRange)
-        {
-            if (Time.time > nextAttack)
-            {
-                // 播放攻击动画
-                anim.SetTrigger("skill");
-                Debug.Log("针对炸弹技能攻击");
-                nextAttack = Time.time + attackRate;
-            }
-        }
+        //if (Vector2.Distance(transform.position, targetPoint.position) < skillRange)
+        //{
+        //    if (Time.time > nextAttack)
+        //    {
+        //        // 播放攻击动画
+        //        anim.SetTrigger("skill");
+        //        Debug.Log("针对炸弹技能攻击");
+        //        nextAttack = Time.time + attackRate;
+        //    }
+        //}
 
     }// 对炸弹使用技能
 
