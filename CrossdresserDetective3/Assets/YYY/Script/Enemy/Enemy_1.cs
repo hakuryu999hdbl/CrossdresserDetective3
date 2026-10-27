@@ -81,7 +81,13 @@ public class Enemy_1 : EnemyController
         anim.Play("Story_Run", 0, 0f);
         anim.Update(0f);
     }
+    public void SetEnemy_Phone()
+    {
+        anim.Play("Story_Photo_1", 0, 0f);
+        anim.Update(0f);
 
+        ReadCurrentGame(GameManager.instance.player);//读取玩家衣物
+    }
 
     public void SetEnemy_Idle()
     {
@@ -127,7 +133,13 @@ public class Enemy_1 : EnemyController
         anim.Update(0f);
     }
 
+    public void SetEnemy_FeraYYY()
+    {
+        anim.Play("Story_FeraYYY_1", 0, 0f);
+        anim.Update(0f);
 
+        ReadCurrentGame(GameManager.instance.player);//读取玩家衣物
+    }
     public void SetEnemy_Girl_Rbq_1() 
     {
         anim.Play("Story_Girl_Rbq_1", 0, 0f);

@@ -941,19 +941,19 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 2://Demo限制
-                //ChapterMenu.SetActive(false);
-                //Chapter_2_Menu.SetActive(true);
-                //
-                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-                //
-                //EventSystem.current.SetSelectedGameObject(null);
-                //EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
-                //
-                //
-                //
-                //CurrentOpen = -2;
-                //
-                //break;
+                ChapterMenu.SetActive(false);
+                Chapter_2_Menu.SetActive(true);
+                
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
+                
+                
+                
+                CurrentOpen = -2;
+                
+                break;
             case 3:
             case 4:
             case 5:
@@ -1181,11 +1181,11 @@ public class MenuManager : MonoBehaviour
             GameFlowData.nextAreaId = "Introduce";
             StartSpine();
         }
-        else if (nextChapter == 1 && nextStage >= 10)
-        {
-            GameFlowData.nextAreaId = "Demo";
-            StartSpine();
-        }
+        //else if (nextChapter == 1 && nextStage >= 10)
+        //{
+        //    GameFlowData.nextAreaId = "Demo";
+        //    StartSpine();
+        //}
         else
         {
             SceneManager.LoadScene("Level");

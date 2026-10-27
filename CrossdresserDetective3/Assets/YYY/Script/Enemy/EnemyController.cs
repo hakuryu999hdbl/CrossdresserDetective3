@@ -1983,6 +1983,10 @@ public class EnemyController : MonoBehaviour
                         Man_clothesIndex = 2;
 
 
+                        //死宅
+                        FatMan_hairIndex = 1;
+                        FatMan_clothesIndex = 1;
+
                         //西服女
                         Girl_hairIndex = Random.Range(3, 5);
                         Girl_clothesIndex = 6;
