@@ -210,37 +210,34 @@ public class RBQController : MonoBehaviour
 
             case -1:
                 anim.Play("Man_AbuseGirl_1", 0, 0f);
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 0:
                 anim.Play("Man_RapeYYY_1", 0, 0f);//用完扔垃圾桶
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 1:
                 anim.Play("Man_AbuseYYY_1", 0, 0f);//轮奸无法合腿
-                //frameEvent.SetDeadBondage_Bondage_2();//全身捆绑，不绑腿
                 break;
 
             case 2:
                 anim.Play("Man_PeeInYYY_1", 0, 0f);//厕所尿便器
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 3:
-                anim.Play("Story_SelfBondage_2", 0, 0f);//榨精地狱
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
+                anim.Play("SelfBondage_2", 0, 0f);//榨精地狱
                 break;
 
             case 4:
-                anim.Play("Story_Girl_LewdmoveYYY_1", 0, 0f);//女干部榨精勒死
-                //RandomSkin();//不捆绑
+                anim.Play("Girl_LewdmoveYYY_1", 0, 0f);//女干部榨精勒死
                 break;
 
             case 5:
                 anim.Play("FatMan_RapeYYY_1", 0, 0f);//死宅玩弄
-                //RandomSkin();//不捆绑
+                break;
+
+            case 6:
+                anim.Play("FatMan_FeraYYY_1", 0, 0f);//死宅玩弄
                 break;
 
         }
@@ -328,7 +325,7 @@ public class RBQController : MonoBehaviour
 
 
 
-    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY   [5]  FatMan_RapeYYY
+    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY   [5]  FatMan_RapeYYY    [6]  FatMan_FeraYYY   
 
 
     /// <summary>
@@ -340,22 +337,9 @@ public class RBQController : MonoBehaviour
 
         //不同的CG对应RBQ衣服也不一样
         //这一层是先设置衣服，到了下一层设置捆绑的绳子还是锁链
-        switch (animationType)
-        {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                frameEvent.SetDeadBondage_Bondage_3();
-                frameEvent.SetDeadBondage_RandomEnemy();
-                break;
 
-            case 4:
-            case 5:
-                frameEvent.SetDeadBondage_Bondage_4();
-                frameEvent.SetDeadBondage_RandomEnemy();
-                break;
-        }
+        frameEvent.SetDeadBondage_Bondage();
+        frameEvent.SetDeadBondage_RandomEnemy();
 
 
 

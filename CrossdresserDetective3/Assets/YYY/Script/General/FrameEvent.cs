@@ -1098,52 +1098,8 @@ public class FrameEvent : MonoBehaviour
     
     }//【局内】被敌人抓住后挣扎，裙子吊带内裤为0
 
-    public void SetDeadBondage_Bondage_1()
-    {
 
-        //赤裸的叶语嫣被捆绑
-        rBQController.clothesIndex = 0;
-        rBQController.shoesIndex = 0;
-        rBQController.bondageType = 0;
-
-
-        //裙子和内裤去掉
-        rBQController.skirtIndex = 0;
-        rBQController.pantiesIndex = 0;
-
-
-        //男性小偷
-        //rBQController.Man_clothesIndex = 1;
-        //rBQController.Man_hairIndex = 2;
-
-
-        rBQController.RefreshPlayerSkin();
-
-    }//【局内】战败玩家（原皮）拘束（用在自缚/被轮奸等通用CG）
-    public void SetDeadBondage_Bondage_2()
-    {
-
-        //赤裸的叶语嫣被捆绑
-        //rBQController.clothesIndex = 10;
-        //rBQController.shoesIndex = 10;
-        rBQController.bondageType = 0;
-
-
-        //裙子和内裤去掉
-        rBQController.skirtIndex = 0;
-        rBQController.pantiesIndex = 0;
-
-
-        //男性小偷
-        //rBQController.Man_clothesIndex = 1;
-        //rBQController.Man_hairIndex = 2;
-
-
-        rBQController.RefreshPlayerSkin();
-
-    }//【局内】战败玩家（原皮）,去掉裙子和内裤（用在掐脖子CG）
-
-    public void SetDeadBondage_Bondage_3() 
+    public void SetDeadBondage_Bondage() 
     {
       
         rBQController.glovesIndex = 1;
@@ -1155,20 +1111,7 @@ public class FrameEvent : MonoBehaviour
         rBQController.pantiesIndex = 0;
 
 
-    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套被捆绑（用在自缚/被轮奸等通用CG）
-    public void SetDeadBondage_Bondage_4()
-    {
-
-        rBQController.glovesIndex = 1;
-        rBQController.stockingsIndex = 1;
-        rBQController.clothesIndex = 0;
-        rBQController.shoesIndex = 0;
-        rBQController.bondageType = 0;
-        rBQController.skirtIndex = 0;
-        rBQController.pantiesIndex = 0;
-
-
-    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套没有捆绑（用在掐脖子CG）
+    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套
     public void SetDeadBondage_RandomEnemy() 
     {
 

@@ -198,6 +198,12 @@ public class PlayerAnimation : MonoBehaviour
         anim.Update(0f);
     }
 
+    public void PlaySick()
+    {
+        anim.Play("Story_Sick", 0, 0f);
+        anim.Update(0f);
+    }
+
     public void SetPlayer_Turn()
     {
         transform.localScale = new Vector3(

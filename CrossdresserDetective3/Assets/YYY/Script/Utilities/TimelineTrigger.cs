@@ -302,6 +302,12 @@ public class TimelineTrigger : MonoBehaviour
     {
         GameManager.instance.player.playerAnimation.PlayKick();
     }
+
+    public void SetPlayerAnim_Sick()
+    {
+        GameManager.instance.player.playerAnimation.PlaySick();
+    }
+
     public void SetPlayer_Turn()
     {
         GameManager.instance.player.playerAnimation.SetPlayer_Turn();
@@ -398,6 +404,17 @@ public class TimelineTrigger : MonoBehaviour
         UIManager.instance.CutsceneGameOverUI();
 
     }//拘束逃脱失败结局
+
+    public void SetPlayer_FeraFatManDie()
+    {
+        endsWithGameOver = true;
+
+        UIManager.instance.ResultNumber = 7;
+
+
+        UIManager.instance.CutsceneGameOverUI();
+
+    }//口交服侍死宅失败结局
 
     public void SetWin() 
     {
