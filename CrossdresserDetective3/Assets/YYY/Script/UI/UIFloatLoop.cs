@@ -64,7 +64,7 @@ public class UIFloatLoop : MonoBehaviour
         }
 
         // --------------------
-        // ∫ÙŒÅEı∑≈
+        // ∫ÙŒÅEı∑?
         // --------------------
         if (scale)
         {
