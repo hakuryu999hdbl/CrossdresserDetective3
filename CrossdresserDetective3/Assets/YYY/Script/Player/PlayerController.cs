@@ -592,7 +592,7 @@ public class PlayerController : MonoBehaviour
                 }
                 Slot = 0;//为近战
 
-
+                RefreshMeleePowerCost();//更新体力消耗
 
                 break;
 
@@ -1515,6 +1515,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    [Header("近战体力消耗")]
+    [Min(0)] public int meleePowerCost = 1;// 通用体力消耗
+    [Min(0)] public int airKickPowerCost = 3;// 飞踢的体力消耗更大
+    [Min(0)] public int kickPowerCost = 1; //普通近战体力消耗
+    [Min(0)] public int knifePowerCost = 2;  // 匕首、尼泊尔军刀共用
+    [Min(0)] public int katanaPowerCost = 3; // 武士刀体力消耗更大
+    private void RefreshMeleePowerCost()
+    {
+        // 空手，或远程槽没有枪时的踢击
+        if (Slot != 0 || meleeType == 0)
+        {
+            meleePowerCost = kickPowerCost;
+            return;
+        }
+
+        meleePowerCost = meleeType == 2
+            ? katanaPowerCost
+            : knifePowerCost;
+    }
+
 
     #region  攻击
     [Header("攻击触发/炸弹")]
@@ -1523,7 +1543,7 @@ public class PlayerController : MonoBehaviour
     private float attackPressTime;
     private float chargeThreshold = 0.35f;
 
-
+  
 
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
@@ -1580,10 +1600,25 @@ public class PlayerController : MonoBehaviour
 
         if (!physicsCheck.isGround)
         {
+            if (character.currentPower < airKickPowerCost)
+            {
+                AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+                return;
+            }
+
             AirKick();
             return;
         }//空中触发飞踢
 
+        // 地面近战：踢击、挥砍
+        if (attackType >= 0)
+        {
+            if (character.currentPower < meleePowerCost) 
+            {
+                AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+                return;
+            }        
+        }
 
         isAttack = true;
 
@@ -1729,7 +1764,11 @@ public class PlayerController : MonoBehaviour
         if (isCaptured) { return; }//被抓住无法翻滚
         if (isSlide) return;
         if (!physicsCheck.isGround) return;
-        if (character.currentPower < slidePowerCost) return;
+        if (character.currentPower < slidePowerCost) 
+        {
+            AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+            return;
+        } 
         if (isAttack || isHurt || isDead || isTeleporting) return;
 
         character.OnSlide(slidePowerCost);
@@ -2048,6 +2087,8 @@ public class PlayerController : MonoBehaviour
             maxAmmo,
             magazineCount
         );
+
+        RefreshMeleePowerCost();//体力消耗跟上
 
     }//更换玩家当前装备显示与UI层显示
 

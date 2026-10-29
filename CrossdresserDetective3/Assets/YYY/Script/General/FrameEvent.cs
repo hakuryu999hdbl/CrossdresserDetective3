@@ -771,6 +771,23 @@ public class FrameEvent : MonoBehaviour
     {
         if (area == null) yield break;
 
+
+        // 玩家近战才消耗，敌人不受影响
+        if (playerController != null &&
+            !playerController.isInCutscene)
+        {
+            int cost = playerController.isAirKick
+                ? playerController.airKickPowerCost
+                : playerController.meleePowerCost;
+
+            // 动画真正打出伤害前，再检查一次体力
+            if (playerController.character.currentPower < cost)
+                yield break;
+
+            playerController.character.OnSlide(cost);
+        }
+
+
         area.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);
