@@ -57,6 +57,22 @@ public class PatrolState : EnemyBaseState
     {
         if (enemy.attackList.Count > 0)
         {
+            //暂时只有Enemy_3才有这个能力，别的敌人有乱七八糟技能和状态
+            if (enemy is Enemy_3) 
+            {
+                // 巡逻时发现玩家，才尝试呼叫增援
+                foreach (Transform target in enemy.attackList)
+                {
+                    if (target != null && target.CompareTag("Player"))
+                    {
+                        Debug.Log("呼叫增援");
+                        enemy.CallReinforcements();
+                        break;
+                    }
+                }
+            }
+          
+
             enemy.EnterBattleState();
             return;
         }

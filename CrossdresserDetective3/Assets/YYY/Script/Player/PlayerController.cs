@@ -1602,7 +1602,8 @@ public class PlayerController : MonoBehaviour
         {
             if (character.currentPower < airKickPowerCost)
             {
-                AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+                //AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+                UIManager.instance.ShowOutOfPowerAlert();
                 return;
             }
 
@@ -1615,7 +1616,8 @@ public class PlayerController : MonoBehaviour
         {
             if (character.currentPower < meleePowerCost) 
             {
-                AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+                //AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+                UIManager.instance.ShowOutOfPowerAlert();
                 return;
             }        
         }
@@ -1766,7 +1768,8 @@ public class PlayerController : MonoBehaviour
         if (!physicsCheck.isGround) return;
         if (character.currentPower < slidePowerCost) 
         {
-            AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+            //AudioManager.Instance.PlayFX(AudioManager.Instance.Attack_pai1);//体力不够声音提升
+            UIManager.instance.ShowOutOfPowerAlert();
             return;
         } 
         if (isAttack || isHurt || isDead || isTeleporting) return;

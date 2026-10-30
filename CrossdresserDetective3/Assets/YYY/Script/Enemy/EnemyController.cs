@@ -81,6 +81,9 @@ public class EnemyController : MonoBehaviour
 
     public bool isAreaSpawnedEnemy = false;//只登记一次
 
+    [Header("出生后直接追击玩家")]
+    public bool chasePlayerOnSpawn = false;
+
     private void Awake()
     {
         Init();
@@ -90,10 +93,9 @@ public class EnemyController : MonoBehaviour
 
         //frameEvent.FadeIn(0.4f);//所有Spine都淡入
 
-
-        if (isAreaSpawnedEnemy)
+        if (chasePlayerOnSpawn)
         {
-            //生成的敌人朝向玩家
+            //面包车生成的敌人朝向玩家
             Transform player = GameManager.instance.player.transform;
 
 
@@ -106,7 +108,7 @@ public class EnemyController : MonoBehaviour
 
             TransitionToState(attackState);
 
-            
+
 
         }
         else
@@ -446,7 +448,111 @@ public class EnemyController : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 敌人呼叫增援
+    /// </summary>
+    #region
+    [Header("呼叫增援")]
+    public bool canCallReinforcements = true;
 
+    // 建议使用单独的增援预制体
+    public EnemyController reinforcementPrefab;
+
+    // 可选：指定门口等出生位置
+    public Transform reinforcementSpawnPoint;
+
+    // 没有指定出生点时，相对于呼叫者的位置
+    public Vector3 reinforcementSpawnOffset = new Vector3(1f, 0f, 0f);
+
+    private bool hasCalledReinforcements;
+
+    public void CallReinforcements()
+    {
+        if (!canCallReinforcements ||
+            hasCalledReinforcements ||
+            isDead ||
+            IsSuspended ||
+            isCatching)
+            return;
+
+        if (reinforcementPrefab == null)
+            return;
+
+        // Awake 时就会判断是否登记，所以必须在预制体上设置好
+        //if (reinforcementPrefab.isAreaSpawnedEnemy)
+        //{
+        //    Debug.LogError(
+        //        "增援预制体的 Is Area Spawned Enemy 必须取消勾选",
+        //        this
+        //    );
+        //    return;
+        //}
+
+        if (GameManager.instance == null ||
+            GameManager.instance.PlayerWin)
+            return;
+
+        // 先标记，防止同一帧重复呼叫
+        hasCalledReinforcements = true;
+
+        Vector3 spawnPosition = reinforcementSpawnPoint != null
+            ? reinforcementSpawnPoint.position
+            : transform.position + reinforcementSpawnOffset;
+
+        EnemyController reinforcement = Instantiate(
+            reinforcementPrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+
+        // 增援不能再召唤增援
+        reinforcement.canCallReinforcements = false;
+
+        // Init 通常已经登记；此方法会防止重复加入
+        GameManager.instance.RegisterSceneEnemy(reinforcement);
+
+        // 等它执行完 Start，再设置追击，避免被初始巡逻覆盖
+        StartCoroutine(StartReinforcementChase(reinforcement));
+
+        // UI提示可接在这里
+        Debug.Log("敌人增援到达！", this);
+
+        UIManager.instance.ShowEnemyReinforcementsAlert();
+    }
+
+    private IEnumerator StartReinforcementChase(
+        EnemyController reinforcement)
+    {
+        yield return null;
+
+        if (reinforcement == null ||
+            reinforcement.isDead ||
+            reinforcement.IsSuspended)
+            yield break;
+
+        if (GameManager.instance == null ||
+            GameManager.instance.PlayerWin)
+            yield break;
+
+        PlayerController player = GameManager.instance.player;
+
+        if (player == null ||
+            player.isDead ||
+            player.isCaptured)
+            yield break;
+
+        reinforcement.targetPoint = player.transform;
+        reinforcement.lastKnownTargetPos = player.transform.position;
+
+        if (!reinforcement.attackList.Contains(player.transform))
+            reinforcement.attackList.Add(player.transform);
+
+        reinforcement.FaceToPosition(player.transform.position);
+        reinforcement.TransitionToState(reinforcement.attackState);
+    }
+
+    #endregion
 
 
 

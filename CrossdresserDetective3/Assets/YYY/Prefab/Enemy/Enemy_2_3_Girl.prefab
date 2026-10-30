@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5237263863428684106}
-  damage: 10
+  damage: 20
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 13
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 60
   currentHealth: 0
   maxPower: 0
   currentPower: 0
@@ -536,12 +536,16 @@ MonoBehaviour:
   Girl_maskIndex: 0
   Man_hairIndex: 0
   Man_clothesIndex: 0
+  FatMan_hairIndex: 0
+  FatMan_clothesIndex: 0
   meleeType: 0
   pistolType: 0
   rifleType: 0
   throwType: 0
   attackType: -1
   bondageType: 0
+  isLL_1: 0
+  isLL_2: 0
   rb: {fileID: 3893579378872553356}
   coll: {fileID: 7929080795597642550}
   frameEvent_Audio: {fileID: 4571336264240715102}
@@ -1906,7 +1910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5237263863428684106}
-  damage: 10
+  damage: 30
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 10

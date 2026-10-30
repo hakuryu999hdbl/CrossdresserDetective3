@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 4455470644987404545}
-  damage: 10
+  damage: 20
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 13
@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 4455470644987404545}
-  damage: 10
+  damage: 30
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 10
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 60
   currentHealth: 0
   maxPower: 0
   currentPower: 0
@@ -2087,6 +2087,10 @@ MonoBehaviour:
   skillRange: 1.5
   attackList: []
   isAreaSpawnedEnemy: 0
+  canCallReinforcements: 1
+  reinforcementPrefab: {fileID: 0}
+  reinforcementSpawnPoint: {fileID: 0}
+  reinforcementSpawnOffset: {x: 1, y: 0, z: 0}
   stunTime: 2
   hitTimer: 0
   searchTime: 3
@@ -2181,6 +2185,8 @@ MonoBehaviour:
   throwType: 0
   attackType: 0
   bondageType: 0
+  isLL_1: 0
+  isLL_2: 0
   rb: {fileID: 5910538495183785535}
   coll: {fileID: 5822379228471588854}
   frameEvent_Audio: {fileID: 4948022059324474796}

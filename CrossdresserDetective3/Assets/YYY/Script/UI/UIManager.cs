@@ -1110,7 +1110,52 @@ public class UIManager : MonoBehaviour
         }
     }//跳过过场动画
 
+    [Header("提示")]
+    public GameObject text_OutOfPower;
+    public GameObject text_EnemyReinforcements;
 
+    public float alertTextDuration = 2f;
+
+    private Coroutine alertCoroutine;
+
+    public void ShowOutOfPowerAlert()
+    {
+        ShowAlert(text_OutOfPower);
+    }
+
+    public void ShowEnemyReinforcementsAlert()
+    {
+        ShowAlert(text_EnemyReinforcements);
+    }
+
+    private void ShowAlert(GameObject targetText)
+    {
+        if (targetText == null)
+            return;
+
+        if (alertCoroutine != null)
+            StopCoroutine(alertCoroutine);
+
+        alertCoroutine = StartCoroutine(AlertRoutine(targetText));
+    }
+
+    private IEnumerator AlertRoutine(GameObject targetText)
+    {
+        if (text_OutOfPower != null)
+            text_OutOfPower.SetActive(false);
+
+        if (text_EnemyReinforcements != null)
+            text_EnemyReinforcements.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        targetText.SetActive(true);
+
+        yield return new WaitForSeconds(alertTextDuration);
+
+        targetText.SetActive(false);
+        alertCoroutine = null;
+    }
 
     #endregion
 

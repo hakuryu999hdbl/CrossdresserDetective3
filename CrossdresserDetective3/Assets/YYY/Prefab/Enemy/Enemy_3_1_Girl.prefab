@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8066643b5165d3468c206b618b6fcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 60
   currentHealth: 0
   maxPower: 0
   currentPower: 0
@@ -206,6 +206,11 @@ MonoBehaviour:
   skillRange: 1.5
   attackList: []
   isAreaSpawnedEnemy: 0
+  chasePlayerOnSpawn: 0
+  canCallReinforcements: 1
+  reinforcementPrefab: {fileID: 3540335908034767965, guid: 10e4d69402e17f944b6a418050bfe11d, type: 3}
+  reinforcementSpawnPoint: {fileID: 0}
+  reinforcementSpawnOffset: {x: 1, y: 0, z: 0}
   stunTime: 2
   hitTimer: 0
   searchTime: 3
@@ -292,12 +297,16 @@ MonoBehaviour:
   Girl_maskIndex: 0
   Man_hairIndex: 0
   Man_clothesIndex: 0
+  FatMan_hairIndex: 0
+  FatMan_clothesIndex: 0
   meleeType: 0
   pistolType: 0
   rifleType: 0
   throwType: 0
   attackType: 0
   bondageType: 0
+  isLL_1: 0
+  isLL_2: 0
   rb: {fileID: 5820601251204781562}
   coll: {fileID: 4212385584293330016}
   frameEvent_Audio: {fileID: 1199274362390782277}
@@ -465,7 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1083429699338135308}
-  damage: 10
+  damage: 30
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 10
@@ -2214,7 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1083429699338135308}
-  damage: 10
+  damage: 20
   hitEffectType: 0
   TurnOnBomb: 0
   knockbackX: 13

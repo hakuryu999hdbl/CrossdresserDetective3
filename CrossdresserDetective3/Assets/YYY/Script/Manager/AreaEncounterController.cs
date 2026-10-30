@@ -93,6 +93,9 @@ public class AreaEncounterController : MonoBehaviour
             if (enemyController != null)
             {
                 enemyController.isAreaSpawnedEnemy = true;
+
+                // 门出生巡逻，面包车出生直接追击
+                enemyController.chasePlayerOnSpawn = isVan;
             }
 
 
