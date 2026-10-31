@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject Company_1, Company_2, Company_3;
     public GameObject ParkingArea_1;
     public GameObject Outside_1;
+    public GameObject Office_1;
 
     private void Start()
     {
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour
                 switch (CurrentStage)
                 {
                     case 1:
-                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        Instantiate(Office_1, Vector3.zero, Quaternion.identity);
                         break;
 
                     case 2:
@@ -113,6 +114,8 @@ public class GameManager : MonoBehaviour
                         Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
                         break;
                     case 4:
+                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        break;
                     case 5:
                     case 6:
                     case 7:
@@ -198,16 +201,16 @@ public class GameManager : MonoBehaviour
         // =========================
         // Demo限制：第一章只开放1~9关
         // =========================
-        if (GameFlowData.CurrentChapter == 1 &&
-            GameFlowData.CurrentStage >= 10)
-        {
-            GameFlowData.nextAreaId = "Demo";
-        
-            Time.timeScale = 1f;
-        
-            SceneManager.LoadScene("Spine");
-            yield break;
-        }
+        //if (GameFlowData.CurrentChapter == 1 &&
+        //    GameFlowData.CurrentStage >= 10)
+        //{
+        //    GameFlowData.nextAreaId = "Demo";
+        //
+        //    Time.timeScale = 1f;
+        //
+        //    SceneManager.LoadScene("Spine");
+        //    yield break;
+        //}
 
 
         // 每章10关
@@ -307,7 +310,7 @@ public class GameManager : MonoBehaviour
                 switch (GameFlowData.CurrentStage)
                 {
                     case 1:
-                        ShowClue();
+                        ShowEscape();
                         break;
 
                     case 2:
@@ -319,7 +322,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 4:
-                        ShowRescue();
+                        ShowClue();
                         break;
 
                     case 5:

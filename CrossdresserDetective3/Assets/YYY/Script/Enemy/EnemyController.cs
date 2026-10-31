@@ -1695,7 +1695,16 @@ public class EnemyController : MonoBehaviour
             // 两种移动巡逻随机初始方向
             case EnemyPatrolMode.RandomPatrol:
             case EnemyPatrolMode.ContinuousPatrol:
-                patrolDir = Random.value < 0.5f ? -1 : 1;
+
+
+                //patrolDir = Random.value < 0.5f ? -1 : 1;
+
+                //巡逻初始朝向玩家
+                Transform player = GameManager.instance.player.transform;
+                // 玩家在右边朝右，在左边朝左
+                startFaceDir = player.position.x >= transform.position.x ? 1 : -1;
+                patrolDir = startFaceDir;
+
                 break;
         }
 
