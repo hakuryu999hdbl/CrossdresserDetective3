@@ -888,7 +888,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//洗澡脱上衣
+    }//【剧情】洗澡脱上衣
     public void Undressing_Down() 
     {
         playerController.beltIndex = 0;
@@ -899,36 +899,9 @@ public class FrameEvent : MonoBehaviour
 
         playerController.RefreshPlayerSkin();
 
-       
-    }//洗澡脱下半身
 
+    }//【剧情】洗澡脱下半身
 
-    //public void Bondage()
-    //{
-    //
-    //    //playerController.beltIndex = 0;
-    //    //playerController.clothesIndex = 10;
-    //    //playerController.shoesIndex = 10;
-    //    //playerController.bondageType = 0;
-    //    //playerController.pantiesIndex = 0;
-    //
-    //    //playerController.RefreshPlayerSkin();
-    //
-    //}//自缚（局内拘束）
-
-
-    //public void BondageUnlocker()
-    //{
-    //
-    //    //playerController.beltIndex = 0;
-    //    //playerController.clothesIndex = 0;
-    //    //playerController.shoesIndex = 0;
-    //    //playerController.bondageType = 0;
-    //    //playerController.pantiesIndex = 0;
-    //
-    //    //playerController.RefreshPlayerSkin();
-    //
-    //}//（局内解缚）
 
     public void SetPlayer_Clothes_01()
     {
@@ -946,7 +919,7 @@ public class FrameEvent : MonoBehaviour
         //playerController.bondageType = 0;
         //playerController.RefreshPlayerSkin();
 
-    }//赤裸绳子捆绑状态
+    }//【剧情】赤裸绳子捆绑状态
 
     public void SetPlayer_Clothes_02()
     {
@@ -963,7 +936,7 @@ public class FrameEvent : MonoBehaviour
 
         playerController.RefreshPlayerSkin();
 
-    }//赤裸状态
+    }//【剧情】赤裸状态
 
     public void SetPlayer_Clothes_03()
     {
@@ -984,7 +957,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//第一章事务所剧情(白色内裤无裙子)
+    }//【剧情】第一章事务所剧情(白色内裤无裙子)
 
 
     public void Story_Clothes_Man_01()
@@ -1009,7 +982,7 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//小偷外貌
+    }//【剧情】小偷外貌
 
     public void Story_Clothes_FatMan_01()
     {
@@ -1045,7 +1018,7 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//眼睛衬衫死宅外貌
+    }//【剧情】眼睛衬衫死宅外貌
 
     public void Story_Clothes_FatMan_02()
     {
@@ -1081,12 +1054,28 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//裸体死宅外貌
+    }//【剧情】裸体死宅外貌
     #endregion
 
 
 
+    public void SetSisterClothes_1() 
+    {
 
+        playerController.Girl_hairIndex = 1;
+        playerController.Girl_clothesIndex = 1;
+        playerController.Girl_glovesIndex = 1;
+        playerController.Girl_shoesIndex = 1;
+
+
+        playerController.Girl_underwearIndex = 2;//内衣裤袜
+        playerController.Girl_stockingsIndex = 2;
+
+        playerController.Girl_hatIndex = 0;//没有头饰
+        playerController.Girl_maskIndex = 0;//不戴面具
+
+        playerController.RefreshPlayerSkin();
+    }//【局内】姐姐标准服装
     public void SetCatch_1() 
     {
         playerController.isUsingStoryClothes = true;//不要记录衣服
@@ -1168,36 +1157,6 @@ public class FrameEvent : MonoBehaviour
     }//【CG鉴赏】战败玩家随机男性女性敌人
 
  
-
-    //public void SetRBQ_Bondage_1() 
-    //{
-    //
-    //    //赤裸的叶语嫣被捆绑
-    //    rBQController.clothesIndex = 0;
-    //    rBQController.glovesIndex = 0;
-    //    rBQController.hatIndex = 0;
-    //    rBQController.maskIndex = 0;
-    //    rBQController.beltIndex = 0;
-    //    rBQController.stockingsIndex = 0;
-    //    rBQController.pantiesIndex = 0;
-    //    rBQController.shoesIndex = 0;
-    //    rBQController.skirtIndex = 0;
-    //    rBQController.bondageType = 0;
-    //
-    //
-    //    //赤裸的女孩被捆绑
-    //    rBQController.Girl_clothesIndex = 0;
-    //    rBQController.Girl_glovesIndex = 0;
-    //    rBQController.Girl_hatIndex = 0;
-    //    rBQController.Girl_maskIndex = 0;
-    //    rBQController.Girl_stockingsIndex = 0;
-    //    rBQController.Girl_underwearIndex = 0;
-    //    rBQController.Girl_shoesIndex = 0;
-    //
-    //
-    //    rBQController.RefreshPlayerSkin();
-    //
-    //}//救出模式失踪少女RBQ皮肤套入
 
 
 

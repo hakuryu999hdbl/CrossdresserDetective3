@@ -413,6 +413,43 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
+    /// 姐姐模式
+    /// </summary>
+    #region
+    [Header("姐姐操作模式")]
+    public bool isSisterMode;
+
+    public RuntimeAnimatorController playerAnimator;
+    public RuntimeAnimatorController playerAnimator_Sister;
+
+    public RuntimeAnimatorController uiAnimator;
+    public RuntimeAnimatorController uiAnimator_Sister;
+
+    public void SetSisterMode(bool enabled)
+    {
+        isSisterMode = enabled;
+
+        // 局内角色动画
+        playerAnimation.anim.runtimeAnimatorController =
+            enabled ? playerAnimator_Sister : playerAnimator;
+
+        // UI层角色动画
+        UI_anim.runtimeAnimatorController =
+            enabled ? uiAnimator_Sister : uiAnimator;
+
+        // 重新进入待机状态
+        playerAnimation.anim.Play("Idle", 0, 0f);
+        playerAnimation.anim.Update(0f);
+
+        //设置姐姐标准服装
+        frameEvent.SetSisterClothes_1();
+    }
+
+
+    #endregion
+
+
+    /// <summary>
     /// Spine外观
     /// </summary>
     #region
@@ -507,12 +544,6 @@ public class PlayerController : MonoBehaviour
             hatIndex,
             maskIndex,
 
-            Man_hairIndex,
-            Man_clothesIndex,
-
-            FatMan_hairIndex,
-            FatMan_clothesIndex,
-
             Girl_hairIndex,
             Girl_clothesIndex,
             Girl_glovesIndex,
@@ -521,6 +552,12 @@ public class PlayerController : MonoBehaviour
             Girl_stockingsIndex,
             Girl_hatIndex,
             Girl_maskIndex,
+
+            Man_hairIndex,
+            Man_clothesIndex,
+
+            FatMan_hairIndex,
+            FatMan_clothesIndex,
 
             meleeType,
             pistolType,

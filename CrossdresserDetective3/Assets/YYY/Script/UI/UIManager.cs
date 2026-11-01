@@ -78,6 +78,28 @@ public class UIManager : MonoBehaviour
             case 2:
                 switch (GameFlowData.CurrentStage)
                 {
+                    case 1:
+                        // 主线剧情直接进入游戏，不打开整备界面
+                        isSetUp = false;
+                        CurrentOpen = 0;
+
+                        SetUpMenu.SetActive(false);
+                        PauseButton.SetActive(true);
+
+                        playerController.EnableGameplayInput();
+
+                        EventSystem.current.SetSelectedGameObject(null);
+
+
+                        //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
+                        MoveWeaponUIToBattle();//把背包的武器类UI切换过去
+
+
+                        // 第二章第一关，操作姐姐
+                        playerController.SetSisterMode(true);
+
+                        break;
+
                     default:
                         OpenSetUp();
                         break;
