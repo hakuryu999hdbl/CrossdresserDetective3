@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,22 @@ public class ElevatorFloorDoor : MonoBehaviour, IInteractable
     public Collider2D blockCollider;
     //public Animator anim;
 
-  
+    [Header("电梯引用")]
+    public ElevatorController elevator; //叫上来叫下去
+    public bool isTopDoor;
+
+    [Header("电梯方向显示")]
+    public GameObject upImage;
+    public GameObject downImage;
+
+    public void SetDirection(bool goingUp)
+    {
+        if (upImage != null)
+            upImage.SetActive(goingUp);
+
+        if (downImage != null)
+            downImage.SetActive(!goingUp);
+    }
 
 
     public void Open()
@@ -29,10 +44,6 @@ public class ElevatorFloorDoor : MonoBehaviour, IInteractable
     }
 
 
-
-    //���㗈������
-    public ElevatorController elevator;
-    public bool isTopDoor;
 
     public void TriggerAction()
     {

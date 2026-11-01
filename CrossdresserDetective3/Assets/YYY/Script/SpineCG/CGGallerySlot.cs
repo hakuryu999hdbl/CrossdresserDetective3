@@ -38,6 +38,8 @@ public class CGGallerySlot : MonoBehaviour
         if (selectedMark != null)
         {
             selectedMark.SetActive(selected);
+
+           
         }
     }
 

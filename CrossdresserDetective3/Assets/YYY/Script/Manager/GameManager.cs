@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
                 {
                     case 1:
                         Instantiate(Office_1, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 2:
@@ -310,7 +312,7 @@ public class GameManager : MonoBehaviour
                 switch (GameFlowData.CurrentStage)
                 {
                     case 1:
-                        ShowEliminate();
+                        ShowRescue();
                         break;
 
                     case 2:

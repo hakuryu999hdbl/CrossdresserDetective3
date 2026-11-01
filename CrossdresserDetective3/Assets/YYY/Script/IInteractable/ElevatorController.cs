@@ -20,7 +20,7 @@ public class ElevatorController : MonoBehaviour, IInteractable
 
     public Rigidbody2D rb;
 
-   
+ 
 
 
     private void Start()
@@ -37,6 +37,9 @@ public class ElevatorController : MonoBehaviour, IInteractable
         OpenCurrentDoor();
 
         RefreshEffect();
+
+        if (obstacle != null)
+            obstacle.SetActive(false);//隐藏透明挡板
     }
 
     public void TriggerAction()
@@ -60,6 +63,9 @@ public class ElevatorController : MonoBehaviour, IInteractable
     {
         AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Elevator_1);
         isMoving = true;
+
+        RefreshObstacle();//更新透明挡板
+        RefreshFloorDirection();//更新按钮图标
 
         if (upEffect != null) upEffect.SetActive(false);
         if (downEffect != null) downEffect.SetActive(false);
@@ -89,6 +95,8 @@ public class ElevatorController : MonoBehaviour, IInteractable
         RefreshEffect();
 
         AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Elevator_2);
+
+        RefreshObstacle();//更新透明挡板
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -118,8 +126,21 @@ public class ElevatorController : MonoBehaviour, IInteractable
 
         if (downEffect != null)
             downEffect.SetActive(isAtTop);  // 在顶层才能下去
-    }
 
+        RefreshFloorDirection();
+    }
+    private void RefreshFloorDirection()
+    {
+        bool goingUp = isMoving
+            ? currentTarget == topPoint
+            : isAtTop;
+
+        if (topDoor != null)
+            topDoor.SetDirection(goingUp);
+
+        if (bottomDoor != null)
+            bottomDoor.SetDirection(goingUp);
+    }
 
 
     //电梯门关上
@@ -156,6 +177,8 @@ public class ElevatorController : MonoBehaviour, IInteractable
 
         currentTarget = currentTarget == topPoint ? bottomPoint : topPoint;
 
+        RefreshObstacle();
+
         moveCoroutine = StartCoroutine(MoveTo(currentTarget));
     }
 
@@ -179,5 +202,23 @@ public class ElevatorController : MonoBehaviour, IInteractable
         currentTarget = bottomPoint;
         moveCoroutine = StartCoroutine(MoveTo(currentTarget));
         CloseAllDoors();
+    }
+
+
+
+
+
+
+    [Header("电梯下降挡板")]
+    public GameObject obstacle;
+
+    private void RefreshObstacle()
+    {
+        if (obstacle == null) return;
+
+        // 只有正在向下移动时才开启
+        bool shouldBlock = isMoving && currentTarget == bottomPoint;
+
+        obstacle.SetActive(shouldBlock);
     }
 }
