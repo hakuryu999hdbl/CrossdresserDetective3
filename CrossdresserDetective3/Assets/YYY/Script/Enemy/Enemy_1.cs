@@ -38,7 +38,8 @@ public class Enemy_1 : EnemyController
         }
 
 
-        if (useChargeSkill)
+        // 玩家在电梯内时改用普通追逐和近战，避免在狭小轿厢内冲刺。
+        if (useChargeSkill && !IsTargetOnElevator(targetPoint))
         {
             TransitionToState(chargeSkillState);//冲刺型敌人
         }

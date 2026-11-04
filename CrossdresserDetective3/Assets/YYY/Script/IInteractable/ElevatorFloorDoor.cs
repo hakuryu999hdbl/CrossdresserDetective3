@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElevatorFloorDoor : MonoBehaviour, IInteractable
 {
     public Collider2D blockCollider;
-    //public Animator anim;
+    public GameObject Door_Image;
 
     [Header("电梯引用")]
     public ElevatorController elevator; //叫上来叫下去
@@ -30,8 +30,7 @@ public class ElevatorFloorDoor : MonoBehaviour, IInteractable
         if (blockCollider != null)
             blockCollider.enabled = false;
 
-        //if (anim != null)
-        //    anim.SetBool("Open", true);
+        Door_Image.SetActive(false);
     }
 
     public void Close()
@@ -39,8 +38,7 @@ public class ElevatorFloorDoor : MonoBehaviour, IInteractable
         if (blockCollider != null)
             blockCollider.enabled = true;
 
-        //if (anim != null)
-        //    anim.SetBool("Open", false);
+        Door_Image.SetActive(true);
     }
 
 

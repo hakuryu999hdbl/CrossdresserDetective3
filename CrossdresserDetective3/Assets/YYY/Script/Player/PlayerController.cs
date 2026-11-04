@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     public bool isTeleporting = false;//是否传送
     public bool isWallCling;   // 是否抓/蹬在墙上停住
     public bool isOnElevator;//是否在电梯里
+    public ElevatorController CurrentElevator { get; set; }
     public bool isInCutscene;//是否位于过场动画
 
     public bool isBoki = false;//是否勃起

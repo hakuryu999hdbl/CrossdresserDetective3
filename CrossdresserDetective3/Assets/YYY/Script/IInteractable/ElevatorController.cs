@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ElevatorController : MonoBehaviour, IInteractable
 {
@@ -16,6 +17,21 @@ public class ElevatorController : MonoBehaviour, IInteractable
     public GameObject downEffect;
 
     private bool isMoving;
+    public bool IsMoving => isMoving;
+    private readonly HashSet<Collider2D> passengers = new HashSet<Collider2D>();
+
+    public bool ContainsPassenger(Component passenger)
+    {
+        foreach (Collider2D passengerCollider in passengers)
+        {
+            if (passengerCollider != null && passengerCollider.enabled &&
+                passengerCollider.gameObject.activeInHierarchy &&
+                (passengerCollider.transform == passenger.transform ||
+                 passengerCollider.transform.IsChildOf(passenger.transform)))
+                return true;
+        }
+        return false;
+    }
     private bool isAtTop;
 
     public Rigidbody2D rb;
@@ -100,9 +116,12 @@ public class ElevatorController : MonoBehaviour, IInteractable
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>() != null)
+        passengers.Add(collision);
+        PlayerController player = collision.GetComponentInParent<PlayerController>();
+        if (player != null)
         {
-            collision.GetComponent<PlayerController>().isOnElevator = true;
+            player.isOnElevator = true;
+            player.CurrentElevator = this;
 
             RefreshEffect();
         }
@@ -110,13 +129,31 @@ public class ElevatorController : MonoBehaviour, IInteractable
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>() != null)
+        passengers.Remove(collision);
+        PlayerController player = collision.GetComponentInParent<PlayerController>();
+        if (player != null && player.CurrentElevator == this && !ContainsPassenger(player))
         {
 
-            collision.GetComponent<PlayerController>().isOnElevator = false;
+            player.isOnElevator = false;
+            player.CurrentElevator = null;
 
             RefreshEffect();
         }
+    }
+
+    private void OnDisable()
+    {
+        foreach (Collider2D passengerCollider in passengers)
+        {
+            if (passengerCollider == null) continue;
+            PlayerController player = passengerCollider.GetComponentInParent<PlayerController>();
+            if (player != null && player.CurrentElevator == this)
+            {
+                player.CurrentElevator = null;
+                player.isOnElevator = false;
+            }
+        }
+        passengers.Clear();
     }
 
     private void RefreshEffect()

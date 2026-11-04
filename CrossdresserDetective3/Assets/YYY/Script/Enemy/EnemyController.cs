@@ -808,6 +808,23 @@ public class EnemyController : MonoBehaviour
         return true;
     }
 
+    public bool IsTargetOnElevator(Transform target)
+    {
+        if (target == null || !target.CompareTag("Player")) return false;
+        PlayerController player = target.GetComponent<PlayerController>();
+        return player != null && player.isOnElevator && player.CurrentElevator != null;
+    }
+
+    // 移动中的电梯只隔断外部敌人的追击，同乘敌人仍能攻击。
+    public bool IsTargetInOtherMovingElevator(Transform target)
+    {
+        if (target == null || !target.CompareTag("Player")) return false;
+        PlayerController player = target.GetComponent<PlayerController>();
+        if (player == null) return false;
+        ElevatorController elevator = player.CurrentElevator;
+        return elevator != null && elevator.IsMoving && !elevator.ContainsPassenger(this);
+    }
+
     public void AttackAction()
     {
         if (IsSuspended) return;
@@ -869,9 +886,15 @@ public class EnemyController : MonoBehaviour
 
                 bool playerAlreadyCaptured = player != null && (player.isCaptured || player.isStruggling);
 
+                // Sister 模式优先禁止抓取，包括逃出模式和低血量随机抓取。
+                if (player != null && player.isSisterMode)
+                {
+                    anim.SetInteger("attackType", 2);
+                    anim.SetTrigger("attack");
+                }
                 // 玩家已经被其他敌人抓住时：
                 // 仍允许普通攻击，但禁止再次触发抓取
-                if (playerAlreadyCaptured)
+                else if (playerAlreadyCaptured)
                 {
                     anim.SetInteger("attackType", 2);//所有敌人统计普通攻击
                     anim.SetTrigger("attack");
@@ -968,6 +991,9 @@ public class EnemyController : MonoBehaviour
     public bool CanAcquireTargetByHeight(Transform target)
     {
         if (target == null)
+            return false;
+
+        if (IsTargetInOtherMovingElevator(target))
             return false;
 
         float yDiff = Mathf.Abs(

@@ -31,6 +31,9 @@ public class ChargeSkillState : EnemyBaseState
             return;
         }
 
+        if (ReturnToPatrolForElevator(enemy)) return;
+        if (SwitchToNormalAttackForElevator(enemy)) return;
+
         //记录目标的x位置
         Vector2 _dir = enemy.targetPoint.position - enemy.transform.position;
 
@@ -88,6 +91,11 @@ public class ChargeSkillState : EnemyBaseState
 
 
 
+        // 电梯离开属于主动取消技能，蓄力、冲刺和硬直阶段都要处理。
+        // 在列表刷新前检查，保留已离开视野的当前目标供判断。
+        if (ReturnToPatrolForElevator(enemy)) return;
+        if (SwitchToNormalAttackForElevator(enemy)) return;
+
         bool hasTarget =
             enemy.attackList != null &&
             enemy.attackList.Count > 0;
@@ -95,6 +103,8 @@ public class ChargeSkillState : EnemyBaseState
         if (hasTarget)
         {
             enemy.targetPoint = enemy.attackList[0];
+            if (ReturnToPatrolForElevator(enemy)) return;
+            if (SwitchToNormalAttackForElevator(enemy)) return;
         }
         else if (phase == Phase.Ready)
         {
@@ -135,6 +145,34 @@ public class ChargeSkillState : EnemyBaseState
                 UpdateHit(enemy);
                 break;
         }
+    }
+
+    private bool SwitchToNormalAttackForElevator(EnemyController enemy)
+    {
+        if (!enemy.IsTargetOnElevator(enemy.targetPoint)) return false;
+
+        enemy.lastChargeTime = Time.time;
+        // ExitState 统一恢复速度、可见度、无敌和技能动画参数。
+        enemy.TransitionToState(enemy.attackState);
+        return true;
+    }
+
+    private bool ReturnToPatrolForElevator(EnemyController enemy)
+    {
+        bool lostToElevator = enemy.IsTargetInOtherMovingElevator(enemy.targetPoint);
+        if (enemy.attackList != null)
+        {
+            int removed = enemy.attackList.RemoveAll(enemy.IsTargetInOtherMovingElevator);
+            lostToElevator |= removed > 0;
+        }
+
+        if (!lostToElevator) return false;
+
+        enemy.targetPoint = null;
+        enemy.lastChargeTime = Time.time;
+        // ExitState 会停止移动，并复原技能无敌、提示和动画参数。
+        enemy.TransitionToState(enemy.patrolState);
+        return true;
     }
 
     private void UpdateReady(EnemyController enemy)

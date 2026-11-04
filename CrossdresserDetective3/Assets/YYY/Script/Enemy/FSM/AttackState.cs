@@ -87,14 +87,18 @@ public class AttackState : EnemyBaseState
             //    return;
             //}
 
-            if (enemy.ShouldLoseTargetByHeight(enemy.targetPoint))
+            bool lostToElevator = enemy.IsTargetInOtherMovingElevator(enemy.targetPoint);
+            if (lostToElevator || enemy.ShouldLoseTargetByHeight(enemy.targetPoint))
             {
                 enemy.lastKnownTargetPos = enemy.targetPoint.position;
 
                 enemy.attackList.Remove(enemy.targetPoint);
                 enemy.targetPoint = null;
 
-                enemy.TransitionToState(enemy.searchState);
+                // 电梯离开时直接恢复巡逻，避免搜索时继续朝电梯门跑。
+                if (lostToElevator && enemy.rb != null)
+                    enemy.rb.velocity = new Vector2(0f, enemy.rb.velocity.y);
+                enemy.TransitionToState(lostToElevator ? enemy.patrolState : enemy.searchState);
                 return;
             }
         }
