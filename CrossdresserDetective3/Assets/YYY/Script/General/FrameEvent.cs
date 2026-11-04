@@ -923,7 +923,7 @@ public class FrameEvent : MonoBehaviour
 
     public void SetPlayer_Clothes_02()
     {
-        playerController.isUsingStoryClothes = true;//不要记录衣服
+        playerController.SetStoryUnarmed();//剧情空手，不记录衣服和武器
 
 
         playerController.beltIndex = 0;
@@ -936,12 +936,12 @@ public class FrameEvent : MonoBehaviour
 
         playerController.RefreshPlayerSkin();
 
-    }//【剧情】赤裸状态
+    }//【剧情】赤裸状态 
 
     public void SetPlayer_Clothes_03()
     {
 
-        playerController.isUsingStoryClothes = true;//不要记录衣服
+        playerController.SetStoryUnarmed();//剧情空手，不记录衣服和武器
 
         //Debug.Log("第一章衣物");
 
@@ -957,7 +957,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//【剧情】第一章事务所剧情(白色内裤无裙子)
+    }//【剧情】第一章第一关事务所剧情(白色内裤无裙子)
 
 
     public void Story_Clothes_Man_01()
@@ -1061,6 +1061,7 @@ public class FrameEvent : MonoBehaviour
 
     public void SetSisterClothes_1() 
     {
+        playerController.SetStoryUnarmed();//剧情空手，不记录衣服和武器
 
         playerController.Girl_hairIndex = 1;
         playerController.Girl_clothesIndex = 1;

@@ -2128,27 +2128,27 @@ public class EnemyController : MonoBehaviour
                         FatMan_hairIndex = 1;
                         FatMan_clothesIndex = 1;
 
-                        //西服女
+                        //兔女郎
                         Girl_hairIndex = Random.Range(3, 5);
-                        Girl_clothesIndex = 6;
-                        Girl_glovesIndex = 1;
+                        Girl_clothesIndex = 0;
+                        Girl_glovesIndex = Random.Range(0, 3);
                         Girl_shoesIndex = Random.Range(1, 3);
 
 
                         switch (Random.Range(1, 3))
                         {
                             case 1:
-                                Girl_underwearIndex = 1;//内衣
+                                Girl_underwearIndex = 5;//玉腿兔女郎
                                 Girl_stockingsIndex = Random.Range(0, 2);
                                 if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
                                 break;
                             case 2:
-                                Girl_underwearIndex = 2;//内衣裤袜
+                                Girl_underwearIndex = 4;//裤袜兔女郎                    
                                 Girl_stockingsIndex = 2;
                                 break;
                         }
 
-                        Girl_hatIndex = 0;//没有头饰
+                        Girl_hatIndex = 1;//兔耳朵
                         Girl_maskIndex = 0;//不戴面具
 
 

@@ -816,6 +816,28 @@ public class PlayerController : MonoBehaviour
     [Header("剧情临时服装")]
     public bool isUsingStoryClothes;//如果我处于剧情关卡中，每次换装换武器，不会记录
 
+    public void SetStoryUnarmed()
+    {
+        // 剧情装备仅作用于当前玩家，后续切换武器也不能覆盖原存档。
+        isUsingStoryClothes = true;
+
+        meleeType = 0;
+        pistolType = 0;
+        rifleType = 0;
+        throwType = 0;
+        meleeSlot = 0;
+        rangedSlot = 0;
+        Slot = 0;
+
+        isHoldingThrow = false;
+        throwCharge = 0f;
+        throwChargeOnRelease = 0f;
+        ResetThrowCount();
+
+        RefreshPlayerSkin();
+        RefreshCurrentWeapon();
+    }
+
 
 
     public void SaveCurrentGame()
