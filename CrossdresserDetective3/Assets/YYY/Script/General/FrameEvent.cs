@@ -1117,8 +1117,20 @@ public class FrameEvent : MonoBehaviour
         rBQController.skirtIndex = 0;
         rBQController.pantiesIndex = 0;
 
+        rBQController.Girl_hairIndex = 1;
+        rBQController.Girl_clothesIndex = 1;
+        rBQController.Girl_glovesIndex = 1;
+        rBQController.Girl_shoesIndex = 1;
 
-    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套
+
+        rBQController.Girl_underwearIndex = 2;
+        rBQController.Girl_stockingsIndex = 2;
+
+        rBQController.Girl_hatIndex = 0;
+        rBQController.Girl_maskIndex = 0;
+
+
+    }  //【CG鉴赏】战败玩家只穿着黑丝丝袜手套/姐姐穿着原版服装
     public void SetDeadBondage_RandomEnemy() 
     {
 

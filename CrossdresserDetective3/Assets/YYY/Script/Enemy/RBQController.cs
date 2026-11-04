@@ -62,6 +62,42 @@ public class RBQController : MonoBehaviour
                             break;
                     }
                     break;
+
+                case 2:
+                    switch (GameFlowData.CurrentStage)
+                    {
+                        case 1:
+                            currentAnimationType = -1;
+                            UIManager.instance.ResultNumber = 8;//女性吊缚后入
+                            break;
+                        case 2:
+                        case 3:
+                        case 4:
+                            currentAnimationType = 2;
+                            UIManager.instance.ResultNumber = 3;//厕所尿便器
+                            break;
+
+                        case 5:
+                        case 6:
+                            currentAnimationType = 1;
+                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
+                            break;
+
+                        case 7:
+                        case 8:
+                            currentAnimationType = 0;
+                            UIManager.instance.ResultNumber = 1;//用完垃圾桶
+                            break;
+
+
+
+                        case 9:
+                        case 10:
+                            currentAnimationType = 5;
+                            UIManager.instance.ResultNumber = 6;//死宅玩弄
+                            break;
+                    }
+                    break;
             }
 
             //currentAnimationType = Random.Range(0, 2);//玩家随机伪娘动画
@@ -162,28 +198,22 @@ public class RBQController : MonoBehaviour
         {
             case -1:
                 anim.Play("Man_AbuseGirl_7", 0, 0f);
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 0:
                 anim.Play("Man_RapeYYY_7", 0, 0f);
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
 
             case 1:
                 anim.Play("Man_AbuseYYY_8", 0, 0f);
-                //frameEvent.SetDeadBondage_Bondage_1();//全身捆绑
                 break;
             case 2:
-                //无
                 break;
 
             case 3:
-                //无
                 break;
 
             case 4:
-                //无
                 break;
 
         }
@@ -209,7 +239,7 @@ public class RBQController : MonoBehaviour
         {
 
             case -1:
-                anim.Play("Man_AbuseGirl_1", 0, 0f);
+                anim.Play("Man_AbuseGirl_1", 0, 0f);//女性吊缚后入
                 break;
 
             case 0:
@@ -311,6 +341,15 @@ public class RBQController : MonoBehaviour
         skirtIndex = player.skirtIndex;
         stockingsIndex = player.stockingsIndex;
 
+        Girl_hairIndex = player.Girl_hairIndex;
+        Girl_clothesIndex = player.Girl_clothesIndex;
+        Girl_glovesIndex = player.Girl_glovesIndex;
+        Girl_underwearIndex = player.Girl_underwearIndex;
+        Girl_shoesIndex = player.Girl_shoesIndex;
+        Girl_stockingsIndex = player.Girl_stockingsIndex;
+        Girl_hatIndex = player.Girl_hatIndex;
+        Girl_maskIndex = player.Girl_maskIndex;
+
         RefreshPlayerSkin();
 
     }//尸体读取玩家
@@ -338,9 +377,10 @@ public class RBQController : MonoBehaviour
         //不同的CG对应RBQ衣服也不一样
         //这一层是先设置衣服，到了下一层设置捆绑的绳子还是锁链
 
-        frameEvent.SetDeadBondage_Bondage();
-        frameEvent.SetDeadBondage_RandomEnemy();
-
+       
+        frameEvent.SetDeadBondage_RandomEnemy();//设置随机男和西装女
+        frameEvent.SetDeadBondage_Bondage();//设置了嫣赤裸和绫穿着正装的状态
+        RefreshPlayerSkin();//固定服装覆盖随机外观后，需要重新应用到 Spine 皮肤。
 
 
 
