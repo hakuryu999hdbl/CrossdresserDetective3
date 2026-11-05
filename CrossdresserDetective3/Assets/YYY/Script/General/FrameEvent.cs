@@ -907,20 +907,22 @@ public class FrameEvent : MonoBehaviour
     public void SetPlayer_Clothes_01()
     {
 
-        //playerController.isUsingStoryClothes = true;//不要记录衣服
-        //
-        //
-        //playerController.beltIndex = 0;
-        //playerController.clothesIndex = 10;
-        //playerController.glovesIndex = 0;
-        //playerController.pantiesIndex = 0;
-        //playerController.shoesIndex = 10;
-        //playerController.skirtIndex = 0;
-        //playerController.stockingsIndex = 0;
-        //playerController.bondageType = 0;
-        //playerController.RefreshPlayerSkin();
+        playerController.isUsingStoryClothes = true;//不要记录衣服
+        
+        
+        playerController.beltIndex = 0;
+        playerController.clothesIndex = 3;
+        playerController.glovesIndex = 3;
+        playerController.pantiesIndex = 0;
+        playerController.shoesIndex = 3;
+        playerController.skirtIndex = 0;
+        playerController.stockingsIndex = 3;
 
-    }//【剧情】赤裸绳子捆绑状态
+        playerController.hatIndex = 1;
+        playerController.maskIndex = 0;
+        playerController.RefreshPlayerSkin();
+
+    }//【剧情】主角兔女郎
 
     public void SetPlayer_Clothes_02()
     {
@@ -934,10 +936,12 @@ public class FrameEvent : MonoBehaviour
         playerController.shoesIndex = 0;
         playerController.skirtIndex = 0;
         playerController.stockingsIndex = 0;
+        playerController.hatIndex = 0;
+        playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
 
-    }//【剧情】赤裸状态 
+    }//【剧情】主角赤裸状态 
 
     public void SetPlayer_Clothes_03()
     {
@@ -958,7 +962,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//【剧情】第一章第一关事务所剧情(白色内裤无裙子)
+    }//【剧情】主角第一章第一关事务所剧情(白色内裤无裙子)
 
 
     public void Story_Clothes_Man_01()

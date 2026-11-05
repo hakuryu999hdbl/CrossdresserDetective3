@@ -223,8 +223,6 @@ public class PlayerAnimation : MonoBehaviour
     public void PlayRapeYYY() 
     {
 
-        playerController.frameEvent.SetPlayer_Clothes_01();
-
         anim.Play("Story_RapeYYY", 0, 0f);
         anim.Update(0f);
     }//战败调用

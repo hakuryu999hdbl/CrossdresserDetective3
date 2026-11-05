@@ -365,7 +365,7 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayer_Clothes_01()
     {
         GameManager.instance.player.frameEvent.SetPlayer_Clothes_01();
-    }//主角赤裸绳子捆绑状态
+    }//主角兔女郎服装
 
     public void SetPlayer_Clothes_02()
     {
@@ -375,7 +375,7 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayer_Clothes_03()
     {
         GameManager.instance.player.frameEvent.SetPlayer_Clothes_03();
-    }//主角赤裸状态
+    }//主角第一章服装
 
     public void SetPlayer_EnterBondage()
     {
