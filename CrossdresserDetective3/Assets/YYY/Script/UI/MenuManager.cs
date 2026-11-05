@@ -1181,6 +1181,11 @@ public class MenuManager : MonoBehaviour
             GameFlowData.nextAreaId = "Introduce";
             StartSpine();
         }
+        else if (nextChapter == 2 && nextStage == 2)
+        {
+            GameFlowData.nextAreaId = "CG_Fera";
+            StartSpine();
+        }
         //else if (nextChapter == 1 && nextStage >= 10)
         //{
         //    GameFlowData.nextAreaId = "Demo";

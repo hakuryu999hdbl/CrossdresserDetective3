@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -286,6 +286,12 @@ public class CutsceneDialogue : MonoBehaviour
     public GameObject Thief_A;
     public GameObject Thief_B;
     public GameObject FatMan;
+    public GameObject FemaleCadre_A;
+    public GameObject FemaleCadre_B;
+    public GameObject YYL_1;
+    public GameObject YYL_2;
+    public GameObject MaleCadre;
+    public GameObject Underling;
 
     private void SetSpeakerStyle(string speaker)
     {
@@ -296,6 +302,12 @@ public class CutsceneDialogue : MonoBehaviour
         Thief_A.SetActive(false);
         Thief_B.SetActive(false);
         FatMan.SetActive(false);
+        FemaleCadre_A.SetActive(false);
+        FemaleCadre_B.SetActive(false);
+        YYL_1.SetActive(false);
+        YYL_2.SetActive(false);
+        MaleCadre.SetActive(false);
+        Underling.SetActive(false);
 
         switch (speaker)
         {
@@ -329,6 +341,39 @@ public class CutsceneDialogue : MonoBehaviour
             case "Thief_B":
                 Thief_B.SetActive(true);
                 textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);// 极淡偏紫蓝
+                break;
+
+            case "FemaleCadre_A":
+            case "FemaleCadre_AB": // 兼容第二章中两名女干部同时说话的标记
+                FemaleCadre_A.SetActive(true);
+                if (speaker == "FemaleCadre_AB") FemaleCadre_B.SetActive(true);
+                textLabel.color = new Color(0.62f, 0.84f, 1.0f, 1.0f);
+                break;
+
+            case "FemaleCadre_B":
+                FemaleCadre_B.SetActive(true);
+                textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);
+                break;
+
+            case "YYL_1":
+                YYL_1.SetActive(true);
+                textLabel.color = new Color32(190, 140, 255, 255); // 紫色
+                break;
+
+
+            case "YYL_2":
+                YYL_2.SetActive(true);
+                textLabel.color = new Color32(190, 140, 255, 255); // 紫色
+                break;
+
+            case "Underling":
+                Underling.SetActive(true);
+                textLabel.color = new Color32(255, 184, 107, 255); // 暖橙色
+                break;
+
+            case "MaleCadre":
+                MaleCadre.SetActive(true);
+                textLabel.color = new Color32(128, 210, 170, 255); // 薄荷绿
                 break;
 
             case "FatMan":

@@ -229,6 +229,9 @@ public class Sign : MonoBehaviour
         {
             IInteractable item = other.GetComponent<IInteractable>();
 
+            if (item is RescueTarget rescueTarget && rescueTarget.IsDecorative)
+                return;
+
             if (item != null)
             {
                 canPress = true;

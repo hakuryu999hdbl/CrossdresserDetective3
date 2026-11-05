@@ -919,6 +919,20 @@ public class PlayerController : MonoBehaviour
 
         isCaptured = true;
 
+        // 被抓会中断攻击，不能让隐藏后的动画继续发送攻击帧事件。
+        isHoldingThrow = false;
+        throwCharge = 0f;
+        isAirKick = false;
+        if (airKickCoroutine != null)
+        {
+            StopCoroutine(airKickCoroutine);
+            airKickCoroutine = null;
+        }
+        playerAnimation.EnterCutsceneIdle();
+        if (frameEvent.AttackArea_1 != null) frameEvent.AttackArea_1.SetActive(false);
+        if (frameEvent.AttackArea_2 != null) frameEvent.AttackArea_2.SetActive(false);
+        if (frameEvent.AttackArea_3 != null) frameEvent.AttackArea_3.SetActive(false);
+
         inputDirection = Vector2.zero;
         rb.velocity = Vector2.zero;
 

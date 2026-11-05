@@ -8,6 +8,10 @@ public class RBQController : MonoBehaviour
 
     public bool isPlayer = false;
 
+    [Header("场景装饰")]
+    [Tooltip("仅作场景装饰：不生成敌人、不可交互，也不计入救出目标。请在进入运行模式前设置。")]
+    public bool isDecorative = false;
+
     private void Awake()
     {
 

@@ -24,15 +24,28 @@ public class RescueTarget : MonoBehaviour, IInteractable
     private string interactableTag;
     private bool registered;
 
+    public bool IsDecorative => rbqController != null && rbqController.isDecorative;
+
     public GameObject NoTouch;//目前没有办法救的提示
 
     private void Awake()
     {
         interactableTag = gameObject.tag;
+        if (rbqController == null)
+            rbqController = GetComponentInParent<RBQController>();
     }
 
     private void Start()
     {
+        if (IsDecorative)
+        {
+            // 保留场景中的演出，但不参与任务和交互。
+            gameObject.tag = "Untagged";
+            if (NoTouch != null) NoTouch.SetActive(false);
+            RefreshAnimation();
+            return;
+        }
+
         RegisterTarget();//向GameManager登记这是救出任务
         RefreshAnimation();//随机拘束还是凌辱，告知rbqController
 
@@ -47,7 +60,7 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void RegisterTarget()
     {
-        if (registered)
+        if (IsDecorative || registered)
             return;
 
         registered = true;
@@ -88,6 +101,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     public void TriggerAction()
     {
+        if (IsDecorative) return;
+
         if (GameManager.instance.player.isBondage)
             return;
 
@@ -114,6 +129,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void StartRescueBattle()
     {
+        if (IsDecorative) return;
+
         if (enemyPrefab == null)
         {
             BecomeRescueable();
@@ -180,6 +197,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void BecomeRescueable()
     {
+        if (IsDecorative) return;
+
         state = RescueState.Bound;
         NoTouch.SetActive(false);
 
@@ -189,6 +208,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void Rescue()
     {
+        if (IsDecorative) return;
+
         if (state != RescueState.Bound)
             return;
 
@@ -222,6 +243,8 @@ public class RescueTarget : MonoBehaviour, IInteractable
 
     private void Update()
     {
+        if (IsDecorative) return;
+
         if (state != RescueState.BeingAbused)
             return;
 

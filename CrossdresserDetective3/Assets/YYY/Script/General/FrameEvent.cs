@@ -770,6 +770,7 @@ public class FrameEvent : MonoBehaviour
     IEnumerator AttackRoutine(GameObject area)
     {
         if (area == null) yield break;
+        if (playerController != null && playerController.isCaptured) yield break;
 
 
         // 玩家近战才消耗，敌人不受影响

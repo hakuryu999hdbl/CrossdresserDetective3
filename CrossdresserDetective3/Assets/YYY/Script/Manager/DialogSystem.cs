@@ -77,6 +77,7 @@ public class DialogSystem : MonoBehaviour
                 textAssets.Add(-1, Resources.Load<TextAsset>("TXT_Japanese/J_Demo"));
                 textAssets.Add(0, Resources.Load<TextAsset>("TXT_Japanese/J_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Japanese/J_CG_01"));
+                textAssets.Add(2, Resources.Load<TextAsset>("TXT_Japanese/J_CG_02"));
 
                 break;
             case 1:
@@ -84,6 +85,7 @@ public class DialogSystem : MonoBehaviour
                 textAssets.Add(-1, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_Demo"));
                 textAssets.Add(0, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_CG_01"));
+                textAssets.Add(2, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_CG_02"));
 
                 break;
             case 2:
@@ -91,7 +93,7 @@ public class DialogSystem : MonoBehaviour
                 textAssets.Add(-1, Resources.Load<TextAsset>("TXT_Simplified_Chinese/C1_Demo"));
                 textAssets.Add(0, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_CG_01"));
-
+                textAssets.Add(2, Resources.Load<TextAsset>("TXT_Traditional_Chinese/C2_CG_02"));
 
                 break;
             case 3:
@@ -99,14 +101,14 @@ public class DialogSystem : MonoBehaviour
                 textAssets.Add(-1, Resources.Load<TextAsset>("TXT_English/E_Demo"));
                 textAssets.Add(0, Resources.Load<TextAsset>("TXT_English/E_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_English/E_CG_01"));
-
+                textAssets.Add(2, Resources.Load<TextAsset>("TXT_English/E_CG_02"));
                 break;
             case 4:
                 //剧情开头
                 textAssets.Add(-1, Resources.Load<TextAsset>("TXT_Korean/K_Demo"));
                 textAssets.Add(0, Resources.Load<TextAsset>("TXT_Korean/K_CG_00"));
                 textAssets.Add(1, Resources.Load<TextAsset>("TXT_Korean/K_CG_01"));
-
+                textAssets.Add(2, Resources.Load<TextAsset>("TXT_Korean/K_CG_02"));
                 break;
         }
 
@@ -177,6 +179,9 @@ public class DialogSystem : MonoBehaviour
     public GameObject BlackNameboard;
     public GameObject YYY;
     public GameObject LL;
+    public GameObject YYL_1;
+    public GameObject MaleCadre;
+    public GameObject Underling;
 
     IEnumerator SetTextUI()
     {
@@ -196,6 +201,9 @@ public class DialogSystem : MonoBehaviour
         BlackNameboard.SetActive(false);
         YYY.SetActive(false);
         LL.SetActive(false);
+        YYL_1.SetActive(false);
+        MaleCadre.SetActive(false);
+        Underling.SetActive(false);
 
         switch (line)
         {
@@ -210,6 +218,27 @@ public class DialogSystem : MonoBehaviour
                 BlackNameboard.SetActive(true);
                 YYY.SetActive(true);
                 textLabel.color = new Color(1.0f, 0.70f, 0.82f, 1.0f);// 极淡粉色
+                index++;
+                break;
+
+            case "YYL_1":
+                BlackNameboard.SetActive(true);
+                YYL_1.SetActive(true);
+                textLabel.color = new Color32(190, 140, 255, 255);
+                index++;
+                break;
+
+            case "Underling":
+                BlackNameboard.SetActive(true);
+                Underling.SetActive(true);
+                textLabel.color = new Color32(255, 184, 107, 255); // 暖橙色
+                index++;
+                break;
+
+            case "MaleCadre":
+                BlackNameboard.SetActive(true);
+                MaleCadre.SetActive(true);
+                textLabel.color = new Color32(128, 210, 170, 255); // 薄荷绿
                 index++;
                 break;
 
@@ -283,6 +312,10 @@ public class DialogSystem : MonoBehaviour
             }        
             else if (GameFlowData.nextAreaId == "CG_Photo")
             { //主线剧情1-1照片自慰
+                SceneManager.LoadScene("Level");
+            }
+            else if (GameFlowData.nextAreaId == "CG_Fera")
+            { //主线剧情2-2口交上位
                 SceneManager.LoadScene("Level");
             }
         }

@@ -7,7 +7,9 @@ public class Spine_FrameEvents : MonoBehaviour
     public Animator Demo;
     public Animator Introduce;
     public Animator CG_Photo;
+    public Animator CG_Fera;
     public Animator CG_Clock;
+
 
 
     //当前播放的动画器
@@ -36,6 +38,13 @@ public class Spine_FrameEvents : MonoBehaviour
                 currentAnimator = CG_Photo;
                 if (GameFlowData.returnPath != "cg") { SaveManager.UpdateThumbnail("CG_Photo"); }//非CG路径才能记录照片
                 GlobalSaveManager.UnlockCG("CG_Photo");//解锁CG
+                break;
+
+            case "CG_Fera":
+                dialogSystem.animation_number = 2;
+                currentAnimator = CG_Fera;
+                if (GameFlowData.returnPath != "cg") { SaveManager.UpdateThumbnail("CG_Fera"); }//非CG路径才能记录照片
+                GlobalSaveManager.UnlockCG("CG_Fera");//解锁CG
                 break;
 
             case "CG_Clock":

@@ -172,6 +172,7 @@ public class EnemyController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             anim.SetInteger("state", 0);
+            CheckCatchAnimationProgress();
 
           
             return;
@@ -1335,6 +1336,30 @@ public class EnemyController : MonoBehaviour
 
     public GameObject Catch_Collider;//让动画产生，防止bug
 
+    private float catchStartedAt;
+    private int catchReadyStateHash;
+    private bool waitingForCatchAnimation;
+
+    private void CheckCatchAnimationProgress()
+    {
+        if (!waitingForCatchAnimation || Time.time - catchStartedAt < 0.5f)
+            return;
+
+        AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(attackLayer);
+        // 成功动画必须离开前摇；退回空状态也不能算成功。
+        if (info.fullPathHash != catchReadyStateHash &&
+            (info.IsName("LewdmoveYYY_1") || info.IsName("Lewdmove_1") ||
+             (this is Enemy_3 && info.IsName("Catch"))))
+        {
+            waitingForCatchAnimation = false;
+            return;
+        }
+
+        waitingForCatchAnimation = false;
+        Debug.LogWarning($"[抓取恢复] {name} 的成功动画未推进，解除抓取。state={info.fullPathHash}", this);
+        ThrowCapturedPlayer();
+    }
+
     public void StartCatchPlayer(PlayerController player)
     {
         Debug.Log("[丢出帧事件] 已执行", this);
@@ -1407,6 +1432,9 @@ public class EnemyController : MonoBehaviour
 
         isCatching = true;
         capturedPlayer = player;
+        catchStartedAt = Time.time;
+        catchReadyStateHash = anim.GetCurrentAnimatorStateInfo(attackLayer).fullPathHash;
+        waitingForCatchAnimation = this is Enemy_1 || this is Enemy_3;
 
         // ★ 抓取成立的瞬间就建立双方关系
         player.catchingEnemy = this;
@@ -1418,6 +1446,9 @@ public class EnemyController : MonoBehaviour
         //开始抓取的清理
         anim.ResetTrigger("attack");
         anim.ResetTrigger("skill");
+
+        anim.ResetTrigger("hit");
+        anim.ResetTrigger("catch");
 
         attackList.Clear();
         targetPoint = null;

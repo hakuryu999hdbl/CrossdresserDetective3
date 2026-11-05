@@ -225,6 +225,15 @@ public class GameManager : MonoBehaviour
         // 加载之前才恢复正常时间
         Time.timeScale = 1f;
 
+        // 2-2 开头先播放剧情 CG，结束后由 DialogSystem 进入 Level。
+        if (GameFlowData.CurrentChapter == 2 && GameFlowData.CurrentStage == 2)
+        {
+            GameFlowData.nextAreaId = "CG_Fera";
+            GameFlowData.returnPath = null;
+            SceneManager.LoadScene("Spine");
+            yield break;
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
