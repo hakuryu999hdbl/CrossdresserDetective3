@@ -2060,6 +2060,12 @@ public class EnemyController : MonoBehaviour
     [Header("特殊角色皮肤")]
     public bool isLL_1;//常服琉璃
     public bool isLL_2;//女反派琉璃
+    public bool isThief;//小偷
+    public bool isFatMan_1;//白衬衫眼镜胖男
+    public bool isFatMan_2;//裸体胖男
+    public bool isFemaleCadre_1;//女干部A
+    public bool isFemaleCadre_2;//女干部B
+
 
 
     public void StageSkin()
@@ -2071,11 +2077,14 @@ public class EnemyController : MonoBehaviour
                 {
                     case 1:
                     case 2:
-
-                        //frameEvent.Story_Clothes_Man_01();//设置男性小偷
                         //小偷头型
-                        Man_hairIndex = 2;
-                        Man_clothesIndex = 1;
+                        //Man_hairIndex = 2;
+                        //Man_clothesIndex = 1;
+
+                        //西服男（无小偷头型）
+                        Man_hairIndex = Random.Range(0, 2);
+                        Man_clothesIndex = 2;
+
 
                         //死宅
                         FatMan_hairIndex = 1;
@@ -2213,21 +2222,44 @@ public class EnemyController : MonoBehaviour
         rifleType = Random.Range(1, 3);
 
 
+
+
+
         if (isLL_1) 
         {
-            Girl_hairIndex = 0;
-            Girl_clothesIndex = 5;
-            Girl_glovesIndex = 0;
-            Girl_shoesIndex = 2;
-
-
-            Girl_underwearIndex = 2;//内衣裤袜
-            Girl_stockingsIndex = 2;
-
-            Girl_hatIndex = 0;//没有头饰
-            Girl_maskIndex = 0;//不戴面具
+            frameEvent.Story_Clothes_LL_01();
+            return;
         }
-
+        if (isLL_2)
+        {
+            frameEvent.Story_Clothes_LL_02();
+            return;
+        }
+        if (isThief)
+        {
+            frameEvent.Story_Clothes_Man_01();
+            return;
+        }
+        if (isFatMan_1)
+        {
+            frameEvent.Story_Clothes_FatMan_01();
+            return;
+        }
+        if (isFatMan_2)
+        {
+            frameEvent.Story_Clothes_FatMan_02();
+            return;
+        }
+        if (isFemaleCadre_1)
+        {
+            frameEvent.Story_Clothes_Girl_01();
+            return;
+        }
+        if (isFemaleCadre_2)
+        {
+            frameEvent.Story_Clothes_Girl_02();
+            return;
+        }
 
 
         RefreshPlayerSkin();//初始更新皮肤

@@ -889,7 +889,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//【剧情】洗澡脱上衣
+    }//Spine帧事件调用【剧情】洗澡脱上衣
     public void Undressing_Down() 
     {
         playerController.beltIndex = 0;
@@ -901,7 +901,7 @@ public class FrameEvent : MonoBehaviour
         playerController.RefreshPlayerSkin();
 
 
-    }//【剧情】洗澡脱下半身
+    }//Spine帧事件调用【剧情】洗澡脱下半身
 
 
     public void SetPlayer_Clothes_01()
@@ -922,7 +922,7 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
         playerController.RefreshPlayerSkin();
 
-    }//【剧情】主角兔女郎
+    }//TimeLine帧事件调用【剧情】主角兔女郎
 
     public void SetPlayer_Clothes_02()
     {
@@ -941,7 +941,7 @@ public class FrameEvent : MonoBehaviour
 
         playerController.RefreshPlayerSkin();
 
-    }//【剧情】主角赤裸状态 
+    }//TimeLine帧事件调用【剧情】主角赤裸状态 
 
     public void SetPlayer_Clothes_03()
     {
@@ -962,9 +962,9 @@ public class FrameEvent : MonoBehaviour
         playerController.maskIndex = 0;
 
         playerController.RefreshPlayerSkin();
-    }//【剧情】主角第一章第一关事务所剧情(白色内裤无裙子)
+    }//TimeLine帧事件调用【剧情】主角第一章第一关事务所剧情(白色内裤无裙子)
 
-
+    //我留下了TimeLine途径
     public void Story_Clothes_Man_01()
     {
         //赤裸的叶语嫣被捆绑
@@ -987,33 +987,33 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//【剧情】小偷外貌
-
+    }//EnemyController初始调用【剧情】小偷外貌+赤裸的主角被捆绑
+    //我留下了TimeLine途径
     public void Story_Clothes_FatMan_01()
     {
         //通常装的叶语嫣
-        enemyController.clothesIndex = 0;
-        enemyController.glovesIndex = 0;
-        enemyController.hatIndex = 0;
-        enemyController.maskIndex = 0;
-        enemyController.beltIndex = 0;
-        enemyController.stockingsIndex = 0;
-        enemyController.pantiesIndex = 0;
-        enemyController.shoesIndex = 0;
-        enemyController.skirtIndex = 0;
-
-
-
-        enemyController.beltIndex = 1;
-        enemyController.stockingsIndex = 1;
-        enemyController.pantiesIndex = 4;
-        enemyController.shoesIndex = 1;
-        enemyController.skirtIndex = 0;
-
-        enemyController.clothesIndex = 1;
-        enemyController.glovesIndex = 1;
-        enemyController.hatIndex = 0;
-        enemyController.maskIndex = 0;
+        //enemyController.clothesIndex = 0;
+        //enemyController.glovesIndex = 0;
+        //enemyController.hatIndex = 0;
+        //enemyController.maskIndex = 0;
+        //enemyController.beltIndex = 0;
+        //enemyController.stockingsIndex = 0;
+        //enemyController.pantiesIndex = 0;
+        //enemyController.shoesIndex = 0;
+        //enemyController.skirtIndex = 0;
+        //
+        //
+        //
+        //enemyController.beltIndex = 1;
+        //enemyController.stockingsIndex = 1;
+        //enemyController.pantiesIndex = 4;
+        //enemyController.shoesIndex = 1;
+        //enemyController.skirtIndex = 0;
+        //
+        //enemyController.clothesIndex = 1;
+        //enemyController.glovesIndex = 1;
+        //enemyController.hatIndex = 0;
+        //enemyController.maskIndex = 0;
 
         //眼睛衬衫死宅
         enemyController.FatMan_clothesIndex = 1;
@@ -1023,33 +1023,33 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//【剧情】眼睛衬衫死宅外貌
-
+    }//EnemyController初始调用【剧情】眼睛衬衫死宅外貌
+    //我留下了TimeLine途径
     public void Story_Clothes_FatMan_02()
     {
         //通常装的叶语嫣
-        enemyController.clothesIndex = 0;
-        enemyController.glovesIndex = 0;
-        enemyController.hatIndex = 0;
-        enemyController.maskIndex = 0;
-        enemyController.beltIndex = 0;
-        enemyController.stockingsIndex = 0;
-        enemyController.pantiesIndex = 0;
-        enemyController.shoesIndex = 0;
-        enemyController.skirtIndex = 0;
-
-
-
-        enemyController.beltIndex = 1;
-        enemyController.stockingsIndex = 1;
-        enemyController.pantiesIndex = 4;
-        enemyController.shoesIndex = 1;
-        enemyController.skirtIndex = 0;
-
-        enemyController.clothesIndex = 1;
-        enemyController.glovesIndex = 1;
-        enemyController.hatIndex = 0;
-        enemyController.maskIndex = 0;
+        //enemyController.clothesIndex = 0;
+        //enemyController.glovesIndex = 0;
+        //enemyController.hatIndex = 0;
+        //enemyController.maskIndex = 0;
+        //enemyController.beltIndex = 0;
+        //enemyController.stockingsIndex = 0;
+        //enemyController.pantiesIndex = 0;
+        //enemyController.shoesIndex = 0;
+        //enemyController.skirtIndex = 0;
+        //
+        //
+        //
+        //enemyController.beltIndex = 1;
+        //enemyController.stockingsIndex = 1;
+        //enemyController.pantiesIndex = 4;
+        //enemyController.shoesIndex = 1;
+        //enemyController.skirtIndex = 0;
+        //
+        //enemyController.clothesIndex = 1;
+        //enemyController.glovesIndex = 1;
+        //enemyController.hatIndex = 0;
+        //enemyController.maskIndex = 0;
 
         //眼睛衬衫死宅
         enemyController.FatMan_clothesIndex = 0;
@@ -1059,7 +1059,78 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//【剧情】裸体死宅外貌
+    }//EnemyController初始调用【剧情】裸体死宅外貌
+
+    public void Story_Clothes_LL_01() 
+    {
+        enemyController.Girl_hairIndex = 0;
+        enemyController.Girl_clothesIndex = 5;
+        enemyController.Girl_glovesIndex = 0;
+        enemyController.Girl_shoesIndex = 2;
+
+
+        enemyController.Girl_underwearIndex = 2;//内衣裤袜
+        enemyController.Girl_stockingsIndex = 2;
+
+        enemyController.Girl_hatIndex = 0;//没有头饰
+        enemyController.Girl_maskIndex = 0;//不戴面具
+
+        enemyController.RefreshPlayerSkin();
+
+    }//EnemyController初始调用【剧情】女反派琉璃常服
+
+    public void Story_Clothes_LL_02()
+    {
+        enemyController.Girl_hairIndex = 0;
+        enemyController.Girl_clothesIndex = 0;
+        enemyController.Girl_glovesIndex = 3;
+        enemyController.Girl_shoesIndex = 0;
+
+
+        enemyController.Girl_underwearIndex = 3;
+        enemyController.Girl_stockingsIndex = 3;
+
+        enemyController.Girl_hatIndex = 0;//没有头饰
+        enemyController.Girl_maskIndex = 1;//眼罩
+
+        enemyController.RefreshPlayerSkin();
+
+    }//EnemyController初始调用【剧情】女反派琉璃SM装
+
+    public void Story_Clothes_Girl_01() 
+    {
+        enemyController.Girl_hairIndex = 3;
+        enemyController.Girl_clothesIndex = 6;
+        enemyController.Girl_glovesIndex = 3;
+        enemyController.Girl_shoesIndex = 0;
+
+
+        enemyController.Girl_underwearIndex = 1;
+        enemyController.Girl_stockingsIndex = 2;
+
+        enemyController.Girl_hatIndex = 0;//没有头饰
+        enemyController.Girl_maskIndex = 0;//眼罩
+
+        enemyController.RefreshPlayerSkin();
+    }//EnemyController初始调用【剧情】女干部A
+
+    public void Story_Clothes_Girl_02()
+    {
+        enemyController.Girl_hairIndex = 4;
+        enemyController.Girl_clothesIndex = 6;
+        enemyController.Girl_glovesIndex = 0;
+        enemyController.Girl_shoesIndex = 2;
+
+
+        enemyController.Girl_underwearIndex = 1;
+        enemyController.Girl_stockingsIndex = 2;
+
+        enemyController.Girl_hatIndex = 0;//没有头饰
+        enemyController.Girl_maskIndex = 0;//眼罩
+
+        enemyController.RefreshPlayerSkin();
+    }//EnemyController初始调用【剧情】女干部B
+
     #endregion
 
 
