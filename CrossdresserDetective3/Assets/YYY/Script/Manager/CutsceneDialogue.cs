@@ -344,9 +344,7 @@ public class CutsceneDialogue : MonoBehaviour
                 break;
 
             case "FemaleCadre_A":
-            case "FemaleCadre_AB": // 兼容第二章中两名女干部同时说话的标记
                 FemaleCadre_A.SetActive(true);
-                if (speaker == "FemaleCadre_AB") FemaleCadre_B.SetActive(true);
                 textLabel.color = new Color(0.62f, 0.84f, 1.0f, 1.0f);
                 break;
 

@@ -204,6 +204,9 @@ public class TimelineTrigger : MonoBehaviour
             case "Chapter_01_8":
                 UIManager.instance.Init_Chapter_01_8();
                 break;
+            case "Chapter_02_1":
+                UIManager.instance.Init_Chapter_02_1();
+                break;
         }
     }
 

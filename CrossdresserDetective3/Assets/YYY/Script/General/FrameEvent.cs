@@ -1106,7 +1106,7 @@ public class FrameEvent : MonoBehaviour
 
 
         enemyController.Girl_underwearIndex = 1;
-        enemyController.Girl_stockingsIndex = 2;
+        enemyController.Girl_stockingsIndex = 1;
 
         enemyController.Girl_hatIndex = 0;//没有头饰
         enemyController.Girl_maskIndex = 0;//眼罩

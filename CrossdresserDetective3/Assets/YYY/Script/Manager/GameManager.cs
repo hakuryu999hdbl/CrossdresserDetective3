@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour
                 switch (GameFlowData.CurrentStage)
                 {
                     case 1:
-                        ShowClue();
+                        ShowEscape();
                         break;
 
                     case 2:

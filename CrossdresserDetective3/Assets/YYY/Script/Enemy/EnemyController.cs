@@ -887,10 +887,10 @@ public class EnemyController : MonoBehaviour
 
                 bool playerAlreadyCaptured = player != null && (player.isCaptured || player.isStruggling);
 
-                // Sister 模式优先禁止抓取，包括逃出模式和低血量随机抓取。
+                // 姐姐不能被抓，优先于拘束和低血量随机抓取。
                 if (player != null && player.isSisterMode)
                 {
-                    anim.SetInteger("attackType", 2);
+                    anim.SetInteger("attackType", Random.Range(1, 3));
                     anim.SetTrigger("attack");
                 }
                 // 玩家已经被其他敌人抓住时：
@@ -902,8 +902,8 @@ public class EnemyController : MonoBehaviour
 
                     Debug.Log("玩家已经被其他敌人抓住,只能触发attack");
                 }
-                //如果是逃出模式，只有抓住攻击这一种（当然在这个模式下，关卡里放满了Enemy_1）
-                else if(GameFlowData.CurrentMissionType==GameFlowData.MissionType.Escape) 
+                // 玩家处于拘束时，Enemy_1 只使用抓取，与任务模式无关。
+                else if (this is Enemy_1 && player != null && player.isBondage)
                 {
                     StartCatchAttack();//开启抓取
                 }
@@ -1366,6 +1366,7 @@ public class EnemyController : MonoBehaviour
 
         if (IsSuspended) return;
         if (player == null) return;
+        if (player.isSisterMode) return;
 
         if (player.physicsCheck == null || !player.physicsCheck.isGround)
             return;
