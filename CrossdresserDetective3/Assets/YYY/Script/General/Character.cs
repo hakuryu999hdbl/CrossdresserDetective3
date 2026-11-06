@@ -97,14 +97,14 @@ public class Character : MonoBehaviour, IDamageable
         //}
 
         // 摩托哥防御反击
-        if (enemy != null && enemy.TryHandleIncomingAttack(attacker))
+        if (enemy != null && !enemy.IsNpc && enemy.TryHandleIncomingAttack(attacker))
         {
             Debug.Log("攻击已被特殊状态处理");
             return;
         }
 
         // Enemy_5 悬空期间无敌
-        if (enemy != null && enemy.IgnoreIncomingDamage())
+        if (enemy != null && !enemy.IsNpc && enemy.IgnoreIncomingDamage())
             return;
 
         // 抓住玩家的敌人无敌

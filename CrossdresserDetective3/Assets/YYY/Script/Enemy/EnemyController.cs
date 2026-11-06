@@ -84,6 +84,22 @@ public class EnemyController : MonoBehaviour
     [Header("出生后直接追击玩家")]
     public bool chasePlayerOnSpawn = false;
 
+    private bool spawnedAsNpc;
+    public bool IsNpc =>
+        (spawnedAsNpc || this is Enemy_1) && CheckArea != null && !CheckArea.activeSelf;
+
+    public void ConfigureAsNpc(EnemyController reinforcement, Transform spawnPoint)
+    {
+        spawnedAsNpc = true;
+        chasePlayerOnSpawn = false;
+        canCallReinforcements = true;
+        reinforcementPrefab = reinforcement;
+        reinforcementSpawnPoint = spawnPoint;
+
+        if (CheckArea != null)
+            CheckArea.SetActive(false);
+    }
+
     private void Awake()
     {
         Init();
@@ -411,9 +427,6 @@ public class EnemyController : MonoBehaviour
         foreach (Collider2D c in suspendedDamageColliders) if (c != null) c.enabled = true;
         suspendedDamageBehaviours.Clear();
         suspendedDamageColliders.Clear();
-
-        //视野也恢复
-        checkArea.gameObject.SetActive(true);
     }
 
     private bool gameOverStopped = false;
@@ -479,16 +492,6 @@ public class EnemyController : MonoBehaviour
         if (reinforcementPrefab == null)
             return;
 
-        // Awake 时就会判断是否登记，所以必须在预制体上设置好
-        //if (reinforcementPrefab.isAreaSpawnedEnemy)
-        //{
-        //    Debug.LogError(
-        //        "增援预制体的 Is Area Spawned Enemy 必须取消勾选",
-        //        this
-        //    );
-        //    return;
-        //}
-
         if (GameManager.instance == null ||
             GameManager.instance.PlayerWin)
             return;
@@ -509,27 +512,26 @@ public class EnemyController : MonoBehaviour
 
         // 增援不能再召唤增援
         reinforcement.canCallReinforcements = false;
+        if (spawnedAsNpc && reinforcement.CheckArea != null)
+            reinforcement.CheckArea.SetActive(true);
 
         // Init 通常已经登记；此方法会防止重复加入
         GameManager.instance.RegisterSceneEnemy(reinforcement);
 
-        // 等它执行完 Start，再设置追击，避免被初始巡逻覆盖
-        StartCoroutine(StartReinforcementChase(reinforcement));
+        // 由增援自己等待 Start，避免 NPC 死后被移除时中断追击。
+        reinforcement.StartCoroutine(reinforcement.StartReinforcementChase());
 
-        // UI提示可接在这里
         Debug.Log("敌人增援到达！", this);
 
-        UIManager.instance.ShowEnemyReinforcementsAlert();
+        if (UIManager.instance != null)
+            UIManager.instance.ShowEnemyReinforcementsAlert();
     }
 
-    private IEnumerator StartReinforcementChase(
-        EnemyController reinforcement)
+    private IEnumerator StartReinforcementChase()
     {
         yield return null;
 
-        if (reinforcement == null ||
-            reinforcement.isDead ||
-            reinforcement.IsSuspended)
+        if (isDead || IsSuspended)
             yield break;
 
         if (GameManager.instance == null ||
@@ -543,14 +545,14 @@ public class EnemyController : MonoBehaviour
             player.isCaptured)
             yield break;
 
-        reinforcement.targetPoint = player.transform;
-        reinforcement.lastKnownTargetPos = player.transform.position;
+        targetPoint = player.transform;
+        lastKnownTargetPos = player.transform.position;
 
-        if (!reinforcement.attackList.Contains(player.transform))
-            reinforcement.attackList.Add(player.transform);
+        if (!attackList.Contains(player.transform))
+            attackList.Add(player.transform);
 
-        reinforcement.FaceToPosition(player.transform.position);
-        reinforcement.TransitionToState(reinforcement.attackState);
+        FaceToPosition(player.transform.position);
+        TransitionToState(attackState);
     }
 
     #endregion
@@ -2346,7 +2348,7 @@ public class EnemyController : MonoBehaviour
 
         // 只有巡逻状态下，从背后攻击才能暗杀
         //bool canBackstab = currentState == patrolState;// && hitFromBehind  //暂时近战正面完全偷袭巡逻状态
-        bool canBackstab = CanBeAssassinated();
+        bool canBackstab = IsNpc || CanBeAssassinated();
 
 
         // 眩晕状态依然可以直接处决
@@ -2449,6 +2451,10 @@ public class EnemyController : MonoBehaviour
     {
         if (isDead)
             return;
+
+        // 先登记增援，再结算死亡。死亡流程也会关闭 FOVHolder。
+        if (IsNpc)
+            CallReinforcements();
 
 
         PlayBloodEffect();//不知道为啥死亡有些时候血特效出不来就先这样吧

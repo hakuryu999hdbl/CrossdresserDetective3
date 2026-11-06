@@ -20,8 +20,9 @@ public class Bullet : MonoBehaviour
     public GameObject SparkEffect;
 
    
-    [Header("烟雾/障碍削弱")]
-    public bool disableAttackOnObstacle = false; // 敌人子弹 true，玩家子弹 false
+    [Header("掩体与烟雾")]
+    [Tooltip("穿过烟雾时关闭伤害。敌人子弹开启，玩家子弹关闭。")]
+    public bool disableAttackOnObstacle = false;
     public GameObject Attack; // 子物体 AttackArea
     public LayerMask obstacleLayer;
 
@@ -64,23 +65,23 @@ public class Bullet : MonoBehaviour
         if (isDestroying) return;
 
 
-        int hitObjLayer = collision.gameObject.layer;
-
-
-        if (disableAttackOnObstacle &&
-        ((1 << collision.gameObject.layer) & obstacleLayer) != 0)
+        int hitLayerBit = 1 << collision.gameObject.layer;
+        bool hitObstacle = (hitLayerBit & obstacleLayer) != 0;
+        if (hitObstacle && collision.TryGetComponent<SmokeArea>(out _))
         {
-            if (Attack != null)
-            {
-                Destroy(Attack);
-            }
-        } //用于子弹穿过烟雾弹/视野障碍时变成无效子弹
+            if (disableAttackOnObstacle && Attack != null)
+                Attack.SetActive(false);
 
+            return;
+        }
 
-        if (((1 << hitObjLayer) & wallLayer) != 0)
+        if (hitObstacle || (hitLayerBit & wallLayer) != 0)
         {
             if (destroyOnWallHit)
             {
+                if (hitObstacle && Attack != null)
+                    Attack.SetActive(false);
+
                 GameObject spark = Instantiate(SparkEffect,transform.position, Quaternion.identity);
                 Destroy(spark, 1f);
 
@@ -90,7 +91,7 @@ public class Bullet : MonoBehaviour
             return;
         }//打到墙上
 
-        if (((1 << hitObjLayer) & hitLayer) != 0)
+        if ((hitLayerBit & hitLayer) != 0)
         {
             if (destroyOnEnemyHit)
             {

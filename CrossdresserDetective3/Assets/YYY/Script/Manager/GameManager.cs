@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 2:
-                        ShowRescue();
+                        ShowClue();
                         break;
 
                     case 3:
@@ -333,7 +333,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 4:
-                        ShowClue();
+                        ShowRescue();
                         break;
 
                     case 5:
@@ -341,15 +341,8 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 6:
-                        ShowClue();
-                        break;
-
                     case 7:
-                        ShowClue();
-                        break;
                     case 8:
-                        ShowRescue();
-                        break;
                     case 9:
                     case 10:
                         ShowEliminate();
@@ -509,7 +502,7 @@ public class GameManager : MonoBehaviour
             roomManager.SetupEscape();
         }
 
-        UIManager.instance.escapeText.gameObject.SetActive(true);
+        UIManager.instance.SetEscapeObjectiveVisible(true);
 
     }//弹出这是逃脱任务提示
 
@@ -685,7 +678,7 @@ public class GameManager : MonoBehaviour
         if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
         {
             UIManager.instance.BondageUnlockText.SetActive(false);
-            UIManager.instance.escapeText.SetActive(true);
+            UIManager.instance.SetEscapeObjectiveVisible(true);
             return;
         }
 
@@ -697,7 +690,7 @@ public class GameManager : MonoBehaviour
         // 隐藏原任务信息
         UIManager.instance.clueText.gameObject.SetActive(false);
         UIManager.instance.rescueText.gameObject.SetActive(false);
-        UIManager.instance.escapeText.SetActive(false);
+        UIManager.instance.SetEscapeObjectiveVisible(false);
         UIManager.instance.eliminateText.SetActive(false);
 
         // 显示解缚任务
@@ -727,7 +720,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameFlowData.MissionType.Escape:
-                UIManager.instance.escapeText.SetActive(true);
+                UIManager.instance.SetEscapeObjectiveVisible(true);
                 break;
         }
 

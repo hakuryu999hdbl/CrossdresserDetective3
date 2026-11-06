@@ -7,6 +7,8 @@ public class AreaEncounterController : MonoBehaviour
     [Header("敌人生成")]
     public GameObject[] enemyPrefabs; // 敌人预制体数组
     public Transform[] spawnPoints;   // 生成点数组
+    [Tooltip("生成 NPC 并关闭视野。增援使用 Enemy Prefabs 和 Spawn Points 各自的第一项。")]
+    public bool spawnAsNpc;
 
 
     private List<GameObject> aliveEnemies = new List<GameObject>();
@@ -72,12 +74,18 @@ public class AreaEncounterController : MonoBehaviour
 
     public void SpawnEnemies() 
     {
+        EnemyController npcReinforcement = null;
+        if (spawnAsNpc && enemyPrefabs.Length > 0 && enemyPrefabs[0] != null)
+            npcReinforcement = enemyPrefabs[0].GetComponent<EnemyController>();
 
         //areaActivated = true;
 
         // 生成敌人
         foreach (GameObject enemyPrefab in enemyPrefabs)
         {
+            if (enemyPrefab == null)
+                continue;
+
             int randomIndex = Random.Range(0, spawnPoints.Length);
             Transform spawnPoint = spawnPoints[randomIndex];
 
@@ -96,6 +104,9 @@ public class AreaEncounterController : MonoBehaviour
 
                 // 门出生巡逻，面包车出生直接追击
                 enemyController.chasePlayerOnSpawn = isVan;
+
+                if (spawnAsNpc)
+                    enemyController.ConfigureAsNpc(npcReinforcement, spawnPoints[0]);
             }
 
 

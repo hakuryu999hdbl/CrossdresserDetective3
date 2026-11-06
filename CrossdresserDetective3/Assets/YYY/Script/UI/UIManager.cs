@@ -1150,15 +1150,19 @@ public class UIManager : MonoBehaviour
 
     public void ShowOutOfPowerAlert()
     {
-        ShowAlert(text_OutOfPower);
+        // 两条提示共用一个位置，增援提示显示期间优先保留它。
+        if (text_EnemyReinforcements != null && text_EnemyReinforcements.activeSelf)
+            return;
+
+        ShowAlert(text_OutOfPower, 0.5f);
     }
 
     public void ShowEnemyReinforcementsAlert()
     {
-        ShowAlert(text_EnemyReinforcements);
+        ShowAlert(text_EnemyReinforcements, 0f);
     }
 
-    private void ShowAlert(GameObject targetText)
+    private void ShowAlert(GameObject targetText, float delay)
     {
         if (targetText == null)
             return;
@@ -1166,10 +1170,10 @@ public class UIManager : MonoBehaviour
         if (alertCoroutine != null)
             StopCoroutine(alertCoroutine);
 
-        alertCoroutine = StartCoroutine(AlertRoutine(targetText));
+        alertCoroutine = StartCoroutine(AlertRoutine(targetText, delay));
     }
 
-    private IEnumerator AlertRoutine(GameObject targetText)
+    private IEnumerator AlertRoutine(GameObject targetText, float delay)
     {
         if (text_OutOfPower != null)
             text_OutOfPower.SetActive(false);
@@ -1177,7 +1181,8 @@ public class UIManager : MonoBehaviour
         if (text_EnemyReinforcements != null)
             text_EnemyReinforcements.SetActive(false);
 
-        yield return new WaitForSeconds(0.5f);
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
 
         targetText.SetActive(true);
 
@@ -1840,8 +1845,19 @@ public class UIManager : MonoBehaviour
     }
 
     public GameObject escapeText, eliminateText;
+    public GameObject superiorOfficeText;
 
+    public void SetEscapeObjectiveVisible(bool visible)
+    {
+        bool showSuperiorOffice = visible &&
+            GameFlowData.CurrentChapter == 2 &&
+            GameFlowData.CurrentStage == 1 &&
+            superiorOfficeText != null;
 
+        escapeText.SetActive(visible && !showSuperiorOffice);
+        if (superiorOfficeText != null)
+            superiorOfficeText.SetActive(showSuperiorOffice);
+    }
 
     public GameObject BondageUnlockText;
 
