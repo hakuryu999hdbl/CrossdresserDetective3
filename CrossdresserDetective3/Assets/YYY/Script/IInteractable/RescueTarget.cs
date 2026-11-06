@@ -251,12 +251,14 @@ public class RescueTarget : MonoBehaviour, IInteractable
         if (battleTriggered)
             return;
 
-        if (GameManager.instance == null)
+        GameManager game = GameManager.instance;
+        if (game == null || game.EnemiesSuspendedForCaptivity)
             return;
 
-        PlayerController player = GameManager.instance.player;
+        PlayerController player = game.player;
 
-        if (player == null || player.isDead)
+        // 被抓或传送到拘束房期间，不消耗救出战斗的触发机会。
+        if (player == null || player.isDead || player.isCaptured)
             return;
 
         float xDistance = Mathf.Abs(

@@ -916,7 +916,11 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (waitGameOverInput && !isCaptivityShowing)//不能是调教，必须处刑
+        // 拘束中的 K 键由拘束输入处理，避免同时触发菜单返回。
+        if (isCaptivityShowing)
+            return;
+
+        if (waitGameOverInput)
         {
             ShowGameOverMenu();
             return;
@@ -1215,6 +1219,11 @@ public class UIManager : MonoBehaviour
         if (isResultShowing) return;
         isResultShowing = true;
 
+        BeginGameOverPresentation();
+    }
+
+    private void BeginGameOverPresentation()
+    {
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
         MissionFailure.SetActive(true);
@@ -1679,7 +1688,7 @@ public class UIManager : MonoBehaviour
 
 
 
-        Test_Input();//测试按钮
+        HandleCaptivityInput();
     }
 
 
@@ -2059,10 +2068,10 @@ public class UIManager : MonoBehaviour
     [Header("挣扎提示")]
     public GameObject Struggle_Captured;//挣扎提示
     private bool captivityBreakFreeStarted;
+    private bool captivityEscapeInputArmed;
 
 
-    //按下J键挣扎解缚
-    private void Test_Input()
+    private void HandleCaptivityInput()
     {
         if (!isCaptivityShowing ||
          !waitGameOverInput ||
@@ -2072,15 +2081,25 @@ public class UIManager : MonoBehaviour
          !playerController.isCaptured)
             return;
 
-        bool keyboardPressed =
-            Keyboard.current != null &&
-            Keyboard.current.jKey.wasPressedThisFrame;
+        if (Keyboard.current?.kKey.wasPressedThisFrame == true ||
+            Gamepad.current?.buttonEast.wasPressedThisFrame == true)
+        {
+            GiveUpCaptivityEscape();
+            return;
+        }
 
-        bool gamepadPressed =
-            Gamepad.current != null &&
-            Gamepad.current.buttonSouth.wasPressedThisFrame;
+        var keyboardEscape = Keyboard.current?.jKey;
+        var gamepadEscape = Gamepad.current?.buttonSouth;
+        if (!captivityEscapeInputArmed)
+        {
+            // 先观察到松键，避免把上一段挣扎的按键带进调教房。
+            captivityEscapeInputArmed = keyboardEscape?.isPressed != true &&
+                gamepadEscape?.isPressed != true;
+            return;
+        }
 
-        if (keyboardPressed || gamepadPressed)
+        if (keyboardEscape?.wasPressedThisFrame == true ||
+            gamepadEscape?.wasPressedThisFrame == true)
             StartCaptivityBreakFree();
     }
 
@@ -2097,11 +2116,25 @@ public class UIManager : MonoBehaviour
             return;
 
         captivityBreakFreeStarted = true;
+        Struggle_Captured.SetActive(false);
         DeadBody.anim.ResetTrigger("Next");
         DeadBody.anim.SetTrigger("Next"); // Man_RapeYYY_7 → 8
 
         StartCoroutine(WaitForCaptivityAnimation8());
     }//开启黑幕淡入淡出，进入解缚逃脱模式入口
+
+    public void GiveUpCaptivityEscape()
+    {
+        if (!isCaptivityShowing || !waitGameOverInput || captivityBreakFreeStarted ||
+            DeadBody == null || !DeadBody.gameObject.activeInHierarchy || !playerController.isCaptured)
+            return;
+
+        waitGameOverInput = false;
+        isCaptivityShowing = false;
+        Struggle_Captured.SetActive(false);
+        playerController.isDead = true;
+        BeginGameOverPresentation();
+    }
 
     private IEnumerator WaitForCaptivityAnimation8()
     {
@@ -2120,7 +2153,8 @@ public class UIManager : MonoBehaviour
     }
     public void TestReviveFromRBQ()
     {
-        if (!waitGameOverInput || !playerController.isCaptured)
+        if (!isCaptivityShowing || !captivityBreakFreeStarted ||
+            !waitGameOverInput || !playerController.isCaptured)
             return;
 
         waitGameOverInput = false; // 防止 J 同时触发结算跳过
@@ -2180,14 +2214,13 @@ public class UIManager : MonoBehaviour
 
         isResultShowing = true;
         isCaptivityShowing = true;
+        waitGameOverInput = false;
+        captivityBreakFreeStarted = false;
+        captivityEscapeInputArmed = false;
         GameManager.instance.SuspendEnemiesForCaptivity();
 
         playerController.DisableGameplayInput();
         StartCoroutine(CaptivityDelay());
-
-
-
-        captivityBreakFreeStarted = false;//重置
 
         
     }
@@ -2216,8 +2249,10 @@ public class UIManager : MonoBehaviour
         DeadBody.PlayCaptivityAnimation(playerController);
 
         blackScreen.SetFadeOut();
+        yield return new WaitForSeconds(1f);
 
-        // 供当前测试版 J 键解绳使用。
+        if (playerController.Forbidden_2 != null)
+            playerController.Forbidden_2.SetActive(false);
         waitGameOverInput = true;
 
         Struggle_Captured.SetActive(true);//开启提示

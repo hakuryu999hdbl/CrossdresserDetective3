@@ -918,6 +918,8 @@ public class PlayerController : MonoBehaviour
 
 
         isCaptured = true;
+        struggleFailed = false;
+        if (Forbidden_2 != null) Forbidden_2.SetActive(false);
 
         // 被抓会中断攻击，不能让隐藏后的动画继续发送攻击帧事件。
         isHoldingThrow = false;
@@ -959,6 +961,7 @@ public class PlayerController : MonoBehaviour
     public void ExitCapturedState(Vector2 throwForce)
     {
         isCaptured = false;
+        if (Forbidden_2 != null) Forbidden_2.SetActive(false);
 
         //玩家变回不透明
         frameEvent.ShowSkeleton();
@@ -988,13 +991,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("被抓挣扎")]
     public bool isStruggling;//状态似乎要和抓了就扔区别开
+    private bool struggleFailed;
 
     public EnemyController catchingEnemy;
 
     public void StartStruggle(EnemyController enemy)
     {
-        // 已经在挣扎了，不要重复清零
-        if (isStruggling)
+        // 失败后，动画帧事件不能重开本次挣扎。
+        if (!isCaptured || isDead || struggleFailed || isStruggling || catchingEnemy != enemy)
             return;
 
 
@@ -1026,6 +1030,7 @@ public class PlayerController : MonoBehaviour
     {
         isStruggling = false;
         currentStruggle = 0;
+        if (Forbidden_2 != null) Forbidden_2.SetActive(false);
 
 
         //关闭UI
@@ -1047,6 +1052,11 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeStruggle(int amount)
     {
+        if (!isCaptured || isDead || !isStruggling || struggleFailed || catchingEnemy == null)
+            return;
+        if (amount > 0 && Forbidden_2 != null && Forbidden_2.activeSelf)
+            return;
+
 
         currentStruggle = Mathf.Clamp(currentStruggle + amount, 0, maxStruggle);
         UIManager.instance.UpdateStruggleBar(currentStruggle, maxStruggle);
@@ -1107,7 +1117,6 @@ public class PlayerController : MonoBehaviour
 
             Debug.Log("射精/体力下降");
 
-            catchingEnemy.ForceMasturbate();
             currentSex = 0;
             currentStruggle = 0;   // 挣扎槽也清零
 
@@ -1119,12 +1128,18 @@ public class PlayerController : MonoBehaviour
             if (weakness >= 4)
             {
                 // 进入处刑，永久停止本次抓取的挣扎
+                struggleFailed = true;
                 isStruggling = false;
                 currentStruggle = 0;
                 UIManager.instance.HideStruggleBar();
 
 
+                catchingEnemy.anim.ResetTrigger("next");
                 catchingEnemy.anim.SetTrigger("over");
+            }
+            else
+            {
+                catchingEnemy.ForceMasturbate();
             }
 
             Forbidden_2.SetActive(true);
@@ -1633,6 +1648,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (isCaptured) return;
         if (isBondage) { return; }
 
 
@@ -1644,6 +1660,7 @@ public class PlayerController : MonoBehaviour
     {
 
         if (isInCutscene) { return; }//过场动画锁
+        if (isCaptured) return;
         if (isBondage) { return; }
 
         if (isStruggling) return;//挣扎

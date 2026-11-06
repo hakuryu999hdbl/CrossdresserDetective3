@@ -224,6 +224,10 @@ public class ChargeSkillState : EnemyBaseState
     {
         enemy.rb.velocity = Vector2.zero;
 
+        // 冲刺落点保持锁定，出手前只按目标当前位置转向一次。
+        if (enemy.targetPoint != null)
+            enemy.FaceToPosition(enemy.targetPoint.position);
+
         phase = Phase.Hit;
         timer = enemy.chargeRecoveryTime;
 

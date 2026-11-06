@@ -1342,7 +1342,7 @@ public class EnemyController : MonoBehaviour
 
     private void CheckCatchAnimationProgress()
     {
-        if (!waitingForCatchAnimation || Time.time - catchStartedAt < 0.5f)
+        if (!waitingForCatchAnimation)
             return;
 
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(attackLayer);
@@ -1354,6 +1354,10 @@ public class EnemyController : MonoBehaviour
             waitingForCatchAnimation = false;
             return;
         }
+
+        // 每帧确认是否进入成功动画，超时才执行防卡释放。
+        if (Time.time - catchStartedAt < 0.5f)
+            return;
 
         waitingForCatchAnimation = false;
         Debug.LogWarning($"[抓取恢复] {name} 的成功动画未推进，解除抓取。state={info.fullPathHash}", this);
@@ -1562,6 +1566,8 @@ public class EnemyController : MonoBehaviour
         if (!isCatching || capturedPlayer == null)
             return;
 
+        // 挣扎帧事件已经证明抓取动画启动，后续状态不再由启动超时检查处理。
+        waitingForCatchAnimation = false;
         capturedPlayer.StartStruggle(this);
     }//开启挣扎
 
