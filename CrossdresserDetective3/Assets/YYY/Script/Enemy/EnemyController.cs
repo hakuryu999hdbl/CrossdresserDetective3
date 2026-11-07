@@ -2,6 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemySkin
+{
+    Default,
+    [InspectorName("小偷")] Thief,
+    [InspectorName("花臂黑帮分子")] Yakuza,
+    [InspectorName("警察")] Police,
+    [InspectorName("路人")] Passerby,
+    [InspectorName("白衬衫眼镜胖男")] FatMan,
+    [InspectorName("裸体胖男")] NakedFatMan,
+    [InspectorName("富豪")] RichMan,
+    [InspectorName("女干部 A")] FemaleCadre1,
+    [InspectorName("女干部 B")] FemaleCadre2,
+    [InspectorName("常服琉璃")] Liuli1,
+    [InspectorName("女反派琉璃")] Liuli2
+}
+
 public class EnemyController : MonoBehaviour
 {
     [Header("动画状态")]
@@ -88,13 +104,17 @@ public class EnemyController : MonoBehaviour
     public bool IsNpc =>
         (spawnedAsNpc || this is Enemy_1) && CheckArea != null && !CheckArea.activeSelf;
 
-    public void ConfigureAsNpc(EnemyController reinforcement, Transform spawnPoint)
+    public void ConfigureAsNpc(
+        EnemyController reinforcement,
+        Transform spawnPoint,
+        EnemySkin skin = EnemySkin.Default)
     {
         spawnedAsNpc = true;
         chasePlayerOnSpawn = false;
         canCallReinforcements = true;
         reinforcementPrefab = reinforcement;
         reinforcementSpawnPoint = spawnPoint;
+        reinforcementSkin = skin;
 
         if (CheckArea != null)
             CheckArea.SetActive(false);
@@ -472,6 +492,9 @@ public class EnemyController : MonoBehaviour
     // 建议使用单独的增援预制体
     public EnemyController reinforcementPrefab;
 
+    [Tooltip("Default 使用原有皮肤设置，其余选项指定增援实例的特殊皮肤。")]
+    public EnemySkin reinforcementSkin;
+
     // 可选：指定门口等出生位置
     public Transform reinforcementSpawnPoint;
 
@@ -512,6 +535,7 @@ public class EnemyController : MonoBehaviour
 
         // 增援不能再召唤增援
         reinforcement.canCallReinforcements = false;
+        reinforcement.SetSkinOverride(reinforcementSkin);
         if (spawnedAsNpc && reinforcement.CheckArea != null)
             reinforcement.CheckArea.SetActive(true);
 
@@ -2070,10 +2094,33 @@ public class EnemyController : MonoBehaviour
     public bool isLL_1;//常服琉璃
     public bool isLL_2;//女反派琉璃
     public bool isThief;//小偷
+    public bool isYakuza;//花臂黑帮分子
+    public bool isPolice;//男性警察
+    public bool isPassersby;//男性路人
     public bool isFatMan_1;//白衬衫眼镜胖男
     public bool isFatMan_2;//裸体胖男
+    public bool isRichMan;//富豪
     public bool isFemaleCadre_1;//女干部A
     public bool isFemaleCadre_2;//女干部B
+
+    private void SetSkinOverride(EnemySkin skin)
+    {
+        if (skin == EnemySkin.Default)
+            return;
+
+        // 指定皮肤时只保留对应开关，避免预制体上的其他皮肤开关抢先生效。
+        isThief = skin == EnemySkin.Thief;
+        isYakuza = skin == EnemySkin.Yakuza;
+        isPolice = skin == EnemySkin.Police;
+        isPassersby = skin == EnemySkin.Passerby;
+        isFatMan_1 = skin == EnemySkin.FatMan;
+        isFatMan_2 = skin == EnemySkin.NakedFatMan;
+        isRichMan = skin == EnemySkin.RichMan;
+        isFemaleCadre_1 = skin == EnemySkin.FemaleCadre1;
+        isFemaleCadre_2 = skin == EnemySkin.FemaleCadre2;
+        isLL_1 = skin == EnemySkin.Liuli1;
+        isLL_2 = skin == EnemySkin.Liuli2;
+    }
 
 
 
@@ -2087,13 +2134,8 @@ public class EnemyController : MonoBehaviour
                     case 1:
                     case 2:
                         //小偷头型
-                        //Man_hairIndex = 2;
-                        //Man_clothesIndex = 1;
-
-                        //西服男（无小偷头型）
-                        Man_hairIndex = Random.Range(0, 2);
-                        Man_clothesIndex = 2;
-
+                        Man_hairIndex = 2;
+                        Man_clothesIndex = 1;
 
                         //死宅
                         FatMan_hairIndex = 1;
@@ -2107,6 +2149,39 @@ public class EnemyController : MonoBehaviour
                     case 6:
                     case 7:
                     case 8:
+
+                        //西服男（无小偷头型）
+                        Man_hairIndex = Random.Range(0, 2);
+                        Man_clothesIndex = 2;
+
+                     
+
+                        //西服女
+                        Girl_hairIndex = Random.Range(3, 5);
+                        Girl_clothesIndex = 6;
+                        Girl_glovesIndex = 1;
+                        Girl_shoesIndex = Random.Range(1, 3);
+
+
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Girl_underwearIndex = 1;//内衣
+                                Girl_stockingsIndex = Random.Range(0, 2);
+                                if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
+                                break;
+                            case 2:
+                                Girl_underwearIndex = 2;//内衣裤袜
+                                Girl_stockingsIndex = 2;
+                                break;
+                        }
+
+                        Girl_hatIndex = 0;//没有头饰
+                        Girl_maskIndex = 0;//不戴面具
+
+
+
+                        break;
                     case 9:
                     case 10:
 
@@ -2160,7 +2235,89 @@ public class EnemyController : MonoBehaviour
                 switch (GameFlowData.CurrentStage)
                 {
                     case 1:
+
+                        //西服男（无小偷头型）
+                        Man_hairIndex = Random.Range(0, 2);
+                        Man_clothesIndex = 2;
+
+
+
+                        //西服女
+                        Girl_hairIndex = Random.Range(3, 5);
+                        Girl_clothesIndex = 6;
+                        Girl_glovesIndex = 1;
+                        Girl_shoesIndex = Random.Range(1, 3);
+
+
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Girl_underwearIndex = 1;//内衣
+                                Girl_stockingsIndex = Random.Range(0, 2);
+                                if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
+                                break;
+                            case 2:
+                                Girl_underwearIndex = 2;//内衣裤袜
+                                Girl_stockingsIndex = 2;
+                                break;
+                        }
+
+                        Girl_hatIndex = 0;//没有头饰
+                        Girl_maskIndex = 0;//不戴面具
+
+                        break;
+
                     case 2:
+
+                        //路人男（无小偷头型）
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Man_hairIndex = Random.Range(0, 2);
+                                break;
+                            case 2:
+                                Man_hairIndex = 3;
+                                break;
+                        }
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Man_clothesIndex = Random.Range(1, 3);
+                                break;
+                            case 2:
+                                Man_clothesIndex = 5;
+                                break;
+                        }
+
+
+                        //路人肥男
+                        FatMan_hairIndex = Random.Range(0, 2);
+                        FatMan_clothesIndex = 1;
+
+                        //路人女
+                        Girl_hairIndex = Random.Range(3, 5);
+                        Girl_clothesIndex = 5;
+                        Girl_glovesIndex = Random.Range(0, 3);
+                        Girl_shoesIndex = Random.Range(1, 3);
+
+
+                        switch (Random.Range(1, 3))
+                        {
+                            case 1:
+                                Girl_underwearIndex = 1;
+                                Girl_stockingsIndex = Random.Range(0, 2);
+                                if (Girl_stockingsIndex == 1) { Girl_shoesIndex = 0; }
+                                break;
+                            case 2:
+                                Girl_underwearIndex = 2;                  
+                                Girl_stockingsIndex = 2;
+                                break;
+                        }
+
+                        Girl_hatIndex = 0;
+                        Girl_maskIndex = 0;
+
+                        break;
                     case 3:
                     case 4:
                     case 5:
@@ -2249,6 +2406,21 @@ public class EnemyController : MonoBehaviour
             frameEvent.Story_Clothes_Man_01();
             return;
         }
+        if (isYakuza)
+        {
+            frameEvent.Story_Clothes_Man_02();
+            return;
+        }
+        if (isPolice)
+        {
+            frameEvent.Story_Clothes_Man_03();
+            return;
+        }
+        if (isPassersby)
+        {
+            frameEvent.Story_Clothes_Man_04();
+            return;
+        }
         if (isFatMan_1)
         {
             frameEvent.Story_Clothes_FatMan_01();
@@ -2257,6 +2429,11 @@ public class EnemyController : MonoBehaviour
         if (isFatMan_2)
         {
             frameEvent.Story_Clothes_FatMan_02();
+            return;
+        }
+        if (isRichMan)
+        {
+            frameEvent.Story_Clothes_FatMan_03();
             return;
         }
         if (isFemaleCadre_1)

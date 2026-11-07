@@ -988,6 +988,35 @@ public class FrameEvent : MonoBehaviour
 
 
     }//EnemyController初始调用【剧情】小偷外貌+赤裸的主角被捆绑
+    public void Story_Clothes_Man_02()
+    {
+
+        //男性花臂黑帮分子
+        enemyController.Man_clothesIndex = 3;
+
+        enemyController.RefreshPlayerSkin();
+
+
+    }//EnemyController初始调用【剧情】花臂黑帮分子
+    public void Story_Clothes_Man_03()
+    {
+
+        //男性警察
+        enemyController.Man_clothesIndex = 4;
+        enemyController.Man_hairIndex = Random.Range(0,4);
+        enemyController.RefreshPlayerSkin();
+
+
+    }//EnemyController初始调用【剧情】男警察
+    public void Story_Clothes_Man_04()
+    {
+
+        //男性路人
+        enemyController.Man_clothesIndex = 5;
+        enemyController.RefreshPlayerSkin();
+
+
+    }//EnemyController初始调用【剧情】男路人
     //我留下了TimeLine途径
     public void Story_Clothes_FatMan_01()
     {
@@ -1060,7 +1089,18 @@ public class FrameEvent : MonoBehaviour
 
 
     }//EnemyController初始调用【剧情】裸体死宅外貌
+    public void Story_Clothes_FatMan_03()
+    {
+       
+        //眼睛衬衫死宅
+        enemyController.FatMan_clothesIndex = 2;
+        enemyController.FatMan_hairIndex = 0;
 
+
+        enemyController.RefreshPlayerSkin();
+
+
+    }//EnemyController初始调用【剧情】富豪
     public void Story_Clothes_LL_01() 
     {
         enemyController.Girl_hairIndex = 0;

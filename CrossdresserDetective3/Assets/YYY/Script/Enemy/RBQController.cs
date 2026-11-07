@@ -33,8 +33,6 @@ public class RBQController : MonoBehaviour
                     {
                         case 1:
                         case 2:
-                            //currentAnimationType = 3;
-                            //UIManager.instance.ResultNumber = 2;//榨精地狱
                             currentAnimationType = 0;
                             UIManager.instance.ResultNumber = 1;//用完垃圾桶
                             break;
@@ -74,11 +72,20 @@ public class RBQController : MonoBehaviour
                             currentAnimationType = -1;
                             UIManager.instance.ResultNumber = 8;//女性吊缚后入
                             break;
+
                         case 2:
+                            currentAnimationType = 1;
+                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
+                            break;
+
                         case 3:
+                            currentAnimationType = 5;
+                            UIManager.instance.ResultNumber = 6;//死宅玩弄
+                            break;
+
                         case 4:
-                            currentAnimationType = 2;
-                            UIManager.instance.ResultNumber = 3;//厕所尿便器
+                            currentAnimationType = 1;
+                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
                             break;
 
                         case 5:

@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 2:
-                        ShowClue();
+                        ShowEscape();
                         break;
 
                     case 3:

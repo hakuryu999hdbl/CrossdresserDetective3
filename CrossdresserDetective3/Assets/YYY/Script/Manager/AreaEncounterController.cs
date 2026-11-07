@@ -10,6 +10,8 @@ public class AreaEncounterController : MonoBehaviour
     [Tooltip("生成 NPC 并关闭视野。增援使用 Enemy Prefabs 和 Spawn Points 各自的第一项。")]
     public bool spawnAsNpc;
 
+    [Tooltip("NPC 死亡后生成的增援皮肤。Default 使用原有皮肤设置。")]
+    public EnemySkin reinforcementSkin;
 
     private List<GameObject> aliveEnemies = new List<GameObject>();
     private bool areaActivated = false;//是否被触发一遍
@@ -105,8 +107,12 @@ public class AreaEncounterController : MonoBehaviour
                 // 门出生巡逻，面包车出生直接追击
                 enemyController.chasePlayerOnSpawn = isVan;
 
+                // 面包车生成的敌人使用小偷皮肤，由 StageSkin 统一应用。
+                if (isVan)
+                    enemyController.isThief = true;
+
                 if (spawnAsNpc)
-                    enemyController.ConfigureAsNpc(npcReinforcement, spawnPoints[0]);
+                    enemyController.ConfigureAsNpc(npcReinforcement, spawnPoints[0], reinforcementSkin);
             }
 
 
