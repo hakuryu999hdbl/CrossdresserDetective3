@@ -1018,6 +1018,13 @@ public class FrameEvent : MonoBehaviour
 
     }//EnemyController初始调用【剧情】男路人
     //我留下了TimeLine途径
+    public void Story_Clothes_Man_05()
+    {
+        enemyController.Man_hairIndex = 0;
+        enemyController.Man_clothesIndex = 0;
+        enemyController.RefreshPlayerSkin();
+    }//裸体肌肉男
+
     public void Story_Clothes_FatMan_01()
     {
         //通常装的叶语嫣

@@ -15,7 +15,8 @@ public enum EnemySkin
     [InspectorName("女干部 A")] FemaleCadre1,
     [InspectorName("女干部 B")] FemaleCadre2,
     [InspectorName("常服琉璃")] Liuli1,
-    [InspectorName("女反派琉璃")] Liuli2
+    [InspectorName("女反派琉璃")] Liuli2,
+    [InspectorName("裸体肌肉男")] NakedMuscleMan
 }
 
 public class EnemyController : MonoBehaviour
@@ -2098,7 +2099,8 @@ public class EnemyController : MonoBehaviour
     public bool isPolice;//男性警察
     public bool isPassersby;//男性路人
     public bool isFatMan_1;//白衬衫眼镜胖男
-    public bool isFatMan_2;//裸体胖男
+    public bool isNakedFatMan;//裸体胖男
+    public bool isNakedMuscleMan;//裸体肌肉男
     public bool isRichMan;//富豪
     public bool isFemaleCadre_1;//女干部A
     public bool isFemaleCadre_2;//女干部B
@@ -2114,7 +2116,8 @@ public class EnemyController : MonoBehaviour
         isPolice = skin == EnemySkin.Police;
         isPassersby = skin == EnemySkin.Passerby;
         isFatMan_1 = skin == EnemySkin.FatMan;
-        isFatMan_2 = skin == EnemySkin.NakedFatMan;
+        isNakedFatMan = skin == EnemySkin.NakedFatMan;
+        isNakedMuscleMan = skin == EnemySkin.NakedMuscleMan;
         isRichMan = skin == EnemySkin.RichMan;
         isFemaleCadre_1 = skin == EnemySkin.FemaleCadre1;
         isFemaleCadre_2 = skin == EnemySkin.FemaleCadre2;
@@ -2421,12 +2424,17 @@ public class EnemyController : MonoBehaviour
             frameEvent.Story_Clothes_Man_04();
             return;
         }
+        if (isNakedMuscleMan)
+        {
+            frameEvent.Story_Clothes_Man_05();
+            return;
+        }
         if (isFatMan_1)
         {
             frameEvent.Story_Clothes_FatMan_01();
             return;
         }
-        if (isFatMan_2)
+        if (isNakedFatMan)
         {
             frameEvent.Story_Clothes_FatMan_02();
             return;

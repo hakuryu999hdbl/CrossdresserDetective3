@@ -78,6 +78,10 @@ public class UIManager : MonoBehaviour
             case 2:
                 switch (GameFlowData.CurrentStage)
                 {
+                    default:
+                        OpenSetUp();
+                        break;
+
                     case 1:
                         // 主线剧情直接进入游戏，不打开整备界面
                         isSetUp = false;
@@ -98,11 +102,7 @@ public class UIManager : MonoBehaviour
                         // 第二章第一关，操作姐姐
                         playerController.SetSisterMode(true);
 
-                        break;
-
-                    default:
-                        OpenSetUp();
-                        break;
+                        break;         
 
 
                 }
@@ -2286,8 +2286,9 @@ public class UIManager : MonoBehaviour
     {
         RemoveBondageUnlocker();
 
-        if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape)
-            return;//逃脱模式里不允许解缚
+        if (GameFlowData.CurrentMissionType == GameFlowData.MissionType.Escape &&
+            GameFlowData.CurrentChapter == 1 && GameFlowData.CurrentStage == 1)
+            return;//仅 1-1 的逃脱模式不允许解缚，其他关卡正常生成开锁器。
 
         RoomManager room = GameManager.instance.roomManager;
 
