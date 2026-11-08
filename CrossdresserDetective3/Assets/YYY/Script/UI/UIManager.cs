@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -1036,8 +1036,8 @@ public class UIManager : MonoBehaviour
     public GameObject UI_All;//包含血条体力值子弹数当前武器等全体UI，在过场动画弹出的时候隐藏
     public GameObject UI_Cutscene;//过场动画的上下黑幕和台词显示
 
-    public GameObject InputPrompt_1;//普通移动按键提示
-    public GameObject InputPrompt_2;//拘束移动按键提示
+    [UnityEngine.Serialization.FormerlySerializedAs("InputPrompt_1")]
+    public GameObject InputPrompt;//移动按键提示，禁止图标按玩家状态显示
 
     public bool isInCutscene = false;//其实因该是GameManager管理这个是不是在过场动画内，目前暂时由UIManager做
 
@@ -1143,6 +1143,145 @@ public class UIManager : MonoBehaviour
     [Header("提示")]
     public GameObject text_OutOfPower;
     public GameObject text_EnemyReinforcements;
+    private GameObject text_Discovered;
+    private GameObject suspicionPanel;
+    private Image suspicionFill;
+    private Image undercoverAttackForbidden;
+    private Image undercoverThrowForbidden;
+    private Image capturedJumpForbidden;
+    private Image capturedRollForbidden;
+
+    public void SetUndercoverCombatPrompts(PlayerController player, bool locked)
+    {
+        bool restrained = player != null && (player.isCaptured || player.isBondage);
+        bool combatLocked = locked || restrained;
+        if (combatLocked && InputPrompt != null && player != null)
+        {
+            var sign = player.GetComponentInChildren<Sign>(true);
+            var source = sign != null && sign.Forbidden != null
+                ? sign.Forbidden.GetComponent<SpriteRenderer>() : null;
+            if (source != null)
+            {
+                if (undercoverAttackForbidden == null)
+                    undercoverAttackForbidden = CreateUndercoverForbidden("Attack", source);
+                if (undercoverThrowForbidden == null)
+                    undercoverThrowForbidden = CreateUndercoverForbidden("Switch Throw", source);
+                if (restrained && capturedJumpForbidden == null)
+                    capturedJumpForbidden = CreateUndercoverForbidden("Jump", source);
+                if (restrained && capturedRollForbidden == null)
+                    capturedRollForbidden = CreateUndercoverForbidden("Roll", source);
+            }
+        }
+        if (undercoverAttackForbidden != null)
+            undercoverAttackForbidden.gameObject.SetActive(combatLocked);
+        if (undercoverThrowForbidden != null)
+            undercoverThrowForbidden.gameObject.SetActive(combatLocked);
+        if (capturedJumpForbidden != null)
+            capturedJumpForbidden.gameObject.SetActive(restrained);
+        if (capturedRollForbidden != null)
+            capturedRollForbidden.gameObject.SetActive(restrained);
+    }
+
+    private Image CreateUndercoverForbidden(string promptName, SpriteRenderer source)
+    {
+        Transform prompt = InputPrompt.transform.Find(promptName);
+        if (prompt == null) return null;
+        var overlay = new GameObject("ActionForbidden", typeof(RectTransform), typeof(Image));
+        var rect = (RectTransform)overlay.transform;
+        rect.SetParent(prompt, false);
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.sizeDelta = new Vector2(80, 80);
+        rect.SetAsLastSibling();
+        var image = overlay.GetComponent<Image>();
+        image.sprite = source.sprite;
+        image.color = source.color;
+        image.preserveAspect = true;
+        image.raycastTarget = false;
+        return image;
+    }
+
+    public void UpdateSuspicionBar(float current, float maximum, bool visible)
+    {
+        if (suspicionPanel == null && Struggle != null && StruggleBar != null)
+        {
+            suspicionPanel = new GameObject("SuspicionBar", typeof(RectTransform));
+            var rect = (RectTransform)suspicionPanel.transform;
+            rect.SetParent(Struggle.transform.parent, false);
+            // Below the mission board (its current bottom is about 151 canvas units).
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1);
+            rect.anchoredPosition = new Vector2(0, -195);
+            rect.sizeDelta = new Vector2(460, 28);
+            var background = suspicionPanel.AddComponent<Image>();
+            background.color = new Color(0.08f, 0.06f, 0, 0.85f);
+            background.raycastTarget = false;
+            suspicionFill = Instantiate(StruggleBar, rect);
+            suspicionFill.name = "SuspicionFill";
+            var fillRect = suspicionFill.rectTransform;
+            fillRect.anchorMin = Vector2.zero;
+            fillRect.anchorMax = Vector2.one;
+            fillRect.offsetMin = new Vector2(3, 3);
+            fillRect.offsetMax = new Vector2(-3, -3);
+            fillRect.localScale = Vector3.one;
+            suspicionFill.color = new Color(1, 0.85f, 0.05f);
+            suspicionFill.raycastTarget = false;
+            suspicionFill.gameObject.SetActive(true);
+            var icon = new GameObject("SuspicionLabel", typeof(RectTransform), typeof(Text));
+            icon.SetActive(false);
+            icon.transform.SetParent(rect, false);
+            var iconRect = (RectTransform)icon.transform;
+            iconRect.anchorMin = iconRect.anchorMax = new Vector2(0, 0.5f);
+            iconRect.anchoredPosition = new Vector2(-80, 0);
+            iconRect.sizeDelta = new Vector2(150, 44);
+            var label = icon.GetComponent<Text>();
+            var alertLabel = text_OutOfPower != null ? text_OutOfPower.GetComponent<Text>() : null;
+            label.font = alertLabel != null ? alertLabel.font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            label.fontSize = 24;
+            label.fontStyle = FontStyle.Bold;
+            label.alignment = TextAnchor.MiddleCenter;
+            label.color = suspicionFill.color;
+            label.raycastTarget = false;
+            var language = icon.AddComponent<Language>();
+            language.J = "疑惑";
+            language.C_1 = "怀疑";
+            language.C_2 = "懷疑";
+            language.E = "Suspicion";
+            language.K = "의심";
+            icon.SetActive(true);
+        }
+        if (suspicionPanel == null) return;
+        suspicionFill.fillAmount = Mathf.Clamp01(current / Mathf.Max(1, maximum));
+        suspicionPanel.SetActive(visible);
+    }
+
+    public void HideSuspicionBar()
+    {
+        if (suspicionPanel != null) suspicionPanel.SetActive(false);
+    }
+
+    public void ShowDiscoveredAlert()
+    {
+        if (text_Discovered == null && text_OutOfPower != null)
+        {
+            text_Discovered = Instantiate(text_OutOfPower, text_OutOfPower.transform.parent);
+            text_Discovered.name = "Text_Discovered";
+            var language = text_Discovered.GetComponent<Language>();
+            if (language != null)
+            {
+                language.J = "見つかった！";
+                language.C_1 = "被发现了";
+                language.C_2 = "被發現了";
+                language.E = "Discovered!";
+                language.K = "발각됐다!";
+                language.isTyped = false;
+            }
+            else
+            {
+                var label = text_Discovered.GetComponent<Text>();
+                if (label != null) label.text = "被发现了";
+            }
+        }
+        ShowAlert(text_Discovered, 0);
+    }
 
     public float alertTextDuration = 2f;
 
@@ -1150,6 +1289,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowOutOfPowerAlert()
     {
+        if (text_Discovered != null && text_Discovered.activeSelf) return;
         // 两条提示共用一个位置，增援提示显示期间优先保留它。
         if (text_EnemyReinforcements != null && text_EnemyReinforcements.activeSelf)
             return;
@@ -1159,6 +1299,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowEnemyReinforcementsAlert()
     {
+        if (text_Discovered != null && text_Discovered.activeSelf) return;
         ShowAlert(text_EnemyReinforcements, 0f);
     }
 
@@ -1175,6 +1316,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator AlertRoutine(GameObject targetText, float delay)
     {
+        if (text_Discovered != null) text_Discovered.SetActive(false);
         if (text_OutOfPower != null)
             text_OutOfPower.SetActive(false);
 
@@ -1655,6 +1797,9 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        // Every level needs these prompts, including levels without a suspicion meter.
+        var suspicion = playerController != null ? playerController.GetComponent<PlayerSuspicion>() : null;
+        SetUndercoverCombatPrompts(playerController, suspicion != null && suspicion.CombatLocked);
         if (healthDelayImage.fillAmount > healthImage.fillAmount)
         {
             healthDelayImage.fillAmount -= Time.deltaTime * 1.2f;//可以调整速度

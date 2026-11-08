@@ -105,6 +105,13 @@ public class EnemyController : MonoBehaviour
     public bool IsNpc =>
         (spawnedAsNpc || this is Enemy_1) && CheckArea != null && !CheckArea.activeSelf;
 
+    public void RevealAsHostile()
+    {
+        if (isDead) return;
+        spawnedAsNpc = false;
+        if (CheckArea != null) CheckArea.SetActive(true);
+    }
+
     public void ConfigureAsNpc(
         EnemyController reinforcement,
         Transform spawnPoint,
@@ -2640,6 +2647,11 @@ public class EnemyController : MonoBehaviour
         // 先登记增援，再结算死亡。死亡流程也会关闭 FOVHolder。
         if (IsNpc)
             CallReinforcements();
+
+        var player = GameManager.instance != null ? GameManager.instance.player : null;
+        var suspicion = player != null ? player.GetComponent<PlayerSuspicion>() : null;
+        if (suspicion != null && suspicion.CombatLocked)
+            suspicion.Expose();
 
 
         PlayBloodEffect();//不知道为啥死亡有些时候血特效出不来就先这样吧

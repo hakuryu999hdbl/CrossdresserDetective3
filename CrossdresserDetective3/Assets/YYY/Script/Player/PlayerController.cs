@@ -1634,6 +1634,9 @@ public class PlayerController : MonoBehaviour
 
   
 
+    private bool UndercoverCombatLocked =>
+        TryGetComponent<PlayerSuspicion>(out var suspicion) && suspicion.CombatLocked;
+
     private void OnAttackStarted(InputAction.CallbackContext ctx)
     {
         CheckGamepadInput(ctx);//西输入
@@ -1650,6 +1653,7 @@ public class PlayerController : MonoBehaviour
 
         if (isCaptured) return;
         if (isBondage) { return; }
+        if (UndercoverCombatLocked) return;
 
 
 
@@ -1658,6 +1662,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
+        if (UndercoverCombatLocked) return;
 
         if (isInCutscene) { return; }//过场动画锁
         if (isCaptured) return;
@@ -1685,6 +1690,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerAttack(InputAction.CallbackContext obj)
     {
+        if (UndercoverCombatLocked) return;
         if (isBondage) { return; }
         if (isCaptured) { return; }//被抓住无法攻击
         //if (!physicsCheck.isGround) { return; }//空中无法攻击
@@ -1976,6 +1982,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnThrowStart(InputAction.CallbackContext obj)
     {
+        if (UndercoverCombatLocked) return;
         CheckGamepadInput(obj);//北输入
 
         if (isBondage || isCaptured) { return; }
@@ -1989,6 +1996,12 @@ public class PlayerController : MonoBehaviour
     }
     private void OnThrowCanceled(InputAction.CallbackContext ctx)
     {
+        if (UndercoverCombatLocked)
+        {
+            isHoldingThrow = false;
+            throwCharge = 0;
+            return;
+        }
         if (isBondage) { return; }
 
         float holdTime = Time.time - throwPressTime;
@@ -2013,6 +2026,7 @@ public class PlayerController : MonoBehaviour
 
     public void Throw()
     {
+        if (UndercoverCombatLocked) return;
         if (isBondage) { return; }
         if (isCaptured) { return; }//被抓住无法投掷
         //if (!physicsCheck.isGround) { return; }//空中无法投掷
@@ -2034,6 +2048,7 @@ public class PlayerController : MonoBehaviour
 
     public void ThrowWeapon()
     {
+        if (UndercoverCombatLocked) return;
 
         if (throwType == 0) { return; }
 

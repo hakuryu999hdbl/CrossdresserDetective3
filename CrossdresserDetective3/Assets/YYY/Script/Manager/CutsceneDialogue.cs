@@ -358,7 +358,10 @@ public class CutsceneDialogue : MonoBehaviour
                 textLabel.color = new Color32(190, 140, 255, 255); // 紫色
                 break;
 
-
+            case "YYL_1_Red":
+                YYL_1.SetActive(true);
+                textLabel.color = Color.red;
+                break;
             case "YYL_2":
                 YYL_2.SetActive(true);
                 textLabel.color = new Color32(190, 140, 255, 255); // 紫色

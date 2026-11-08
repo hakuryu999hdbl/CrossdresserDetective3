@@ -499,6 +499,13 @@ public class GameManager : MonoBehaviour
     {
         GameFlowData.CurrentMissionType = MissionType.Escape;
         Debug.Log("逃脱模式");
+        // Chapter 1-1 is the original bondage escape; later escape missions are undercover.
+        if (player != null && GameFlowData.CurrentChapter > 1)
+        {
+            var suspicion = player.GetComponent<PlayerSuspicion>();
+            if (suspicion == null) suspicion = player.gameObject.AddComponent<PlayerSuspicion>();
+            suspicion.BeginUndercover();
+        }
 
         if (roomManager != null)
         {

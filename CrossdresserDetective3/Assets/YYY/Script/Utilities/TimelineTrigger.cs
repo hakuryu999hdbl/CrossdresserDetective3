@@ -418,8 +418,8 @@ public class TimelineTrigger : MonoBehaviour
     {
         GameManager.instance.player.EnterBondageState();
 
-        UIManager.instance.InputPrompt_1.SetActive(false);
-        UIManager.instance.InputPrompt_2.SetActive(true);
+        UIManager.instance.InputPrompt.SetActive(true);
+        UIManager.instance.SetUndercoverCombatPrompts(GameManager.instance.player, false);
 
     }//进入拘束状态
 

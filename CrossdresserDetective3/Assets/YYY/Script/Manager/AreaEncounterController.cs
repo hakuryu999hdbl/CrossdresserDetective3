@@ -10,6 +10,19 @@ public class AreaEncounterController : MonoBehaviour
     [Tooltip("生成 NPC 并关闭视野。增援使用 Enemy Prefabs 和 Spawn Points 各自的第一项。")]
     public bool spawnAsNpc;
 
+    [Tooltip("在生成角色的 FOVHolder 位置附加监视器，暴露前作为监视者巡逻。")]
+    public bool attachMonitor;
+    [SerializeField, HideInInspector] private GameObject monitorPrefab;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (monitorPrefab == null)
+            monitorPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(
+                "Assets/YYY/Prefab/Enemy/Monitor.prefab");
+    }
+#endif
+
     [Tooltip("NPC 死亡后生成的增援皮肤。Default 使用原有皮肤设置。")]
     public EnemySkin reinforcementSkin;
 
@@ -76,6 +89,10 @@ public class AreaEncounterController : MonoBehaviour
 
     public void SpawnEnemies() 
     {
+        var player = GameManager.instance != null ? GameManager.instance.player : null;
+        var suspicion = player != null ? player.GetComponent<PlayerSuspicion>() : null;
+        bool exposed = suspicion != null && suspicion.IsExposed;
+        if (exposed) spawnAsNpc = false;
         EnemyController npcReinforcement = null;
         if (spawnAsNpc && enemyPrefabs.Length > 0 && enemyPrefabs[0] != null)
             npcReinforcement = enemyPrefabs[0].GetComponent<EnemyController>();
@@ -113,6 +130,12 @@ public class AreaEncounterController : MonoBehaviour
 
                 if (spawnAsNpc)
                     enemyController.ConfigureAsNpc(npcReinforcement, spawnPoints[0], reinforcementSkin);
+                else if (exposed)
+                    enemyController.RevealAsHostile();
+
+                // After exposure, future spawns remain ordinary hostile enemies.
+                if (attachMonitor && !exposed)
+                    AttachMonitor(enemyController);
             }
 
 
@@ -129,6 +152,28 @@ public class AreaEncounterController : MonoBehaviour
     }
 
 
+
+    private void AttachMonitor(EnemyController enemy)
+    {
+        // A monitor must be a sibling of FOVHolder: the original FOV is disabled
+        // while undercover, so parenting inside it would also disable the monitor.
+        if (enemy.GetComponentInChildren<SurveillanceMonitor>(true) != null)
+            return;
+        if (monitorPrefab == null)
+        {
+            Debug.LogError("生成器缺少 Monitor 预设体引用，请在编辑器重新勾选 Attach Monitor。", this);
+            return;
+        }
+        Transform fov = enemy.CheckArea != null ? enemy.CheckArea.transform : null;
+        Transform parent = fov != null && fov.parent != null ? fov.parent : enemy.transform;
+        GameObject monitor = Instantiate(monitorPrefab, parent, false);
+        if (fov != null)
+        {
+            monitor.transform.localPosition = fov.localPosition;
+            monitor.transform.localRotation = fov.localRotation;
+            monitor.transform.localScale = fov.localScale;
+        }
+    }
 
     System.Collections.IEnumerator CheckEnemiesDead()
     {
