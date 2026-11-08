@@ -1136,7 +1136,7 @@ public class UIManager : MonoBehaviour
         if (currentTimeline != null)
         {
             currentTimeline.SkipTimeline();
-            currentTimeline = null;
+            // 分段跳过后仍在播放。完整结束时由 TimelineTrigger 注销。
         }
     }//跳过过场动画
 

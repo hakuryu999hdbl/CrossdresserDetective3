@@ -223,6 +223,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 3230245167812501204}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &711271637633778275
 BoxCollider2D:
@@ -898,6 +899,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 2111814300141804404}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &8958678034825015878
 BoxCollider2D:
@@ -3115,6 +3117,7 @@ Transform:
   - {fileID: 3256690856239439360}
   - {fileID: 8443143968569213779}
   - {fileID: 9043766459570212433}
+  - {fileID: 7683862136367753214}
   - {fileID: 5383241153957973002}
   - {fileID: 1309669089639157648}
   - {fileID: 8651792141873866715}
@@ -5001,6 +5004,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 4835515069536826727}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 1
 --- !u!61 &7961016747790961376
 BoxCollider2D:
@@ -6129,6 +6133,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 8728218501141194106}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &5122235436455093441
 BoxCollider2D:
@@ -6443,6 +6448,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 8260215829515902719}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &8278174456686976439
 BoxCollider2D:
@@ -7498,8 +7504,8 @@ Transform:
   m_GameObject: {fileID: 3607706589715886088}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.5784, y: -29.38, z: 0.65}
-  m_LocalScale: {x: 179.59288, y: 0.45949998, z: 1}
+  m_LocalPosition: {x: 31.6557, y: -29.77, z: 0.65}
+  m_LocalScale: {x: 77.12278, y: 0.45949998, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9103059292663891248}
@@ -259237,6 +259243,91 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4055649635640315513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7683862136367753214}
+  - component: {fileID: 651993742960145604}
+  - component: {fileID: 3047190925126432608}
+  m_Layer: 0
+  m_Name: Cube (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7683862136367753214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055649635640315513}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -89.7626, y: -29.7534, z: 0.65}
+  m_LocalScale: {x: 39.249382, y: 0.49262995, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9103059292663891248}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &651993742960145604
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055649635640315513}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &3047190925126432608
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055649635640315513}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ba0c15defaa88fa4b812cd21ff24f6af, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4058146708727823516
 GameObject:
   m_ObjectHideFlags: 0
@@ -260566,6 +260657,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 580779493249382495}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 1
 --- !u!61 &5487821639711553404
 BoxCollider2D:
@@ -264994,6 +265086,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 9128341922325810765}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &2482042011887237440
 BoxCollider2D:
@@ -266033,6 +266126,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 4349802351037801469}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &8271160259826819528
 BoxCollider2D:
@@ -266525,6 +266619,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 7272841688618006710}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &4549680368951259334
 BoxCollider2D:
@@ -266836,6 +266931,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 7635685083328752603}
   spawnAsNpc: 0
+  reinforcementSkin: 0
   isVan: 0
 --- !u!61 &4167991375508979911
 BoxCollider2D:
@@ -270715,8 +270811,8 @@ Transform:
   m_GameObject: {fileID: 9098083438096606306}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 65.9385, y: -15.62, z: 0.65}
-  m_LocalScale: {x: 293.42346, y: 0.45949998, z: 1}
+  m_LocalPosition: {x: 198.26, y: -15.62, z: 0.65}
+  m_LocalScale: {x: 28.774279, y: 0.45949998, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5297993247406883172}

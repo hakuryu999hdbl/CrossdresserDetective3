@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 [RequireComponent(typeof(Collider2D))]
 public class TimelineTrigger : MonoBehaviour
@@ -125,11 +126,28 @@ public class TimelineTrigger : MonoBehaviour
         if (director == null)
             return;
 
+        TimelineAsset timeline = director.playableAsset as TimelineAsset;
+        double nextPoint = double.PositiveInfinity;
+        if (timeline != null)
+        {
+            foreach (TrackAsset track in timeline.GetRootTracks())
+                FindNextSkipPoint(track, director.time, ref nextPoint);
+        }
+
+        if (nextPoint < director.duration)
+        {
+            director.time = nextPoint;
+            director.Evaluate();
+            // 不 Stop 或重建 Graph：下一次正常播放更新会按 Timeline 的
+            // notification 区间补发跨过的 Signal，保留台词和剧情状态进度。
+            // Evaluate 本身只更新画面，不负责发送这些 Signal。
+            return;
+        }
 
 
 
         director.time = director.duration;
-        director.Evaluate();// ← 这里会强制把中间所有还没播到的 Signal / Marker 全部执行一遍
+        director.Evaluate();//更新终点画面；Signal 由 Timeline 的通知机制处理。
         director.Stop();
 
 
@@ -145,6 +163,22 @@ public class TimelineTrigger : MonoBehaviour
                 UIManager.instance.blackScreen.SetFadeOut();
         }
 
+    }
+
+    private static void FindNextSkipPoint(TrackAsset track, double currentTime, ref double nextPoint)
+    {
+        if (track.mutedInHierarchy) return;
+
+        foreach (IMarker marker in track.GetMarkers())
+        {
+            // 容差远小于一帧，防止第二次按 K 又停在同一个点。
+            if (marker is TimelineSkipPoint && marker.time > currentTime + 0.000001 &&
+                marker.time < nextPoint)
+                nextPoint = marker.time;
+        }
+
+        foreach (TrackAsset child in track.GetChildTracks())
+            FindNextSkipPoint(child, currentTime, ref nextPoint);
     }
 
 

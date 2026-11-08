@@ -835,7 +835,7 @@ public class PlayerController : MonoBehaviour
         ResetThrowCount();
 
         RefreshPlayerSkin();
-        RefreshCurrentWeapon();
+        RefreshCurrentWeaponState(false);//剧情设置装备只刷新状态，不播放切换音效。
     }
 
 
@@ -2142,10 +2142,16 @@ public class PlayerController : MonoBehaviour
     }
     public void RefreshCurrentWeapon()
     {
+        RefreshCurrentWeaponState(true);
+    }
+
+    private void RefreshCurrentWeaponState(bool playSwitchSound)
+    {
         if (Slot == 0)
         {
 
-            frameEvent_Audio._Attack_katana_draw();
+            if (playSwitchSound)
+                frameEvent_Audio._Attack_katana_draw();
 
             if (meleeType == 0)
             {
@@ -2161,7 +2167,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            frameEvent_Audio._Attack_katana_in();
+            if (playSwitchSound)
+                frameEvent_Audio._Attack_katana_in();
 
 
             if (rangedSlot == -1 && pistolType != 0)
