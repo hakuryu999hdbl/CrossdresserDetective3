@@ -292,6 +292,8 @@ public class CutsceneDialogue : MonoBehaviour
     public GameObject YYL_2;
     public GameObject MaleCadre;
     public GameObject Underling;
+    public GameObject StreetGirl_A;
+    public GameObject StreetGirl_B;
 
     private void SetSpeakerStyle(string speaker)
     {
@@ -308,6 +310,8 @@ public class CutsceneDialogue : MonoBehaviour
         YYL_2.SetActive(false);
         MaleCadre.SetActive(false);
         Underling.SetActive(false);
+        if (StreetGirl_A != null) StreetGirl_A.SetActive(false);
+        if (StreetGirl_B != null) StreetGirl_B.SetActive(false);
 
         switch (speaker)
         {
@@ -350,6 +354,16 @@ public class CutsceneDialogue : MonoBehaviour
 
             case "FemaleCadre_B":
                 FemaleCadre_B.SetActive(true);
+                textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);
+                break;
+
+            case "StreetGirl_A":
+                if (StreetGirl_A != null) StreetGirl_A.SetActive(true);
+                textLabel.color = new Color(0.62f, 0.84f, 1.0f, 1.0f);
+                break;
+
+            case "StreetGirl_B":
+                if (StreetGirl_B != null) StreetGirl_B.SetActive(true);
                 textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);
                 break;
 

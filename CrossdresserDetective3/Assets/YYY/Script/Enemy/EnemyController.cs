@@ -58,6 +58,7 @@ public class EnemyController : MonoBehaviour
     [Header("敌人攻击")]
     public float attackRate;//攻击冷却
     public float attackRange, skillRange;//攻击范围
+    [SerializeField] private bool disableCatchAttack;
     float nextAttack = 0;
 
     public List<Transform> attackList = new List<Transform>();
@@ -252,7 +253,8 @@ public class EnemyController : MonoBehaviour
 
 
 
-        currentState.OnUpdate(this);//每帧执行状态
+        if (dashTimeRemaining <= 0f)
+            currentState.OnUpdate(this);//冲刺期间暂停 AI 移动和转向
         anim.SetInteger("state", animState);
 
         anim.SetBool("isCrouch", isCrouch);
@@ -298,6 +300,7 @@ public class EnemyController : MonoBehaviour
     public void TransitionToState(EnemyBaseState state)
     {
         if (IsSuspended && state != suspendedState) return;
+        StopDash();
         // 只要从巡逻状态离开，之后就变成普通走走停停
         if (currentState == patrolState && state != patrolState)
         {
@@ -733,6 +736,65 @@ public class EnemyController : MonoBehaviour
     #region
     [Header("攻击状态")]
     public Transform heldBomb;//大块头的扔炸弹方向
+    [Header("飞踢冲刺")]
+    [SerializeField] private float dashAttackSpeed = 4f;
+    [SerializeField] private float dashAttackDuration = 0.1f;
+    [SerializeField] private Collider2D dashPushCollider;
+    private float dashTimeRemaining;
+    private float dashDirection;
+
+    public void Dash()
+    {
+        if (!isActiveAndEnabled || !CanDash() || dashTimeRemaining > 0f) return;
+
+        dashDirection = Mathf.Sign(transform.localScale.x);
+        dashTimeRemaining = dashAttackDuration;
+    }
+
+    private bool CanDash()
+    {
+        return rb != null && physicsCheck != null && !isDead && !IsSuspended &&
+               !isDizzy && !isCatching && currentState != hitState &&
+               (GameManager.instance == null || !GameManager.instance.gameOver);
+    }
+
+    private void FixedUpdate()
+    {
+        if (dashTimeRemaining <= 0f)
+        {
+            if (dashPushCollider != null && dashPushCollider.enabled)
+                StopDash();
+            return;
+        }
+
+        if (!CanDash() ||
+            (dashDirection < 0f && physicsCheck.touchLeftWall) ||
+            (dashDirection > 0f && physicsCheck.touchRightWall))
+        {
+            StopDash();
+            return;
+        }
+
+        if (dashPushCollider != null && !dashPushCollider.enabled)
+            dashPushCollider.enabled = true;
+
+        float step = Mathf.Min(Time.fixedDeltaTime, dashTimeRemaining);
+        rb.MovePosition(rb.position + Vector2.right * (dashDirection * dashAttackSpeed * step));
+        dashTimeRemaining -= step;
+    }
+
+    private void OnDisable()
+    {
+        StopDash();
+    }
+
+    private void StopDash()
+    {
+        dashTimeRemaining = 0f;
+        if (dashPushCollider != null)
+            dashPushCollider.enabled = false;
+    }
+
     public void MoveToTarget()
     {
 
@@ -920,6 +982,7 @@ public class EnemyController : MonoBehaviour
                 PlayerController player = GameManager.instance.player;
 
                 bool playerAlreadyCaptured = player != null && (player.isCaptured || player.isStruggling);
+                bool canUseCatchAttack = this is Enemy_1 && !disableCatchAttack && player != null;
 
                 // 姐姐不能被抓，优先于拘束和低血量随机抓取。
                 if (player != null && player.isSisterMode)
@@ -937,7 +1000,7 @@ public class EnemyController : MonoBehaviour
                     Debug.Log("玩家已经被其他敌人抓住,只能触发attack");
                 }
                 // 玩家处于拘束时，Enemy_1 只使用抓取，与任务模式无关。
-                else if (this is Enemy_1 && player != null && player.isBondage)
+                else if (canUseCatchAttack && player.isBondage)
                 {
                     StartCatchAttack();//开启抓取
                 }
@@ -945,7 +1008,7 @@ public class EnemyController : MonoBehaviour
                 {
 
                     //目前只有Enemy_1随机抓取,别的敌人要么远程攻击要么特殊攻击
-                    if (this is Enemy_1) 
+                    if (canUseCatchAttack)
                     {
 
 
@@ -2392,6 +2455,27 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
+
+
+
+
+
+        // 兜底伪娘服装(兔女郎)
+        hairIndex = 1;
+        clothesIndex = 3;
+        glovesIndex = 0;
+        beltIndex = 0;
+        stockingsIndex = 3;
+        pantiesIndex = 3;
+        shoesIndex = 3;
+        hatIndex = 1;
+
+
+
+
+
+
+
         //武器完全随机
         meleeType = Random.Range(1, 4);
         pistolType = Random.Range(1, 4);
@@ -2462,6 +2546,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+      
 
         RefreshPlayerSkin();//初始更新皮肤
     }

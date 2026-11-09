@@ -1113,6 +1113,11 @@ public class UIManager : MonoBehaviour
         cutsceneDialogue.LoadDialogue("Chapter_02_1");
     }//填充章节台词
 
+    public void Init_Chapter_02_2()
+    {
+        cutsceneDialogue.LoadDialogue("Chapter_02_2");
+    }//填充章节台词
+
     [Header("目前的过场动画跳过")]
     public TimelineTrigger currentTimeline;
 
@@ -1991,6 +1996,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject escapeText, eliminateText;
     public GameObject superiorOfficeText;
+    public GameObject clientRoomText;
 
     public void SetEscapeObjectiveVisible(bool visible)
     {
@@ -1999,9 +2005,16 @@ public class UIManager : MonoBehaviour
             GameFlowData.CurrentStage == 1 &&
             superiorOfficeText != null;
 
-        escapeText.SetActive(visible && !showSuperiorOffice);
+        bool showClientRoom = visible &&
+            GameFlowData.CurrentChapter == 2 &&
+            GameFlowData.CurrentStage == 2 &&
+            clientRoomText != null;
+
+        escapeText.SetActive(visible && !showSuperiorOffice && !showClientRoom);
         if (superiorOfficeText != null)
             superiorOfficeText.SetActive(showSuperiorOffice);
+        if (clientRoomText != null)
+            clientRoomText.SetActive(showClientRoom);
     }
 
     public GameObject BondageUnlockText;

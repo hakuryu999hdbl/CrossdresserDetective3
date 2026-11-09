@@ -763,7 +763,10 @@ public class FrameEvent : MonoBehaviour
 
     public void Dash()
     {
-        playerController.Dash();//这个是冲刺一段
+        if (playerController != null)
+            playerController.Dash();
+        else if (enemyController != null)
+            enemyController.Dash();
     }
 
 
