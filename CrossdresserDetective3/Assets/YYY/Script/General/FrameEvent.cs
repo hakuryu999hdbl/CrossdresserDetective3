@@ -970,7 +970,8 @@ public class FrameEvent : MonoBehaviour
     //我留下了TimeLine途径
     public void Story_Clothes_Man_01()
     {
-        //赤裸的叶语嫣被捆绑
+        //赤裸的叶语嫣
+        enemyController.hairIndex = 0;
         enemyController.clothesIndex = 0;
         enemyController.glovesIndex = 0;
         enemyController.hatIndex = 0;
@@ -990,7 +991,7 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//EnemyController初始调用【剧情】小偷外貌+赤裸的主角被捆绑
+    }//EnemyController初始调用【剧情】小偷外貌+赤裸的主角
     public void Story_Clothes_Man_02()
     {
 
@@ -1020,75 +1021,88 @@ public class FrameEvent : MonoBehaviour
 
 
     }//EnemyController初始调用【剧情】男路人
-    //我留下了TimeLine途径
     public void Story_Clothes_Man_05()
     {
         enemyController.Man_hairIndex = 0;
         enemyController.Man_clothesIndex = 0;
         enemyController.RefreshPlayerSkin();
     }//裸体肌肉男
-
+     //我留下了TimeLine途径
     public void Story_Clothes_FatMan_01()
     {
         //通常装的叶语嫣
-        //enemyController.clothesIndex = 0;
-        //enemyController.glovesIndex = 0;
-        //enemyController.hatIndex = 0;
-        //enemyController.maskIndex = 0;
-        //enemyController.beltIndex = 0;
-        //enemyController.stockingsIndex = 0;
-        //enemyController.pantiesIndex = 0;
-        //enemyController.shoesIndex = 0;
-        //enemyController.skirtIndex = 0;
-        //
-        //
-        //
-        //enemyController.beltIndex = 1;
-        //enemyController.stockingsIndex = 1;
-        //enemyController.pantiesIndex = 4;
-        //enemyController.shoesIndex = 1;
-        //enemyController.skirtIndex = 0;
-        //
-        //enemyController.clothesIndex = 1;
-        //enemyController.glovesIndex = 1;
-        //enemyController.hatIndex = 0;
-        //enemyController.maskIndex = 0;
+        enemyController.hairIndex = 0;
+        enemyController.clothesIndex = 0;
+        enemyController.glovesIndex = 0;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
+        enemyController.beltIndex = 0;
+        enemyController.stockingsIndex = 0;
+        enemyController.pantiesIndex = 0;
+        enemyController.shoesIndex = 0;
+        enemyController.skirtIndex = 0;
+        
+        
+        
+        enemyController.beltIndex = 1;
+        enemyController.stockingsIndex = 1;
+        enemyController.pantiesIndex = 4;
+        enemyController.shoesIndex = 1;
+        enemyController.skirtIndex = 0;
+        
+        enemyController.clothesIndex = 1;
+        enemyController.glovesIndex = 1;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
 
         //眼睛衬衫死宅
         enemyController.FatMan_clothesIndex = 1;
         enemyController.FatMan_hairIndex = 1;
 
+        // 2-3 支线用敌人动画代演叶语嫣，沿用玩家当前的 YYY 外观。
+        if (GameFlowData.CurrentChapter == 2 && GameFlowData.CurrentStage == 3 &&
+            GameManager.instance != null && GameManager.instance.player != null)
+        {
+            PlayerController player = GameManager.instance.player;
+            enemyController.hairIndex = player.hairIndex;
+            enemyController.hatIndex = player.hatIndex;
+            enemyController.maskIndex = player.maskIndex;
+            enemyController.beltIndex = player.beltIndex;
+            enemyController.ReadCurrentGame(player);
+            return;
+        }
 
         enemyController.RefreshPlayerSkin();
 
 
-    }//EnemyController初始调用【剧情】眼睛衬衫死宅外貌
+    }//EnemyController初始调用【剧情】眼镜衬衫死宅外貌＋叶语嫣装束
     //我留下了TimeLine途径
     public void Story_Clothes_FatMan_02()
     {
         //通常装的叶语嫣
-        //enemyController.clothesIndex = 0;
-        //enemyController.glovesIndex = 0;
-        //enemyController.hatIndex = 0;
-        //enemyController.maskIndex = 0;
-        //enemyController.beltIndex = 0;
-        //enemyController.stockingsIndex = 0;
-        //enemyController.pantiesIndex = 0;
-        //enemyController.shoesIndex = 0;
-        //enemyController.skirtIndex = 0;
-        //
-        //
-        //
-        //enemyController.beltIndex = 1;
-        //enemyController.stockingsIndex = 1;
-        //enemyController.pantiesIndex = 4;
-        //enemyController.shoesIndex = 1;
-        //enemyController.skirtIndex = 0;
-        //
-        //enemyController.clothesIndex = 1;
-        //enemyController.glovesIndex = 1;
-        //enemyController.hatIndex = 0;
-        //enemyController.maskIndex = 0;
+        enemyController.hairIndex = 0;
+        enemyController.clothesIndex = 0;
+        enemyController.glovesIndex = 0;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
+        enemyController.beltIndex = 0;
+        enemyController.stockingsIndex = 0;
+        enemyController.pantiesIndex = 0;
+        enemyController.shoesIndex = 0;
+        enemyController.skirtIndex = 0;
+        
+        
+        
+        enemyController.beltIndex = 1;
+        enemyController.stockingsIndex = 1;
+        enemyController.pantiesIndex = 4;
+        enemyController.shoesIndex = 1;
+        enemyController.skirtIndex = 0;
+        
+        enemyController.clothesIndex = 1;
+        enemyController.glovesIndex = 1;
+        enemyController.hatIndex = 0;
+        enemyController.maskIndex = 0;
 
         //眼睛衬衫死宅
         enemyController.FatMan_clothesIndex = 0;
@@ -1098,7 +1112,7 @@ public class FrameEvent : MonoBehaviour
         enemyController.RefreshPlayerSkin();
 
 
-    }//EnemyController初始调用【剧情】裸体死宅外貌
+    }//EnemyController初始调用【剧情】裸体死宅外貌＋通常装束叶语嫣
     public void Story_Clothes_FatMan_03()
     {
        

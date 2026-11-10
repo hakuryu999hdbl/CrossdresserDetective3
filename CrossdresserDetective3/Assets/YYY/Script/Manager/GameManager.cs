@@ -259,14 +259,28 @@ public class GameManager : MonoBehaviour
     }//天空盒自己来报告
 
     public RoomManager roomManager;
+    private bool escapeInitialized;
+
+    public static bool IsEscapeStage =>
+        (CurrentChapter == 1 && CurrentStage == 1) ||
+        (CurrentChapter == 2 && (CurrentStage == 1 || CurrentStage == 2));
 
     public void IsRoomManager(RoomManager _roomManager)
     {
         roomManager = _roomManager;
+        // 复用地图需要先启用逃出任务对象并放置玩家，才能触发开场 Timeline。
+        if (IsEscapeStage && roomManager.playerSpawnPoints_escape != null)
+            ShowMissionUI();
     }//RoomManager自己来报告
 
     public void ShowMissionUI()
     {
+        if (IsEscapeStage)
+        {
+            Mission.SetActive(true);
+            ShowEscape();
+            return;
+        }
 
         Mission.SetActive(true);
 
@@ -281,10 +295,6 @@ public class GameManager : MonoBehaviour
             case 1:
                 switch (GameFlowData.CurrentStage)
                 {
-                    case 1:                
-                        ShowEscape();
-                        break;
-
                     case 2:                 
                         ShowEliminate();
                         break;
@@ -323,14 +333,6 @@ public class GameManager : MonoBehaviour
             case 2:
                 switch (GameFlowData.CurrentStage)
                 {
-                    case 1:
-                        ShowEscape();
-                        break;
-
-                    case 2:
-                        ShowEscape();
-                        break;
-
                     case 3:
                         ShowClue();
                         break;
@@ -340,7 +342,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 5:
-                        ShowRescue();
+                        ShowClue();
                         break;
 
                     case 6:
@@ -497,6 +499,8 @@ public class GameManager : MonoBehaviour
 
     void ShowEscape()
     {
+        if (escapeInitialized) return;
+        escapeInitialized = true;
         GameFlowData.CurrentMissionType = MissionType.Escape;
         Debug.Log("逃脱模式");
         // Chapter 1-1 is the original bondage escape; later escape missions are undercover.

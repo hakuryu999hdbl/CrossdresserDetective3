@@ -41,84 +41,29 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;//防止重刷场景前的暂停
 
-        //由于点击【下一关】不回到主菜单出发记录，所以GameManager还是需要身上保留关卡地图任务字典
-        switch (GameFlowData.CurrentChapter)
+        if (GameManager.IsEscapeStage ||
+            (GameFlowData.CurrentChapter == 1 && GameFlowData.CurrentStage == 2))
         {
-            case 1:
-                switch (GameFlowData.CurrentStage)
-                {
-                    default:
-                        OpenSetUp();
-                        break;
-                    case 1:
-                    case 2:
+            isSetUp = false;
+            CurrentOpen = 0;
+            SetUpMenu.SetActive(false);
+            PauseButton.SetActive(true);
+            playerController.EnableGameplayInput();
+            EventSystem.current.SetSelectedGameObject(null);
+            MoveWeaponUIToBattle();
 
-                        // 主线剧情直接进入游戏，不打开整备界面
-                        isSetUp = false;
-                        CurrentOpen = 0;
-
-                        SetUpMenu.SetActive(false);
-                        PauseButton.SetActive(true);
-
-                        playerController.EnableGameplayInput();
-
-                        EventSystem.current.SetSelectedGameObject(null);
-
-
-                        //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
-                        MoveWeaponUIToBattle();//把背包的武器类UI切换过去
-                                               //CloseSetUp();
-                        break;
-
-
-
-                }
-                break;
-
-            case 2:
-                switch (GameFlowData.CurrentStage)
-                {
-                    default:
-                        OpenSetUp();
-                        break;
-
-                    case 1:
-                        // 主线剧情直接进入游戏，不打开整备界面
-                        isSetUp = false;
-                        CurrentOpen = 0;
-
-                        SetUpMenu.SetActive(false);
-                        PauseButton.SetActive(true);
-
-                        playerController.EnableGameplayInput();
-
-                        EventSystem.current.SetSelectedGameObject(null);
-
-
-                        //主线剧情不弹出背包界面（好像这个UI层退出一下需要）
-                        MoveWeaponUIToBattle();//把背包的武器类UI切换过去
-
-
-                        // 第二章第一关，操作姐姐
-                        playerController.SetSisterMode(true);
-
-                        break;         
-
-
-                }
-                break;
+            if (GameFlowData.CurrentChapter == 2 && GameFlowData.CurrentStage == 1)
+                playerController.SetSisterMode(true);
         }
-
-
-      
-
+        else
+        {
+            OpenSetUp();
+        }
 
         // ===== 游戏开始时初始化武器UI =====
         RefreshWeaponSlotUI(playerController);
         RefreshWeaponChoose(playerController);
     }
-
-
 
     /// <summary>
     /// 暂停菜单

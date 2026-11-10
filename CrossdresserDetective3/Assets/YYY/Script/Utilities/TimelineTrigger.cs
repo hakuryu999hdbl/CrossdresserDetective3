@@ -412,6 +412,11 @@ public class TimelineTrigger : MonoBehaviour
         GameManager.instance.player.frameEvent.SetPlayer_Clothes_02();
     }//主角赤裸状态
 
+    public void SetPlayerStoryUnarmed()
+    {
+        GameManager.instance.player.SetStoryUnarmed();
+    }//主角保留衣物赤手空拳
+
     public void SetPlayer_Clothes_03()
     {
         GameManager.instance.player.frameEvent.SetPlayer_Clothes_03();
