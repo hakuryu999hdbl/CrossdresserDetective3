@@ -511,6 +511,20 @@ MonoBehaviour:
     - {fileID: -8500266682796141389}
     - {fileID: -6211780162303251224}
   m_PostPlaybackState: 3
+--- !u!114 &-486938257322406730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4204b675d4d24cf5a45264b2ef1b3821, type: 3}
+  m_Name: "\u8DF3\u8FC7\u70B9 / Skip Point"
+  m_EditorClassIdentifier: 
+  m_Time: 41.95
+  description: "\u4E0B\u4E00\u6BB5"
 --- !u!114 &-303695608742666579
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -547,6 +561,7 @@ MonoBehaviour:
   - {fileID: 7428959660817081333}
   - {fileID: -7136228072675750350}
   - {fileID: -1479986062119062590}
+  - {fileID: 1185728776336468366}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -569,6 +584,30 @@ MonoBehaviour:
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 895927119f91a6641be170cb161b6f2e, type: 2}
+--- !u!114 &1185728776336468366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e0562c2f0445cbab975292559fe239, type: 3}
+  m_Name: Timeline Skip Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects:
+    - {fileID: -486938257322406730}
 --- !u!114 &1202984305802702184
 MonoBehaviour:
   m_ObjectHideFlags: 1
