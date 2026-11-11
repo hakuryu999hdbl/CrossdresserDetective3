@@ -70,9 +70,7 @@ public class FrameEvent : MonoBehaviour
           1,  //刀剑
           1,  // 手枪
           1, // 步枪
-          0, //投掷品
-
-          0//拘束类型
+          0 //投掷品
 
           );
 
@@ -113,9 +111,7 @@ public class FrameEvent : MonoBehaviour
             Random.Range(0, 2), // 刀剑
             Random.Range(0, 2), // 手枪
             Random.Range(0, 2), // 步枪
-            Random.Range(0, 2), // 投掷品
-
-            Random.Range(0, 2)  // 拘束
+            Random.Range(0, 2) // 投掷品
         );//随机皮肤
     }
 
@@ -125,8 +121,7 @@ public class FrameEvent : MonoBehaviour
            int _Girl_hairIndex, int _Girl_clothesIndex, int _Girl_glovesIndex, int _Girl_underwearIndex, int _Girl_shoesIndex, int _Girl_stockingsIndex, int _Girl_hatIndex, int _Girl_maskIndex,
             int _Man_hairIndex, int _Man_clothesIndex,
               int _FatMan_hairIndex, int _FatMan_clothesIndex,
-           int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex, int _Weapon_ThrowableIndex,
-            int _Weapon_BondageIndex
+           int _Weapon_MeleeIndex, int _Weapon_PistolIndex, int _Weapon_RifleIndex, int _Weapon_ThrowableIndex
         )
     {
 
@@ -224,8 +219,6 @@ public class FrameEvent : MonoBehaviour
 
         if (_Weapon_ThrowableIndex != 0)
             AddSkinSafe(newSkin, $"Weapon/Throwable/Weapon_Throwable_color{_Weapon_ThrowableIndex}");
-
-        AddSkinSafe(newSkin, $"Weapon/Bondage/Weapon_Bondage_color{_Weapon_BondageIndex}");
 
         AddSkinSafe(newSkin, $"Man/Hair/Man_Hair_color{_Man_hairIndex}");
 
@@ -1253,7 +1246,6 @@ public class FrameEvent : MonoBehaviour
         rBQController.stockingsIndex = 1;
         rBQController.clothesIndex = 0;
         rBQController.shoesIndex = 0;
-        rBQController.bondageType = 0;
         rBQController.skirtIndex = 0;
         rBQController.pantiesIndex = 0;
 
