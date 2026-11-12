@@ -216,6 +216,9 @@ public class UIManager : MonoBehaviour
     public GameObject EquipMenu, WeaponMenu;
     public GameObject MeleeMenu, RangedMenu, ThrowableMenu;
     public GameObject ClothesMenu, GlovesMenu, SkirtMenu, PantiesMenu, StockingsMenu, ShoesMenu;
+    [SerializeField] private Font setupNewBadgeFont;
+    private readonly Dictionary<ShopItemButton, (GameObject item, GameObject category, GameObject section)>
+        setupNewBadges = new Dictionary<ShopItemButton, (GameObject, GameObject, GameObject)>();
 
     //进入页面最先选中
     public GameObject SetUpFirstSelected;
@@ -256,6 +259,7 @@ public class UIManager : MonoBehaviour
 
         //MoveWeaponUIToSetup();//武器UI过去
         SetUpMenu.SetActive(true); PauseButton.SetActive(false);
+        RefreshSetupNewBadges();
 
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
 
@@ -269,6 +273,123 @@ public class UIManager : MonoBehaviour
 
 
         RandomStartTalk();//随机初始骚话
+    }
+
+    private void RefreshSetupNewBadges()
+    {
+        if (string.IsNullOrEmpty(GameFlowData.CurrentPlayer))
+            return;
+
+        if (setupNewBadges.Count == 0)
+        {
+            var rootButtons = ContactMenu.GetComponentsInChildren<Button>(true);
+            var weaponButtons = WeaponMenu.GetComponentsInChildren<Button>(true);
+            var equipButtons = EquipMenu.GetComponentsInChildren<Button>(true);
+            GameObject weaponBadge = CreateSetupNewBadge(FindSetupMenuButton(rootButtons, nameof(OpenWeaponMenu)));
+            GameObject equipBadge = CreateSetupNewBadge(FindSetupMenuButton(rootButtons, nameof(OpenEquipMenu)));
+
+            RegisterSetupNewBadges(MeleeMenu, weaponButtons, nameof(OpenMeleeMenu), weaponBadge);
+            RegisterSetupNewBadges(RangedMenu, weaponButtons, nameof(OpenRangedMenu), weaponBadge);
+            RegisterSetupNewBadges(ThrowableMenu, weaponButtons, nameof(OpenThrowableMenu), weaponBadge);
+            RegisterSetupNewBadges(ClothesMenu, equipButtons, nameof(OpenClothesMenu), equipBadge);
+            RegisterSetupNewBadges(GlovesMenu, equipButtons, nameof(OpenGlovesMenu), equipBadge);
+            RegisterSetupNewBadges(SkirtMenu, equipButtons, nameof(OpenSkirtMenu), equipBadge);
+            RegisterSetupNewBadges(PantiesMenu, equipButtons, nameof(OpenPantiesMenu), equipBadge);
+            RegisterSetupNewBadges(StockingsMenu, equipButtons, nameof(OpenStockingsMenu), equipBadge);
+            RegisterSetupNewBadges(ShoesMenu, equipButtons, nameof(OpenShoesMenu), equipBadge);
+        }
+
+        RefreshSetupNewBadges(SaveManager.LoadGame(GameFlowData.CurrentPlayer));
+    }
+
+    private void RegisterSetupNewBadges(GameObject page, Button[] categoryButtons, string openMethod, GameObject sectionBadge)
+    {
+        GameObject categoryBadge = CreateSetupNewBadge(FindSetupMenuButton(categoryButtons, openMethod));
+        foreach (var item in page.GetComponentsInChildren<ShopItemButton>(true))
+            setupNewBadges.Add(item, (CreateSetupNewBadge(item.gameObject), categoryBadge, sectionBadge));
+    }
+
+    private GameObject FindSetupMenuButton(Button[] buttons, string openMethod)
+    {
+        foreach (var button in buttons)
+        {
+            for (int i = 0; i < button.onClick.GetPersistentEventCount(); i++)
+            {
+                if (button.onClick.GetPersistentTarget(i) == this &&
+                    button.onClick.GetPersistentMethodName(i) == openMethod)
+                    return button.gameObject;
+            }
+        }
+
+        Debug.LogWarning($"整备菜单找不到 {openMethod} 的按钮。", this);
+        return null;
+    }
+
+    private GameObject CreateSetupNewBadge(GameObject button)
+    {
+        if (button == null)
+            return null;
+
+        var badge = new GameObject("NEW", typeof(RectTransform), typeof(Text));
+        badge.SetActive(false);
+        var rect = (RectTransform)badge.transform;
+        rect.SetParent(button.transform, false);
+        rect.anchorMin = rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(1f, 0.5f);
+        rect.anchoredPosition = new Vector2(-8f, -5f);
+        rect.sizeDelta = new Vector2(96f, 50f);
+
+        var label = badge.GetComponent<Text>();
+        label.font = setupNewBadgeFont != null ? setupNewBadgeFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        label.fontSize = 30;
+        label.alignment = TextAnchor.MiddleRight;
+        label.color = new Color(1f, 0.04f, 0.01f);
+        label.raycastTarget = false;
+        label.text = "NEW";
+        return badge;
+    }
+
+    private static bool IsNewShopItem(ShopItemButton item, SaveData data)
+    {
+        return !string.IsNullOrEmpty(item.itemId) && item.IsStageUnlocked(data) &&
+            data.seenShopItemIds?.Contains(item.itemId) != true;
+    }
+
+    private void RefreshSetupNewBadges(SaveData data)
+    {
+        foreach (var badges in setupNewBadges.Values)
+        {
+            badges.item.SetActive(false);
+            if (badges.category != null) badges.category.SetActive(false);
+            if (badges.section != null) badges.section.SetActive(false);
+        }
+
+        foreach (var entry in setupNewBadges)
+        {
+            if (!IsNewShopItem(entry.Key, data))
+                continue;
+
+            var badges = entry.Value;
+            badges.item.SetActive(true);
+            if (badges.category != null) badges.category.SetActive(true);
+            if (badges.section != null) badges.section.SetActive(true);
+        }
+    }
+
+    internal void MarkShopItemSeen(ShopItemButton item)
+    {
+        if (!isSetUp || string.IsNullOrEmpty(GameFlowData.CurrentPlayer) ||
+            !setupNewBadges.TryGetValue(item, out var badges) || !badges.item.activeSelf)
+            return;
+
+        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+        if (IsNewShopItem(item, data))
+        {
+            data.seenShopItemIds ??= new List<string>();
+            data.seenShopItemIds.Add(item.itemId);
+            SaveManager.SaveGame(data);
+        }
+        RefreshSetupNewBadges(data);
     }
 
     public void CloseSetUp()

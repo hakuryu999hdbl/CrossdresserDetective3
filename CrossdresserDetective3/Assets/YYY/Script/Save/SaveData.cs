@@ -60,6 +60,7 @@ public class SaveData
 
     //已经购买的商品ID
     public List<string> purchasedItemIds = new List<string>();
+    public List<string> seenShopItemIds = new List<string>();
 
 
     /// <summary>

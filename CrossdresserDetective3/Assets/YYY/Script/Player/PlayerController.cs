@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        UpdateDashAttack();
 
         if (isInCutscene)
         {
@@ -916,8 +917,8 @@ public class PlayerController : MonoBehaviour
         if (Forbidden_2 != null) Forbidden_2.SetActive(false);
 
         // 被抓会中断攻击，不能让隐藏后的动画继续发送攻击帧事件。
-        isHoldingThrow = false;
-        throwCharge = 0f;
+        CancelQueuedActions();
+        isThrowing = false;
         isAirKick = false;
         if (airKickCoroutine != null)
         {
@@ -938,7 +939,7 @@ public class PlayerController : MonoBehaviour
 
         // 如果还有攻击/投掷状态，全部清掉
         isAttack = false;
-        isDashAttack = false;
+        StopDashAttack();
 
         frameEvent_Audio._Voice_StopLoop();//打断循环呻吟
         frameEvent_Audio._Voice_Mute();//再次触发的时候循环声也屏蔽
@@ -1185,11 +1186,11 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
 
         isAttack = false;
-        isHoldingThrow = false;
-        throwCharge = 0f;
+        CancelQueuedActions();
+        isThrowing = false;
 
         isAirKick = false;
-        isDashAttack = false;
+        StopDashAttack();
         wallJump = false;
         isWallCling = false;
 
@@ -1312,6 +1313,7 @@ public class PlayerController : MonoBehaviour
 
 
         isHurt = true;//主要用于屏蔽输入
+        StopDashAttack();
 
         playerAnimation.PlayHurt();
 
@@ -1363,6 +1365,9 @@ public class PlayerController : MonoBehaviour
         PlayBloodEffect();
 
         isDead = true;
+        CancelQueuedActions();
+        isThrowing = false;
+        StopDashAttack();
         inputControl.Gameplay.Disable();//通过直接禁用来做（但是防止4层多端输入，在上方也禁止）
 
 
@@ -1405,6 +1410,8 @@ public class PlayerController : MonoBehaviour
         UIManager.instance.OnCutsceneStart();
 
         // 只关 Gameplay，同时打开 UI，让 Cancel 可以用来跳过
+        CancelQueuedActions();
+        isThrowing = false;
         inputControl.Gameplay.Disable();
         inputControl.UI.Enable();
         //DisableGameplayInput();//背包层面的玩家锁
@@ -1416,8 +1423,6 @@ public class PlayerController : MonoBehaviour
         rb.angularVelocity = 0f;
 
         isAttack = false;
-        isHoldingThrow = false;
-        throwCharge = 0f;
 
         // 停止滑铲
         if (slideCoroutine != null)
@@ -1434,7 +1439,7 @@ public class PlayerController : MonoBehaviour
         }
 
         isAirKick = false;
-        isDashAttack = false;
+        StopDashAttack();
         isSlide = false;
 
         #endregion
@@ -1548,6 +1553,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDisable()
     {
+        CancelQueuedActions();
+        StopDashAttack();
         inputControl.Disable();
     }
     public void EnableGameplayInput()
@@ -1558,6 +1565,7 @@ public class PlayerController : MonoBehaviour
     }
     public void DisableGameplayInput()
     {
+        CancelQueuedActions();
         inputControl.Gameplay.Disable();
         inputControl.UI.Enable();
         Sign.SetActive(false);
@@ -1624,6 +1632,7 @@ public class PlayerController : MonoBehaviour
 
 
     private float attackPressTime;
+    private bool attackPressed;
     private float chargeThreshold = 0.35f;
 
   
@@ -1651,11 +1660,16 @@ public class PlayerController : MonoBehaviour
 
 
 
+        if (HasThrowPriority) return;
         attackPressTime = Time.time;
+        attackPressed = true;
     }
 
     private void OnAttackCanceled(InputAction.CallbackContext ctx)
     {
+        if (!attackPressed) return;
+        attackPressed = false;
+        if (HasThrowPriority) return;
         if (UndercoverCombatLocked) return;
 
         if (isInCutscene) { return; }//过场动画锁
@@ -1797,44 +1811,65 @@ public class PlayerController : MonoBehaviour
 
     #region  冲刺
     [Header("冲刺")]
-    public bool isDashAttack;//这个暂时没有产生作用，但是留着看看
+    public bool isDashAttack;
     public float dashAttackSpeed = 16f;
     public float dashAttackDuration = 0.2f;
+    [SerializeField] private Collider2D dashPushCollider;
+    private float dashTimeRemaining;
+    private float dashDirection;
 
     public void Dash()
     {
-        StartCoroutine(DashAttack());
-    }
+        if (!isActiveAndEnabled || isDashAttack || !CanDashAttack() || dashAttackDuration <= 0f)
+            return;
 
-    IEnumerator DashAttack()
-    {
         isAttack = true;
         isDashAttack = true;
+        dashDirection = Mathf.Sign(transform.localScale.x);
+        dashTimeRemaining = dashAttackDuration;
+    }
 
+    private bool CanDashAttack()
+    {
+        return !isDead && !isHurt && !isCaptured && !isBondage &&
+            !isInCutscene && !isTeleporting;
+    }
 
+    private void UpdateDashAttack()
+    {
+        if (!isDashAttack)
+            return;
 
-        float timer = 0f;
-        float dir = transform.localScale.x;
-
-        while (timer < dashAttackDuration)
+        if (dashTimeRemaining <= 0f || !CanDashAttack() ||
+            (dashDirection < 0f && physicsCheck.touchLeftWall) ||
+            (dashDirection > 0f && physicsCheck.touchRightWall))
         {
-            yield return new WaitForFixedUpdate();
-
-            // 撞墙停止
-            if ((physicsCheck.touchLeftWall && dir < 0f) ||
-                (physicsCheck.touchRightWall && dir > 0f))
-                break;
-
-            rb.MovePosition(
-                rb.position +
-                new Vector2(dir * dashAttackSpeed * Time.fixedDeltaTime, 0f)
-            );
-
-            timer += Time.fixedDeltaTime;
+            StopDashAttack();
+            return;
         }
 
-        isDashAttack = false;
+        if (dashPushCollider != null && !dashPushCollider.enabled)
+            dashPushCollider.enabled = true;
 
+        float step = Mathf.Min(Time.fixedDeltaTime, dashTimeRemaining);
+        rb.MovePosition(rb.position + Vector2.right * (dashDirection * dashAttackSpeed * step));
+        dashTimeRemaining -= step;
+    }
+
+    private void StopDashAttack()
+    {
+        isDashAttack = false;
+        dashTimeRemaining = 0f;
+        if (dashPushCollider != null)
+            dashPushCollider.enabled = false;
+    }
+
+    internal void FinishAttackAnimation()
+    {
+        isAttack = false;
+        isAirKick = false;
+        isThrowing = false;
+        StopDashAttack();
     }
     #endregion
 
@@ -1922,6 +1957,9 @@ public class PlayerController : MonoBehaviour
     float ThrowRate = 0.5f;//投掷频率
 
     private float throwPressTime;
+    private bool throwQueued;
+    private bool isThrowing;
+    private bool HasThrowPriority => isHoldingThrow || throwQueued || isThrowing;
 
     [Header("投掷蓄力")]
     public bool isHoldingThrow;
@@ -1972,17 +2010,15 @@ public class PlayerController : MonoBehaviour
         {
             throwCharge = 0f;
         }
+        TryPlayQueuedThrow();
     }//蓄力UI
 
     public void OnThrowStart(InputAction.CallbackContext obj)
     {
-        if (UndercoverCombatLocked) return;
+        if (!CanUseThrowInput() || HasThrowPriority) return;
         CheckGamepadInput(obj);//北输入
 
-        if (isBondage || isCaptured) { return; }
-        if (isInCutscene) { return; }//过场动画锁
-
-
+        attackPressed = false;
         throwPressTime = Time.time;
         isHoldingThrow = true;
 
@@ -1990,21 +2026,16 @@ public class PlayerController : MonoBehaviour
     }
     private void OnThrowCanceled(InputAction.CallbackContext ctx)
     {
-        if (UndercoverCombatLocked)
-        {
-            isHoldingThrow = false;
-            throwCharge = 0;
-            return;
-        }
-        if (isBondage) { return; }
+        if (!isHoldingThrow) return;
+        isHoldingThrow = false;
+        throwCharge = 0f;
+        if (!CanUseThrowInput()) return;
 
         float holdTime = Time.time - throwPressTime;
 
-        throwChargeOnRelease = throwCharge;
-        isHoldingThrow = false;
-
         if (holdTime >= chargeThreshold)
         {
+            throwChargeOnRelease = Mathf.Clamp01(holdTime / maxThrowChargeTime);
             Throw();
         }
         else
@@ -2020,13 +2051,7 @@ public class PlayerController : MonoBehaviour
 
     public void Throw()
     {
-        if (UndercoverCombatLocked) return;
-        if (isBondage) { return; }
-        if (isCaptured) { return; }//被抓住无法投掷
-        //if (!physicsCheck.isGround) { return; }//空中无法投掷
-
-
-        //投掷品数量消耗
+        if (!CanUseThrowInput() || throwQueued || isThrowing) return;
         if (throwType == 0) return;
         if (throwCount <= 0)
         {
@@ -2034,8 +2059,40 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        playerAnimation.PlayThrow();
+        throwQueued = true;
+        TryPlayQueuedThrow();
+    }
+
+    private bool CanUseThrowInput()
+    {
+        return !isDead && !isBondage && !isCaptured && !isInCutscene &&
+            !isTeleporting && !UndercoverCombatLocked;
+    }
+
+    private void TryPlayQueuedThrow()
+    {
+        if (!throwQueued) return;
+        if (!CanUseThrowInput() || throwType == 0 || throwCount <= 0)
+        {
+            throwQueued = false;
+            return;
+        }
+
+        if (isAttack || isDashAttack || isAirKick || isSlide || isHurt || Time.time <= nextThrow)
+            return;
+
+        throwQueued = false;
+        isThrowing = true;
         isAttack = true;
+        playerAnimation.PlayThrow();
+    }
+
+    private void CancelQueuedActions()
+    {
+        attackPressed = false;
+        isHoldingThrow = false;
+        throwCharge = 0f;
+        throwQueued = false;
     }
 
 
@@ -2392,6 +2449,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Reload()
     {
+        if (HasThrowPriority) return;
         if (isBondage || isCaptured) { return; }
         if (!physicsCheck.isGround) return; // 空中禁止换弹
         if (attackType >= 0) return; // 不是枪

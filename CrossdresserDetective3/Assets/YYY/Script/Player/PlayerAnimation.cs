@@ -63,7 +63,9 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlayThrow()
     {
-
+        anim.ResetTrigger("attack");
+        anim.ResetTrigger("airKick");
+        anim.ResetTrigger("reload");
         anim.SetTrigger("throw");
     }
 

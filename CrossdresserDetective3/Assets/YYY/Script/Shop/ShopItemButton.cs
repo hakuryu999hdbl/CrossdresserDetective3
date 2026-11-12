@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using static GameFlowData;
 
-public class ShopItemButton : MonoBehaviour
+public class ShopItemButton : MonoBehaviour, ISelectHandler
 {
     [Header("商品信息")]
     [Tooltip("例如：melee_dagger")]
@@ -32,6 +33,12 @@ public class ShopItemButton : MonoBehaviour
     private void Start()
     {
         RefreshUI();
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (UIManager.instance != null)
+            UIManager.instance.MarkShopItemSeen(this);
     }
 
 
@@ -139,7 +146,7 @@ public class ShopItemButton : MonoBehaviour
     /// <summary>
     /// 判断要求的关卡是否已经解锁
     /// </summary>
-    private bool IsStageUnlocked(SaveData data)
+    internal bool IsStageUnlocked(SaveData data)
     {
         data.InitStageData();
 
