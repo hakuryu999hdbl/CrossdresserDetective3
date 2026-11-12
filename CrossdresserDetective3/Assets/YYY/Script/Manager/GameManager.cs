@@ -33,12 +33,13 @@ public class GameManager : MonoBehaviour
     public GameObject Company_1, Company_2, Company_3;
     public GameObject ParkingArea_1;
     public GameObject Outside_1;
+    public GameObject Outside_2;
     public GameObject Office_1;
 
     private void Start()
     {
-     
-        
+
+
 
 
 
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 2:
-                        Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);   
+                        Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
                         break;
 
                     case 3:
@@ -124,6 +125,11 @@ public class GameManager : MonoBehaviour
 
                     case 6:
                     case 7:
+                        Instantiate(Outside_2, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
+                        break;
+
                     case 8:
                     case 9:
                     case 10:
@@ -295,7 +301,7 @@ public class GameManager : MonoBehaviour
             case 1:
                 switch (GameFlowData.CurrentStage)
                 {
-                    case 2:                 
+                    case 2:
                         ShowEliminate();
                         break;
 
@@ -311,7 +317,7 @@ public class GameManager : MonoBehaviour
                         ShowRescue();
                         break;
 
-                    case 6:                    
+                    case 6:
                         ShowClue();
                         break;
 
@@ -336,20 +342,23 @@ public class GameManager : MonoBehaviour
                     case 3:
                         ShowClue();
                         break;
-
                     case 4:
                         ShowRescue();
                         break;
-
                     case 5:
                         ShowClue();
                         break;
-
                     case 6:
-                        ShowRescue();
+                        ShowClue();
                         break;
-                    case 7:                      
+                    case 7:
                         ShowEliminate();
+                        break;
+                    case 8:
+                        ShowClue();
+                        break;
+                    case 9:
+                        ShowRescue();
                         break;
                 }
                 break;
@@ -679,7 +688,7 @@ public class GameManager : MonoBehaviour
 
 
 
-  
+
 
 
     // 进入解缚逃脱
@@ -737,7 +746,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-    
+
     }
 
 
