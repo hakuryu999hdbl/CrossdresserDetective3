@@ -56,8 +56,6 @@ public class PlayerSuspicion : MonoBehaviour
         if (IsExposed) return;
         IsExposed = true;
         CombatLocked = false;
-        foreach (var spawner in FindObjectsByType<AreaEncounterController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-            spawner.spawnAsNpc = false;
         foreach (var enemy in FindObjectsByType<EnemyController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             if (enemy.IsNpc) enemy.RevealAsHostile();
         foreach (var monitor in monitors)

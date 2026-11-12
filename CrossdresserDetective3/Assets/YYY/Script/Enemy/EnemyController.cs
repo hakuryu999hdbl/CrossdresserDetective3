@@ -113,18 +113,23 @@ public class EnemyController : MonoBehaviour
         if (CheckArea != null) CheckArea.SetActive(true);
     }
 
-    public void ConfigureAsNpc(
+    public void ConfigureNpcSpawn(
         EnemyController reinforcement,
         Transform spawnPoint,
-        EnemySkin skin = EnemySkin.Default)
+        EnemySkin skin,
+        bool spawnAsNpc)
     {
-        spawnedAsNpc = true;
-        chasePlayerOnSpawn = false;
         canCallReinforcements = true;
         reinforcementPrefab = reinforcement;
         reinforcementSpawnPoint = spawnPoint;
         reinforcementSkin = skin;
+        reinforcementUsesDoor = true;
 
+        if (!spawnAsNpc)
+            return;
+
+        spawnedAsNpc = true;
+        chasePlayerOnSpawn = false;
         if (CheckArea != null)
             CheckArea.SetActive(false);
     }
@@ -506,24 +511,20 @@ public class EnemyController : MonoBehaviour
     [Tooltip("Default 使用原有皮肤设置，其余选项指定增援实例的特殊皮肤。")]
     public EnemySkin reinforcementSkin;
 
-    // 可选：指定门口等出生位置
+    // 指定增援出生位置
     public Transform reinforcementSpawnPoint;
 
-    // 没有指定出生点时，相对于呼叫者的位置
-    public Vector3 reinforcementSpawnOffset = new Vector3(1f, 0f, 0f);
-
+    private bool reinforcementUsesDoor;
     private bool hasCalledReinforcements;
 
     public void CallReinforcements()
     {
         if (!canCallReinforcements ||
             hasCalledReinforcements ||
-            isDead ||
-            IsSuspended ||
-            isCatching)
+            isDead)
             return;
 
-        if (reinforcementPrefab == null)
+        if (reinforcementPrefab == null || reinforcementSpawnPoint == null)
             return;
 
         if (GameManager.instance == null ||
@@ -533,22 +534,16 @@ public class EnemyController : MonoBehaviour
         // 先标记，防止同一帧重复呼叫
         hasCalledReinforcements = true;
 
-        Vector3 spawnPosition = reinforcementSpawnPoint != null
-            ? reinforcementSpawnPoint.position
-            : transform.position + reinforcementSpawnOffset;
-
-        EnemyController reinforcement = Instantiate(
-            reinforcementPrefab,
-            spawnPosition,
-            Quaternion.identity
-        );
-
-
+        Vector3 spawnPosition = reinforcementUsesDoor
+            ? AreaEncounterController.GetSpawnPosition(reinforcementSpawnPoint, 0f)
+            : reinforcementSpawnPoint.position;
+        EnemyController reinforcement = Instantiate(reinforcementPrefab, spawnPosition, Quaternion.identity);
         // 增援不能再召唤增援
         reinforcement.canCallReinforcements = false;
         reinforcement.SetSkinOverride(reinforcementSkin);
-        if (spawnedAsNpc && reinforcement.CheckArea != null)
-            reinforcement.CheckArea.SetActive(true);
+        reinforcement.RevealAsHostile();
+        if (reinforcementUsesDoor)
+            AreaEncounterController.OpenSpawnDoor(reinforcementSpawnPoint);
 
         // Init 通常已经登记；此方法会防止重复加入
         GameManager.instance.RegisterSceneEnemy(reinforcement);
@@ -556,8 +551,7 @@ public class EnemyController : MonoBehaviour
         // 由增援自己等待 Start，避免 NPC 死后被移除时中断追击。
         reinforcement.StartCoroutine(reinforcement.StartReinforcementChase());
 
-        Debug.Log("敌人增援到达！", this);
-
+        Debug.Log("敌人增援到达！", reinforcement);
         if (UIManager.instance != null)
             UIManager.instance.ShowEnemyReinforcementsAlert();
     }
@@ -2139,6 +2133,10 @@ public class EnemyController : MonoBehaviour
     {
        
 
+        hatIndex = player.hatIndex;
+        hairIndex = player.hairIndex;
+        maskIndex = player.maskIndex;
+        beltIndex = player.beltIndex;
         clothesIndex = player.clothesIndex;
         glovesIndex = player.glovesIndex;
         pantiesIndex = player.pantiesIndex;
@@ -2725,9 +2723,8 @@ public class EnemyController : MonoBehaviour
         if (isDead)
             return;
 
-        // 先登记增援，再结算死亡。死亡流程也会关闭 FOVHolder。
-        if (IsNpc)
-            CallReinforcements();
+        // 先登记增援，再结算死亡。
+        CallReinforcements();
 
         var player = GameManager.instance != null ? GameManager.instance.player : null;
         var suspicion = player != null ? player.GetComponent<PlayerSuspicion>() : null;

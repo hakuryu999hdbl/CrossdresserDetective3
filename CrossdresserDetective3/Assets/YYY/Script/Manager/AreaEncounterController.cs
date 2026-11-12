@@ -23,8 +23,20 @@ public class AreaEncounterController : MonoBehaviour
     }
 #endif
 
-    [Tooltip("NPC 死亡后生成的增援皮肤。Default 使用原有皮肤设置。")]
+    [Tooltip("NPC 生成器产出的角色死亡时，使用此增援皮肤。Default 使用原有皮肤设置。")]
     public EnemySkin reinforcementSkin;
+
+    internal static Vector3 GetSpawnPosition(Transform spawnPoint, float offsetX)
+    {
+        // 出生点是门框，敌人出生在门框下方的地面高度。
+        return spawnPoint.position + new Vector3(offsetX, -1.5f, -1f);
+    }
+
+    internal static void OpenSpawnDoor(Transform spawnPoint)
+    {
+        if (spawnPoint.TryGetComponent<Animator>(out var animator))
+            animator.SetTrigger("Open");
+    }
 
     private List<GameObject> aliveEnemies = new List<GameObject>();
     private bool areaActivated = false;//是否被触发一遍
@@ -92,7 +104,7 @@ public class AreaEncounterController : MonoBehaviour
         var player = GameManager.instance != null ? GameManager.instance.player : null;
         var suspicion = player != null ? player.GetComponent<PlayerSuspicion>() : null;
         bool exposed = suspicion != null && suspicion.IsExposed;
-        if (exposed) spawnAsNpc = false;
+        bool spawnNpc = spawnAsNpc && !exposed;
         EnemyController npcReinforcement = null;
         if (spawnAsNpc && enemyPrefabs.Length > 0 && enemyPrefabs[0] != null)
             npcReinforcement = enemyPrefabs[0].GetComponent<EnemyController>();
@@ -109,7 +121,7 @@ public class AreaEncounterController : MonoBehaviour
             Transform spawnPoint = spawnPoints[randomIndex];
 
             Vector2 offset = Random.insideUnitCircle.normalized * Random.Range(0.5f, 1.5f);
-            Vector3 spawnPosition = spawnPoint.position + new Vector3(offset.x, -1.5f, -1);//目标是Z在0，但是门都是0.95不能更低，Y是门刚好让敌人不产生下落动画高度
+            Vector3 spawnPosition = GetSpawnPosition(spawnPoint, offset.x);
 
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             aliveEnemies.Add(enemy);
@@ -129,8 +141,9 @@ public class AreaEncounterController : MonoBehaviour
                     enemyController.isThief = true;
 
                 if (spawnAsNpc)
-                    enemyController.ConfigureAsNpc(npcReinforcement, spawnPoints[0], reinforcementSkin);
-                else if (exposed)
+                    enemyController.ConfigureNpcSpawn(npcReinforcement, spawnPoints[0], reinforcementSkin, spawnNpc);
+
+                if (exposed)
                     enemyController.RevealAsHostile();
 
                 // After exposure, future spawns remain ordinary hostile enemies.
@@ -140,10 +153,7 @@ public class AreaEncounterController : MonoBehaviour
 
 
 
-            if (spawnPoint.GetComponent<Animator>() != null)
-            {
-                spawnPoint.GetComponent<Animator>().SetTrigger("Open");//开门动画
-            }
+            OpenSpawnDoor(spawnPoint);
 
         }
 

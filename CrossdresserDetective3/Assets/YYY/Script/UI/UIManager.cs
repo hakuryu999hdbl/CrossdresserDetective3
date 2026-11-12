@@ -1096,6 +1096,11 @@ public class UIManager : MonoBehaviour
     private GameObject text_Discovered;
     private GameObject suspicionPanel;
     private Image suspicionFill;
+    private Text suspicionLabel;
+    private static readonly Color SuspicionYellow = new Color(1f, 0.85f, 0.05f);
+    private static readonly Color SuspicionRed = new Color(1f, 0.2f, 0.1f);
+    private const float SuspicionWarningThreshold = 0.8f;
+    private const float SuspicionWarningCycle = 0.6f;
     private Image undercoverAttackForbidden;
     private Image undercoverThrowForbidden;
     private Image capturedJumpForbidden;
@@ -1172,7 +1177,7 @@ public class UIManager : MonoBehaviour
             fillRect.offsetMin = new Vector2(3, 3);
             fillRect.offsetMax = new Vector2(-3, -3);
             fillRect.localScale = Vector3.one;
-            suspicionFill.color = new Color(1, 0.85f, 0.05f);
+            suspicionFill.color = SuspicionYellow;
             suspicionFill.raycastTarget = false;
             suspicionFill.gameObject.SetActive(true);
             var icon = new GameObject("SuspicionLabel", typeof(RectTransform), typeof(Text));
@@ -1182,14 +1187,13 @@ public class UIManager : MonoBehaviour
             iconRect.anchorMin = iconRect.anchorMax = new Vector2(0, 0.5f);
             iconRect.anchoredPosition = new Vector2(-80, 0);
             iconRect.sizeDelta = new Vector2(150, 44);
-            var label = icon.GetComponent<Text>();
+            suspicionLabel = icon.GetComponent<Text>();
             var alertLabel = text_OutOfPower != null ? text_OutOfPower.GetComponent<Text>() : null;
-            label.font = alertLabel != null ? alertLabel.font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            label.fontSize = 24;
-            label.fontStyle = FontStyle.Bold;
-            label.alignment = TextAnchor.MiddleCenter;
-            label.color = suspicionFill.color;
-            label.raycastTarget = false;
+            suspicionLabel.font = alertLabel != null ? alertLabel.font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            suspicionLabel.fontSize = 24;
+            suspicionLabel.fontStyle = FontStyle.Bold;
+            suspicionLabel.alignment = TextAnchor.MiddleCenter;
+            suspicionLabel.raycastTarget = false;
             var language = icon.AddComponent<Language>();
             language.J = "疑惑";
             language.C_1 = "怀疑";
@@ -1199,7 +1203,13 @@ public class UIManager : MonoBehaviour
             icon.SetActive(true);
         }
         if (suspicionPanel == null) return;
-        suspicionFill.fillAmount = Mathf.Clamp01(current / Mathf.Max(1, maximum));
+        float fill = Mathf.Clamp01(current / Mathf.Max(1, maximum));
+        suspicionFill.fillAmount = fill;
+        bool showRed = fill >= SuspicionWarningThreshold &&
+            Time.time % SuspicionWarningCycle < SuspicionWarningCycle * 0.5f;
+        Color color = showRed ? SuspicionRed : SuspicionYellow;
+        suspicionFill.color = color;
+        suspicionLabel.color = color;
         suspicionPanel.SetActive(visible);
     }
 

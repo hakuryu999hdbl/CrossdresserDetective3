@@ -345,6 +345,10 @@ public class RBQController : MonoBehaviour
     {
 
 
+        hatIndex = player.hatIndex;
+        hairIndex = player.hairIndex;
+        maskIndex = player.maskIndex;
+        beltIndex = player.beltIndex;
         clothesIndex = player.clothesIndex;
         glovesIndex = player.glovesIndex;
         pantiesIndex = player.pantiesIndex;
