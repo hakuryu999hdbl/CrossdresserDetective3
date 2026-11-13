@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
 
                     case 6:
                     case 7:
-                        Instantiate(Outside_2, Vector3.zero, Quaternion.identity);
+                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
