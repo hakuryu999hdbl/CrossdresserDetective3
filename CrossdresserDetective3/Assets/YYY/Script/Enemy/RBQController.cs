@@ -113,7 +113,7 @@ public class RBQController : MonoBehaviour
 
             //currentAnimationType = Random.Range(0, 2);//玩家随机伪娘动画
         }
-        else
+        else if (!isDecorative)
         {
             currentAnimationType = -1;//目前先设置解救失踪少女，没有伪娘
         }
@@ -167,6 +167,9 @@ public class RBQController : MonoBehaviour
 
 
         RandomizeZ();
+
+        if (isDecorative && !isPlayer)
+            AbuseAnimation();
 
 
 
@@ -590,6 +593,16 @@ public class RBQController : MonoBehaviour
                 }
                 break;
         }
+
+        // 兜底伪娘服装(兔女郎)
+        hairIndex = 1;
+        clothesIndex = 3;
+        glovesIndex = 0;
+        beltIndex = 0;
+        stockingsIndex = 3;
+        pantiesIndex = 3;
+        shoesIndex = 3;
+        hatIndex = 1;
 
         //武器完全随机
         meleeType = Random.Range(1, 4);

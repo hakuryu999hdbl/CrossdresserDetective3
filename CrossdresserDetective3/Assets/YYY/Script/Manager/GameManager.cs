@@ -124,6 +124,10 @@ public class GameManager : MonoBehaviour
 
 
                     case 6:
+                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
+                        break;
                     case 7:
                         Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
                         skyboxSample.Night();//晚上关卡单独指定
@@ -131,9 +135,11 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case 8:
+                        Instantiate(Outside_2, Vector3.zero, Quaternion.identity);
+                        break;
                     case 9:
                     case 10:
-                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        Instantiate(Outside_2, Vector3.zero, Quaternion.identity);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
@@ -271,6 +277,10 @@ public class GameManager : MonoBehaviour
         (CurrentChapter == 1 && CurrentStage == 1) ||
         (CurrentChapter == 2 && (CurrentStage == 1 || CurrentStage == 2));
 
+    public static bool IsEliminateStage =>
+        (CurrentChapter == 1 && (CurrentStage == 2 || CurrentStage == 9)) ||
+        (CurrentChapter == 2 && (CurrentStage == 6 || CurrentStage == 7));
+
     public void IsRoomManager(RoomManager _roomManager)
     {
         roomManager = _roomManager;
@@ -290,6 +300,12 @@ public class GameManager : MonoBehaviour
 
         Mission.SetActive(true);
 
+        if (IsEliminateStage)
+        {
+            ShowEliminate();
+            return;
+        }
+
         Debug.Log("显示模式：" + GameFlowData.CurrentMissionType);
 
 
@@ -301,10 +317,6 @@ public class GameManager : MonoBehaviour
             case 1:
                 switch (GameFlowData.CurrentStage)
                 {
-                    case 2:
-                        ShowEliminate();
-                        break;
-
                     case 3:
                         ShowClue();
                         break;
@@ -327,9 +339,6 @@ public class GameManager : MonoBehaviour
                     case 8:
                         ShowRescue();
                         break;
-                    case 9:
-                        ShowEliminate();
-                        break;
                     case 10:
                         ShowRescue();
                         break;
@@ -347,12 +356,6 @@ public class GameManager : MonoBehaviour
                         break;
                     case 5:
                         ShowClue();
-                        break;
-                    case 6:
-                        ShowClue();
-                        break;
-                    case 7:
-                        ShowEliminate();
                         break;
                     case 8:
                         ShowClue();

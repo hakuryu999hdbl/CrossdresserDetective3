@@ -487,6 +487,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("武器与攻击方式")]
     public int meleeType;//0空手 1匕首 2武士刀 3尼泊尔军刀
+    public bool HasEquippedGun => pistolType > 0 || rifleType > 0;
+
     public int pistolType;//0空手 1柯尔特M1911 2沙鹰手枪 3格洛克手枪
     public int rifleType;//0空手 1步枪M4A1 2步枪AK47
     public int throwType;//0空手 1手榴弹 2烟雾弹 3闪光弹 4燃烧弹  5震撼弹  6飞刀

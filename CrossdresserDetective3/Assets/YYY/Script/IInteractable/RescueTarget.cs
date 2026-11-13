@@ -42,7 +42,6 @@ public class RescueTarget : MonoBehaviour, IInteractable
             // 保留场景中的演出，但不参与任务和交互。
             gameObject.tag = "Untagged";
             if (NoTouch != null) NoTouch.SetActive(false);
-            RefreshAnimation();
             return;
         }
 

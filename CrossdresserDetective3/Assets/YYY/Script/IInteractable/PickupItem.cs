@@ -38,7 +38,7 @@ public class PickupItem : MonoBehaviour
         {
             // 子弹：没枪就销毁
             case PickupType.CurrentAmmo:
-                if (player.attackType >= 0)
+                if (!player.HasEquippedGun)
                 {
                     Destroy(gameObject);
                 }
@@ -46,7 +46,7 @@ public class PickupItem : MonoBehaviour
 
             // 弹夹：没枪就销毁
             case PickupType.Magazine:
-                if (player.attackType >= 0)
+                if (!player.HasEquippedGun)
                 {
                     Destroy(gameObject);
                 }
@@ -179,7 +179,7 @@ public class PickupItem : MonoBehaviour
     private bool TryPickupCurrentAmmo(PlayerController player)
     {
         // 没有装备枪械
-        if (player.attackType >= 0)
+        if (!player.HasEquippedGun)
             return false;
 
         // 当前弹匣已经满了，所以变成增加一个弹夹
@@ -197,7 +197,7 @@ public class PickupItem : MonoBehaviour
     private bool TryPickupMagazine(PlayerController player)
     {
         // 没有装备枪械
-        if (player.attackType >= 0)
+        if (!player.HasEquippedGun)
             return false;
 
         // 可以根据需要增加备用弹匣上限判断

@@ -62,16 +62,17 @@ public class Chest : MonoBehaviour, IInteractable
 
     public void TriggerAction()
     {
-        if (isDone || GameManager.instance.player.isBondage)
+        PlayerController player = GameManager.instance.player;
+        if (isDone || player == null || player.isBondage)
             return;
 
-        OpenChest();
+        OpenChest(player);
     }
 
-    private void OpenChest()
+    private void OpenChest(PlayerController player)
     {
         // 箱子奖励完全没配置时不允许打开，避免空箱
-        if (!isComputer && !DropChestRewards())
+        if (!isComputer && !DropChestRewards(player))
             return;
 
         isDone = true;
@@ -88,7 +89,7 @@ public class Chest : MonoBehaviour, IInteractable
         }
     }
 
-    private bool DropChestRewards()
+    private bool DropChestRewards(PlayerController player)
     {
         List<GameObject> normalItems = new List<GameObject>();
 
@@ -123,9 +124,17 @@ public class Chest : MonoBehaviour, IInteractable
                 SpawnDropItem(moneyPrefab);
         }
 
-        // 没有金币时保底掉一件；有金币时按概率额外掉落
+        bool droppedSupplies = false;
+        if (player.character != null && player.character.currentHealth < player.character.maxHealth)
+            droppedSupplies |= DropGuaranteedSupply(normalItems, PickupItem.PickupType.Health);
+        if (player.throwType > 0)
+            droppedSupplies |= DropGuaranteedSupply(normalItems, PickupItem.PickupType.Throwable);
+        if (player.HasEquippedGun)
+            droppedSupplies |= DropGuaranteedSupply(normalItems, PickupItem.PickupType.CurrentAmmo);
+
+        // 无金币且未掉补给时保底掉一件，其余情况保留额外掉落概率。
         if (normalItems.Count > 0 &&
-            (moneyPrefab == null || Random.value < itemDropChance))
+            ((moneyPrefab == null && !droppedSupplies) || Random.value < itemDropChance))
         {
             SpawnDropItem(
                 normalItems[Random.Range(0, normalItems.Count)]
@@ -133,6 +142,22 @@ public class Chest : MonoBehaviour, IInteractable
         }
 
         return true;
+    }
+
+    private bool DropGuaranteedSupply(List<GameObject> items, PickupItem.PickupType type)
+    {
+        GameObject prefab = items.Find(item => IsPickupType(item, type));
+        if (prefab == null)
+            return false;
+
+        SpawnDropItem(prefab);
+        items.RemoveAll(item => IsPickupType(item, type));
+        return true;
+    }
+
+    private static bool IsPickupType(GameObject item, PickupItem.PickupType type)
+    {
+        return item.TryGetComponent<PickupItem>(out var pickup) && pickup.pickupType == type;
     }
 
     private void SpawnDropItem(GameObject prefab)

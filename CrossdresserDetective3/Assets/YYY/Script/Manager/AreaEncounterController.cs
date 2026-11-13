@@ -104,9 +104,11 @@ public class AreaEncounterController : MonoBehaviour
         var player = GameManager.instance != null ? GameManager.instance.player : null;
         var suspicion = player != null ? player.GetComponent<PlayerSuspicion>() : null;
         bool exposed = suspicion != null && suspicion.IsExposed;
-        bool spawnNpc = spawnAsNpc && !exposed;
+        bool eliminate = GameManager.IsEliminateStage;
+        bool useNpcSettings = spawnAsNpc && !eliminate;
+        bool spawnNpc = useNpcSettings && !exposed;
         EnemyController npcReinforcement = null;
-        if (spawnAsNpc && enemyPrefabs.Length > 0 && enemyPrefabs[0] != null)
+        if (useNpcSettings && enemyPrefabs.Length > 0 && enemyPrefabs[0] != null)
             npcReinforcement = enemyPrefabs[0].GetComponent<EnemyController>();
 
         //areaActivated = true;
@@ -140,14 +142,14 @@ public class AreaEncounterController : MonoBehaviour
                 if (isVan)
                     enemyController.isThief = true;
 
-                if (spawnAsNpc)
+                if (useNpcSettings)
                     enemyController.ConfigureNpcSpawn(npcReinforcement, spawnPoints[0], reinforcementSkin, spawnNpc);
 
-                if (exposed)
+                if (eliminate || exposed)
                     enemyController.RevealAsHostile();
 
                 // After exposure, future spawns remain ordinary hostile enemies.
-                if (attachMonitor && !exposed)
+                if (attachMonitor && !eliminate && !exposed)
                     AttachMonitor(enemyController);
             }
 
