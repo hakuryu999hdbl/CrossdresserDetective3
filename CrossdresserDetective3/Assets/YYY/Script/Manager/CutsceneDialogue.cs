@@ -294,6 +294,10 @@ public class CutsceneDialogue : MonoBehaviour
     public GameObject Underling;
     public GameObject StreetGirl_A;
     public GameObject StreetGirl_B;
+    public GameObject Chikan_A;
+    public GameObject Chikan_B;
+    public GameObject Chikan_C;
+    public GameObject Chikan_D;
 
     private void SetSpeakerStyle(string speaker)
     {
@@ -312,6 +316,10 @@ public class CutsceneDialogue : MonoBehaviour
         Underling.SetActive(false);
         if (StreetGirl_A != null) StreetGirl_A.SetActive(false);
         if (StreetGirl_B != null) StreetGirl_B.SetActive(false);
+        if (Chikan_A != null) Chikan_A.SetActive(false);
+        if (Chikan_B != null) Chikan_B.SetActive(false);
+        if (Chikan_C != null) Chikan_C.SetActive(false);
+        if (Chikan_D != null) Chikan_D.SetActive(false);
 
         switch (speaker)
         {
@@ -365,6 +373,26 @@ public class CutsceneDialogue : MonoBehaviour
             case "StreetGirl_B":
                 if (StreetGirl_B != null) StreetGirl_B.SetActive(true);
                 textLabel.color = new Color(0.72f, 0.70f, 1.0f, 1.0f);
+                break;
+
+            case "Chikan_A":
+                if (Chikan_A != null) Chikan_A.SetActive(true);
+                textLabel.color = new Color32(255, 204, 133, 255);
+                break;
+
+            case "Chikan_B":
+                if (Chikan_B != null) Chikan_B.SetActive(true);
+                textLabel.color = new Color32(143, 224, 208, 255);
+                break;
+
+            case "Chikan_C":
+                if (Chikan_C != null) Chikan_C.SetActive(true);
+                textLabel.color = new Color32(166, 198, 255, 255);
+                break;
+
+            case "Chikan_D":
+                if (Chikan_D != null) Chikan_D.SetActive(true);
+                textLabel.color = new Color32(245, 168, 202, 255);
                 break;
 
             case "YYL_1":

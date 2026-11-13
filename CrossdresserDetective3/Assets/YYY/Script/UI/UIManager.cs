@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;//防止重刷场景前的暂停
 
-        if (GameManager.IsEscapeStage ||
+        if (GameManager.IsEscapeStage || GameManager.IsDirectRescueStage ||
             (GameFlowData.CurrentChapter == 1 && GameFlowData.CurrentStage == 2))
         {
             isSetUp = false;
@@ -51,13 +51,16 @@ public class UIManager : MonoBehaviour
             playerController.EnableGameplayInput();
             EventSystem.current.SetSelectedGameObject(null);
             MoveWeaponUIToBattle();
-
-            if (GameFlowData.CurrentChapter == 2 && GameFlowData.CurrentStage == 1)
-                playerController.SetSisterMode(true);
         }
         else
         {
             OpenSetUp();
+        }
+
+        if ((GameFlowData.CurrentChapter == 2 &&
+            GameFlowData.CurrentStage == 1) || GameManager.IsDirectRescueStage)
+        {
+            playerController.SetSisterMode(true);
         }
 
         // ===== 游戏开始时初始化武器UI =====
@@ -1183,6 +1186,11 @@ public class UIManager : MonoBehaviour
     {
         cutsceneDialogue.LoadDialogue("Chapter_02_2");
     }//填充章节台词
+
+    public void Init_Chapter_02_3()
+    {
+        cutsceneDialogue.LoadDialogue("Chapter_02_3");
+    }
 
     [Header("目前的过场动画跳过")]
     public TimelineTrigger currentTimeline;

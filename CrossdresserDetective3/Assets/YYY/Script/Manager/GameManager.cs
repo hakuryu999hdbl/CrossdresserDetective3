@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public void IsPlayer(PlayerController controller)
     {
         player = controller;
+        TryInitializeDirectRescue();
 
     }//玩家自己传过来
 
@@ -277,6 +278,8 @@ public class GameManager : MonoBehaviour
         (CurrentChapter == 1 && CurrentStage == 1) ||
         (CurrentChapter == 2 && (CurrentStage == 1 || CurrentStage == 2));
 
+    public static bool IsDirectRescueStage => CurrentChapter == 2 && CurrentStage == 9;
+
     public static bool IsEliminateStage =>
         (CurrentChapter == 1 && (CurrentStage == 2 || CurrentStage == 9)) ||
         (CurrentChapter == 2 && (CurrentStage == 6 || CurrentStage == 7));
@@ -284,10 +287,19 @@ public class GameManager : MonoBehaviour
     public void IsRoomManager(RoomManager _roomManager)
     {
         roomManager = _roomManager;
+        TryInitializeDirectRescue();
         // 复用地图需要先启用逃出任务对象并放置玩家，才能触发开场 Timeline。
         if (IsEscapeStage && roomManager.playerSpawnPoints_escape != null)
             ShowMissionUI();
     }//RoomManager自己来报告
+
+    private bool directRescueInitialized;
+
+    private void TryInitializeDirectRescue()
+    {
+        if (IsDirectRescueStage && player != null && roomManager != null)
+            ShowMissionUI();
+    }
 
     public void ShowMissionUI()
     {
@@ -361,7 +373,11 @@ public class GameManager : MonoBehaviour
                         ShowClue();
                         break;
                     case 9:
-                        ShowRescue();
+                        if (!directRescueInitialized && player != null && roomManager != null)
+                        {
+                            directRescueInitialized = true;
+                            ShowRescue();
+                        }
                         break;
                 }
                 break;
