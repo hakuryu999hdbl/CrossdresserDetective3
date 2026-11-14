@@ -15,6 +15,11 @@ public class TimelineTrigger : MonoBehaviour
     private bool alreadyTriggered;
     private PlayerController player;
     private Collider2D triggerCollider;
+    private Transform chapter023PlayerParent;
+    private bool chapter023PlayerSimulated;
+    private Renderer chapter023PlayerRenderer;
+    private int chapter023PlayerSortingLayer;
+    private int chapter023PlayerSortingOrder;
 
     private void Awake()
     {
@@ -77,6 +82,22 @@ public class TimelineTrigger : MonoBehaviour
             UIManager.instance.RegisterTimeline(this);
         // ==========================================
 
+        if (Chapter == "Chapter_02_3")
+        {
+            chapter023PlayerParent = player.transform.parent;
+            chapter023PlayerSimulated = player.rb.simulated;
+            player.rb.simulated = false;
+            chapter023PlayerRenderer = player.playerAnimation.GetComponent<Renderer>();
+            if (chapter023PlayerRenderer != null)
+            {
+                chapter023PlayerSortingLayer = chapter023PlayerRenderer.sortingLayerID;
+                chapter023PlayerSortingOrder = chapter023PlayerRenderer.sortingOrder;
+                chapter023PlayerRenderer.sortingLayerID = SortingLayer.NameToID("Environment");
+                chapter023PlayerRenderer.sortingOrder = 19;
+            }
+            SetInit();
+        }
+
         director.gameObject.SetActive(true);
         director.time = 0;
         director.Play();
@@ -84,7 +105,8 @@ public class TimelineTrigger : MonoBehaviour
         if (disableColliderAfterTrigger && triggerOnlyOnce)
             triggerCollider.enabled = false;
 
-        SetInit();//这段过场动画需要的填入
+        if (Chapter != "Chapter_02_3")
+            SetInit();
     }
 
     private void OnTimelineStopped(PlayableDirector stoppedDirector)
@@ -110,8 +132,23 @@ public class TimelineTrigger : MonoBehaviour
         if (player == null)
             return;
 
-        player.ExitCutscene();
+        PlayerController cutscenePlayer = player;
         player = null;
+
+        if (Chapter == "Chapter_02_3")
+        {
+            RestoreChapter023PlayerSorting();
+            cutscenePlayer.transform.SetParent(chapter023PlayerParent);
+            cutscenePlayer.rb.position = cutscenePlayer.transform.position;
+            cutscenePlayer.rb.simulated = chapter023PlayerSimulated;
+            cutscenePlayer.playerAnimation.gameObject.SetActive(true);
+            director.gameObject.SetActive(false);
+
+            if (UIManager.instance != null && UIManager.instance.blackScreen != null)
+                UIManager.instance.blackScreen.SetFadeOut();
+        }
+
+        cutscenePlayer.ExitCutscene();
     }
 
     /// <summary>
@@ -159,7 +196,7 @@ public class TimelineTrigger : MonoBehaviour
             UIManager.instance.UnregisterTimeline(this);
 
             // Timeline 结束处理全部完成后，最后指定淡出
-            if (UIManager.instance.blackScreen != null)
+            if (Chapter != "Chapter_02_3" && UIManager.instance.blackScreen != null)
                 UIManager.instance.blackScreen.SetFadeOut();
         }
 
@@ -328,7 +365,18 @@ public class TimelineTrigger : MonoBehaviour
 
     public void SetPlayerAnim_Runing()
     {
+        RestoreChapter023PlayerSorting();
         GameManager.instance.player.playerAnimation.PlayRuning();
+    }
+
+    private void RestoreChapter023PlayerSorting()
+    {
+        if (chapter023PlayerRenderer == null)
+            return;
+
+        chapter023PlayerRenderer.sortingLayerID = chapter023PlayerSortingLayer;
+        chapter023PlayerRenderer.sortingOrder = chapter023PlayerSortingOrder;
+        chapter023PlayerRenderer = null;
     }
 
 
