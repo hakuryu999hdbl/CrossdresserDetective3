@@ -74,8 +74,8 @@ public class RBQController : MonoBehaviour
                             break;
 
                         case 2:
-                            currentAnimationType = 1;
-                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
+                            currentAnimationType = 7;
+                            UIManager.instance.ResultNumber = 9;//尻壁
                             break;
 
                         case 3:
@@ -84,14 +84,14 @@ public class RBQController : MonoBehaviour
                             break;
 
                         case 4:
-                            currentAnimationType = 1;
-                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
+                            currentAnimationType = 7;
+                            UIManager.instance.ResultNumber = 9;//尻壁
                             break;
 
                         case 5:
                         case 6:
-                            currentAnimationType = 1;
-                            UIManager.instance.ResultNumber = 4;//轮奸无法合腿
+                            currentAnimationType = 8;
+                            UIManager.instance.ResultNumber = 10;//伪娘吊缚口交
                             break;
 
                         case 7:
@@ -103,6 +103,10 @@ public class RBQController : MonoBehaviour
 
 
                         case 9:
+                            currentAnimationType = -1;
+                            UIManager.instance.ResultNumber = 8;//女性吊缚后入
+                            break;
+
                         case 10:
                             currentAnimationType = 5;
                             UIManager.instance.ResultNumber = 6;//死宅玩弄
@@ -230,6 +234,10 @@ public class RBQController : MonoBehaviour
             case 4:
                 break;
 
+            case 7:
+                anim.Play("Man_ButtWallYYY_7", 0, 0f);
+                break;
+
         }
 
         anim.Update(0f);
@@ -282,6 +290,15 @@ public class RBQController : MonoBehaviour
 
             case 6:
                 anim.Play("FatMan_FeraYYY_1", 0, 0f);//死宅玩弄
+                break;
+
+
+            case 7:
+                anim.Play("Man_ButtWallYYY_1", 0, 0f);//尻壁
+                break;
+
+            case 8:
+                anim.Play("Man_FeraYYY_1", 0, 0f);//伪娘吊缚口交
                 break;
 
         }
@@ -382,7 +399,7 @@ public class RBQController : MonoBehaviour
 
 
 
-    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY   [5]  FatMan_RapeYYY    [6]  FatMan_FeraYYY   
+    //[-1] Man_RapeGirl   [0] Man_RapeYYY   [1] Man_AbuseYYY    [2]Man_PeeInYYY   [3]SelfBondage  [4]Girl_LewdmoveYYY   [5]  FatMan_RapeYYY    [6]  FatMan_FeraYYY   [7]Man_ButtWall  [8]Man_FeraYYY
 
 
     /// <summary>

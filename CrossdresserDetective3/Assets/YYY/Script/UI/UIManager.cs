@@ -1444,8 +1444,8 @@ public class UIManager : MonoBehaviour
     public GameObject MissionFailure;
 
     public Image ResultPicture;//设置结局图片
-    public int ResultNumber;//1用完扔垃圾桶  2紧缚逃脱失败  3尿便器   4无捆绑轮奸   5尸体被检查   6死宅玩弄   7口交服侍死宅  8女性吊缚后入   
-    public Sprite CG_1,CG_2,CG_3,CG_4,CG_5, CG_6,CG_7,CG_8;
+    public int ResultNumber;//1用完扔垃圾桶  2紧缚逃脱失败  3尿便器   4无捆绑轮奸   5尸体被检查   6死宅玩弄   7口交服侍死宅  8女性吊缚后入   9尻壁  10伪娘吊缚口交
+    public Sprite CG_1,CG_2,CG_3,CG_4,CG_5, CG_6,CG_7,CG_8, CG_9, CG_10;
 
     public bool waitGameOverInput = false;//等待玩家输入再跳出战败界面
 
@@ -1569,6 +1569,18 @@ public class UIManager : MonoBehaviour
                 SaveManager.UpdateThumbnail("EndResult_08");
                 ResultPicture.sprite = CG_8;//女性吊缚后入
                 GlobalSaveManager.UnlockCG("Man_RapeGirl");
+                break;
+
+            case 9:
+                SaveManager.UpdateThumbnail("EndResult_09");
+                ResultPicture.sprite = CG_9;//尻壁
+                GlobalSaveManager.UnlockCG("Man_ButtWallYYY");
+                break;
+
+            case 10:
+                SaveManager.UpdateThumbnail("EndResult_10");
+                ResultPicture.sprite = CG_10;//伪娘吊缚口交
+                GlobalSaveManager.UnlockCG("Man_FeraYYY");
                 break;
         }
 
