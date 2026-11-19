@@ -146,6 +146,15 @@ public class Enemy_1 : EnemyController
 
         ReadCurrentGame(GameManager.instance.player);//读取玩家衣物
     }
+
+    public void SetEnemy_ButtWallYYY()
+    {
+        anim.Play("Story_ButtWallYYY_6", 0, 0f);
+        anim.Update(0f);
+
+        ReadCurrentGame(GameManager.instance.player);//读取玩家衣物
+    }
+
     public void SetEnemy_Girl_Rbq_1() 
     {
         anim.Play("Story_Girl_Rbq_1", 0, 0f);
