@@ -100,7 +100,7 @@ public class CGGalleryController : MonoBehaviour
                 unlockedIndex++;
         }
 
-        if (currentSelectedSlot != null && !currentSelectedSlot.gameObject.activeSelf)
+        if (currentSelectedSlot != null && !unlockedIds.Contains(currentSelectedSlot.cgId))
             ClearPreview();
 
         pageLabel.text = $"{currentPage + 1}/{pageCount}";
@@ -285,6 +285,7 @@ public class CGGalleryController : MonoBehaviour
 
         isCG = !isCG;
         currentPage = 0;
+        ClearPreview();
         RefreshGallerySlots();
 
     }//切换CG和EndResult
@@ -316,9 +317,12 @@ public class CGGalleryController : MonoBehaviour
         galleryUI.SetActive(true);
 
 
-        //当前选中移动到返回按钮
+        //缩略图在其他页时，焦点回到播放按钮。
+        GameObject focusTarget = currentSelectedSlot != null && currentSelectedSlot.gameObject.activeInHierarchy
+            ? currentSelectedSlot.gameObject
+            : playButton;
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(currentSelectedSlot.gameObject);
+        EventSystem.current.SetSelectedGameObject(focusTarget);
     }// 从CG播放界面返回// 画面Back按钮和多端Cancel都调用这里
 
     private void OnCancel(InputAction.CallbackContext context)

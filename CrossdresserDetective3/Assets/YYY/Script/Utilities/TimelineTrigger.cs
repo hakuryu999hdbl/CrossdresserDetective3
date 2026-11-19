@@ -13,6 +13,7 @@ public class TimelineTrigger : MonoBehaviour
     [SerializeField] private bool disableColliderAfterTrigger = true;
 
     private bool alreadyTriggered;
+    private bool endsWithWin;
     private PlayerController player;
     private Collider2D triggerCollider;
     private Transform chapter023PlayerParent;
@@ -129,6 +130,12 @@ public class TimelineTrigger : MonoBehaviour
 
     private void RestorePlayer()
     {
+        if (endsWithWin)
+        {
+            player = null;
+            return;
+        }
+
         if (player == null)
             return;
 
@@ -160,7 +167,7 @@ public class TimelineTrigger : MonoBehaviour
 
     public void SkipTimeline()
     {
-        if (director == null)
+        if (director == null || endsWithWin)
             return;
 
         TimelineAsset timeline = director.playableAsset as TimelineAsset;
@@ -182,6 +189,21 @@ public class TimelineTrigger : MonoBehaviour
         }
 
 
+
+        double winTime = double.PositiveInfinity;
+        if (timeline != null)
+        {
+            foreach (TrackAsset track in timeline.GetRootTracks())
+                FindWinSignal(track, ref winTime);
+        }
+
+        if (!double.IsPositiveInfinity(winTime))
+        {
+            director.time = winTime;
+            director.Evaluate();
+            SetWin();
+            return;
+        }
 
         director.time = director.duration;
         director.Evaluate();//更新终点画面；Signal 由 Timeline 的通知机制处理。
@@ -216,6 +238,21 @@ public class TimelineTrigger : MonoBehaviour
 
         foreach (TrackAsset child in track.GetChildTracks())
             FindNextSkipPoint(child, currentTime, ref nextPoint);
+    }
+
+    private static void FindWinSignal(TrackAsset track, ref double winTime)
+    {
+        if (track.mutedInHierarchy) return;
+
+        foreach (IMarker marker in track.GetMarkers())
+        {
+            if (marker is SignalEmitter emitter && emitter.asset != null &&
+                emitter.asset.name == "SetWin" && marker.time < winTime)
+                winTime = marker.time;
+        }
+
+        foreach (TrackAsset child in track.GetChildTracks())
+            FindWinSignal(child, ref winTime);
     }
 
 
@@ -514,7 +551,14 @@ public class TimelineTrigger : MonoBehaviour
 
     public void SetWin() 
     {
-        GameManager.instance.PlayerEscapeWin();
+        if (endsWithWin) return;
+        endsWithWin = true;
+
+        if (director != null)
+            director.Pause();
+
+        UIManager.instance.UnregisterTimeline(this);
+        GameManager.instance.PlayerCutsceneWin();
 
     }//一般过程动画胜利
 }

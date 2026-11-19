@@ -524,6 +524,14 @@ public class GameManager : MonoBehaviour
         PlayerWin = true;
     }//这个用于逃出模式
 
+    public void PlayerCutsceneWin()
+    {
+        if (PlayerWin) return;
+
+        PlayerWin = true;
+        UIManager.instance.CutsceneWinUI();
+    }
+
     void ShowEscape()
     {
         if (escapeInitialized) return;

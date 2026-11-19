@@ -1656,6 +1656,24 @@ public class UIManager : MonoBehaviour
         AudioManager.Instance.PlayFX(AudioManager.Instance.SE_MissionComplete);//成功音效
     }
 
+    public void CutsceneWinUI()
+    {
+        if (isResultShowing) return;
+        isResultShowing = true;
+
+        SaveStageResult();
+        playerController.DisableGameplayInput();
+        UI_Cutscene.SetActive(false);
+        UI_All.SetActive(false);
+        MissionComplete.SetActive(false);
+        blackScreen.SetFadeOut();
+
+        WinPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(WinfirstSelected);
+        AudioManager.Instance.PlayFX(AudioManager.Instance.SE_MissionComplete);
+    }
+
     public bool isResultShowing = false;//一旦开始结算，另一种结果不能出现
 
     private void SaveStageResult()
