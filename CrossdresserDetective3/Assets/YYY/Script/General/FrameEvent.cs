@@ -1241,7 +1241,8 @@ public class FrameEvent : MonoBehaviour
 
     public void SetDeadBondage_Bondage() 
     {
-      
+        rBQController.hairIndex = 0;
+        rBQController.hatIndex = 0;
         rBQController.glovesIndex = 1;
         rBQController.stockingsIndex = 1;
         rBQController.clothesIndex = 0;

@@ -10,6 +10,8 @@ public class CGGalleryController : MonoBehaviour
     public GameObject galleryUI;
     public Image largePreviewImage;
     public GameObject playButton;
+    [SerializeField] private Button pageButton;
+    [SerializeField] private Text pageLabel;
 
     [Header("CG播放界面")]
     public GameObject playbackUI;
@@ -20,6 +22,9 @@ public class CGGalleryController : MonoBehaviour
     [Header("全部CG Slot")]
     public CGGallerySlot[] slots;
 
+    private const int SlotsPerPage = 8;
+    private int currentPage;
+    private int pageCount = 1;
     private CGGallerySlot currentSelectedSlot;
 
     private PlayerInputControl inputControl;
@@ -68,13 +73,47 @@ public class CGGalleryController : MonoBehaviour
     /// </summary>
     public void RefreshGallerySlots()
     {
+        var unlockedIds = GlobalSaveManager.Load().unlockedCGIds;
+        var playbackType = isCG ? CGGallerySlot.CGPlaybackType.Spine : CGGallerySlot.CGPlaybackType.RBQ;
+        int unlockedCount = 0;
         foreach (CGGallerySlot slot in slots)
         {
-            if (slot != null)
+            if (slot != null && slot.playbackType == playbackType && unlockedIds.Contains(slot.cgId))
             {
-                slot.RefreshUnlockState();
+                unlockedCount++;
             }
         }
+
+        pageCount = Mathf.Max(1, (unlockedCount + SlotsPerPage - 1) / SlotsPerPage);
+        currentPage = Mathf.Clamp(currentPage, 0, pageCount - 1);
+        int pageStart = currentPage * SlotsPerPage;
+        int unlockedIndex = 0;
+        foreach (CGGallerySlot slot in slots)
+        {
+            if (slot == null)
+                continue;
+
+            bool unlocked = slot.playbackType == playbackType && unlockedIds.Contains(slot.cgId);
+            bool visible = unlocked && unlockedIndex >= pageStart && unlockedIndex < pageStart + SlotsPerPage;
+            slot.gameObject.SetActive(visible);
+            if (unlocked)
+                unlockedIndex++;
+        }
+
+        if (currentSelectedSlot != null && !currentSelectedSlot.gameObject.activeSelf)
+            ClearPreview();
+
+        pageLabel.text = $"{currentPage + 1}/{pageCount}";
+        pageButton.interactable = pageCount > 1;
+    }
+
+    public void NextPage()
+    {
+        if (pageCount <= 1)
+            return;
+
+        currentPage = (currentPage + 1) % pageCount;
+        RefreshGallerySlots();
     }
 
     /// <summary>
@@ -82,7 +121,6 @@ public class CGGalleryController : MonoBehaviour
     /// </summary>
     public void ClearSelection()
     {
-        currentSelectedSlot = null;
         isPlayingCG = false;
 
         galleryUI.SetActive(true);
@@ -91,6 +129,13 @@ public class CGGalleryController : MonoBehaviour
         {
             playbackUI.SetActive(false);
         }
+
+        ClearPreview();
+    }
+
+    private void ClearPreview()
+    {
+        currentSelectedSlot = null;
 
         //大图显示纯黑
         largePreviewImage.sprite = null;
@@ -117,7 +162,7 @@ public class CGGalleryController : MonoBehaviour
     /// </summary>
     public void SelectCG(CGGallerySlot slot)
     {
-        if (slot == null)
+        if (slot == null || !slot.gameObject.activeInHierarchy)
             return;
 
         currentSelectedSlot = slot;
@@ -239,6 +284,8 @@ public class CGGalleryController : MonoBehaviour
         }
 
         isCG = !isCG;
+        currentPage = 0;
+        RefreshGallerySlots();
 
     }//切换CG和EndResult
 

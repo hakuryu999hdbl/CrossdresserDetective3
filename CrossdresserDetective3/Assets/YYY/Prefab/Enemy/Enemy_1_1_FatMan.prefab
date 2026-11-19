@@ -1892,6 +1892,7 @@ GameObject:
   - component: {fileID: 5275604744708713050}
   - component: {fileID: 5910538495183785535}
   - component: {fileID: 5822379228471588854}
+  - component: {fileID: 6940325569357124252}
   - component: {fileID: 4455470644987404545}
   - component: {fileID: 3759330300776813897}
   - component: {fileID: 3962412636269855035}
@@ -2102,6 +2103,9 @@ MonoBehaviour:
   catchSign: {fileID: 8446682404981333600}
   deadAlertPrefab: {fileID: 2255714643527023495, guid: 37457a37c4ea93e4b9ec44762580cf84, type: 3}
   heldBomb: {fileID: 0}
+  dashAttackSpeed: 16
+  dashAttackDuration: 0.2
+  dashPushCollider: {fileID: 6940325569357124252}
   isRangedEnemy: 0
   shootVerticalTolerance: 0.3
   meleeRange: 1.2
@@ -2228,3 +2232,40 @@ MonoBehaviour:
     m_Bits: 128
   manual: 1
   isPlayer: 0
+--- !u!70 &6940325569357124252
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876247405032285345}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967287
+  m_LayerOverridePriority: 1
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.2783003}
+  m_Size: {x: 0.8521088, y: 2.6983829}
+  m_Direction: 0

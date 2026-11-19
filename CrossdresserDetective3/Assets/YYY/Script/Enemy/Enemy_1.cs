@@ -123,7 +123,8 @@ public class Enemy_1 : EnemyController
     public void SetEnemy_CatchYYY()
     {
         var player = GameManager.instance?.player;
-        if (player != null)
+        if (player != null &&
+            !(GameFlowData.CurrentChapter == 2 && GameFlowData.CurrentStage == 2))
             ReadCurrentGame(player);
 
         anim.Play("Story_CatchBondageYYY_1", 0, 0f);
