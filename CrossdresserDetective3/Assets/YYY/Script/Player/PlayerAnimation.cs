@@ -113,6 +113,12 @@ public class PlayerAnimation : MonoBehaviour
 
     void ForceIdle()
     {
+        if (playerController.isBondage)
+        {
+            EnterBondageIdle();
+            return;
+        }
+
         Debug.Log("强制进入Idle");
 
         // 强制进入Idle
@@ -228,5 +234,12 @@ public class PlayerAnimation : MonoBehaviour
         anim.Play("Story_RapeYYY", 0, 0f);
         anim.Update(0f);
     }//战败调用
+
+    public void PlayWoodeHorseYYY()
+    {
+
+        anim.Play("Story_WoodeHorseYYY_7", 0, 0f);
+        anim.Update(0f);
+    }
 }
 

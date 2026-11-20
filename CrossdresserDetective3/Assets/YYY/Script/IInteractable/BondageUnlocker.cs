@@ -22,6 +22,7 @@ public class BondageUnlocker : MonoBehaviour
 
         // ﾓﾉ UIManager ﾇ蟲ｵｱﾇｰｽ簍ﾓﾃｲ｢ﾏ忞ﾙﾎ・・
         UIManager.instance.RemoveBondageUnlocker();
+        Destroy(gameObject);
 
 
         player.attackType = player.attackTypeBeforeBondage;

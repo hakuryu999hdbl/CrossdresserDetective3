@@ -11,6 +11,12 @@ public class RBQController : MonoBehaviour
     [Header("场景装饰")]
     [Tooltip("仅作场景装饰：不生成敌人、不可交互，也不计入救出目标。请在进入运行模式前设置。")]
     public bool isDecorative = false;
+    [Header("是否指定")]
+    public bool isSpecifyAnimationType = false;
+
+    [Header("初始玩家皮肤")]
+    [Tooltip("开启后，在关卡皮肤初始化完成且玩家就绪时读取玩家当前外观。")]
+    public bool readYYYSkinOnStart = false;
 
     private void Awake()
     {
@@ -119,7 +125,13 @@ public class RBQController : MonoBehaviour
         }
         else if (!isDecorative)
         {
-            currentAnimationType = -1;//目前先设置解救失踪少女，没有伪娘
+
+            if (!isSpecifyAnimationType)
+            {
+                //进行随机，但是现在先这样设置
+                currentAnimationType = -1;//目前先设置解救失踪少女，没有伪娘
+            }
+
         }
 
 
@@ -181,7 +193,7 @@ public class RBQController : MonoBehaviour
   
 
 
-    private void Start()
+    private IEnumerator Start()
     {
         StageSkin();
         //RandomSkin();
@@ -190,6 +202,13 @@ public class RBQController : MonoBehaviour
 
 
         RandomizeZ();
+
+        if (readYYYSkinOnStart)
+        {
+            yield return new WaitUntil(() =>
+                GameManager.instance != null && GameManager.instance.player != null);
+            ReadYYYSkin();
+        }
 
         if (isDecorative && !isPlayer)
             AbuseAnimation();
@@ -264,6 +283,13 @@ public class RBQController : MonoBehaviour
                 anim.Play("Man_ButtWallYYY_7", 0, 0f);
                 break;
 
+            case 8:
+                anim.Play("Man_FeraYYY_7", 0, 0f);
+                break;
+
+            case 9:
+                anim.Play("Girl_WoodeHorseYYY_7_2", 0, 0f);
+                break;
         }
 
         anim.Update(0f);
@@ -327,6 +353,9 @@ public class RBQController : MonoBehaviour
                 anim.Play("Man_FeraYYY_1", 0, 0f);//伪娘吊缚口交
                 break;
 
+            case 9:
+                anim.Play("Girl_WoodeHorseYYY_7_2", 0, 0f);////////////////////////////////////////////////后面增加再改
+                break;
         }
 
         anim.Update(0f);
@@ -386,6 +415,18 @@ public class RBQController : MonoBehaviour
         anim.ResetTrigger("Next");
     }
 
+
+    public void ReadYYYSkin()
+    {
+        PlayerController player = GameManager.instance != null ? GameManager.instance.player : null;
+        if (player == null)
+        {
+            Debug.LogWarning("读取 YYY 皮肤时玩家尚未就绪。", this);
+            return;
+        }
+
+        ReadCurrentGame(player);
+    }//失踪少女、装饰RBQ读取玩家
 
     public void ReadCurrentGame(PlayerController player)
     {

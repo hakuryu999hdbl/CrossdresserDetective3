@@ -21,6 +21,9 @@ public class TimelineTrigger : MonoBehaviour
     private Renderer chapter023PlayerRenderer;
     private int chapter023PlayerSortingLayer;
     private int chapter023PlayerSortingOrder;
+    private bool chapter024PlayerVisible;
+    private Transform chapter025PlayerParent;
+    private bool chapter025PlayerSimulated;
 
     private void Awake()
     {
@@ -99,6 +102,28 @@ public class TimelineTrigger : MonoBehaviour
             SetInit();
         }
 
+        if (Chapter == "Chapter_02_4")
+        {
+            chapter024PlayerVisible = player.playerAnimation.gameObject.activeSelf;
+            player.playerAnimation.gameObject.SetActive(false);
+            SetInit();
+        }
+
+        if (Chapter == "Chapter_02_5")
+        {
+            chapter025PlayerParent = player.transform.parent;
+            chapter025PlayerSimulated = player.rb.simulated;
+            player.rb.simulated = false;
+            SetInit();
+            player.frameEvent.ShowSkeleton();
+        }
+
+        if (Chapter == "Chapter_02_6")
+        {
+            SetInit();
+            player.frameEvent.ShowSkeleton();
+        }
+
         director.gameObject.SetActive(true);
         director.time = 0;
         director.Play();
@@ -106,7 +131,8 @@ public class TimelineTrigger : MonoBehaviour
         if (disableColliderAfterTrigger && triggerOnlyOnce)
             triggerCollider.enabled = false;
 
-        if (Chapter != "Chapter_02_3")
+        if (Chapter != "Chapter_02_3" && Chapter != "Chapter_02_4" &&
+            Chapter != "Chapter_02_5" && Chapter != "Chapter_02_6")
             SetInit();
     }
 
@@ -142,6 +168,29 @@ public class TimelineTrigger : MonoBehaviour
         PlayerController cutscenePlayer = player;
         player = null;
 
+        if (Chapter == "Chapter_02_6")
+        {
+            director.gameObject.SetActive(false);
+            cutscenePlayer.frameEvent.ShowSkeleton();
+            UIManager.instance.blackScreen.SetFadeOut();
+        }
+
+        if (Chapter == "Chapter_02_5")
+        {
+            cutscenePlayer.transform.SetParent(chapter025PlayerParent);
+            cutscenePlayer.rb.position = cutscenePlayer.transform.position;
+            cutscenePlayer.rb.simulated = chapter025PlayerSimulated;
+            director.gameObject.SetActive(false);
+        }
+
+        if (Chapter == "Chapter_02_4")
+        {
+            cutscenePlayer.playerAnimation.gameObject.SetActive(chapter024PlayerVisible);
+            cutscenePlayer.frameEvent.ShowSkeleton();
+            director.gameObject.SetActive(false);
+            UIManager.instance.blackScreen.SetFadeOut();
+        }
+
         if (Chapter == "Chapter_02_3")
         {
             RestoreChapter023PlayerSorting();
@@ -156,6 +205,9 @@ public class TimelineTrigger : MonoBehaviour
         }
 
         cutscenePlayer.ExitCutscene();
+
+        if (Chapter == "Chapter_02_6" && !cutscenePlayer.isBondage)
+            SetPlayer_EnterBondage();
     }
 
     /// <summary>
@@ -282,7 +334,8 @@ public class TimelineTrigger : MonoBehaviour
     public void SetInit()
     {
 
-        GameManager.instance.player.transform.position = PlayerSlot.transform.position;//所有初始统一进入位置，防止跳着在空中进入过场动画
+        if (Chapter != "Chapter_02_4")
+            GameManager.instance.player.transform.position = PlayerSlot.transform.position;
 
 
         switch (Chapter)
@@ -320,6 +373,15 @@ public class TimelineTrigger : MonoBehaviour
                 break;
             case "Chapter_02_3":
                 UIManager.instance.Init_Chapter_02_3();
+                break;
+            case "Chapter_02_4":
+                UIManager.instance.Init_Chapter_02_4();
+                break;
+            case "Chapter_02_5":
+                UIManager.instance.Init_Chapter_02_5();
+                break;
+            case "Chapter_02_6":
+                UIManager.instance.Init_Chapter_02_6();
                 break;
         }
     }
@@ -439,6 +501,11 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayer_Turn()
     {
         GameManager.instance.player.playerAnimation.SetPlayer_Turn();
+    }
+
+    public void SetPlayer_WoodenHorse()
+    {
+        GameManager.instance.player.playerAnimation.PlayWoodeHorseYYY();
     }
 
 

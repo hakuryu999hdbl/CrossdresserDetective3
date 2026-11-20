@@ -2734,7 +2734,8 @@ public class EnemyController : MonoBehaviour
 
         var player = GameManager.instance != null ? GameManager.instance.player : null;
         var suspicion = player != null ? player.GetComponent<PlayerSuspicion>() : null;
-        if (suspicion != null && suspicion.CombatLocked)
+        if (suspicion != null &&
+            (suspicion.CombatLocked || GetComponentInChildren<SurveillanceMonitor>(true) != null))
             suspicion.Expose();
 
 

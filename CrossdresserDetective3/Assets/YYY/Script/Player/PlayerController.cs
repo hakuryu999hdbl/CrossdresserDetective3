@@ -1223,6 +1223,7 @@ public class PlayerController : MonoBehaviour
 
     public void UI_anim_Change() 
     {
+        UI_anim.SetInteger("attackType", attackType);
         UI_anim.SetTrigger("Change");//小图像显示也变
     }
 

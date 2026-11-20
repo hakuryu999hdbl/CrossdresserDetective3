@@ -379,6 +379,12 @@ public class FrameEvent : MonoBehaviour
 
     public RBQController rBQController;
 
+    public void ReadRBQYYYSkin()
+    {
+        if (rBQController != null)
+            rBQController.ReadYYYSkin();
+    }
+
     #region 吹灭炸弹
     public void SetOff()
     {
