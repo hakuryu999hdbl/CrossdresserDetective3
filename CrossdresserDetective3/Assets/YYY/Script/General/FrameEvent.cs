@@ -1209,7 +1209,25 @@ public class FrameEvent : MonoBehaviour
         playerController.Girl_maskIndex = 0;//不戴面具
 
         playerController.RefreshPlayerSkin();
-    }//【局内】姐姐标准服装
+    }//【局内】姐姐标准西装制服
+    public void SetSisterClothes_2()
+    {
+        playerController.SetStoryUnarmed();//剧情空手，不记录衣服和武器
+
+        playerController.Girl_hairIndex = 1;
+        playerController.Girl_clothesIndex = 7;
+        playerController.Girl_glovesIndex = 4;
+        playerController.Girl_shoesIndex = 2;
+
+
+        playerController.Girl_underwearIndex = 0;
+        playerController.Girl_stockingsIndex = 4;
+
+        playerController.Girl_hatIndex = 2;//护士帽
+        playerController.Girl_maskIndex = 0;//不戴面具
+
+        playerController.RefreshPlayerSkin();
+    }//【局内】姐姐情趣护士装
     public void SetCatch_1() 
     {
         playerController.isUsingStoryClothes = true;//不要记录衣服

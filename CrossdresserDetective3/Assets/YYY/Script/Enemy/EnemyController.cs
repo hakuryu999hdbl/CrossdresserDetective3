@@ -2131,7 +2131,13 @@ public class EnemyController : MonoBehaviour
 
     public void ReadCurrentGame(PlayerController player)
     {
-       
+        // 剧情激活或刚生成的敌人可能还在等待初始皮肤，先完成它，
+        // 避免延迟 StageSkin 把刚读取的玩家服装覆盖成兜底兔女郎。
+        if (IsInvoking(nameof(StageSkin)))
+        {
+            CancelInvoke(nameof(StageSkin));
+            StageSkin();
+        }
 
         hatIndex = player.hatIndex;
         hairIndex = player.hairIndex;
