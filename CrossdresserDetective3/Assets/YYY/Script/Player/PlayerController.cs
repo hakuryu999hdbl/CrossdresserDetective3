@@ -443,8 +443,10 @@ public class PlayerController : MonoBehaviour
         playerAnimation.anim.Play("Idle", 0, 0f);
         playerAnimation.anim.Update(0f);
 
-        //设置姐姐标准服装
-        frameEvent.SetSisterClothes_1();
+        if (GameFlowData.CurrentChapter == 2 && GameFlowData.CurrentStage == 9)
+            frameEvent.SetSisterClothes_2();
+        else
+            frameEvent.SetSisterClothes_1();
     }
 
 

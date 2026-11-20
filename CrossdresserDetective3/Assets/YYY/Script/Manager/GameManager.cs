@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
     public void IsPlayer(PlayerController controller)
     {
         player = controller;
+        if (IsUndercoverStage)
+        {
+            var suspicion = player.GetComponent<PlayerSuspicion>();
+            if (suspicion == null)
+                suspicion = player.gameObject.AddComponent<PlayerSuspicion>();
+            suspicion.BeginUndercover();
+        }
         TryInitializeDirectRescue();
 
     }//玩家自己传过来
@@ -279,6 +286,10 @@ public class GameManager : MonoBehaviour
         (CurrentChapter == 2 && (CurrentStage == 1 || CurrentStage == 2));
 
     public static bool IsDirectRescueStage => CurrentChapter == 2 && CurrentStage == 9;
+
+    // 潜伏操作限制按关卡指定，暴露后解除，与任务类型独立。
+    public static bool IsUndercoverStage =>
+        CurrentChapter == 2 && (CurrentStage == 1 || CurrentStage == 2 || CurrentStage == 9);
 
     public static bool IsEliminateStage =>
         (CurrentChapter == 1 && (CurrentStage == 2 || CurrentStage == 9)) ||
@@ -538,14 +549,6 @@ public class GameManager : MonoBehaviour
         escapeInitialized = true;
         GameFlowData.CurrentMissionType = MissionType.Escape;
         Debug.Log("逃脱模式");
-        // Chapter 1-1 is the original bondage escape; later escape missions are undercover.
-        if (player != null && GameFlowData.CurrentChapter > 1)
-        {
-            var suspicion = player.GetComponent<PlayerSuspicion>();
-            if (suspicion == null) suspicion = player.gameObject.AddComponent<PlayerSuspicion>();
-            suspicion.BeginUndercover();
-        }
-
         if (roomManager != null)
         {
             roomManager.SetupEscape();

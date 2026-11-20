@@ -25,7 +25,7 @@ public class RBQController : MonoBehaviour
                 return;
             }
 
-
+            //结局入口
             switch (GameFlowData.CurrentChapter)
             {
                 case 1:
@@ -128,6 +128,7 @@ public class RBQController : MonoBehaviour
     }//这个好像动画很早就被触发应，所以随机需要更早
 
     private int stageAnimationType;//关卡指定动画
+    public string CaptivityEscapeStateName { get; private set; } = "Man_RapeYYY_8";
     public void PlayCaptivityAnimation(PlayerController player)
     {
         // 每次进入调教室，都在现有两套演出中重新抽一套。
@@ -145,7 +146,25 @@ public class RBQController : MonoBehaviour
 
 
         //frameEvent.SetDeadBondage_Bondage_1();
-        anim.Play("Man_RapeYYY_7", 0, 0f);
+
+        switch (Random.Range(0, 3)) 
+        {
+            case 0:
+                CaptivityEscapeStateName = "Man_RapeYYY_8";
+                anim.Play("Man_RapeYYY_7", 0, 0f);
+                break;
+            case 1:
+                CaptivityEscapeStateName = "Man_ButtWallYYY_8";
+                anim.Play("Man_ButtWallYYY_6_2", 0, 0f);
+                break;
+            case 2:
+                CaptivityEscapeStateName = "Girl_WoodeHorseYYY_8";
+                anim.Play("Girl_WoodeHorseYYY_7", 0, 0f);
+                break;
+        }
+
+
+       
 
 
     }//进入调教室入口
@@ -225,6 +244,7 @@ public class RBQController : MonoBehaviour
             case 1:
                 anim.Play("Man_AbuseYYY_8", 0, 0f);
                 break;
+
             case 2:
                 break;
 
@@ -232,6 +252,12 @@ public class RBQController : MonoBehaviour
                 break;
 
             case 4:
+                break;
+
+            case 5:
+                break;
+
+            case 6:
                 break;
 
             case 7:

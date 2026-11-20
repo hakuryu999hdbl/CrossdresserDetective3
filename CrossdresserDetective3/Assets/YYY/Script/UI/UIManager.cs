@@ -2406,7 +2406,7 @@ public class UIManager : MonoBehaviour
         captivityBreakFreeStarted = true;
         Struggle_Captured.SetActive(false);
         DeadBody.anim.ResetTrigger("Next");
-        DeadBody.anim.SetTrigger("Next"); // Man_RapeYYY_7 → 8
+        DeadBody.anim.SetTrigger("Next"); // 进入本次演出对应的挣脱动画。
 
         StartCoroutine(WaitForCaptivityAnimation8());
     }//开启黑幕淡入淡出，进入解缚逃脱模式入口
@@ -2426,11 +2426,11 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator WaitForCaptivityAnimation8()
     {
-        // 从 Animator 真正切进 8 开始计时，而不是从按 J 开始计时
+        // 等待本次随机演出的挣脱状态，进入后再计时恢复玩家。
         yield return new WaitUntil(() =>
             DeadBody != null &&
             DeadBody.anim.GetCurrentAnimatorStateInfo(0)
-                .IsName("Man_RapeYYY_8"));
+                .IsName(DeadBody.CaptivityEscapeStateName));
 
         yield return new WaitForSeconds(1f);
 
