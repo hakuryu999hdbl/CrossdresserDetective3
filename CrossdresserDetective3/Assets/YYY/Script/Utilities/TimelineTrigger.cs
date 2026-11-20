@@ -109,7 +109,7 @@ public class TimelineTrigger : MonoBehaviour
             SetInit();
         }
 
-        if (Chapter == "Chapter_02_5")
+        if (Chapter == "Chapter_02_5" || Chapter == "Chapter_02_7")
         {
             chapter025PlayerParent = player.transform.parent;
             chapter025PlayerSimulated = player.rb.simulated;
@@ -132,7 +132,7 @@ public class TimelineTrigger : MonoBehaviour
             triggerCollider.enabled = false;
 
         if (Chapter != "Chapter_02_3" && Chapter != "Chapter_02_4" &&
-            Chapter != "Chapter_02_5" && Chapter != "Chapter_02_6")
+            Chapter != "Chapter_02_5" && Chapter != "Chapter_02_6" && Chapter != "Chapter_02_7")
             SetInit();
     }
 
@@ -175,7 +175,7 @@ public class TimelineTrigger : MonoBehaviour
             UIManager.instance.blackScreen.SetFadeOut();
         }
 
-        if (Chapter == "Chapter_02_5")
+        if (Chapter == "Chapter_02_5" || Chapter == "Chapter_02_7")
         {
             cutscenePlayer.transform.SetParent(chapter025PlayerParent);
             cutscenePlayer.rb.position = cutscenePlayer.transform.position;
@@ -382,6 +382,9 @@ public class TimelineTrigger : MonoBehaviour
                 break;
             case "Chapter_02_6":
                 UIManager.instance.Init_Chapter_02_6();
+                break;
+            case "Chapter_02_7":
+                UIManager.instance.Init_Chapter_02_7();
                 break;
         }
     }

@@ -1207,6 +1207,11 @@ public class UIManager : MonoBehaviour
         cutsceneDialogue.LoadDialogue("Chapter_02_6");
     }
 
+    public void Init_Chapter_02_7()
+    {
+        cutsceneDialogue.LoadDialogue("Chapter_02_7");
+    }
+
     [Header("目前的过场动画跳过")]
     public TimelineTrigger currentTimeline;
 
