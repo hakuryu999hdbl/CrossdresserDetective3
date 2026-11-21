@@ -504,6 +504,25 @@ public class TimelineTrigger : MonoBehaviour
     public void SetPlayer_Turn()
     {
         GameManager.instance.player.playerAnimation.SetPlayer_Turn();
+
+        if (Chapter == "Chapter_01_7" && director != null && director.time >= 24)
+        {
+            PlayerController cutscenePlayer = GameManager.instance.player;
+            Physics2D.SyncTransforms();
+            Bounds bounds = cutscenePlayer.coll.bounds;
+            Vector2 origin = new Vector2(bounds.center.x, bounds.min.y + 0.5f);
+            RaycastHit2D ground = Physics2D.Raycast(
+                origin, Vector2.down, 2f, cutscenePlayer.physicsCheck.groundLayer);
+
+            if (ground.collider != null && !ground.collider.isTrigger)
+            {
+                Vector3 position = cutscenePlayer.transform.position;
+                position.y += ground.point.y - bounds.min.y + 0.01f;
+                cutscenePlayer.transform.position = position;
+                cutscenePlayer.rb.position = position;
+                cutscenePlayer.rb.velocity = Vector2.zero;
+            }
+        }
     }
 
     public void SetPlayer_WoodenHorse()

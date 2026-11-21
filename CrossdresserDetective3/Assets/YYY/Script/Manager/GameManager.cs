@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     public GameObject Outside_1;
     public GameObject Outside_2;
     public GameObject Office_1;
+    public GameObject ConstructionSite_1;
 
     private void Start()
     {
@@ -153,6 +154,10 @@ public class GameManager : MonoBehaviour
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                 }
+                break;
+
+            case 3:
+                Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
                 break;
         }
 
@@ -397,6 +402,16 @@ public class GameManager : MonoBehaviour
                             ShowRescue();
                         }
                         break;
+                }
+                break;
+
+            case 3:
+                switch (GameFlowData.CurrentStage)
+                {
+                    case 1:
+                        ShowClue();
+                        break;
+                  
                 }
                 break;
         }

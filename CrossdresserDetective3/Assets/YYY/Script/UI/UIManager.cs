@@ -134,6 +134,10 @@ public class UIManager : MonoBehaviour
             case 2:
                 GameFlowData.returnPath = "chapter_2";
                 break;
+
+            case 3:
+                GameFlowData.returnPath = "chapter_3";
+                break;
         }
 
         // 保持暂停状态，避免战斗场景继续运行

@@ -27,7 +27,7 @@ public class MenuManager : MonoBehaviour
     #region
     [Header("多端输入")]
     public GameObject newGameButton;//开头默认选中
-    private int CurrentOpen;//-2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4社群菜单  5确认删除存档菜单  6赞助者名单
+    private int CurrentOpen;//-3章节三 -2章节二 -1章节一 0主菜单  1设置菜单  2章节菜单  3存档菜单  4社群菜单  5确认删除存档菜单  6赞助者名单
 
 
 
@@ -66,6 +66,9 @@ public class MenuManager : MonoBehaviour
                 break;
             case "chapter_2":
                 OpenChapter_Number(2);
+                break;
+            case "chapter_3":
+                OpenChapter_Number(3);
                 break;
         }
 
@@ -143,6 +146,10 @@ public class MenuManager : MonoBehaviour
                 break;
             case -2:
                 CloseChapter_Number(2);
+                AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+                break;
+            case -3:
+                CloseChapter_Number(3);
                 AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
                 break;
 
@@ -915,6 +922,10 @@ public class MenuManager : MonoBehaviour
     public GameObject Chapter_2_Menu;
     public GameObject Chapter_2_FirstSelected;//打开章节默认选中（可变换）
     public GameObject Chapter_2_Button;//退出章节二菜单默认选中
+    [Header("关卡三菜单")]
+    public GameObject Chapter_3_Menu;
+    public GameObject Chapter_3_FirstSelected;//打开章节默认选中（可变换）
+    public GameObject Chapter_3_Button;//退出章节三菜单默认选中
 
 
     public GameObject ChapterLocked;//章节未解锁
@@ -955,25 +966,21 @@ public class MenuManager : MonoBehaviour
                 
                 break;
             case 3:
+                ChapterMenu.SetActive(false);
+                Chapter_3_Menu.SetActive(true);
+
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_3_FirstSelected);
+
+                CurrentOpen = -3;
+
+                break;
             case 4:
             case 5:
             case 6:
-
-                ChapterLocked.SetActive(true);
-                Invoke(nameof(CloseChapterLocked), 1f);
-                AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Keyboard);
-
-
-                //ChapterMenu.SetActive(false);
-                //Chapter_2_Menu.SetActive(true);
-                //
-                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-                //
-                //EventSystem.current.SetSelectedGameObject(null);
-                //EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
-                //
-                //CurrentOpen = -2;
-
+                ShowChapterLocked();
                 break;
         }
     }
@@ -1009,26 +1016,29 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 3:
-            case 4:
-            case 5:
-            case 6:
+                ChapterMenu.SetActive(true);
+                Chapter_3_Menu.SetActive(false);
 
-                //ChapterMenu.SetActive(true);
-                //Chapter_2_Menu.SetActive(false);
-                //
-                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-                //
-                //Chapter_2_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
-                //EventSystem.current.SetSelectedGameObject(null);
-                //EventSystem.current.SetSelectedGameObject(Chapter_2_Button);
-                //
-                //CurrentOpen = 2;
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+                Chapter_3_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_3_Button);
+
+                CurrentOpen = 2;
 
                 break;
         }
     }
 
 
+
+    private void ShowChapterLocked()
+    {
+        ChapterLocked.SetActive(true);
+        Invoke(nameof(CloseChapterLocked), 1f);
+        AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Keyboard);
+    }
 
     void CloseChapterLocked() 
     {
@@ -1047,6 +1057,8 @@ public class MenuManager : MonoBehaviour
     public StageButtonUI[] chapter1Buttons;
     [Header("第二章关卡按钮")]
     public StageButtonUI[] chapter2Buttons;
+    [Header("第三章关卡按钮")]
+    public StageButtonUI[] chapter3Buttons;
 
     private SaveData currentData;
 
@@ -1062,9 +1074,11 @@ public class MenuManager : MonoBehaviour
         ReadChapter();
         RefreshChapterButtons(1, chapter1Buttons);
         RefreshChapterButtons(2, chapter2Buttons);
+        RefreshChapterButtons(3, chapter3Buttons);
 
         RefreshChapterStars(1);
         RefreshChapterStars(2);
+        RefreshChapterStars(3);
     }
 
     // 通用刷新：第几章 + 这一章的按钮数组
