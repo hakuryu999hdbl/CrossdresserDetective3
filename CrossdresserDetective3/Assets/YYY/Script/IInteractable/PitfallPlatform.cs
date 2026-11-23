@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PitfallPlatform : MonoBehaviour
 {
+    [SerializeField] private BreakDebrisEffect collapseEffect;
     private BoxCollider2D platformCollider;
 
     private void Awake()
@@ -22,6 +23,9 @@ public class PitfallPlatform : MonoBehaviour
 
     private void TryCollapse(Collision2D collision)
     {
+        if (!gameObject.activeInHierarchy)
+            return;
+
         PlayerController player = collision.gameObject.GetComponentInParent<PlayerController>();
         if (player == null || player.isDead)
             return;
@@ -34,6 +38,9 @@ public class PitfallPlatform : MonoBehaviour
         {
             if (collision.GetContact(i).point.y >= top - 0.15f)
             {
+                if (collapseEffect != null)
+                    collapseEffect.Spawn(platformCollider.bounds, GetComponent<SpriteRenderer>());
+
                 gameObject.SetActive(false);
                 return;
             }

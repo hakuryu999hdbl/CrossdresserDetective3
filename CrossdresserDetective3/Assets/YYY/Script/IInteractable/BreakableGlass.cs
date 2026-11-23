@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Character), typeof(BoxCollider2D))]
 public class BreakableGlass : MonoBehaviour
 {
+    [SerializeField] private BreakDebrisEffect breakEffect;
     private Character character;
 
     private void Awake()
@@ -20,8 +21,14 @@ public class BreakableGlass : MonoBehaviour
         character.OnDie.RemoveListener(Break);
     }
 
-    private void Break()
+    public void Break()
     {
+        if (!gameObject.activeInHierarchy)
+            return;
+
+        if (breakEffect != null)
+            breakEffect.Spawn(GetComponent<BoxCollider2D>().bounds, GetComponent<SpriteRenderer>());
+
         gameObject.SetActive(false);
     }
 }

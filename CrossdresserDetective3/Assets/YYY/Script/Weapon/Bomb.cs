@@ -78,6 +78,13 @@ public class Bomb :  ThrowableEffectBase, IDamageable
 
         foreach (var item in aroundObjects)
         {
+            BreakableGlass glass = item.GetComponentInParent<BreakableGlass>();
+            if (glass != null)
+            {
+                glass.Break();
+                continue;
+            }
+
             //摇晃垂下物体
             SwingOnBlast swing = item.GetComponentInParent<SwingOnBlast>();
             if (swing != null)

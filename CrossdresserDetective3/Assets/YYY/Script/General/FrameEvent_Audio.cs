@@ -15,8 +15,13 @@ public class FrameEvent_Audio : MonoBehaviour
 
     void Awake()
     {
-        AudioManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<AudioManager>();
+        AudioManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<AudioManager>();
 
+    }
+
+    public void PlayClip(AudioClip clip)
+    {
+        audioS.PlayOneShot(clip);
     }
 
     #region Attack/Bullet 战斗系音效
