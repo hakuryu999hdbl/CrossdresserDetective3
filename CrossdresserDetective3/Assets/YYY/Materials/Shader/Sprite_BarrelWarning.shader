@@ -5,7 +5,7 @@ Shader "FTGirl/Sprite Barrel Warning"
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
         _FlashColor ("Warning Color", Color) = (1,0.08,0.025,1)
-        _RimWidth ("Rim Width (px)", Range(1,8)) = 4
+        _RimWidth ("Rim Width (px)", Range(1,32)) = 24
         [PerRendererData] _RendererColor ("Renderer Color", Color) = (1,1,1,1)
         [PerRendererData] _Flip ("Flip", Vector) = (1,1,1,1)
     }

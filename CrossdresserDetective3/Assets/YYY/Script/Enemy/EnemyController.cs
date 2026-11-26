@@ -866,6 +866,8 @@ public class EnemyController : MonoBehaviour
     float looseRegainTargetYDiff = 2.2f;
 
 
+    [SerializeField] private bool ignoreDeadBodyAlerts;
+
     public bool IsValidAttackTarget(Transform t)
     {
         if (t == null) return false;
@@ -882,6 +884,10 @@ public class EnemyController : MonoBehaviour
             return false;
 
         if (t.CompareTag("Bomb") && t.gameObject.layer != LayerMask.NameToLayer("Bomb"))
+            return false;
+
+        if (ignoreDeadBodyAlerts && t.CompareTag("Bomb") &&
+            t.GetComponentInChildren<DeadBodyAlert>(true) != null)
             return false;
 
         // 重新发现目标时，用较小阈值，防止斜坡反复横跳
@@ -1099,6 +1105,9 @@ public class EnemyController : MonoBehaviour
 
             case TargetYMode.IgnoreHeight:
                 return yDiff <= looseRegainTargetYDiff;
+
+            case TargetYMode.UnlimitedHeight:
+                return true;
         }
 
         return false;
@@ -1120,6 +1129,9 @@ public class EnemyController : MonoBehaviour
 
             case TargetYMode.IgnoreHeight:
                 return yDiff > looseLoseTargetYDiff;
+
+            case TargetYMode.UnlimitedHeight:
+                return false;
         }
 
         return true;
@@ -2942,5 +2954,7 @@ public enum TargetYMode
 {
     SameFloor,    // 严格判断楼层，只攻击接近同高度的玩家
 
-    IgnoreHeight  // 宽松判断高度，但偏差过大仍会丢失玩家
+    IgnoreHeight, // 宽松判断高度，但偏差过大仍会丢失玩家
+
+    UnlimitedHeight // 不限制索敌和锁定的高度差
 }

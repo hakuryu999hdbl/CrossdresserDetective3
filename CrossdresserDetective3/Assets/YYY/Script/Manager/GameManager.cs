@@ -157,7 +157,22 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 3:
-                Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                switch (CurrentStage)
+                {
+                    case 1:
+                        Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                        break;
+                    case 2:
+                        Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
+                        break;
+
+                  
+                }
+
+               
+
                 break;
         }
 
@@ -411,7 +426,9 @@ public class GameManager : MonoBehaviour
                     case 1:
                         ShowClue();
                         break;
-                  
+                    case 2:
+                        ShowRescue();
+                        break;
                 }
                 break;
         }
