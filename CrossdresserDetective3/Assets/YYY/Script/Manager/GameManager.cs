@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public GameObject Outside_1;
     public GameObject Outside_2;
     public GameObject Office_1;
-    public GameObject ConstructionSite_1;
+    public GameObject ConstructionSite_1, ConstructionSite_2;
 
     private void Start()
     {
@@ -163,12 +163,27 @@ public class GameManager : MonoBehaviour
                         Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
                         break;
                     case 2:
+                        Instantiate(ConstructionSite_2, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
+                        break;
+                    case 3:
                         Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
+                    case 4:
+                        Instantiate(ConstructionSite_2, Vector3.zero, Quaternion.identity);
+                        break;
 
-                  
+                    case 5:
+                        Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                        break;
+                    case 6:
+                        Instantiate(ConstructionSite_2, Vector3.zero, Quaternion.identity);
+                        skyboxSample.Night();//晚上关卡单独指定
+                        Light_Night.SetActive(true);//夜间灯光
+                        break;
                 }
 
                
@@ -314,7 +329,8 @@ public class GameManager : MonoBehaviour
 
     public static bool IsEliminateStage =>
         (CurrentChapter == 1 && (CurrentStage == 2 || CurrentStage == 9)) ||
-        (CurrentChapter == 2 && (CurrentStage == 6 || CurrentStage == 7));
+        (CurrentChapter == 2 && (CurrentStage == 6 || CurrentStage == 7)) ||
+        (CurrentChapter == 3 && (CurrentStage == 5 || CurrentStage == 6));
 
     public void IsRoomManager(RoomManager _roomManager)
     {
@@ -428,6 +444,12 @@ public class GameManager : MonoBehaviour
                         break;
                     case 2:
                         ShowRescue();
+                        break;
+                    case 3:
+                        ShowRescue();
+                        break;
+                    case 4:
+                        ShowClue();
                         break;
                 }
                 break;
