@@ -1,46 +1,32 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class BalanceManager : MonoBehaviour
 {
     public static BalanceManager instance { get; private set; }
-    void Awake()
+
+    public Text MoneyText;
+
+    private void Awake()
     {
         instance = this;
     }
 
-
-    [Header("Mony")]
-    public Text MoneyText;
-    public Text MoneyText_2;
-
     private void Start()
     {
-        ChangeMoney(0, false);//更新钱
+        RefreshMoney();
     }
 
-
-    public void ChangeMoney(int amount, bool UseVoice = true)
+    public void RefreshMoney()
     {
-        // 取当前值
-        SaveData _data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
-        int currentMoney = _data.Money;
+        MoneyText.text = SaveManager.LoadGame(GameFlowData.CurrentPlayer).Money.ToString();
+    }
 
-
-        // 修改
-        currentMoney += amount;
-        if (currentMoney < 0) currentMoney = 0;   // 防止出现负数
-
-        // ✅ 把修改结果写回存档对象
-        _data.Money = currentMoney;
-        // ✅ 保存回文件
-        SaveManager.SaveGame(_data);
-
-        // 更新 UI
-        MoneyText.text = currentMoney.ToString();
-        MoneyText_2.text = currentMoney.ToString();
-
-        //AudioManager.Instance.PlayFX(AudioManager.Instance.SE_Reji);
-
+    public void ChangeMoney(int amount)
+    {
+        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+        data.Money = Mathf.Max(0, data.Money + amount);
+        SaveManager.SaveGame(data);
+        MoneyText.text = data.Money.ToString();
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class GameFlowData
 {
@@ -16,6 +17,18 @@ public static class GameFlowData
 
     public static bool suppressNextSelectSound = false;//二级菜单按钮选中声音吞掉
     public static bool suppressNextClickSound = false;//商店购买声音吞掉
+
+    public const string SetupScene = "MissionSetup";
+    public const string LevelScene = "Level";
+
+    public static bool RequiresMissionSetup =>
+        !GameManager.IsEscapeStage && !GameManager.IsDirectRescueStage &&
+        !(CurrentChapter == 1 && CurrentStage == 2);
+
+    public static void LoadMissionEntry()
+    {
+        SceneManager.LoadScene(RequiresMissionSetup ? SetupScene : LevelScene);
+    }
 
     public enum EquipPart
     {

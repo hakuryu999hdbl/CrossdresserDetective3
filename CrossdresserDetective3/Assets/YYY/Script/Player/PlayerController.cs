@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     public bool isBoki = false;//是否勃起
 
 
-    // Start is called before the first frame update
+    private bool isMissionSetupPreview;
     void Start()
     {
         character = GetComponent<Character>();
@@ -89,7 +89,16 @@ public class PlayerController : MonoBehaviour
 
 
 
-        GameManager.instance.IsPlayer(this);
+        isMissionSetupPreview = gameObject.scene.name == GameFlowData.SetupScene;
+        if (isMissionSetupPreview)
+        {
+            rb.simulated = false;
+            DisableGameplayInput();
+        }
+        else
+        {
+            GameManager.instance.IsPlayer(this);
+        }
 
 
 
@@ -111,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
-        if (isInCutscene)
+        if (isMissionSetupPreview || isInCutscene)
         {
             inputDirection = Vector2.zero;
             return;
@@ -165,6 +174,9 @@ public class PlayerController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (isMissionSetupPreview)
+            return;
+
         UpdateDashAttack();
 
         if (isInCutscene)

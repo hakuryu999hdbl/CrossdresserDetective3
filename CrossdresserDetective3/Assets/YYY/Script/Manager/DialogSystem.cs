@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -312,11 +312,11 @@ public class DialogSystem : MonoBehaviour
             }        
             else if (GameFlowData.nextAreaId == "CG_Photo")
             { //主线剧情1-1照片自慰
-                SceneManager.LoadScene("Level");
+                GameFlowData.LoadMissionEntry();
             }
             else if (GameFlowData.nextAreaId == "CG_Fera")
             { //主线剧情2-2口交上位
-                SceneManager.LoadScene("Level");
+                GameFlowData.LoadMissionEntry();
             }
         }
 

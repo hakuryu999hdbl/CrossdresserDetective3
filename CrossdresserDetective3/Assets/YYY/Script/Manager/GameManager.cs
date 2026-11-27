@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     }
 
     public PlayerController player;
+    private bool playerInitialized;
     public void IsPlayer(PlayerController controller)
     {
         player = controller;
@@ -29,8 +30,8 @@ public class GameManager : MonoBehaviour
                 suspicion = player.gameObject.AddComponent<PlayerSuspicion>();
             suspicion.BeginUndercover();
         }
-        TryInitializeDirectRescue();
-        TryInitializeEscape();
+        playerInitialized = true;
+        TryInitializeMission();
 
     }//玩家自己传过来
 
@@ -63,45 +64,45 @@ public class GameManager : MonoBehaviour
                 switch (CurrentStage)
                 {
                     case 1:
-                        Instantiate(DetectiveAgency_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(DetectiveAgency_1);
                         break;
 
                     case 2:
-                        Instantiate(DetectiveAgency_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(DetectiveAgency_2);
                         break;
 
                     case 3:
-                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_1);
                         break;
 
                     case 4:
-                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_2);
                         break;
 
                     case 5:
-                        Instantiate(Company_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_1);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 6:
-                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_2);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 7:
-                        Instantiate(Company_3, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_3);
                         break;
                     case 8:
-                        Instantiate(Company_3, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_3);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 9:
-                        Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
+                        LoadMap(DetectiveAgency_3);
                         break;
                     case 10:
-                        Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
+                        LoadMap(DetectiveAgency_3);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
@@ -112,44 +113,44 @@ public class GameManager : MonoBehaviour
                 switch (CurrentStage)
                 {
                     case 1:
-                        Instantiate(Office_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(Office_1);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 2:
-                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(Outside_1);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 3:
-                        Instantiate(DetectiveAgency_3, Vector3.zero, Quaternion.identity);
+                        LoadMap(DetectiveAgency_3);
                         break;
                     case 4:
                     case 5:
-                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(Outside_1);
                         break;
 
 
 
                     case 6:
-                        Instantiate(Company_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(Company_2);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 7:
-                        Instantiate(Outside_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(Outside_1);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
 
                     case 8:
-                        Instantiate(Outside_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(Outside_2);
                         break;
                     case 9:
                     case 10:
-                        Instantiate(Outside_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(Outside_2);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
@@ -160,27 +161,27 @@ public class GameManager : MonoBehaviour
                 switch (CurrentStage)
                 {
                     case 1:
-                        Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(ConstructionSite_1);
                         break;
                     case 2:
-                        Instantiate(ConstructionSite_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(ConstructionSite_2);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 3:
-                        Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(ConstructionSite_1);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
                     case 4:
-                        Instantiate(ConstructionSite_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(ConstructionSite_2);
                         break;
 
                     case 5:
-                        Instantiate(ConstructionSite_1, Vector3.zero, Quaternion.identity);
+                        LoadMap(ConstructionSite_1);
                         break;
                     case 6:
-                        Instantiate(ConstructionSite_2, Vector3.zero, Quaternion.identity);
+                        LoadMap(ConstructionSite_2);
                         skyboxSample.Night();//晚上关卡单独指定
                         Light_Night.SetActive(true);//夜间灯光
                         break;
@@ -236,7 +237,7 @@ public class GameManager : MonoBehaviour
         // 只在加载场景前恢复
         Time.timeScale = 1f;
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        LoadMissionEntry();
     }
 
 
@@ -293,7 +294,7 @@ public class GameManager : MonoBehaviour
             yield break;
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        LoadMissionEntry();
     }
 
     #endregion
@@ -332,27 +333,26 @@ public class GameManager : MonoBehaviour
         (CurrentChapter == 2 && (CurrentStage == 6 || CurrentStage == 7)) ||
         (CurrentChapter == 3 && (CurrentStage == 5 || CurrentStage == 6));
 
-    public void IsRoomManager(RoomManager _roomManager)
-    {
-        roomManager = _roomManager;
-        TryInitializeDirectRescue();
-        // 复用地图需要先启用逃出任务对象并放置玩家，才能触发开场 Timeline。
-        TryInitializeEscape();
-    }//RoomManager自己来报告
-
     private bool directRescueInitialized;
 
-    private void TryInitializeEscape()
+    private void LoadMap(GameObject mapPrefab)
     {
-        if (IsEscapeStage && player != null && roomManager != null &&
-            roomManager.playerSpawnPoints_escape != null)
-            ShowMissionUI();
+        GameObject map = Instantiate(mapPrefab, Vector3.zero, Quaternion.identity);
+        roomManager = map.GetComponentInChildren<RoomManager>();
+        TryInitializeMission();
     }
 
-    private void TryInitializeDirectRescue()
+    private void TryInitializeMission()
     {
-        if (IsDirectRescueStage && player != null && roomManager != null)
+        if (!playerInitialized || roomManager == null)
+            return;
+
+        // 复用地图的逃脱关由出生点触发开场 Timeline。
+        if (RequiresMissionSetup || IsDirectRescueStage ||
+            (IsEscapeStage && roomManager.playerSpawnPoints_escape != null))
+        {
             ShowMissionUI();
+        }
     }
 
     public void ShowMissionUI()
@@ -457,7 +457,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    }//一般在装备设置界面关闭和主线剧情过场动画结尾触发这是什么任务的提示和通知RoomManager
+    }//任务入场或剧情事件通知 RoomManager 初始化对应任务
 
     #endregion
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static GameFlowData;
@@ -130,7 +130,7 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
         //刷新顶部金钱显示
         if (BalanceManager.instance != null)
         {
-            BalanceManager.instance.ChangeMoney(0, false);
+            BalanceManager.instance.RefreshMoney();
         }
 
         //刷新这个商品UI

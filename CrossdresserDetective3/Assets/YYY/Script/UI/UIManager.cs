@@ -19,9 +19,11 @@ public class UIManager : MonoBehaviour
 
     public void Awake()
     {
+        isSetUp = gameObject.scene.name == GameFlowData.SetupScene;
 
 #if UNITY_STANDALONE
-        mobileTouch.SetActive(false);
+        if (!isSetUp)
+            mobileTouch.SetActive(false);
 #endif
 
 
@@ -41,24 +43,26 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;//防止重刷场景前的暂停
 
-        if (GameManager.IsEscapeStage || GameManager.IsDirectRescueStage ||
-            (GameFlowData.CurrentChapter == 1 && GameFlowData.CurrentStage == 2))
-        {
-            isSetUp = false;
-            CurrentOpen = 0;
-            SetUpMenu.SetActive(false);
-            PauseButton.SetActive(true);
-            playerController.EnableGameplayInput();
-            EventSystem.current.SetSelectedGameObject(null);
-            MoveWeaponUIToBattle();
-        }
-        else
+        if (isSetUp)
         {
             OpenSetUp();
         }
+        else
+        {
+            PauseButton.SetActive(true);
+            playerController.EnableGameplayInput();
+            EventSystem.current.SetSelectedGameObject(null);
+            Invoke(nameof(PlayBGM), 0.5f);
+            if (GameFlowData.RequiresMissionSetup)
+            {
+                anim.Play("Show", 0, 0f);
+                UI_CameraChangeMiddle();
+                blackScreen.SetFadeOut();
+            }
+        }
 
-        if ((GameFlowData.CurrentChapter == 2 &&
-            GameFlowData.CurrentStage == 1) || GameManager.IsDirectRescueStage)
+        if (!isSetUp && ((GameFlowData.CurrentChapter == 2 &&
+            GameFlowData.CurrentStage == 1) || GameManager.IsDirectRescueStage))
         {
             playerController.SetSisterMode(true);
         }
@@ -184,34 +188,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-    [Header("武器UI切换位置")]
-    public RectTransform weaponUI;
-    public RectTransform setupWeaponUIRoot; // 整备界面位置
-    public RectTransform battleWeaponUIRoot; // 局内界面位置
-
-    private void MoveWeaponUIToSetup()
-    {
-        weaponUI.SetParent(setupWeaponUIRoot, false);
-
-        weaponUI.anchorMin = Vector2.zero;
-        weaponUI.anchorMax = Vector2.one;
-        weaponUI.offsetMin = Vector2.zero;
-        weaponUI.offsetMax = Vector2.zero;
-    }
-
-    private void MoveWeaponUIToBattle()
-    {
-        weaponUI.SetParent(battleWeaponUIRoot, false);
-
-        weaponUI.anchorMin = Vector2.zero;
-        weaponUI.anchorMax = Vector2.one;
-        weaponUI.offsetMin = Vector2.zero;
-        weaponUI.offsetMax = Vector2.zero;
-
-        Invoke(nameof(PlayBGM), 0.5f);
-     
-    }
-
     void PlayBGM() 
     {
         GameManager.instance.roomManager.PlayBGM();//开启房间专属BGM端口
@@ -248,24 +224,12 @@ public class UIManager : MonoBehaviour
 
     private int CurrentOpen;//-7鞋子菜单  -6丝袜菜单  -5内裤菜单 -4裙子菜单  -3手套菜单 -2衣服菜单  -1服装菜单  0整备主菜单  1武器菜单  2近战武器菜单  3远程武器菜单  4投掷武器菜单
 
-    public void ToggleSetUp()
-    {
-        if (isSetUp)
-        {
-            CloseSetUp();
-        }
-        else
-        {
-            OpenSetUp();
-        }
-    }
-    public void OpenSetUp()
+    private void OpenSetUp()
     {
         isSetUp = true;
         CurrentOpen = 0;
 
-        //MoveWeaponUIToSetup();//武器UI过去
-        SetUpMenu.SetActive(true); PauseButton.SetActive(false);
+        SetUpMenu.SetActive(true);
         RefreshSetupNewBadges();
 
         playerController.DisableGameplayInput();  // 打开 UI 输入、设置默认选中，关闭玩家中的游戏设置
@@ -401,7 +365,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseSetUp()
     {
-        if (isClosingSetUp)
+        if (!isSetUp || isClosingSetUp)
             return;
         StartCoroutine(CloseSetUpCoroutine());
 
@@ -411,58 +375,13 @@ public class UIManager : MonoBehaviour
     private IEnumerator CloseSetUpCoroutine()
     {
         isClosingSetUp = true;
-
-        // 防止淡入过程中玩家再次操作
-        playerController.DisableGameplayInput();
-
-        // 黑幕淡入
         blackScreen.SetFadeIn();
 
         yield return new WaitForSecondsRealtime(1f);
 
-        // =========================
-        // 黑幕后切换到局内
-        // =========================
-
-        isSetUp = false;
-        CurrentOpen = 0;
-
-        MoveWeaponUIToBattle();//把背包的武器类UI切换过去
-        SetUpMenu.SetActive(false);
-        PauseButton.SetActive(true);
-
         GameFlowData.suppressNextSelectSound = true;
-
-        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;
-
-        EventSystem.current.SetSelectedGameObject(null);
-
-        // 每次关上界面的时候，让放大图出现一个进来的动画
-        anim.Play("Show", 0, 0f);
-
-        UI_CameraChangeMiddle();
-
-        if (playerController.attackType == -10)
-        {
-            playerController.attackType =
-                playerController.meleeSlot;
-        }
-
-        // 黑幕后重新打开玩家操作
-        playerController.EnableGameplayInput();
-
-        // 黑幕淡出
-        blackScreen.SetFadeOut();
-
-        isClosingSetUp = false;
-
-       
-
+        SceneManager.LoadScene(GameFlowData.LevelScene);
     }
-
-
-
-
 
     #region 服装菜单
     public void OpenEquipMenu()
@@ -2027,12 +1946,14 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        healthEvent.OnEventRaised += OnHealthEvent;
+        if (!isSetUp)
+            healthEvent.OnEventRaised += OnHealthEvent;
 
     }
     private void OnDisable()
     {
-        healthEvent.OnEventRaised -= OnHealthEvent;
+        if (!isSetUp)
+            healthEvent.OnEventRaised -= OnHealthEvent;
 
     }
 
@@ -2070,6 +1991,9 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (isSetUp)
+            return;
+
         // Every level needs these prompts, including levels without a suspicion meter.
         var suspicion = playerController != null ? playerController.GetComponent<PlayerSuspicion>() : null;
         SetUndercoverCombatPrompts(playerController, suspicion != null && suspicion.CombatLocked);

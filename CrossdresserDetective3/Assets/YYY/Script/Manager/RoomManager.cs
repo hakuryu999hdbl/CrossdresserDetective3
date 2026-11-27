@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,11 +24,6 @@ public class RoomManager : MonoBehaviour
 
     [Header("captivityPoint")]
     public Transform captivityPoint; // 抓取失败后解缚逃脱的位置
-
-    private void Start()
-    {
-        GameManager.instance.IsRoomManager(this);
-    }
 
 
     public void SetupInvestigate()

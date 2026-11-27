@@ -1,8 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class SkyboxSample : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class SkyboxSample : MonoBehaviour
         //DayOrNight();
         //Night();
 
-        if (SceneManager.GetActiveScene().name == "Level")
+        if (gameObject.scene.name == GameFlowData.LevelScene)
         {
             //局内固定
             GameManager.instance.IsSkyboxSample(this);
