@@ -466,6 +466,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Font weaponDescriptionFont;
     private RectTransform weaponDescriptionCard;
     private Text weaponDescriptionText;
+    private Font weaponDescriptionFallbackFont;
     private GameObject hoveredWeaponButton;
     private GameObject lastWeaponSelection;
 
@@ -509,7 +510,8 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        string description = GetWeaponDescription(item);
+        int language = Language.CurrentIndex;
+        string description = GetWeaponDescription(item, language);
         if (description == null)
         {
             if (weaponDescriptionCard != null)
@@ -520,6 +522,7 @@ public class UIManager : MonoBehaviour
         if (weaponDescriptionCard == null)
             CreateWeaponDescriptionCard();
 
+        weaponDescriptionText.font = language == 4 ? weaponDescriptionFallbackFont : weaponDescriptionFont;
         weaponDescriptionText.text = description;
         RectTransform parent = (RectTransform)weaponDescriptionCard.parent;
         RectTransform row = (RectTransform)target.transform;
@@ -561,34 +564,119 @@ public class UIManager : MonoBehaviour
         textRect.anchorMax = Vector2.one;
         textRect.offsetMin = new Vector2(24f, 16f);
         textRect.offsetMax = new Vector2(-22f, -16f);
-        weaponDescriptionText.font = weaponDescriptionFont;
+        weaponDescriptionFallbackFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         weaponDescriptionText.fontSize = 27;
         weaponDescriptionText.alignment = TextAnchor.MiddleLeft;
         weaponDescriptionText.color = new Color(0.95f, 0.92f, 0.89f);
         weaponDescriptionText.raycastTarget = false;
     }
 
-    private static string GetWeaponDescription(EquippedItemMark item)
+    private static string GetWeaponDescription(EquippedItemMark item, int language)
     {
         return (item.equipType, item.itemIndex) switch
         {
-            (EquippedItemMark.EquipType.Melee, 0) => "用高跟鞋将敌人踢飞，伤害低，体力消耗低。",
-            (EquippedItemMark.EquipType.Melee, 1) => "快速多段攻击，伤害低，体力消耗低。",
-            (EquippedItemMark.EquipType.Melee, 2) => "一刀击碎防御槽，并可直接暗杀巡逻中的精英敌人。伤害高，体力消耗高。",
-            (EquippedItemMark.EquipType.Melee, 3) => "快速多段攻击，伤害中等，体力消耗高。",
-            (EquippedItemMark.EquipType.RangedNone, 0) => "不装备远程武器。",
-            (EquippedItemMark.EquipType.Pistol, 1) => "威力较低，但弹道稳定，易于操控。",
-            (EquippedItemMark.EquipType.Pistol, 2) => "拥有极高的单发伤害与击退效果，但射速较慢。",
-            (EquippedItemMark.EquipType.Pistol, 3) => "弹容量大，射击与换弹速度快，适合连续作战。",
-            (EquippedItemMark.EquipType.Rifle, 1) => "拥有优秀的射速与稳定性，综合性能出色。",
-            (EquippedItemMark.EquipType.Rifle, 2) => "拥有强大的持续火力，但连续射击时弹道容易扩散。",
-            (EquippedItemMark.EquipType.Throw, 0) => "不装备投掷物。",
-            (EquippedItemMark.EquipType.Throw, 1) => "直接消灭带防御槽的敌人，推荐躲在掩体后使用。",
-            (EquippedItemMark.EquipType.Throw, 2) => "能够遮蔽敌人视线一段时间，推荐躲入烟雾进行暗杀。",
-            (EquippedItemMark.EquipType.Throw, 3) => "使范围内的所有敌人较长时间失去视野，推荐配合枪支使用。",
-            (EquippedItemMark.EquipType.Throw, 4) => "在前方形成火海，持续灼烧敌人，推荐被大量敌人追击时使用。",
-            (EquippedItemMark.EquipType.Throw, 5) => "使范围内的所有敌人短暂失去视野，并进入一击必倒状态。",
-            (EquippedItemMark.EquipType.Throw, 6) => "笔直向前造成贯穿伤害，推荐在多名敌人背后使用。",
+            (EquippedItemMark.EquipType.Melee, 0) => Language.ResolveText(language,
+                "ハイヒールで敵を蹴り飛ばす。ダメージとスタミナ消費は少なめ。",
+                "用高跟鞋将敌人踢飞，伤害低，体力消耗低。",
+                "用高跟鞋將敵人踢飛，傷害低，體力消耗低。",
+                "Kick enemies away with your heels. Low damage and stamina cost.",
+                "하이힐로 적을 걷어찬다. 피해량과 스태미나 소모가 낮다."),
+            (EquippedItemMark.EquipType.Melee, 1) => Language.ResolveText(language,
+                "素早い連続攻撃。ダメージとスタミナ消費は少なめ。",
+                "快速多段攻击，伤害低，体力消耗低。",
+                "快速多段攻擊，傷害低，體力消耗低。",
+                "Fast multi-hit attacks with low damage and stamina cost.",
+                "빠르게 여러 번 공격한다. 피해량과 스태미나 소모가 낮다."),
+            (EquippedItemMark.EquipType.Melee, 2) => Language.ResolveText(language,
+                "一太刀でガードゲージを破壊し、巡回中の精鋭はそのまま暗殺できる。ダメージとスタミナ消費が大きい。",
+                "一刀击碎防御槽，并可直接暗杀巡逻中的精英敌人。伤害高，体力消耗高。",
+                "一刀擊碎防禦槽，並可直接暗殺巡邏中的精英敵人。傷害高，體力消耗高。",
+                "Breaks the guard gauge in one slash and can instantly assassinate patrolling elites. High damage and stamina cost.",
+                "한 번의 참격으로 방어 게이지를 부수며, 순찰 중인 정예는 즉시 암살할 수 있다. 피해량과 스태미나 소모가 높다."),
+            (EquippedItemMark.EquipType.Melee, 3) => Language.ResolveText(language,
+                "素早い連続攻撃。ダメージは中程度で、スタミナ消費が大きい。",
+                "快速多段攻击，伤害中等，体力消耗高。",
+                "快速多段攻擊，傷害中等，體力消耗高。",
+                "Fast multi-hit attacks with moderate damage and high stamina cost.",
+                "빠르게 여러 번 공격한다. 피해량은 보통이고 스태미나 소모가 높다."),
+            (EquippedItemMark.EquipType.RangedNone, 0) => Language.ResolveText(language,
+                "射撃武器を装備しない。",
+                "不装备远程武器。",
+                "不裝備遠程武器。",
+                "No ranged weapon equipped.",
+                "원거리 무기를 장비하지 않는다."),
+            (EquippedItemMark.EquipType.Pistol, 1) => Language.ResolveText(language,
+                "威力は控えめだが、弾道が安定していて扱いやすい。",
+                "威力较低，但弹道稳定，易于操控。",
+                "威力較低，但彈道穩定，容易操控。",
+                "Low power, but accurate and easy to handle.",
+                "위력은 낮지만 탄도가 안정적이고 다루기 쉽다."),
+            (EquippedItemMark.EquipType.Pistol, 2) => Language.ResolveText(language,
+                "一発の威力とノックバックが非常に大きいが、連射は遅い。",
+                "拥有极高的单发伤害与击退效果，但射速较慢。",
+                "單發傷害與擊退效果極強，但射速較慢。",
+                "Very high damage and knockback per shot, but fires slowly.",
+                "한 발의 피해량과 넉백이 매우 크지만 연사 속도가 느리다."),
+            (EquippedItemMark.EquipType.Pistol, 3) => Language.ResolveText(language,
+                "装弾数が多く、連射とリロードが速い。連戦向き。",
+                "弹容量大，射击与换弹速度快，适合连续作战。",
+                "彈容量大，射擊與換彈速度快，適合連續作戰。",
+                "A large magazine and fast firing and reload speeds make it suited to sustained fights.",
+                "장탄수가 많고 연사와 재장전이 빨라 연속 전투에 적합하다."),
+            (EquippedItemMark.EquipType.Rifle, 1) => Language.ResolveText(language,
+                "連射速度と安定性に優れた、バランスのよいライフル。",
+                "拥有优秀的射速与稳定性，综合性能出色。",
+                "射速與穩定性俱佳，整體性能出色。",
+                "A well-rounded rifle with a fast fire rate and steady aim.",
+                "연사 속도와 안정성이 뛰어난 균형 잡힌 소총이다."),
+            (EquippedItemMark.EquipType.Rifle, 2) => Language.ResolveText(language,
+                "高い火力を維持できるが、撃ち続けると弾がばらけやすい。",
+                "拥有强大的持续火力，但连续射击时弹道容易扩散。",
+                "持續火力強大，但連續射擊時彈道容易擴散。",
+                "Delivers strong sustained fire, but shots spread during long bursts.",
+                "지속 화력이 강하지만 연사를 계속하면 탄이 쉽게 퍼진다."),
+            (EquippedItemMark.EquipType.Throw, 0) => Language.ResolveText(language,
+                "投擲アイテムを装備しない。",
+                "不装备投掷物。",
+                "不裝備投擲物。",
+                "No throwable equipped.",
+                "투척물을 장비하지 않는다."),
+            (EquippedItemMark.EquipType.Throw, 1) => Language.ResolveText(language,
+                "ガードゲージを持つ敵も一撃で倒せる。遮蔽物に隠れて使うとよい。",
+                "直接消灭带防御槽的敌人，推荐躲在掩体后使用。",
+                "可直接消滅帶有防禦槽的敵人，建議躲在掩體後使用。",
+                "Can defeat enemies with a guard gauge in one hit. Use from behind cover.",
+                "방어 게이지가 있는 적도 한 번에 쓰러뜨린다. 엄폐물 뒤에서 사용하는 것이 좋다."),
+            (EquippedItemMark.EquipType.Throw, 2) => Language.ResolveText(language,
+                "煙でしばらく敵の視界を遮る。煙に紛れての暗殺に向いている。",
+                "能够遮蔽敌人视线一段时间，推荐躲入烟雾进行暗杀。",
+                "能暫時遮蔽敵人視線，建議躲入煙霧中進行暗殺。",
+                "Blocks enemy vision temporarily. Slip into the smoke to land an assassination.",
+                "일정 시간 적의 시야를 가린다. 연막에 숨어 암살하기 좋다."),
+            (EquippedItemMark.EquipType.Throw, 3) => Language.ResolveText(language,
+                "範囲内の敵すべての視界を長めに奪う。銃との併用に向いている。",
+                "使范围内的所有敌人较长时间失去视野，推荐配合枪支使用。",
+                "使範圍內的敵人較長時間失去視野，建議搭配槍械使用。",
+                "Blinds all enemies in range for an extended period. Pairs well with firearms.",
+                "범위 안의 모든 적이 비교적 오랫동안 시야를 잃는다. 총기와 함께 쓰기 좋다."),
+            (EquippedItemMark.EquipType.Throw, 4) => Language.ResolveText(language,
+                "前方に炎を広げ、敵を継続的に焼く。大勢の敵に追われたときに有効。",
+                "在前方形成火海，持续灼烧敌人，推荐被大量敌人追击时使用。",
+                "在前方形成火海，持續灼燒敵人，適合被大量敵人追擊時使用。",
+                "Spreads flames ahead that burn enemies over time. Useful when a crowd is chasing you.",
+                "전방에 불길을 일으켜 적에게 지속 피해를 준다. 많은 적에게 쫓길 때 유용하다."),
+            (EquippedItemMark.EquipType.Throw, 5) => Language.ResolveText(language,
+                "範囲内の敵すべてが一時的に視界を失い、一撃で倒せる状態になる。",
+                "使范围内的所有敌人短暂失去视野，并进入一击必倒状态。",
+                "使範圍內的所有敵人短暫失去視野，並進入一擊必倒狀態。",
+                "Briefly blinds all enemies in range and leaves them vulnerable to a one-hit takedown.",
+                "범위 안의 모든 적이 잠시 시야를 잃고 한 번의 공격으로 쓰러지는 상태가 된다."),
+            (EquippedItemMark.EquipType.Throw, 6) => Language.ResolveText(language,
+                "正面にまっすぐ飛び、敵を貫通する。複数の敵の背後から使うと効果的。",
+                "笔直向前造成贯穿伤害，推荐在多名敌人背后使用。",
+                "筆直向前造成貫穿傷害，建議從多名敵人背後使用。",
+                "Flies straight ahead and pierces enemies. Use from behind a group.",
+                "앞으로 곧게 날아가 적을 관통한다. 적 무리의 뒤에서 쓰면 효과적이다."),
             _ => null
         };
     }

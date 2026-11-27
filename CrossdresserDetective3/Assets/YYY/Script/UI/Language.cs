@@ -23,29 +23,7 @@ public class Language : MonoBehaviour
     public void Refresh()
     {
 
-        string fullText = ""; // 存储要显示的完整文本
-        // 根据保存的语言偏好设置文本
-        switch (PlayerPrefs.GetInt("language"))
-        {
-            case 0:
-                fullText = J;
-                break;
-            case 1:
-                fullText = C_1;
-                break;
-            case 2:
-                fullText = C_2;
-                break;
-            case 3:
-                fullText = E;
-                break;
-            case 4:
-                fullText = K;
-                break;
-            default:
-                fullText = E;  // 默认英文
-                break;
-        }
+        string fullText = ResolveText(CurrentIndex, J, C_1, C_2, E, K);
 
         if (isTyped)
         {
@@ -56,6 +34,21 @@ public class Language : MonoBehaviour
             Text.text = fullText.ToString();//直接显示
         }
 
+    }
+
+    internal static int CurrentIndex => PlayerPrefs.GetInt("language");
+
+    internal static string ResolveText(int index, string japanese, string simplifiedChinese,
+        string traditionalChinese, string english, string korean)
+    {
+        return index switch
+        {
+            0 => japanese,
+            1 => simplifiedChinese,
+            2 => traditionalChinese,
+            4 => korean,
+            _ => english
+        };
     }
 
     public bool isTyped = false;//是否需要这种打字效果
