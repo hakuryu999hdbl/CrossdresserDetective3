@@ -45,8 +45,16 @@ public class FrameEvent_Audio : MonoBehaviour
         }
     }
 
-    public void _Attack_katana_in() { audioS.PlayOneShot(AudioManager.Attack_katana_in); }//这个由Player中代码调用
-    public void _Attack_katana_draw() { audioS.PlayOneShot(AudioManager.Attack_katana_draw); }//这个由Player中代码调用
+    public void _Attack_katana_in()
+    {
+        audioS.PlayOneShot(AudioManager.Attack_katana_in);
+    }
+
+    public void _Attack_katana_draw()
+    {
+        audioS.PlayOneShot(AudioManager.Attack_katana_draw);
+    }
+
 
     public void _Attack_sword_clash()
     {

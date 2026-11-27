@@ -544,6 +544,136 @@ public class UIManager : MonoBehaviour
 
     #region 近战武器菜单
 
+    [SerializeField] private Font weaponDescriptionFont;
+    private RectTransform weaponDescriptionCard;
+    private Text weaponDescriptionText;
+    private GameObject hoveredWeaponButton;
+    private GameObject lastWeaponSelection;
+
+    internal void SetWeaponDescriptionHover(GameObject button, bool hovering)
+    {
+        if (!hovering)
+        {
+            if (hoveredWeaponButton == button)
+                hoveredWeaponButton = null;
+            return;
+        }
+
+        if (CurrentOpen >= 2 && CurrentOpen <= 4 && button.GetComponent<EquippedItemMark>() != null)
+            hoveredWeaponButton = button;
+    }
+
+    private void LateUpdate()
+    {
+        GameObject menu = CurrentOpen switch
+        {
+            2 => MeleeMenu,
+            3 => RangedMenu,
+            4 => ThrowableMenu,
+            _ => null
+        };
+
+        GameObject selection = EventSystem.current?.currentSelectedGameObject;
+        if (selection != lastWeaponSelection && hoveredWeaponButton != selection)
+            hoveredWeaponButton = null;
+        lastWeaponSelection = selection;
+
+        GameObject target = hoveredWeaponButton != null ? hoveredWeaponButton : selection;
+        if (menu == null || !menu.activeInHierarchy || isPaused || target == null ||
+            !target.activeInHierarchy || !target.transform.IsChildOf(menu.transform) ||
+            !target.TryGetComponent(out EquippedItemMark item) ||
+            !target.TryGetComponent(out Button button) || !button.IsInteractable())
+        {
+            if (weaponDescriptionCard != null)
+                weaponDescriptionCard.gameObject.SetActive(false);
+            hoveredWeaponButton = null;
+            return;
+        }
+
+        string description = GetWeaponDescription(item);
+        if (description == null)
+        {
+            if (weaponDescriptionCard != null)
+                weaponDescriptionCard.gameObject.SetActive(false);
+            return;
+        }
+
+        if (weaponDescriptionCard == null)
+            CreateWeaponDescriptionCard();
+
+        weaponDescriptionText.text = description;
+        RectTransform parent = (RectTransform)weaponDescriptionCard.parent;
+        RectTransform row = (RectTransform)target.transform;
+        Vector3 rowLeft = parent.InverseTransformPoint(row.TransformPoint(
+            new Vector3(row.rect.xMin, row.rect.center.y, 0f)));
+        float width = Mathf.Clamp(rowLeft.x - parent.rect.xMin - 36f, 220f, 510f);
+        weaponDescriptionCard.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+        float height = Mathf.Max(88f, weaponDescriptionText.preferredHeight + 34f);
+        weaponDescriptionCard.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+        weaponDescriptionCard.localPosition = new Vector3(
+            Mathf.Max(rowLeft.x - 18f, parent.rect.xMin + width + 18f),
+            Mathf.Clamp(rowLeft.y, parent.rect.yMin + height * 0.5f + 18f,
+                parent.rect.yMax - height * 0.5f - 18f), 0f);
+        weaponDescriptionCard.gameObject.SetActive(true);
+    }
+
+    private void CreateWeaponDescriptionCard()
+    {
+        Image border = new GameObject("Weapon Description", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+        weaponDescriptionCard = border.rectTransform;
+        weaponDescriptionCard.SetParent(SetUpMenu.transform, false);
+        weaponDescriptionCard.pivot = new Vector2(1f, 0.5f);
+        border.color = new Color(0.65f, 0.055f, 0.025f);
+        border.raycastTarget = false;
+
+        Image background = new GameObject("Background", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+        background.rectTransform.SetParent(weaponDescriptionCard, false);
+        background.rectTransform.anchorMax = Vector2.one;
+        background.rectTransform.anchorMin = Vector2.zero;
+        background.rectTransform.offsetMin = new Vector2(6f, 2f);
+        background.rectTransform.offsetMax = new Vector2(-2f, -2f);
+        background.color = new Color(0.045f, 0.018f, 0.016f, 0.97f);
+        background.raycastTarget = false;
+
+        weaponDescriptionText = new GameObject("Description", typeof(RectTransform), typeof(Text)).GetComponent<Text>();
+        RectTransform textRect = weaponDescriptionText.rectTransform;
+        textRect.SetParent(weaponDescriptionCard, false);
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = new Vector2(24f, 16f);
+        textRect.offsetMax = new Vector2(-22f, -16f);
+        weaponDescriptionText.font = weaponDescriptionFont;
+        weaponDescriptionText.fontSize = 27;
+        weaponDescriptionText.alignment = TextAnchor.MiddleLeft;
+        weaponDescriptionText.color = new Color(0.95f, 0.92f, 0.89f);
+        weaponDescriptionText.raycastTarget = false;
+    }
+
+    private static string GetWeaponDescription(EquippedItemMark item)
+    {
+        return (item.equipType, item.itemIndex) switch
+        {
+            (EquippedItemMark.EquipType.Melee, 0) => "用高跟鞋将敌人踢飞，伤害低，体力消耗低。",
+            (EquippedItemMark.EquipType.Melee, 1) => "快速多段攻击，伤害低，体力消耗低。",
+            (EquippedItemMark.EquipType.Melee, 2) => "一刀击碎防御槽，并可直接暗杀巡逻中的精英敌人。伤害高，体力消耗高。",
+            (EquippedItemMark.EquipType.Melee, 3) => "快速多段攻击，伤害中等，体力消耗高。",
+            (EquippedItemMark.EquipType.RangedNone, 0) => "不装备远程武器。",
+            (EquippedItemMark.EquipType.Pistol, 1) => "威力较低，但弹道稳定，易于操控。",
+            (EquippedItemMark.EquipType.Pistol, 2) => "拥有极高的单发伤害与击退效果，但射速较慢。",
+            (EquippedItemMark.EquipType.Pistol, 3) => "弹容量大，射击与换弹速度快，适合连续作战。",
+            (EquippedItemMark.EquipType.Rifle, 1) => "拥有优秀的射速与稳定性，综合性能出色。",
+            (EquippedItemMark.EquipType.Rifle, 2) => "拥有强大的持续火力，但连续射击时弹道容易扩散。",
+            (EquippedItemMark.EquipType.Throw, 0) => "不装备投掷物。",
+            (EquippedItemMark.EquipType.Throw, 1) => "直接消灭带防御槽的敌人，推荐躲在掩体后使用。",
+            (EquippedItemMark.EquipType.Throw, 2) => "能够遮蔽敌人视线一段时间，推荐躲入烟雾进行暗杀。",
+            (EquippedItemMark.EquipType.Throw, 3) => "使范围内的所有敌人较长时间失去视野，推荐配合枪支使用。",
+            (EquippedItemMark.EquipType.Throw, 4) => "在前方形成火海，持续灼烧敌人，推荐被大量敌人追击时使用。",
+            (EquippedItemMark.EquipType.Throw, 5) => "使范围内的所有敌人短暂失去视野，并进入一击必倒状态。",
+            (EquippedItemMark.EquipType.Throw, 6) => "笔直向前造成贯穿伤害，推荐在多名敌人背后使用。",
+            _ => null
+        };
+    }
+
     public void OpenMeleeMenu()
     {
         MeleeMenu.SetActive(true);

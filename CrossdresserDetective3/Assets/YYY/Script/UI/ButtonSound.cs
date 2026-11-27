@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonSound : MonoBehaviour,
     IPointerEnterHandler,
+    IPointerExitHandler,
     IPointerClickHandler,
     ISelectHandler,
     ISubmitHandler
@@ -30,6 +31,7 @@ public class ButtonSound : MonoBehaviour,
     {
         if (!CanPlay()) return;
 
+        UIManager.instance?.SetWeaponDescriptionHover(gameObject, true);
 
         // AVG场景不播放UI按钮音
         if (SceneManager.GetActiveScene().name == "Spine")
@@ -37,6 +39,11 @@ public class ButtonSound : MonoBehaviour,
 
 
         AudioManager.Instance.PlayFX(AudioManager.Instance.UI_Select);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIManager.instance?.SetWeaponDescriptionHover(gameObject, false);
     }
 
     // 手柄 / 键盘选中按钮

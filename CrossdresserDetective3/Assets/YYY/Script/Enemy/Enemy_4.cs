@@ -17,6 +17,14 @@ public class Enemy_4 : EnemyController
     [Header("格挡UI")]
     public GameObject blockBarRoot;
     public Image blockBarFill;
+    [SerializeField] private AudioClip blockBreakSound;
+
+    private const float BlockBreakDuration = 0.35f;
+    private Image blockBarFrame;
+    private Color blockBarFrameColor;
+    private Vector3 blockBarScale;
+    private float blockBreakStartTime;
+    private bool isPlayingBlockBreak;
 
     [Header("格挡状态")]
     public bool isBlocking;
@@ -38,12 +46,14 @@ public class Enemy_4 : EnemyController
     {
         base.Init();
 
+        ResetBlockBreakFeedback();
         currentBlockValue = maxBlockValue;
         UpdateBlockUI();
     }
 
     public override void Update()
     {
+        UpdateBlockBreakFeedback();
         if (IsSuspended) return;
         base.Update();
 
@@ -72,8 +82,13 @@ public class Enemy_4 : EnemyController
         // 新增：格挡之前先记录攻击者
         AcquireAttackerAsTarget(attack);
 
-        currentBlockValue -= attack.damage;
-        currentBlockValue = Mathf.Max(0f, currentBlockValue);
+        bool hadBlock = currentBlockValue > 0f;
+        currentBlockValue = attack.IsPlayerKatanaStrike
+            ? 0f
+            : Mathf.Max(0f, currentBlockValue - attack.damage);
+
+        if (hadBlock && currentBlockValue <= 0f)
+            PlayBlockBreakFeedback();
 
         UpdateBlockUI();
 
@@ -159,6 +174,9 @@ public class Enemy_4 : EnemyController
 
     private void UpdateBlockUI()
     {
+        if (isPlayingBlockBreak)
+            return;
+
         blockBarFill.fillAmount =
                  currentBlockValue / maxBlockValue;
 
@@ -173,6 +191,56 @@ public class Enemy_4 : EnemyController
                  currentBlockValue < maxBlockValue ||
                  isBlocking
              );
+    }
+
+    private void PlayBlockBreakFeedback()
+    {
+        if (blockBreakSound != null && frameEvent_Audio != null && frameEvent_Audio.audioS != null)
+            frameEvent_Audio.PlayClip(blockBreakSound);
+
+        if (blockBarRoot == null || !blockBarRoot.TryGetComponent(out blockBarFrame))
+            return;
+
+        blockBarFrameColor = blockBarFrame.color;
+        blockBarScale = blockBarRoot.transform.localScale;
+        blockBreakStartTime = Time.time;
+        isPlayingBlockBreak = true;
+
+        blockBarFill.fillAmount = 0f;
+        blockBarFrame.color = Color.white;
+        blockBarRoot.SetActive(true);
+    }
+
+    private void UpdateBlockBreakFeedback()
+    {
+        if (!isPlayingBlockBreak)
+            return;
+
+        float progress = (Time.time - blockBreakStartTime) / BlockBreakDuration;
+        if (progress >= 1f)
+        {
+            ResetBlockBreakFeedback();
+            UpdateBlockUI();
+            return;
+        }
+
+        float fade = Mathf.InverseLerp(0.2f, 1f, progress);
+        Color color = Color.Lerp(Color.white, new Color(1f, 0.4f, 0.1f), fade);
+        color.a = 1f - fade;
+        blockBarFrame.color = color;
+        blockBarRoot.transform.localScale = Vector3.Scale(
+            blockBarScale, new Vector3(1f - 0.35f * fade, 1f - 0.85f * fade, 1f));
+    }
+
+    private void ResetBlockBreakFeedback()
+    {
+        if (!isPlayingBlockBreak)
+            return;
+
+        isPlayingBlockBreak = false;
+        blockBarRoot.SetActive(false);
+        blockBarRoot.transform.localScale = blockBarScale;
+        blockBarFrame.color = blockBarFrameColor;
     }
 
     // 防御动画事件：
@@ -228,8 +296,8 @@ public class Enemy_4 : EnemyController
         if (isDead)
             return;
 
-        // 先隐藏格挡UI
-        if (blockBarRoot != null)
+        // 破防和死亡发生在同一击时，保留破防提示。
+        if (blockBarRoot != null && !isPlayingBlockBreak)
         {
             blockBarRoot.SetActive(false);
         }

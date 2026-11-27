@@ -52,6 +52,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource fxSource;
 
+
     // 🎵 播放BGM（可循环）
     public void PlayBGM(AudioClip clip, bool loop = true)
     {

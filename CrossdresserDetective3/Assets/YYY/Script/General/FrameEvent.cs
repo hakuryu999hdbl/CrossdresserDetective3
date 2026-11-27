@@ -791,6 +791,13 @@ public class FrameEvent : MonoBehaviour
         }
 
 
+        if (playerController != null && area.TryGetComponent<Attack>(out var attack))
+        {
+            attack.IsPlayerKatanaStrike = playerController.Slot == 0 &&
+                playerController.meleeType == 2 && playerController.attackType == 1 &&
+                !playerController.isAirKick && !playerController.isInCutscene;
+        }
+
         area.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);

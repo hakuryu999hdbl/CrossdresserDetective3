@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     public Character owner;
+    internal bool IsPlayerKatanaStrike { get; set; }
 
     [Header("伤害数值")]
     public int damage;
