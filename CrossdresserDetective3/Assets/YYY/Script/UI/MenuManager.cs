@@ -1076,9 +1076,8 @@ public class MenuManager : MonoBehaviour
         RefreshChapterButtons(2, chapter2Buttons);
         RefreshChapterButtons(3, chapter3Buttons);
 
-        RefreshChapterStars(1);
-        RefreshChapterStars(2);
-        RefreshChapterStars(3);
+        for (int chapter = 1; chapter <= currentData.chapterCount; chapter++)
+            RefreshChapterStars(chapter, currentData);
     }
 
     // 通用刷新：第几章 + 这一章的按钮数组
@@ -1107,59 +1106,56 @@ public class MenuManager : MonoBehaviour
     public Text stageStarText_5;
     public Text stageStarText_6;
 
-    public void RefreshChapterStars(int chapterIndex)
+    [System.Serializable]
+    private class ChapterStarMilestone
     {
-        SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+        [Min(1)] public int chapter;
+        [Range(1, 30)] public int stars;
+        public Graphic[] lineAndMarker;
 
-        if (data == null)
-            return;
-
-        int totalStars = 0;
-
-        int startIndex = (chapterIndex - 1) * data.stagePerChapter;
-
-        for (int i = 0; i < data.stagePerChapter; i++)
+        public void Refresh(int chapterStars)
         {
-            int index = startIndex + i;
-
-            if (index >= data.stageStars.Length)
-                break;
-
-            int star = data.stageStars[index];
-
-            if (star > 0)
+            Color color = chapterStars >= stars ? Color.red : Color.white;
+            foreach (Graphic graphic in lineAndMarker)
             {
-                totalStars += star;
+                if (graphic != null)
+                    graphic.color = color;
             }
         }
+    }
 
-        switch (chapterIndex)
+    [SerializeField] private ChapterStarMilestone[] chapterStarMilestones =
+        System.Array.Empty<ChapterStarMilestone>();
+
+    public void RefreshChapterStars(int chapterIndex)
+    {
+        RefreshChapterStars(chapterIndex, SaveManager.LoadGame(GameFlowData.CurrentPlayer));
+    }
+
+    private void RefreshChapterStars(int chapterIndex, SaveData data)
+    {
+        int totalStars = data.GetChapterStars(chapterIndex);
+        Text starText = chapterIndex switch
         {
-            case 1:
-                stageStarText_1.text = $"{totalStars} / 30";
-                break;
+            1 => stageStarText_1,
+            2 => stageStarText_2,
+            3 => stageStarText_3,
+            4 => stageStarText_4,
+            5 => stageStarText_5,
+            6 => stageStarText_6,
+            _ => null
+        };
 
-            case 2:
-                stageStarText_2.text = $"{totalStars} / 30";
-                break;
+        if (starText != null)
+            starText.text = $"{totalStars} / {data.stagePerChapter * 3}";
 
-            case 3:
-                stageStarText_3.text = $"{totalStars} / 30";
-                break;
-
-            case 4:
-                stageStarText_4.text = $"{totalStars} / 30";
-                break;
-
-            case 5:
-                stageStarText_5.text = $"{totalStars} / 30";
-                break;
-
-            case 6:
-                stageStarText_6.text = $"{totalStars} / 30";
-                break;
+        foreach (ChapterStarMilestone milestone in chapterStarMilestones)
+        {
+            if (milestone.chapter == chapterIndex)
+                milestone.Refresh(totalStars);
         }
     }
+
     #endregion
 
 

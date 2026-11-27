@@ -322,7 +322,7 @@ public class UIManager : MonoBehaviour
 
     private static bool IsNewShopItem(ShopItemButton item, SaveData data)
     {
-        return !string.IsNullOrEmpty(item.itemId) && item.IsStageUnlocked(data) &&
+        return !string.IsNullOrEmpty(item.itemId) && item.IsUnlocked(data) &&
             data.seenShopItemIds?.Contains(item.itemId) != true;
     }
 

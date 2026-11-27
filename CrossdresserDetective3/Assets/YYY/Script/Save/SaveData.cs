@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +16,20 @@ public class SaveData
     // 6章 × 10关 = 60
     public int[] stageStars;
 
+
+    public int GetChapterStars(int chapter)
+    {
+        if (chapter < 1 || chapter > chapterCount)
+            return 0;
+
+        InitStageData();
+        int start = (chapter - 1) * stagePerChapter;
+        int total = 0;
+        for (int index = start; index < start + stagePerChapter; index++)
+            total += Mathf.Clamp(stageStars[index], 0, 3);
+
+        return total;
+    }
 
     public void InitStageData()
     {

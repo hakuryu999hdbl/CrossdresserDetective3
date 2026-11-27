@@ -29,6 +29,10 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
     [Min(1)]
     public int requiredStage = 1;
 
+    [Tooltip("Chapter stars required. Set to 0 to use the stage requirement.")]
+    [Range(0, 30)]
+    public int requiredChapterStars;
+
 
     private void Start()
     {
@@ -56,7 +60,7 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
         SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
 
         //检查是否已经推进到商品要求的关卡
-        bool unlocked = IsStageUnlocked(data);
+        bool unlocked = IsUnlocked(data);
 
         gameObject.SetActive(unlocked);
 
@@ -96,6 +100,9 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
         }
 
         SaveData data = SaveManager.LoadGame(GameFlowData.CurrentPlayer);
+
+        if (!IsUnlocked(data))
+            return;
 
         //已经购买，不再重复扣钱
         if (data.HasPurchasedItem(itemId))
@@ -146,8 +153,12 @@ public class ShopItemButton : MonoBehaviour, ISelectHandler
     /// <summary>
     /// 判断要求的关卡是否已经解锁
     /// </summary>
-    internal bool IsStageUnlocked(SaveData data)
+    internal bool IsUnlocked(SaveData data)
     {
+        if (requiredChapterStars > 0)
+            return data.HasPurchasedItem(itemId) ||
+                data.GetChapterStars(requiredChapter) >= requiredChapterStars;
+
         data.InitStageData();
 
         int chapterIndex = requiredChapter - 1;
