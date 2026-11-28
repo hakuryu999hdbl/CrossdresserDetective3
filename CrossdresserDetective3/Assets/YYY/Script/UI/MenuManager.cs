@@ -547,7 +547,7 @@ public class MenuManager : MonoBehaviour
     void StartSetDisplayMode()
     {
         bool fullscreen = PlayerPrefs.GetInt("DisplayMode", 1) == 1;
-        int resIndex = PlayerPrefs.GetInt("ResolutionIndex", 2); // 默认1080p
+        int resIndex = PlayerPrefs.GetInt(ResolutionIndexKey, -1);
 
         currentMode = fullscreen ? DisplayMode.Fullscreen : DisplayMode.Windowed;
 
@@ -565,8 +565,15 @@ public class MenuManager : MonoBehaviour
 
 
 
-        var res = supportedResolutions[resIndex];
-        Screen.SetResolution(res.x, res.y, fullscreen);
+        if (resIndex >= 0 && resIndex < supportedResolutions.Length)
+        {
+            ApplyResolution(supportedResolutions[resIndex]);
+        }
+        else
+        {
+            var desktop = Screen.currentResolution;
+            ApplyResolution(new Vector2Int(desktop.width, desktop.height));
+        }
 
     }//开始设置屏幕分辨率
 
@@ -580,7 +587,7 @@ public class MenuManager : MonoBehaviour
     }
 
     DisplayMode currentMode;
-    Resolution currentResolution;
+    Vector2Int selectedResolution;
 
 
 
@@ -620,95 +627,48 @@ public class MenuManager : MonoBehaviour
 
     }//设置全屏或者窗口化
 
-    Vector2Int[] supportedResolutions =
-{
-    new Vector2Int(3840, 2160),
-    new Vector2Int(2560, 1600), // 新增：16:10
-    new Vector2Int(2560, 1440),
-    new Vector2Int(1920, 1080),
-    new Vector2Int(1600, 900),
-    new Vector2Int(1280, 720),
-};
+    private const string ResolutionIndexKey = "ResolutionIndex";
+
+    private static readonly Vector2Int[] supportedResolutions =
+    {
+        new Vector2Int(3840, 2160),
+        new Vector2Int(2560, 1600),
+        new Vector2Int(2560, 1440),
+        new Vector2Int(1920, 1080),
+        new Vector2Int(1600, 900),
+        new Vector2Int(1280, 720),
+    };
+
+    private void ApplyResolution(Vector2Int resolution)
+    {
+        selectedResolution = resolution;
+        Screen.SetResolution(resolution.x, resolution.y, currentMode == DisplayMode.Fullscreen);
+    }
 
     public void SetResolutionByIndex(int index)
     {
-        var res = supportedResolutions[index];
+        if (index < 0 || index >= supportedResolutions.Length)
+        {
+            return;
+        }
 
-        Screen.SetResolution(
-            res.x,
-            res.y,
-            currentMode == DisplayMode.Fullscreen
-        );
-
-        // if (index == 0)
-        // {
-        //     //默认的就是基于当前屏幕分辨率
-        //     InitResolutions();
-        // }
-        // else
-        // {
-        //     var res = supportedResolutions[index];
-        //
-        //     Screen.SetResolution(
-        //         res.x,
-        //         res.y,
-        //         currentMode == DisplayMode.Fullscreen
-        //     );
-        // }
-
-        PlayerPrefs.SetInt("ResolutionIndex", index);
-
-        //设置屏幕分辨率文字
+        ApplyResolution(supportedResolutions[index]);
+        PlayerPrefs.SetInt(ResolutionIndexKey, index);
+        PlayerPrefs.Save();
         GetResolutionIndex_Text();
-
-    }//设置当前屏幕模式的分辨率
-
+    }
 
     public void ChangeResolution()
     {
-        //读取当前分辨率编号，默认1920×1080（索引2）
-        int index = PlayerPrefs.GetInt("ResolutionIndex", 2);
-
-        //切换到下一个
-        index++;
-
-        //超过最后一个后回到第一个
-        if (index >= supportedResolutions.Length)
-        {
-            index = 0;
-        }
-
-        var res = supportedResolutions[index];
-
-        Screen.SetResolution(
-            res.x,
-            res.y,
-            currentMode == DisplayMode.Fullscreen
-        );
-
-        PlayerPrefs.SetInt("ResolutionIndex", index);
-        PlayerPrefs.Save();
-
-        GetResolutionIndex_Text();
+        int index = System.Array.IndexOf(supportedResolutions, selectedResolution);
+        SetResolutionByIndex((index + 1) % supportedResolutions.Length);
     }
 
     public Text ResolutionsText;
 
     public void GetResolutionIndex_Text()
     {
-        //设置屏幕分辨率文字
-        int index = PlayerPrefs.GetInt("ResolutionIndex");
-        ResolutionsText.text = GetResolutionLabel(index).ToString();
-
-    }//读取分辨率数字
-
-
-
-    string GetResolutionLabel(int index)
-    {
-        var r = supportedResolutions[index];
-
-        return $"{r.x}×{r.y}";
+        ResolutionsText.text = $"{selectedResolution.x}×{selectedResolution.y}";
     }
 
 

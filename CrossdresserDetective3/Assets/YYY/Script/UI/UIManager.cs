@@ -2082,6 +2082,8 @@ public class UIManager : MonoBehaviour
         if (isSetUp)
             return;
 
+        HandleCaptivityInput();
+
         // Every level needs these prompts, including levels without a suspicion meter.
         var suspicion = playerController != null ? playerController.GetComponent<PlayerSuspicion>() : null;
         SetUndercoverCombatPrompts(playerController, suspicion != null && suspicion.CombatLocked);
@@ -2123,7 +2125,6 @@ public class UIManager : MonoBehaviour
 
 
 
-        HandleCaptivityInput();
     }
 
 
@@ -2523,16 +2524,142 @@ public class UIManager : MonoBehaviour
     public GameObject Struggle_Captured;//挣扎提示
     private bool captivityBreakFreeStarted;
     private bool captivityEscapeInputArmed;
+    private const int CaptivityProgressGoal = 8;
+    private const float CaptivityHitGain = 1.2f;
+    private const float CaptivityDecayPerSecond = 0.12f;
+    private const float CaptivityDegreesPerSecond = 135f;
+    private static readonly float[] CaptivityTargetWidths = { 92f, 64f, 42f };
+    [SerializeField, Min(0f)] private float captivityQteHeight = 1.35f;
+    private int captivityEscapesCompleted;
+    private float captivityProgress;
+    private float captivityNeedleAngle;
+    private float captivityTargetAngle;
+    private float captivityFeedbackUntil;
+    private bool captivityLastHit;
+    private GUIStyle captivityQteText;
 
+    private bool CanAttemptCaptivityEscape =>
+        isCaptivityShowing && waitGameOverInput && !captivityBreakFreeStarted &&
+        DeadBody != null && DeadBody.gameObject.activeInHierarchy &&
+        playerController != null && playerController.isCaptured;
+
+    private void ResetCaptivityTiming()
+    {
+        // 每次判定后从目标区之前重新扫过，避免原地连按。
+        captivityTargetAngle = Random.Range(0f, 360f);
+        captivityNeedleAngle = Mathf.Repeat(captivityTargetAngle - 155f, 360f);
+    }
+
+    private void OnGUI()
+    {
+        if (Event.current.type != EventType.Repaint || !CanAttemptCaptivityEscape ||
+            captivityEscapesCompleted >= CaptivityTargetWidths.Length)
+            return;
+
+        Camera worldCamera = Camera.main;
+        if (worldCamera == null)
+            return;
+
+        Vector3 anchor = worldCamera.WorldToScreenPoint(
+            DeadBody.transform.position + Vector3.up * captivityQteHeight);
+        if (anchor.z <= 0f)
+            return;
+
+        float scale = Mathf.Min(Screen.width / 1600f, Screen.height / 900f);
+        float x = Mathf.Clamp(anchor.x / scale, 166f, Screen.width / scale - 166f);
+        float y = Mathf.Clamp((Screen.height - anchor.y) / scale, 160f, Screen.height / scale - 12f);
+        Vector2 center = new Vector2(x, y - 86f);
+        Matrix4x4 previousMatrix = GUI.matrix;
+        Color previousColor = GUI.color;
+        GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
+
+        Color red = new Color(1f, 0.17f, 0.23f);
+        Color ink = new Color(0.04f, 0.025f, 0.035f, 0.85f);
+        Color white = new Color(0.95f, 0.91f, 0.91f);
+        bool showingFeedback = Time.time < captivityFeedbackUntil;
+        Color feedback = captivityLastHit ? new Color(0.62f, 1f, 0.77f) : red;
+        float targetWidth = CaptivityTargetWidths[captivityEscapesCompleted];
+
+        GUI.DrawTexture(new Rect(x - 64f, center.y - 64f, 128f, 128f),
+            Texture2D.whiteTexture, ScaleMode.StretchToFill, true, 0f, ink, 0f, 64f);
+        DrawCaptivityArc(center, 57f, 0f, 360f, 2f, white);
+        DrawCaptivityArc(center, 52f, 0f, 360f, 1f, new Color(0.66f, 0.52f, 0.54f));
+        DrawCaptivityArc(center, 57f, captivityTargetAngle - targetWidth * 0.5f, targetWidth, 12f,
+            new Color(0.64f, 0.04f, 0.11f));
+        DrawCaptivityArc(center, 57f, captivityTargetAngle - targetWidth * 0.5f, targetWidth, 7f, red);
+        DrawCaptivityLine(center + CaptivityDirection(captivityNeedleAngle) * 45f,
+            center + CaptivityDirection(captivityNeedleAngle) * 66f, 4f, white);
+
+        if (captivityQteText == null)
+        {
+            captivityQteText = new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold
+            };
+        }
+
+        DrawCaptivityRect(new Rect(x - 17f, center.y - 17f, 34f, 34f), showingFeedback ? feedback : white);
+        DrawCaptivityRect(new Rect(x - 15f, center.y - 15f, 30f, 30f), new Color(0.14f, 0.11f, 0.14f));
+        GUI.color = white;
+        captivityQteText.fontSize = 21;
+        GUI.Label(new Rect(x - 16f, center.y - 17f, 32f, 34f), "J", captivityQteText);
+
+        DrawCaptivityRect(new Rect(x - 154f, y - 24f, 308f, 26f), ink);
+        for (int i = 0; i < CaptivityTargetWidths.Length; i++)
+        {
+            DrawCaptivityRect(new Rect(x - 142f + i * 9f, y - 13f, 6f, 5f),
+                i <= captivityEscapesCompleted ? red : new Color(0.31f, 0.26f, 0.29f));
+        }
+        DrawCaptivityRect(new Rect(x - 108f, y - 16f, 200f, 11f), new Color(0.32f, 0.27f, 0.30f));
+        DrawCaptivityRect(new Rect(x - 107f, y - 15f, 198f * captivityProgress / CaptivityProgressGoal, 9f), red);
+        GUI.color = white;
+        captivityQteText.fontSize = 14;
+        GUI.Label(new Rect(x + 94f, y - 23f, 56f, 24f),
+            $"{Mathf.FloorToInt(captivityProgress)} / {CaptivityProgressGoal}", captivityQteText);
+
+        GUI.matrix = previousMatrix;
+        GUI.color = previousColor;
+    }
+
+    private static Vector2 CaptivityDirection(float degrees)
+    {
+        float radians = degrees * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Sin(radians), -Mathf.Cos(radians));
+    }
+
+    private static void DrawCaptivityArc(Vector2 center, float radius, float start, float sweep,
+        float thickness, Color color)
+    {
+        int segments = Mathf.CeilToInt(sweep / 6f);
+        Vector2 previous = center + CaptivityDirection(start) * radius;
+        for (int i = 1; i <= segments; i++)
+        {
+            Vector2 next = center + CaptivityDirection(start + sweep * i / segments) * radius;
+            DrawCaptivityLine(previous, next, thickness, color);
+            previous = next;
+        }
+    }
+
+    private static void DrawCaptivityLine(Vector2 from, Vector2 to, float thickness, Color color)
+    {
+        Matrix4x4 matrix = GUI.matrix;
+        Vector2 direction = to - from;
+        GUI.matrix = matrix * Matrix4x4.TRS(from,
+            Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg), Vector3.one);
+        DrawCaptivityRect(new Rect(-0.5f, -thickness * 0.5f,
+            direction.magnitude + 1f, thickness), color);
+        GUI.matrix = matrix;
+    }
+
+    private static void DrawCaptivityRect(Rect rect, Color color)
+    {
+        GUI.DrawTexture(rect, Texture2D.whiteTexture, ScaleMode.StretchToFill, true, 0f, color, 0f, 0f);
+    }
 
     private void HandleCaptivityInput()
     {
-        if (!isCaptivityShowing ||
-         !waitGameOverInput ||
-         captivityBreakFreeStarted ||
-         DeadBody == null ||
-         !DeadBody.gameObject.activeInHierarchy ||
-         !playerController.isCaptured)
+        if (!CanAttemptCaptivityEscape || Time.timeScale <= 0f)
             return;
 
         if (Keyboard.current?.kKey.wasPressedThisFrame == true ||
@@ -2555,18 +2682,32 @@ public class UIManager : MonoBehaviour
         if (keyboardEscape?.wasPressedThisFrame == true ||
             gamepadEscape?.wasPressedThisFrame == true)
             StartCaptivityBreakFree();
+
+        if (!CanAttemptCaptivityEscape)
+            return;
+
+        captivityProgress = Mathf.Max(0f, captivityProgress - CaptivityDecayPerSecond * Time.deltaTime);
+        captivityNeedleAngle = Mathf.Repeat(
+            captivityNeedleAngle + CaptivityDegreesPerSecond * Time.deltaTime, 360f);
     }
 
 
-    // 手机攻击按钮也可以在 OnClick 绑定这个 public 方法
+    // 保留场景里的手机按钮绑定，所有输入共用同一套判定。
     public void StartCaptivityBreakFree()
     {
-        if (!isCaptivityShowing ||
-            !waitGameOverInput ||
-            captivityBreakFreeStarted ||
-            DeadBody == null ||
-            !DeadBody.gameObject.activeInHierarchy ||
-            !playerController.isCaptured)
+        if (!CanAttemptCaptivityEscape || Time.timeScale <= 0f ||
+            captivityEscapesCompleted >= CaptivityTargetWidths.Length)
+            return;
+
+        float halfWidth = CaptivityTargetWidths[captivityEscapesCompleted] * 0.5f;
+        captivityLastHit = Mathf.Abs(Mathf.DeltaAngle(captivityNeedleAngle, captivityTargetAngle)) <= halfWidth;
+        captivityFeedbackUntil = Time.time + 0.25f;
+        ResetCaptivityTiming();
+        if (!captivityLastHit)
+            return;
+
+        captivityProgress = Mathf.Min(CaptivityProgressGoal, captivityProgress + CaptivityHitGain);
+        if (captivityProgress < CaptivityProgressGoal)
             return;
 
         captivityBreakFreeStarted = true;
@@ -2579,10 +2720,14 @@ public class UIManager : MonoBehaviour
 
     public void GiveUpCaptivityEscape()
     {
-        if (!isCaptivityShowing || !waitGameOverInput || captivityBreakFreeStarted ||
-            DeadBody == null || !DeadBody.gameObject.activeInHierarchy || !playerController.isCaptured)
+        if (!CanAttemptCaptivityEscape)
             return;
 
+        FailCaptivityEscape();
+    }
+
+    private void FailCaptivityEscape()
+    {
         waitGameOverInput = false;
         isCaptivityShowing = false;
         Struggle_Captured.SetActive(false);
@@ -2641,6 +2786,7 @@ public class UIManager : MonoBehaviour
         GameManager.instance.ResumeEnemiesAfterCaptivity();
 
         isCaptivityShowing = false;//调教结束
+        captivityEscapesCompleted++;
 
 
         SpawnBondageUnlocker();//生成解锁器
@@ -2659,6 +2805,13 @@ public class UIManager : MonoBehaviour
         if (isResultShowing)
             return;
 
+        if (captivityEscapesCompleted >= CaptivityTargetWidths.Length)
+        {
+            isResultShowing = true;
+            FailCaptivityEscape();
+            return;
+        }
+
         RoomManager room = GameManager.instance.roomManager;
         if (room == null || room.captivityPoint == null)
         {
@@ -2671,6 +2824,9 @@ public class UIManager : MonoBehaviour
         waitGameOverInput = false;
         captivityBreakFreeStarted = false;
         captivityEscapeInputArmed = false;
+        captivityProgress = 0f;
+        captivityFeedbackUntil = 0f;
+        ResetCaptivityTiming();
         GameManager.instance.SuspendEnemiesForCaptivity();
 
         playerController.DisableGameplayInput();
