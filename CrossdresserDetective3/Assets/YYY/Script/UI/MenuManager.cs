@@ -911,32 +911,30 @@ public class MenuManager : MonoBehaviour
                 CurrentOpen = -1;
 
                 break;
-            case 2://Demo限制
-                //ChapterMenu.SetActive(false);
-                //Chapter_2_Menu.SetActive(true);
-                //
-                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-                //
-                //EventSystem.current.SetSelectedGameObject(null);
-                //EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
-                //
-                //
-                //
-                //CurrentOpen = -2;
-                //
-                //break;
-            case 3://Demo限制
-                //ChapterMenu.SetActive(false);
-                //Chapter_3_Menu.SetActive(true);
-                //
-                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-                //
-                //EventSystem.current.SetSelectedGameObject(null);
-                //EventSystem.current.SetSelectedGameObject(Chapter_3_FirstSelected);
-                //
-                //CurrentOpen = -3;
-                //
-                //break;
+            case 2:
+                ChapterMenu.SetActive(false);
+                Chapter_2_Menu.SetActive(true);
+
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
+
+                CurrentOpen = -2;
+
+                break;
+            case 3:
+                ChapterMenu.SetActive(false);
+                Chapter_3_Menu.SetActive(true);
+
+                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(Chapter_3_FirstSelected);
+
+                CurrentOpen = -3;
+
+                break;
             case 4:
             case 5:
             case 6:

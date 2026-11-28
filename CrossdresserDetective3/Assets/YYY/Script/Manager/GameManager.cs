@@ -258,14 +258,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
 
         // Demo限制：通关第一章第10关后，点击下一关进入感谢试玩。
-        if (GameFlowData.CurrentChapter == 1 && GameFlowData.CurrentStage == 10)
-        {
-            GameFlowData.nextAreaId = "Demo";
-            GameFlowData.returnPath = null;
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("Spine");
-            yield break;
-        }
+        //if (GameFlowData.CurrentChapter == 1 && GameFlowData.CurrentStage == 10)
+        //{
+        //    GameFlowData.nextAreaId = "Demo";
+        //    GameFlowData.returnPath = null;
+        //    Time.timeScale = 1f;
+        //    SceneManager.LoadScene("Spine");
+        //    yield break;
+        //}
 
         GameFlowData.CurrentStage++;
 
