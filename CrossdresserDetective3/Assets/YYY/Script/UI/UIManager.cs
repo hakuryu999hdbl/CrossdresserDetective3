@@ -117,7 +117,7 @@ public class UIManager : MonoBehaviour
 
         playerController.EnableGameplayInput();// 关闭 UI 输入
 
-        PauseSetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        PauseSetUpFirstSelected = EventSystem.current.currentSelectedGameObject ?? PauseSetUpFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
     }
     public void BackToMenu()
@@ -394,7 +394,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject ?? SetUpFirstSelected;//记录上一次你选中的位置
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
@@ -412,7 +412,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
@@ -433,7 +433,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        SetUpFirstSelected = EventSystem.current.currentSelectedGameObject ?? SetUpFirstSelected;//记录上一次你选中的位置
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
@@ -451,7 +451,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject ?? WeaponFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(SetUpFirstSelected);
@@ -691,7 +691,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject ?? WeaponFirstSelected;//记录上一次你选中的位置
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(MeleeFirstSelected);
@@ -710,7 +710,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        MeleeFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        MeleeFirstSelected = EventSystem.current.currentSelectedGameObject ?? MeleeFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
@@ -739,7 +739,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject ?? WeaponFirstSelected;//记录上一次你选中的位置
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(RangedFirstSelected);
@@ -758,7 +758,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        RangedFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        RangedFirstSelected = EventSystem.current.currentSelectedGameObject ?? RangedFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
@@ -816,7 +816,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        WeaponFirstSelected = EventSystem.current.currentSelectedGameObject ?? WeaponFirstSelected;//记录上一次你选中的位置
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ThrowableFirstSelected);
@@ -836,7 +836,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        ThrowableFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        ThrowableFirstSelected = EventSystem.current.currentSelectedGameObject ?? ThrowableFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(WeaponFirstSelected);
@@ -874,7 +874,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ClothesFirstSelected);
@@ -889,7 +889,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        ClothesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        ClothesFirstSelected = EventSystem.current.currentSelectedGameObject ?? ClothesFirstSelected;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
     }
@@ -916,7 +916,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(GlovesFirstSelected);
@@ -931,7 +931,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        GlovesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        GlovesFirstSelected = EventSystem.current.currentSelectedGameObject ?? GlovesFirstSelected;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
     }
@@ -953,7 +953,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(SkirtFirstSelected);
@@ -970,7 +970,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        SkirtFirstSelected = EventSystem.current.currentSelectedGameObject;
+        SkirtFirstSelected = EventSystem.current.currentSelectedGameObject ?? SkirtFirstSelected;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
 
@@ -996,7 +996,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(PantiesFirstSelected);
@@ -1013,7 +1013,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        PantiesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        PantiesFirstSelected = EventSystem.current.currentSelectedGameObject ?? PantiesFirstSelected;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
 
@@ -1038,7 +1038,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(StockingsFirstSelected);
@@ -1055,7 +1055,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        StockingsFirstSelected = EventSystem.current.currentSelectedGameObject;
+        StockingsFirstSelected = EventSystem.current.currentSelectedGameObject ?? StockingsFirstSelected;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
 
@@ -1082,7 +1082,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        EquipFirstSelected = EventSystem.current.currentSelectedGameObject;
+        EquipFirstSelected = EventSystem.current.currentSelectedGameObject ?? EquipFirstSelected;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ShoesFirstSelected);
@@ -1099,7 +1099,7 @@ public class UIManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;
 
-        ShoesFirstSelected = EventSystem.current.currentSelectedGameObject;
+        ShoesFirstSelected = EventSystem.current.currentSelectedGameObject ?? ShoesFirstSelected;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(EquipFirstSelected);
 

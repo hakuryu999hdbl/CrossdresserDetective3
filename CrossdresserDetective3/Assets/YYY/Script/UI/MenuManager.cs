@@ -316,7 +316,7 @@ public class MenuManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-        SaveFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        SaveFirstSelected = EventSystem.current.currentSelectedGameObject ?? SaveFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(SaveButton);
 
@@ -785,7 +785,7 @@ public class MenuManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-        CreditsFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        CreditsFirstSelected = EventSystem.current.currentSelectedGameObject ?? CreditsFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(CreditsButton);
 
@@ -836,7 +836,7 @@ public class MenuManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-        CommunityFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        CommunityFirstSelected = EventSystem.current.currentSelectedGameObject ?? CommunityFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(CommunityButton);
 
@@ -907,7 +907,7 @@ public class MenuManager : MonoBehaviour
 
         GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-        ChapterFirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+        ChapterFirstSelected = EventSystem.current.currentSelectedGameObject ?? ChapterFirstSelected;//记录上一次你选中的位置
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ChapterButton);
 
@@ -952,31 +952,31 @@ public class MenuManager : MonoBehaviour
 
                 break;
             case 2://Demo限制
-                ChapterMenu.SetActive(false);
-                Chapter_2_Menu.SetActive(true);
-                
-                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-                
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
-                
-                
-                
-                CurrentOpen = -2;
-                
-                break;
-            case 3:
-                ChapterMenu.SetActive(false);
-                Chapter_3_Menu.SetActive(true);
-
-                GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(Chapter_3_FirstSelected);
-
-                CurrentOpen = -3;
-
-                break;
+                //ChapterMenu.SetActive(false);
+                //Chapter_2_Menu.SetActive(true);
+                //
+                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                //
+                //EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(Chapter_2_FirstSelected);
+                //
+                //
+                //
+                //CurrentOpen = -2;
+                //
+                //break;
+            case 3://Demo限制
+                //ChapterMenu.SetActive(false);
+                //Chapter_3_Menu.SetActive(true);
+                //
+                //GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
+                //
+                //EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(Chapter_3_FirstSelected);
+                //
+                //CurrentOpen = -3;
+                //
+                //break;
             case 4:
             case 5:
             case 6:
@@ -995,7 +995,7 @@ public class MenuManager : MonoBehaviour
 
                 GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-                Chapter_1_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+                Chapter_1_FirstSelected = EventSystem.current.currentSelectedGameObject ?? Chapter_1_FirstSelected;//记录上一次你选中的位置
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(Chapter_1_Button);
 
@@ -1008,7 +1008,7 @@ public class MenuManager : MonoBehaviour
 
                 GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-                Chapter_2_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+                Chapter_2_FirstSelected = EventSystem.current.currentSelectedGameObject ?? Chapter_2_FirstSelected;//记录上一次你选中的位置
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(Chapter_2_Button);
 
@@ -1021,7 +1021,7 @@ public class MenuManager : MonoBehaviour
 
                 GameFlowData.suppressNextSelectSound = true;//吞掉当前选中音
 
-                Chapter_3_FirstSelected = EventSystem.current.currentSelectedGameObject;//记录上一次你选中的位置
+                Chapter_3_FirstSelected = EventSystem.current.currentSelectedGameObject ?? Chapter_3_FirstSelected;//记录上一次你选中的位置
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(Chapter_3_Button);
 
@@ -1185,7 +1185,7 @@ public class MenuManager : MonoBehaviour
         Debug.Log("进入：章节" + nextChapter + "关卡" + nextStage);
 
         //特殊情况的主线需要单独先进入AVG
-        // Demo限制：第一章只开放1~9关
+        // Demo限制：第一章只开放1~10关
         if (nextChapter == 1 && nextStage == 1)
         {
             GameFlowData.nextAreaId = "Introduce";
